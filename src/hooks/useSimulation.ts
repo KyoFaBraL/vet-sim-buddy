@@ -146,6 +146,15 @@ export const useSimulation = (caseId: number = 1) => {
 
   const applyTreatment = async (treatmentId: number) => {
     try {
+      // Carregar informações do tratamento
+      const { data: treatmentData, error: treatmentError } = await supabase
+        .from("tratamentos")
+        .select("nome")
+        .eq("id", treatmentId)
+        .single();
+
+      if (treatmentError) throw treatmentError;
+
       // Carregar efeitos do tratamento
       const { data: treatmentEffects, error } = await supabase
         .from("efeitos_tratamento")
@@ -167,14 +176,17 @@ export const useSimulation = (caseId: number = 1) => {
 
       toast({
         title: "Tratamento aplicado",
-        description: "Os efeitos do tratamento foram aplicados ao paciente",
+        description: `${treatmentData.nome} foi aplicado ao paciente`,
       });
+
+      return treatmentData.nome;
     } catch (error: any) {
       toast({
         title: "Erro ao aplicar tratamento",
         description: error.message,
         variant: "destructive",
       });
+      return null;
     }
   };
 

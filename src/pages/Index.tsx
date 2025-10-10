@@ -5,6 +5,7 @@ import CaseInfo from "@/components/CaseInfo";
 import SimulationControls from "@/components/SimulationControls";
 import TreatmentPanel from "@/components/TreatmentPanel";
 import ParameterChart from "@/components/ParameterChart";
+import ReportPanel from "@/components/ReportPanel";
 import { useSimulation } from "@/hooks/useSimulation";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -29,6 +30,7 @@ const Index = () => {
   } = useSimulation(1);
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
+  const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
 
   useEffect(() => {
     loadTreatments();
@@ -51,6 +53,13 @@ const Index = () => {
     'PressaoArterial',
     'Lactato',
   ];
+
+  const handleApplyTreatment = async (treatmentId: number) => {
+    const treatmentName = await applyTreatment(treatmentId);
+    if (treatmentName) {
+      setAppliedTreatments(prev => [...prev, `${new Date().toLocaleTimeString('pt-BR')}: ${treatmentName}`]);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
@@ -134,10 +143,21 @@ const Index = () => {
         </div>
 
         {/* Treatments Panel */}
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto mb-8">
           <TreatmentPanel
             treatments={treatments}
-            onApplyTreatment={applyTreatment}
+            onApplyTreatment={handleApplyTreatment}
+          />
+        </div>
+
+        {/* Report Export */}
+        <div className="mb-8">
+          <ReportPanel
+            caseData={caseData}
+            parameters={parameters}
+            currentState={currentState}
+            history={history}
+            appliedTreatments={appliedTreatments}
           />
         </div>
 
