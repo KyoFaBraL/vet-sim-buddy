@@ -21,12 +21,19 @@ interface SimulationState {
   [parameterId: number]: number;
 }
 
+interface HistoryPoint {
+  timestamp: number;
+  values: SimulationState;
+}
+
 export const useSimulation = (caseId: number = 1) => {
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [currentState, setCurrentState] = useState<SimulationState>({});
   const [effects, setEffects] = useState<Effect[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [caseData, setCaseData] = useState<any>(null);
+  const [history, setHistory] = useState<HistoryPoint[]>([]);
+  const [startTime] = useState<number>(Date.now());
   const { toast } = useToast();
 
   // Carregar dados iniciais
@@ -103,9 +110,18 @@ export const useSimulation = (caseId: number = 1) => {
         newState[effect.id_parametro] = currentValue + (magnitude * 0.1);
       });
 
+      // Adicionar ao histórico
+      setHistory((prevHistory) => [
+        ...prevHistory,
+        {
+          timestamp: Date.now() - startTime,
+          values: { ...newState },
+        },
+      ]);
+
       return newState;
     });
-  }, [effects]);
+  }, [effects, startTime]);
 
   // Timer da simulação
   useEffect(() => {
@@ -124,6 +140,7 @@ export const useSimulation = (caseId: number = 1) => {
 
   const resetSimulation = () => {
     setIsRunning(false);
+    setHistory([]);
     loadCase();
   };
 
@@ -182,6 +199,7 @@ export const useSimulation = (caseId: number = 1) => {
     currentState,
     isRunning,
     caseData,
+    history,
     toggleSimulation,
     resetSimulation,
     applyTreatment,

@@ -4,6 +4,7 @@ import MonitorDisplay from "@/components/MonitorDisplay";
 import CaseInfo from "@/components/CaseInfo";
 import SimulationControls from "@/components/SimulationControls";
 import TreatmentPanel from "@/components/TreatmentPanel";
+import ParameterChart from "@/components/ParameterChart";
 import { useSimulation } from "@/hooks/useSimulation";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -20,6 +21,7 @@ const Index = () => {
     currentState,
     isRunning,
     caseData,
+    history,
     toggleSimulation,
     resetSimulation,
     applyTreatment,
@@ -121,6 +123,14 @@ const Index = () => {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Temporal Charts */}
+        <div className="mb-8">
+          <ParameterChart 
+            history={history}
+            parameters={parameters}
+          />
         </div>
 
         {/* Treatments Panel */}
