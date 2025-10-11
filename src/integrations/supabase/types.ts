@@ -430,6 +430,50 @@ export type Database = {
         }
         Relationships: []
       }
+      simulation_notes: {
+        Row: {
+          case_id: number
+          conteudo: string
+          criado_em: string
+          id: string
+          parametros_relevantes: Json | null
+          session_id: string | null
+          timestamp_simulacao: number
+          tipo: string
+          user_id: string
+        }
+        Insert: {
+          case_id: number
+          conteudo: string
+          criado_em?: string
+          id?: string
+          parametros_relevantes?: Json | null
+          session_id?: string | null
+          timestamp_simulacao: number
+          tipo?: string
+          user_id: string
+        }
+        Update: {
+          case_id?: number
+          conteudo?: string
+          criado_em?: string
+          id?: string
+          parametros_relevantes?: Json | null
+          session_id?: string | null
+          timestamp_simulacao?: number
+          tipo?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "simulation_notes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "simulation_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       simulation_sessions: {
         Row: {
           case_id: number

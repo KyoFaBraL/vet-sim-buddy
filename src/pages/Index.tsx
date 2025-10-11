@@ -14,6 +14,7 @@ import { TreatmentHints } from "@/components/TreatmentHints";
 import { RoleSelector } from "@/components/RoleSelector";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
+import { SimulationNotes } from "@/components/SimulationNotes";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -304,6 +305,15 @@ const Index = () => {
           <TreatmentPanel
             treatments={treatments}
             onApplyTreatment={handleApplyTreatment}
+          />
+        </div>
+
+        {/* Simulation Notes */}
+        <div className="mb-8">
+          <SimulationNotes
+            caseId={selectedCaseId}
+            elapsedTime={elapsedTime}
+            currentState={currentState}
           />
         </div>
 
