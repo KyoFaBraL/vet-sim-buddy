@@ -28,23 +28,54 @@ interface SimulationNotesProps {
   elapsedTime: number;
   currentState: Record<number, number>;
   sessionId?: string;
+  onNotesChange?: (addTreatmentLog: (treatmentName: string) => Promise<void>) => void;
 }
 
 export const SimulationNotes = ({ 
   caseId, 
   elapsedTime, 
   currentState,
-  sessionId 
+  sessionId,
+  onNotesChange
 }: SimulationNotesProps) => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNote, setNewNote] = useState("");
-  const [noteType, setNoteType] = useState<"observacao" | "decisao" | "hipotese">("observacao");
+  const [noteType, setNoteType] = useState<"observacao" | "decisao" | "hipotese" | "tratamento">("observacao");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     loadNotes();
   }, [caseId]);
+
+  const addTreatmentLog = async (treatmentName: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      await supabase
+        .from("simulation_notes")
+        .insert({
+          user_id: user.id,
+          case_id: caseId,
+          session_id: sessionId || null,
+          timestamp_simulacao: elapsedTime,
+          tipo: "tratamento",
+          conteudo: `Tratamento aplicado: ${treatmentName}`,
+          parametros_relevantes: currentState,
+        });
+
+      loadNotes();
+    } catch (error) {
+      console.error("Erro ao registrar tratamento:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (onNotesChange) {
+      onNotesChange(addTreatmentLog);
+    }
+  }, [elapsedTime, currentState]);
 
   const loadNotes = async () => {
     const { data } = await supabase
@@ -70,6 +101,8 @@ export const SimulationNotes = ({
         return "default";
       case "hipotese":
         return "secondary";
+      case "tratamento":
+        return "destructive";
       default:
         return "outline";
     }
@@ -81,6 +114,8 @@ export const SimulationNotes = ({
         return "Decisão Clínica";
       case "hipotese":
         return "Hipótese";
+      case "tratamento":
+        return "Tratamento Aplicado";
       default:
         return "Observação";
     }
@@ -166,7 +201,7 @@ export const SimulationNotes = ({
             </span>
             <Select
               value={noteType}
-              onValueChange={(value: "observacao" | "decisao" | "hipotese") => setNoteType(value)}
+              onValueChange={(value: "observacao" | "decisao" | "hipotese" | "tratamento") => setNoteType(value)}
             >
               <SelectTrigger className="w-[200px]">
                 <SelectValue />
@@ -175,6 +210,7 @@ export const SimulationNotes = ({
                 <SelectItem value="observacao">Observação</SelectItem>
                 <SelectItem value="decisao">Decisão Clínica</SelectItem>
                 <SelectItem value="hipotese">Hipótese</SelectItem>
+                <SelectItem value="tratamento">Tratamento</SelectItem>
               </SelectContent>
             </Select>
           </div>

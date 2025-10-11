@@ -60,6 +60,7 @@ const Index = () => {
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
   const [goalPoints, setGoalPoints] = useState(0);
+  const [addTreatmentLogFn, setAddTreatmentLogFn] = useState<((treatmentName: string) => Promise<void>) | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -122,6 +123,11 @@ const Index = () => {
     const treatmentName = await applyTreatment(treatmentId);
     if (treatmentName) {
       setAppliedTreatments(prev => [...prev, `${new Date().toLocaleTimeString('pt-BR')}: ${treatmentName}`]);
+      
+      // Log tratamento nas notas clínicas automaticamente
+      if (addTreatmentLogFn) {
+        await addTreatmentLogFn(treatmentName);
+      }
     }
   };
 
@@ -337,6 +343,7 @@ const Index = () => {
             caseId={selectedCaseId}
             elapsedTime={elapsedTime}
             currentState={currentState}
+            onNotesChange={(addTreatmentLog) => setAddTreatmentLogFn(() => addTreatmentLog)}
           />
         </div>
 
