@@ -18,6 +18,7 @@ import { SimulationNotes } from "@/components/SimulationNotes";
 import { SimulationComparison } from "@/components/SimulationComparison";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { SoundAlerts } from "@/components/SoundAlerts";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -172,6 +173,12 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <SoundAlerts
+                parameters={parameters}
+                currentState={currentState}
+                getParameterStatus={getParameterStatus}
+                isRunning={isRunning}
+              />
               <ThemeToggle />
               <Button variant="outline" onClick={signOut}>
                 <LogOut className="mr-2 h-4 w-4" />
