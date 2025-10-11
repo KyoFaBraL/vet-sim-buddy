@@ -42,6 +42,7 @@ const Index = () => {
   const {
     parameters,
     currentState,
+    previousState,
     isRunning,
     caseData,
     history,
@@ -50,6 +51,7 @@ const Index = () => {
     resetSimulation,
     applyTreatment,
     getParameterStatus,
+    getParameterTrend,
     saveSession,
     loadSession,
   } = useSimulation(selectedCaseId);
@@ -273,6 +275,8 @@ const Index = () => {
                     isNormal={isNormal}
                     isCritical={isCritical}
                     tooltip={parameterDescriptions[param.nome]}
+                    trend={getParameterTrend(param.id, value)}
+                    previousValue={previousState[param.id]}
                   />
                 );
               })}

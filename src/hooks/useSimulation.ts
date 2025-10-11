@@ -29,6 +29,7 @@ interface HistoryPoint {
 export const useSimulation = (caseId: number = 1) => {
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [currentState, setCurrentState] = useState<SimulationState>({});
+  const [previousState, setPreviousState] = useState<SimulationState>({});
   const [effects, setEffects] = useState<Effect[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [caseData, setCaseData] = useState<any>(null);
@@ -102,6 +103,9 @@ export const useSimulation = (caseId: number = 1) => {
   // Motor da simulação - aplica efeitos aos parâmetros
   const tick = useCallback(() => {
     setCurrentState((prevState) => {
+      // Salvar estado anterior antes de atualizar
+      setPreviousState(prevState);
+      
       const newState = { ...prevState };
       
       effects.forEach((effect) => {
@@ -143,6 +147,7 @@ export const useSimulation = (caseId: number = 1) => {
   const resetSimulation = () => {
     setIsRunning(false);
     setHistory([]);
+    setPreviousState({});
     setStartTime(Date.now());
     setElapsedTime(0);
     loadCase();
@@ -208,6 +213,17 @@ export const useSimulation = (caseId: number = 1) => {
     const isNormal = value >= (min + warningThreshold) && value <= (max - warningThreshold);
 
     return { isNormal, isCritical };
+  };
+
+  const getParameterTrend = (parameterId: number, currentValue: number): "up" | "down" | "stable" | null => {
+    const previousValue = previousState[parameterId];
+    if (previousValue === undefined) return null;
+    
+    const threshold = 0.01; // Threshold para considerar mudança significativa
+    const change = currentValue - previousValue;
+    
+    if (Math.abs(change) < threshold) return "stable";
+    return change > 0 ? "up" : "down";
   };
 
   const saveSession = async (nome: string, notas: string) => {
@@ -312,6 +328,7 @@ export const useSimulation = (caseId: number = 1) => {
   return {
     parameters,
     currentState,
+    previousState,
     isRunning,
     caseData,
     history,
@@ -320,6 +337,7 @@ export const useSimulation = (caseId: number = 1) => {
     resetSimulation,
     applyTreatment,
     getParameterStatus,
+    getParameterTrend,
     saveSession,
     loadSession,
   };

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
+import { Info, TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 interface MonitorDisplayProps {
   label: string;
@@ -14,13 +14,48 @@ interface MonitorDisplayProps {
     normal: string;
     clinical: string;
   };
+  trend?: "up" | "down" | "stable" | null;
+  previousValue?: number;
 }
 
-const MonitorDisplay = ({ label, value, unit, isNormal, isCritical, className, tooltip }: MonitorDisplayProps) => {
+const MonitorDisplay = ({ 
+  label, 
+  value, 
+  unit, 
+  isNormal, 
+  isCritical, 
+  className, 
+  tooltip,
+  trend,
+  previousValue 
+}: MonitorDisplayProps) => {
   const getStatusColor = () => {
     if (isCritical) return "text-monitor-critical";
     if (!isNormal) return "text-monitor-warning";
     return "text-monitor-normal";
+  };
+
+  const getTrendIcon = () => {
+    if (!trend || trend === "stable") {
+      return <Minus className="h-5 w-5 text-muted-foreground" />;
+    }
+    if (trend === "up") {
+      return <TrendingUp className="h-5 w-5 text-blue-500" />;
+    }
+    return <TrendingDown className="h-5 w-5 text-orange-500" />;
+  };
+
+  const getTrendColor = () => {
+    if (!trend || trend === "stable") return "text-muted-foreground";
+    if (trend === "up") return "text-blue-500";
+    return "text-orange-500";
+  };
+
+  const formatChange = () => {
+    if (typeof value !== 'number' || previousValue === undefined) return null;
+    const change = value - previousValue;
+    const sign = change > 0 ? "+" : "";
+    return `${sign}${change.toFixed(2)}`;
   };
 
   return (
@@ -29,22 +64,45 @@ const MonitorDisplay = ({ label, value, unit, isNormal, isCritical, className, t
         <div className="text-xs text-monitor-text/60 font-medium tracking-wider uppercase">
           {label}
         </div>
-        {tooltip && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Info className="h-4 w-4 text-monitor-text/40 hover:text-monitor-text/80 cursor-help transition-colors" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs p-4" side="left">
-                <div className="space-y-2">
-                  <p className="font-semibold text-sm">{tooltip.description}</p>
-                  <p className="text-xs text-muted-foreground">{tooltip.normal}</p>
-                  <p className="text-xs">{tooltip.clinical}</p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        )}
+        <div className="flex items-center gap-2">
+          {trend && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className={cn("flex items-center gap-1", getTrendColor())}>
+                    {getTrendIcon()}
+                    {formatChange() && (
+                      <span className="text-xs font-mono">{formatChange()}</span>
+                    )}
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-xs">
+                    {trend === "up" && "Tendência de aumento"}
+                    {trend === "down" && "Tendência de diminuição"}
+                    {trend === "stable" && "Estável"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+          {tooltip && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-4 w-4 text-monitor-text/40 hover:text-monitor-text/80 cursor-help transition-colors" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs p-4" side="left">
+                  <div className="space-y-2">
+                    <p className="font-semibold text-sm">{tooltip.description}</p>
+                    <p className="text-xs text-muted-foreground">{tooltip.normal}</p>
+                    <p className="text-xs">{tooltip.clinical}</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
       </div>
       <div className={cn("text-4xl font-bold font-mono tabular-nums tracking-tight", getStatusColor())}>
         {typeof value === 'number' ? value.toFixed(2) : value}
