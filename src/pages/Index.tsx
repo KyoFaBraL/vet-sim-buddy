@@ -334,6 +334,7 @@ const Index = () => {
           <TreatmentPanel
             treatments={treatments}
             onApplyTreatment={handleApplyTreatment}
+            conditionId={caseData?.id_condicao_primaria}
           />
         </div>
 

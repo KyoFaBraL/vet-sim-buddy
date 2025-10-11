@@ -549,6 +549,33 @@ export type Database = {
         }
         Relationships: []
       }
+      tratamentos_adequados: {
+        Row: {
+          condicao_id: number
+          criado_em: string
+          id: string
+          justificativa: string | null
+          prioridade: number
+          tratamento_id: number
+        }
+        Insert: {
+          condicao_id: number
+          criado_em?: string
+          id?: string
+          justificativa?: string | null
+          prioridade?: number
+          tratamento_id: number
+        }
+        Update: {
+          condicao_id?: number
+          criado_em?: string
+          id?: string
+          justificativa?: string | null
+          prioridade?: number
+          tratamento_id?: number
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           criado_em: string
