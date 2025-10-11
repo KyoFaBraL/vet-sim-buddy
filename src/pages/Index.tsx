@@ -11,6 +11,9 @@ import { CaseManager } from "@/components/CaseManager";
 import { SessionManager } from "@/components/SessionManager";
 import { LearningGoals } from "@/components/LearningGoals";
 import { TreatmentHints } from "@/components/TreatmentHints";
+import { RoleSelector } from "@/components/RoleSelector";
+import { CaseShareManager } from "@/components/CaseShareManager";
+import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +32,8 @@ const Index = () => {
   const { user, loading: authLoading, signOut } = useAuth();
   const [selectedCaseId, setSelectedCaseId] = useState(1);
   const [availableCases, setAvailableCases] = useState<any[]>([]);
+  const [userRole, setUserRole] = useState<"professor" | "aluno" | null>(null);
+  const [roleLoading, setRoleLoading] = useState(true);
   
   const {
     parameters,
@@ -50,8 +55,11 @@ const Index = () => {
   const [goalPoints, setGoalPoints] = useState(0);
 
   useEffect(() => {
-    loadTreatments();
-    loadCases();
+    if (user) {
+      loadTreatments();
+      loadCases();
+      checkUserRole();
+    }
   }, [user]);
 
   const loadTreatments = async () => {
@@ -69,6 +77,23 @@ const Index = () => {
       .order("criado_em", { ascending: false });
     
     if (data) setAvailableCases(data);
+  };
+
+  const checkUserRole = async () => {
+    setRoleLoading(true);
+    const { data } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+    
+    setUserRole(data?.role || null);
+    setRoleLoading(false);
+  };
+
+  const handleCaseAccessed = (caseId: number) => {
+    setSelectedCaseId(caseId);
+    loadCases();
   };
 
   const handleCaseChange = (caseId: string) => {
@@ -109,6 +134,18 @@ const Index = () => {
     return <Auth onAuthSuccess={() => {}} />;
   }
 
+  if (roleLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-muted-foreground">Carregando perfil...</p>
+      </div>
+    );
+  }
+
+  if (!userRole) {
+    return <RoleSelector userId={user.id} onRoleSet={checkUserRole} />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="container mx-auto px-4 py-8">
@@ -138,6 +175,13 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Access Code Input for Students */}
+        {userRole === "aluno" && (
+          <div className="mb-8 max-w-2xl mx-auto">
+            <AccessCodeInput onCaseAccessed={handleCaseAccessed} />
+          </div>
+        )}
+
         {/* Case Selection and Management */}
         <div className="mb-8 grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
           <div className="space-y-2">
@@ -155,10 +199,17 @@ const Index = () => {
               </SelectContent>
             </Select>
           </div>
-          <div>
-            <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
-            <CaseManager onCaseCreated={loadCases} />
-          </div>
+          {userRole === "professor" ? (
+            <div>
+              <label className="text-sm font-medium mb-2 block">Compartilhar Caso</label>
+              <CaseShareManager availableCases={availableCases} />
+            </div>
+          ) : (
+            <div>
+              <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
+              <CaseManager onCaseCreated={loadCases} />
+            </div>
+          )}
           <div>
             <label className="text-sm font-medium mb-2 block">Histórico de Sessões</label>
             <SessionManager 

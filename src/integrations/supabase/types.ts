@@ -362,6 +362,74 @@ export type Database = {
           },
         ]
       }
+      shared_case_access: {
+        Row: {
+          acessado_em: string
+          id: string
+          shared_case_id: string
+          user_id: string
+        }
+        Insert: {
+          acessado_em?: string
+          id?: string
+          shared_case_id: string
+          user_id: string
+        }
+        Update: {
+          acessado_em?: string
+          id?: string
+          shared_case_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_case_access_shared_case_id_fkey"
+            columns: ["shared_case_id"]
+            isOneToOne: false
+            referencedRelation: "shared_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shared_cases: {
+        Row: {
+          access_code: string
+          acessos: number | null
+          ativo: boolean
+          case_id: number
+          criado_em: string
+          descricao: string | null
+          expira_em: string | null
+          id: string
+          shared_by: string
+          titulo: string
+        }
+        Insert: {
+          access_code: string
+          acessos?: number | null
+          ativo?: boolean
+          case_id: number
+          criado_em?: string
+          descricao?: string | null
+          expira_em?: string | null
+          id?: string
+          shared_by: string
+          titulo: string
+        }
+        Update: {
+          access_code?: string
+          acessos?: number | null
+          ativo?: boolean
+          case_id?: number
+          criado_em?: string
+          descricao?: string | null
+          expira_em?: string | null
+          id?: string
+          shared_by?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
       simulation_sessions: {
         Row: {
           case_id: number
@@ -437,6 +505,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          criado_em: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          criado_em?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          criado_em?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       valores_iniciais_caso: {
         Row: {
           id: number
@@ -478,10 +567,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_access_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "professor" | "aluno"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -608,6 +707,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["professor", "aluno"],
+    },
   },
 } as const
