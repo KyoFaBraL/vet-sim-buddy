@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { parameterDescriptions } from "@/constants/parameterDescriptions";
 
 interface Treatment {
   id: number;
@@ -199,6 +200,7 @@ const Index = () => {
                     unit={param.unidade || ""}
                     isNormal={isNormal}
                     isCritical={isCritical}
+                    tooltip={parameterDescriptions[param.nome]}
                   />
                 );
               })}
