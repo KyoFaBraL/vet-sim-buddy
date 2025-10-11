@@ -16,6 +16,7 @@ import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { SimulationNotes } from "@/components/SimulationNotes";
 import { SimulationComparison } from "@/components/SimulationComparison";
+import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -333,6 +334,11 @@ const Index = () => {
             history={history}
             appliedTreatments={appliedTreatments}
           />
+        </div>
+
+        {/* Performance Statistics */}
+        <div className="mb-8">
+          <PerformanceStatistics caseId={selectedCaseId} />
         </div>
 
         {/* Additional Parameters (Secondary Monitor) */}
