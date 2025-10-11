@@ -17,6 +17,7 @@ import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { SimulationNotes } from "@/components/SimulationNotes";
 import { SimulationComparison } from "@/components/SimulationComparison";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -168,10 +169,13 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <Button variant="outline" onClick={signOut}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Sair
-            </Button>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Button variant="outline" onClick={signOut}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Sair
+              </Button>
+            </div>
           </div>
           <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto">
             Sistema de simulação médica veterinária para distúrbios ácido-base
