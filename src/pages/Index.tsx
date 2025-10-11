@@ -9,6 +9,7 @@ import ReportPanel from "@/components/ReportPanel";
 import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
 import { SessionManager } from "@/components/SessionManager";
+import { LearningGoals } from "@/components/LearningGoals";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,6 +35,7 @@ const Index = () => {
     isRunning,
     caseData,
     history,
+    elapsedTime,
     toggleSimulation,
     resetSimulation,
     applyTreatment,
@@ -44,6 +46,7 @@ const Index = () => {
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
+  const [goalPoints, setGoalPoints] = useState(0);
 
   useEffect(() => {
     loadTreatments();
@@ -87,6 +90,10 @@ const Index = () => {
     if (treatmentName) {
       setAppliedTreatments(prev => [...prev, `${new Date().toLocaleTimeString('pt-BR')}: ${treatmentName}`]);
     }
+  };
+
+  const handleGoalAchieved = (goalId: string, points: number) => {
+    setGoalPoints(prev => prev + points);
   };
 
   if (authLoading) {
@@ -214,6 +221,17 @@ const Index = () => {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Learning Goals */}
+        <div className="mb-8">
+          <LearningGoals
+            caseId={selectedCaseId}
+            currentState={currentState}
+            parameters={parameters}
+            elapsedTime={elapsedTime}
+            onGoalAchieved={handleGoalAchieved}
+          />
         </div>
 
         {/* Temporal Charts */}

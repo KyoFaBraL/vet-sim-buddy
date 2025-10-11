@@ -155,6 +155,84 @@ export type Database = {
           },
         ]
       }
+      metas_alcancadas: {
+        Row: {
+          alcancada_em: string
+          criado_em: string
+          id: string
+          meta_id: string
+          pontos_ganhos: number
+          session_id: string
+          tempo_decorrido_segundos: number
+          user_id: string
+        }
+        Insert: {
+          alcancada_em?: string
+          criado_em?: string
+          id?: string
+          meta_id: string
+          pontos_ganhos: number
+          session_id: string
+          tempo_decorrido_segundos: number
+          user_id: string
+        }
+        Update: {
+          alcancada_em?: string
+          criado_em?: string
+          id?: string
+          meta_id?: string
+          pontos_ganhos?: number
+          session_id?: string
+          tempo_decorrido_segundos?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      metas_aprendizado: {
+        Row: {
+          case_id: number
+          criado_em: string
+          descricao: string
+          id: string
+          parametro_alvo: string | null
+          pontos: number | null
+          tempo_limite_segundos: number | null
+          tipo: string
+          titulo: string
+          tolerancia: number | null
+          tratamento_requerido: number | null
+          valor_alvo: number | null
+        }
+        Insert: {
+          case_id: number
+          criado_em?: string
+          descricao: string
+          id?: string
+          parametro_alvo?: string | null
+          pontos?: number | null
+          tempo_limite_segundos?: number | null
+          tipo: string
+          titulo: string
+          tolerancia?: number | null
+          tratamento_requerido?: number | null
+          valor_alvo?: number | null
+        }
+        Update: {
+          case_id?: number
+          criado_em?: string
+          descricao?: string
+          id?: string
+          parametro_alvo?: string | null
+          pontos?: number | null
+          tempo_limite_segundos?: number | null
+          tipo?: string
+          titulo?: string
+          tolerancia?: number | null
+          tratamento_requerido?: number | null
+          valor_alvo?: number | null
+        }
+        Relationships: []
+      }
       parametros: {
         Row: {
           descricao: string | null

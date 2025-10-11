@@ -33,7 +33,8 @@ export const useSimulation = (caseId: number = 1) => {
   const [isRunning, setIsRunning] = useState(false);
   const [caseData, setCaseData] = useState<any>(null);
   const [history, setHistory] = useState<HistoryPoint[]>([]);
-  const [startTime] = useState<number>(Date.now());
+  const [startTime, setStartTime] = useState<number>(Date.now());
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
   const { toast } = useToast();
 
   // Carregar dados iniciais
@@ -129,10 +130,11 @@ export const useSimulation = (caseId: number = 1) => {
 
     const interval = setInterval(() => {
       tick();
+      setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
     }, 2000); // Atualiza a cada 2 segundos
 
     return () => clearInterval(interval);
-  }, [isRunning, tick]);
+  }, [isRunning, tick, startTime]);
 
   const toggleSimulation = () => {
     setIsRunning((prev) => !prev);
@@ -141,6 +143,8 @@ export const useSimulation = (caseId: number = 1) => {
   const resetSimulation = () => {
     setIsRunning(false);
     setHistory([]);
+    setStartTime(Date.now());
+    setElapsedTime(0);
     loadCase();
   };
 
@@ -311,6 +315,7 @@ export const useSimulation = (caseId: number = 1) => {
     isRunning,
     caseData,
     history,
+    elapsedTime,
     toggleSimulation,
     resetSimulation,
     applyTreatment,
