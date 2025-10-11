@@ -15,6 +15,7 @@ import { RoleSelector } from "@/components/RoleSelector";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { SimulationNotes } from "@/components/SimulationNotes";
+import { SimulationComparison } from "@/components/SimulationComparison";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -211,12 +212,18 @@ const Index = () => {
               <CaseManager onCaseCreated={loadCases} />
             </div>
           )}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Histórico de Sessões</label>
-            <SessionManager 
-              onSaveSession={saveSession}
-              onLoadSession={loadSession}
-            />
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Histórico de Sessões</label>
+            <div className="flex gap-2">
+              <SessionManager 
+                onSaveSession={saveSession}
+                onLoadSession={loadSession}
+              />
+              <SimulationComparison
+                caseId={selectedCaseId}
+                parameters={parameters}
+              />
+            </div>
           </div>
         </div>
 
