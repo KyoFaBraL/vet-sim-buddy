@@ -206,6 +206,105 @@ export const useSimulation = (caseId: number = 1) => {
     return { isNormal, isCritical };
   };
 
+  const saveSession = async (nome: string, notas: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    // Calcular duração
+    const duracao = Math.floor((Date.now() - startTime) / 1000);
+
+    // Criar sessão
+    const { data: session, error: sessionError } = await supabase
+      .from("simulation_sessions")
+      .insert({
+        user_id: user.id,
+        case_id: caseId,
+        nome,
+        notas,
+        data_fim: new Date().toISOString(),
+        duracao_segundos: duracao,
+        status: 'concluida'
+      })
+      .select()
+      .single();
+
+    if (sessionError || !session) {
+      console.error("Erro ao salvar sessão:", sessionError);
+      return;
+    }
+
+    // Salvar histórico de parâmetros
+    const historyData = history.flatMap(point =>
+      Object.entries(point.values).map(([paramId, value]) => ({
+        session_id: session.id,
+        timestamp: point.timestamp,
+        parametro_id: parseInt(paramId),
+        valor: Number(value)
+      }))
+    );
+
+    const { error: historyError } = await supabase
+      .from("session_history")
+      .insert(historyData);
+
+    if (historyError) {
+      console.error("Erro ao salvar histórico:", historyError);
+    }
+
+    console.log("Sessão salva com sucesso!");
+  };
+
+  const loadSession = async (sessionId: string) => {
+    // Carregar dados da sessão
+    const { data: session, error: sessionError } = await supabase
+      .from("simulation_sessions")
+      .select("*")
+      .eq("id", sessionId)
+      .single();
+
+    if (sessionError || !session) {
+      console.error("Erro ao carregar sessão:", sessionError);
+      return;
+    }
+
+    // Carregar histórico
+    const { data: historyData, error: historyError } = await supabase
+      .from("session_history")
+      .select("*")
+      .eq("session_id", sessionId)
+      .order("timestamp");
+
+    if (historyError) {
+      console.error("Erro ao carregar histórico:", historyError);
+      return;
+    }
+
+    // Reconstruir histórico
+    const reconstructedHistory: HistoryPoint[] = [];
+    const timestamps = [...new Set(historyData?.map(h => h.timestamp) || [])];
+
+    timestamps.forEach(timestamp => {
+      const stateAtTime: Record<number, number> = {};
+      historyData
+        ?.filter(h => h.timestamp === timestamp)
+        .forEach(h => {
+          stateAtTime[h.parametro_id] = parseFloat(h.valor.toString());
+        });
+      
+      reconstructedHistory.push({
+        timestamp,
+        values: stateAtTime
+      });
+    });
+
+    setHistory(reconstructedHistory);
+    
+    // Definir estado atual como o último ponto do histórico
+    if (reconstructedHistory.length > 0) {
+      setCurrentState(reconstructedHistory[reconstructedHistory.length - 1].values);
+    }
+  };
+
   return {
     parameters,
     currentState,
@@ -216,5 +315,7 @@ export const useSimulation = (caseId: number = 1) => {
     resetSimulation,
     applyTreatment,
     getParameterStatus,
+    saveSession,
+    loadSession,
   };
 };

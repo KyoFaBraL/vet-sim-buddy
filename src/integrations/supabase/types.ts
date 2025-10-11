@@ -203,6 +203,141 @@ export type Database = {
         }
         Relationships: []
       }
+      session_history: {
+        Row: {
+          criado_em: string
+          id: string
+          parametro_id: number
+          session_id: string
+          timestamp: number
+          valor: number
+        }
+        Insert: {
+          criado_em?: string
+          id?: string
+          parametro_id: number
+          session_id: string
+          timestamp: number
+          valor: number
+        }
+        Update: {
+          criado_em?: string
+          id?: string
+          parametro_id?: number
+          session_id?: string
+          timestamp?: number
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_history_parametro_id_fkey"
+            columns: ["parametro_id"]
+            isOneToOne: false
+            referencedRelation: "parametros"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_history_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "simulation_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_treatments: {
+        Row: {
+          aplicado_em: string
+          id: string
+          session_id: string
+          timestamp_simulacao: number
+          tratamento_id: number
+        }
+        Insert: {
+          aplicado_em?: string
+          id?: string
+          session_id: string
+          timestamp_simulacao: number
+          tratamento_id: number
+        }
+        Update: {
+          aplicado_em?: string
+          id?: string
+          session_id?: string
+          timestamp_simulacao?: number
+          tratamento_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_treatments_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "simulation_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_treatments_tratamento_id_fkey"
+            columns: ["tratamento_id"]
+            isOneToOne: false
+            referencedRelation: "tratamentos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      simulation_sessions: {
+        Row: {
+          case_id: number
+          criado_em: string
+          data_fim: string | null
+          data_inicio: string
+          duracao_segundos: number | null
+          id: string
+          nome: string
+          notas: string | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          case_id: number
+          criado_em?: string
+          data_fim?: string | null
+          data_inicio?: string
+          duracao_segundos?: number | null
+          id?: string
+          nome: string
+          notas?: string | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          case_id?: number
+          criado_em?: string
+          data_fim?: string | null
+          data_inicio?: string
+          duracao_segundos?: number | null
+          id?: string
+          nome?: string
+          notas?: string | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "simulation_sessions_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "casos_clinicos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "simulation_sessions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tratamentos: {
         Row: {
           descricao: string | null

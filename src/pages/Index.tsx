@@ -8,6 +8,7 @@ import ParameterChart from "@/components/ParameterChart";
 import ReportPanel from "@/components/ReportPanel";
 import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
+import { SessionManager } from "@/components/SessionManager";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -36,6 +37,8 @@ const Index = () => {
     resetSimulation,
     applyTreatment,
     getParameterStatus,
+    saveSession,
+    loadSession,
   } = useSimulation(selectedCaseId);
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
@@ -127,7 +130,7 @@ const Index = () => {
         </div>
 
         {/* Case Selection and Management */}
-        <div className="mb-8 grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+        <div className="mb-8 grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
           <div className="space-y-2">
             <label className="text-sm font-medium">Selecionar Caso</label>
             <Select value={selectedCaseId.toString()} onValueChange={handleCaseChange}>
@@ -146,6 +149,13 @@ const Index = () => {
           <div>
             <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
             <CaseManager onCaseCreated={loadCases} />
+          </div>
+          <div>
+            <label className="text-sm font-medium mb-2 block">Histórico de Sessões</label>
+            <SessionManager 
+              onSaveSession={saveSession}
+              onLoadSession={loadSession}
+            />
           </div>
         </div>
 
