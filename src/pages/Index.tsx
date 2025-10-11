@@ -10,6 +10,7 @@ import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
 import { SessionManager } from "@/components/SessionManager";
 import { LearningGoals } from "@/components/LearningGoals";
+import { TreatmentHints } from "@/components/TreatmentHints";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -242,8 +243,13 @@ const Index = () => {
           />
         </div>
 
-        {/* Treatments Panel */}
-        <div className="max-w-2xl mx-auto mb-8">
+        {/* Treatment Hints and Treatments */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <TreatmentHints
+            currentState={currentState}
+            parameters={parameters}
+            caseData={caseData}
+          />
           <TreatmentPanel
             treatments={treatments}
             onApplyTreatment={handleApplyTreatment}
