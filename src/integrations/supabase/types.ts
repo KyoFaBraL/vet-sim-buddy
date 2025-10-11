@@ -22,6 +22,7 @@ export type Database = {
           id: number
           id_condicao_primaria: number | null
           nome: string
+          user_id: string | null
         }
         Insert: {
           criado_em?: string | null
@@ -30,6 +31,7 @@ export type Database = {
           id?: number
           id_condicao_primaria?: number | null
           nome: string
+          user_id?: string | null
         }
         Update: {
           criado_em?: string | null
@@ -38,6 +40,7 @@ export type Database = {
           id?: number
           id_condicao_primaria?: number | null
           nome?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -45,6 +48,13 @@ export type Database = {
             columns: ["id_condicao_primaria"]
             isOneToOne: false
             referencedRelation: "condicoes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "casos_clinicos_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -169,6 +179,27 @@ export type Database = {
           unidade?: string | null
           valor_maximo?: number | null
           valor_minimo?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          nome_completo: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          nome_completo?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          nome_completo?: string | null
         }
         Relationships: []
       }
