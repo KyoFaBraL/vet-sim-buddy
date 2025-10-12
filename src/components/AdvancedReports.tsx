@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { TrendingUp, Users, Target, Clock, Award } from "lucide-react";
+import { TrendingUp, Users, Target, Clock, Award, Download } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
 
 interface StudentStats {
   user_id: string;
@@ -15,9 +17,21 @@ interface StudentStats {
   badges_conquistados: number;
 }
 
+interface ReportStats {
+  totalSessions: number;
+  successRate: number;
+  avgDuration: number;
+  totalBadges: number;
+  completedSessions: number;
+  totalPoints: number;
+  byDayOfWeek: Array<{ dia: string; sessoes: number }>;
+  statusDist: Array<{ name: string; value: number; color: string }>;
+  byHour: Array<{ hora: string; sessoes: number }>;
+}
+
 export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
   const [timeRange, setTimeRange] = useState("30");
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<ReportStats | null>(null);
   const [studentData, setStudentData] = useState<StudentStats[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,20 +69,43 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
       const dateFilter = new Date();
       dateFilter.setDate(dateFilter.getDate() - parseInt(timeRange));
 
-      // Carregar sessões do período
+      // Carregar sessões do período do usuário atual
       const { data: sessions } = await supabase
         .from('simulation_sessions')
         .select('*')
+        .eq('user_id', userData.user.id)
         .gte('data_inicio', dateFilter.toISOString());
 
-      if (!sessions) return;
+      if (!sessions) {
+        setStats(null);
+        setIsLoading(false);
+        return;
+      }
 
       // Estatísticas gerais
       const totalSessions = sessions.length;
+      const completedSessions = sessions.filter(s => s.status === 'vitoria' || s.status === 'derrota').length;
       const successfulSessions = sessions.filter(s => s.status === 'vitoria').length;
-      const successRate = totalSessions > 0 ? (successfulSessions / totalSessions) * 100 : 0;
+      const successRate = completedSessions > 0 ? (successfulSessions / completedSessions) * 100 : 0;
       
       const avgDuration = sessions.reduce((acc, s) => acc + (s.duracao_segundos || 0), 0) / totalSessions || 0;
+
+      // Buscar badges do usuário
+      const { data: badges } = await supabase
+        .from('user_badges')
+        .select('id')
+        .eq('user_id', userData.user.id);
+
+      const totalBadges = badges?.length || 0;
+
+      // Buscar pontos totais
+      const sessionIds = sessions.map(s => s.id);
+      const { data: goals } = await supabase
+        .from('metas_alcancadas')
+        .select('pontos_ganhos')
+        .in('session_id', sessionIds);
+
+      const totalPoints = goals?.reduce((acc, g) => acc + (g.pontos_ganhos || 0), 0) || 0;
 
       // Por dia da semana
       const byDayOfWeek = new Array(7).fill(0).map((_, i) => ({
@@ -83,8 +120,8 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
 
       // Status distribution
       const statusDist = [
-        { name: 'Vitória', value: sessions.filter(s => s.status === 'won' || s.status === 'vitoria').length, color: '#22c55e' },
-        { name: 'Derrota', value: sessions.filter(s => s.status === 'lost' || s.status === 'derrota').length, color: '#ef4444' },
+        { name: 'Vitória', value: sessions.filter(s => s.status === 'vitoria').length, color: '#22c55e' },
+        { name: 'Derrota', value: sessions.filter(s => s.status === 'derrota').length, color: '#ef4444' },
         { name: 'Em Andamento', value: sessions.filter(s => s.status === 'em_andamento').length, color: '#6b7280' },
       ];
 
@@ -103,6 +140,9 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
         totalSessions,
         successRate,
         avgDuration,
+        totalBadges,
+        completedSessions,
+        totalPoints,
         byDayOfWeek,
         statusDist: statusDist.filter(s => s.value > 0),
         byHour: byHour.filter(h => h.sessoes > 0)
@@ -149,12 +189,85 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
     return `${mins}min`;
   };
 
+  const exportToCSV = () => {
+    if (!stats) return;
+
+    const csvContent = [
+      ["Métrica", "Valor"],
+      ["Total de Sessões", stats.totalSessions.toString()],
+      ["Sessões Concluídas", stats.completedSessions.toString()],
+      ["Taxa de Sucesso (%)", stats.successRate.toFixed(1)],
+      ["Tempo Médio (min)", Math.floor(stats.avgDuration / 60).toString()],
+      ["Pontos Totais", stats.totalPoints.toString()],
+      ["Badges Conquistados", stats.totalBadges.toString()],
+      ["", ""],
+      ["Status", "Quantidade"],
+      ...stats.statusDist.map(s => [s.name, s.value.toString()])
+    ].map(row => row.join(",")).join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `relatorio_${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+    toast.success("Relatório CSV exportado!");
+  };
+
+  const exportToTXT = () => {
+    if (!stats) return;
+
+    const txtContent = [
+      "=".repeat(80),
+      `RELATÓRIO DE DESEMPENHO - SIMULADOR VETERINÁRIO`,
+      `Gerado em: ${new Date().toLocaleString("pt-BR")}`,
+      "=".repeat(80),
+      "",
+      "📊 ESTATÍSTICAS GERAIS",
+      "─".repeat(80),
+      `Total de Sessões: ${stats.totalSessions}`,
+      `Sessões Concluídas: ${stats.completedSessions}`,
+      `Taxa de Sucesso: ${stats.successRate.toFixed(1)}%`,
+      `Tempo Médio: ${Math.floor(stats.avgDuration / 60)} minutos`,
+      `Pontos Totais: ${stats.totalPoints}`,
+      `Badges Conquistados: ${stats.totalBadges}`,
+      "",
+      "─".repeat(80),
+      "🎯 DISTRIBUIÇÃO DE RESULTADOS",
+      "─".repeat(80),
+      ...stats.statusDist.map(s => `${s.name}: ${s.value} (${((s.value / stats.totalSessions) * 100).toFixed(1)}%)`),
+      "",
+      "─".repeat(80),
+      "📅 SESSÕES POR DIA DA SEMANA",
+      "─".repeat(80),
+      ...stats.byDayOfWeek.map(d => `${d.dia}: ${d.sessoes} sessões`),
+      "",
+      "=".repeat(80),
+    ].join("\n");
+
+    const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `relatorio_${new Date().toISOString().split("T")[0]}.txt`;
+    link.click();
+    toast.success("Relatório TXT exportado!");
+  };
+
   if (isLoading) {
     return <p className="text-muted-foreground">Carregando relatórios...</p>;
   }
 
-  if (!stats) {
-    return <p className="text-muted-foreground">Sem dados disponíveis</p>;
+  if (!stats || stats.totalSessions === 0) {
+    return (
+      <Card>
+        <CardContent className="p-6">
+          <div className="text-center py-8 text-muted-foreground">
+            <TrendingUp className="h-12 w-12 mx-auto mb-3 opacity-50" />
+            <p>Nenhum dado disponível</p>
+            <p className="text-sm mt-1">Complete algumas simulações para gerar relatórios</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (
@@ -170,16 +283,26 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
               Análise detalhada de desempenho e atividade
             </CardDescription>
           </div>
-          <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="7">Últimos 7 dias</SelectItem>
-              <SelectItem value="30">Últimos 30 dias</SelectItem>
-              <SelectItem value="90">Últimos 90 dias</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex gap-2">
+            <Select value={timeRange} onValueChange={setTimeRange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7">Últimos 7 dias</SelectItem>
+                <SelectItem value="30">Últimos 30 dias</SelectItem>
+                <SelectItem value="90">Últimos 90 dias</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" size="sm" onClick={exportToCSV}>
+              <Download className="h-4 w-4 mr-2" />
+              CSV
+            </Button>
+            <Button variant="outline" size="sm" onClick={exportToTXT}>
+              <Download className="h-4 w-4 mr-2" />
+              TXT
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -235,7 +358,7 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
                     <Award className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">Badges Total</span>
                   </div>
-                  <p className="text-2xl font-bold mt-2">-</p>
+                  <p className="text-2xl font-bold mt-2">{stats.totalBadges}</p>
                 </CardContent>
               </Card>
             </div>
