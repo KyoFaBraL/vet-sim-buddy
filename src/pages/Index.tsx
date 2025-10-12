@@ -26,6 +26,9 @@ import { GuidedTutorial } from "@/components/GuidedTutorial";
 import { AdvancedReports } from "@/components/AdvancedReports";
 import { TreatmentFeedback } from "@/components/TreatmentFeedback";
 import { CaseLibrary } from "@/components/CaseLibrary";
+import { DiagnosticChallenge } from "@/components/DiagnosticChallenge";
+import { SimulationModeSelector } from "@/components/SimulationModeSelector";
+import { SessionFeedbackReport } from "@/components/SessionFeedbackReport";
 import ParameterChart from "@/components/ParameterChart";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
@@ -33,7 +36,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { parameterDescriptions } from "@/constants/parameterDescriptions";
+
+type SimulationMode = 'practice' | 'evaluation';
 
 interface Treatment {
   id: number;
@@ -78,6 +84,10 @@ const Index = () => {
     treatmentName: string;
     effects: Array<{nome: string; valorAntes: number; valorDepois: number; unidade: string}>;
   } | null>(null);
+  const [simulationMode, setSimulationMode] = useState<SimulationMode>('practice');
+  const [completedSessionId, setCompletedSessionId] = useState<string | null>(null);
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [diagnosticPoints, setDiagnosticPoints] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -140,7 +150,16 @@ const Index = () => {
     setSelectedCaseId(parseInt(caseId));
     setAppliedTreatments([]);  // Reset do log de tratamentos
     setGoalPoints(0);           // Reset das metas
+    setDiagnosticPoints(0);     // Reset dos pontos de diagnóstico
+    setCompletedSessionId(null); // Reset da sessão
     resetSimulation();
+  };
+
+  const handleSimulationEnd = (sessionId: string) => {
+    setCompletedSessionId(sessionId);
+    if (simulationMode === 'evaluation') {
+      setShowFeedbackDialog(true);
+    }
   };
 
   // Parâmetros principais para exibir no monitor
@@ -275,6 +294,15 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="simulacao" className="space-y-8">
+            {/* Modo de Simulação */}
+            <div className="max-w-4xl mx-auto">
+              <SimulationModeSelector
+                currentMode={simulationMode}
+                onModeChange={setSimulationMode}
+                disabled={isRunning}
+              />
+            </div>
+
             {/* Case Selection and Management */}
             <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
               <div className="space-y-2">
@@ -416,7 +444,7 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Learning Goals, Treatments, and Reports in Grid */}
+            {/* Learning Goals, Treatments, Diagnostic Challenge, and Reports in Grid */}
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-8">
                 <LearningGoals
@@ -426,6 +454,17 @@ const Index = () => {
                   parameters={parameters}
                   elapsedTime={elapsedTime}
                   onGoalAchieved={handleGoalAchieved}
+                />
+
+                <DiagnosticChallenge
+                  caseId={selectedCaseId}
+                  currentState={currentState}
+                  parameters={parameters}
+                  onSuccess={() => {
+                    setDiagnosticPoints(prev => prev + 10);
+                    changeHp(5); // Bônus de HP por diagnóstico correto
+                  }}
+                  disabled={!isRunning}
                 />
 
                 <TreatmentPanel
@@ -439,7 +478,7 @@ const Index = () => {
                   parameters={parameters}
                   caseData={caseData}
                   onHpChange={changeHp}
-                  disabled={!isRunning}
+                  disabled={!isRunning || simulationMode === 'evaluation'}
                 />
               </div>
 
@@ -457,6 +496,13 @@ const Index = () => {
                   currentState={currentState}
                   onNotesChange={setAddTreatmentLogFn}
                 />
+
+                {/* Feedback Report (appears when session ends in evaluation mode) */}
+                {completedSessionId && simulationMode === 'evaluation' && (
+                  <SessionFeedbackReport 
+                    sessionId={completedSessionId}
+                  />
+                )}
               </div>
             </div>
           </TabsContent>

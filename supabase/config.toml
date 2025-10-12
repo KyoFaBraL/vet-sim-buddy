@@ -25,3 +25,10 @@ verify_jwt = false
 
 [functions.populate-case-data]
 verify_jwt = false
+
+[functions.generate-differential-diagnosis]
+verify_jwt = false
+
+[functions.generate-session-feedback]
+verify_jwt = false
+
