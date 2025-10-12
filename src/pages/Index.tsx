@@ -293,18 +293,16 @@ const Index = () => {
             {/* Seção de Relatórios */}
             <Card>
               <CardHeader>
-                <CardTitle>Relatórios e Estatísticas</CardTitle>
+                <CardTitle>Gerenciamento de Alunos</CardTitle>
                 <CardDescription>
                   Acompanhe o desempenho dos alunos
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="students" className="w-full">
-                  <TabsList className="grid w-full grid-cols-5">
+                  <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="students">Gerenciar Alunos</TabsTrigger>
                     <TabsTrigger value="reports">Relatórios Alunos</TabsTrigger>
-                    <TabsTrigger value="statistics">Estatísticas</TabsTrigger>
-                    <TabsTrigger value="advanced">Relatórios Avançados</TabsTrigger>
                     <TabsTrigger value="library">Biblioteca</TabsTrigger>
                   </TabsList>
                   <TabsContent value="students" className="space-y-4">
@@ -312,12 +310,6 @@ const Index = () => {
                   </TabsContent>
                   <TabsContent value="reports" className="space-y-4">
                     <StudentReports />
-                  </TabsContent>
-                  <TabsContent value="statistics" className="space-y-4">
-                    <PerformanceStatistics caseId={selectedCaseId} />
-                  </TabsContent>
-                  <TabsContent value="advanced" className="space-y-4">
-                    <AdvancedReports />
                   </TabsContent>
                   <TabsContent value="library" className="space-y-4">
                     <CaseLibrary onCaseSelect={(caseId) => console.log("Caso selecionado:", caseId)} selectedCaseId={selectedCaseId} />
@@ -589,10 +581,12 @@ const Index = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="history" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="history">Histórico</TabsTrigger>
                 <TabsTrigger value="comparison">Comparação</TabsTrigger>
                 <TabsTrigger value="badges">Conquistas</TabsTrigger>
+                <TabsTrigger value="statistics">Estatísticas</TabsTrigger>
+                <TabsTrigger value="reports">Relatórios</TabsTrigger>
               </TabsList>
               
               <TabsContent value="history" className="space-y-4">
@@ -605,6 +599,24 @@ const Index = () => {
               
               <TabsContent value="badges" className="space-y-4">
                 <BadgeSystem />
+              </TabsContent>
+
+              <TabsContent value="statistics" className="space-y-4">
+                <PerformanceStatistics caseId={selectedCaseId} />
+              </TabsContent>
+
+              <TabsContent value="reports" className="space-y-4">
+                <AdvancedReports />
+                <div className="mt-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Exportar Dados de Simulação</CardTitle>
+                      <CardDescription>
+                        Exporte seus dados de desempenho para análise externa. Estes relatórios estarão disponíveis para seu professor.
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </div>
               </TabsContent>
             </Tabs>
           </CardContent>
