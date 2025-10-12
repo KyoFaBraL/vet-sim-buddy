@@ -18,17 +18,17 @@ enabled = false
 pooler_enabled = false
 
 [functions.analyze-custom-case]
-verify_jwt = false
+verify_jwt = true
 
 [functions.treatment-hints]
-verify_jwt = false
+verify_jwt = true
 
 [functions.populate-case-data]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-differential-diagnosis]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-session-feedback]
-verify_jwt = false
+verify_jwt = true
 

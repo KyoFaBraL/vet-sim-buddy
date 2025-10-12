@@ -6,6 +6,41 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { z } from "zod";
+
+// Validation schemas
+const signUpSchema = z.object({
+  email: z.string()
+    .trim()
+    .email({ message: "Email inválido" })
+    .max(255, "Email muito longo")
+    .refine(
+      (email) => !email.includes('\r') && !email.includes('\n'),
+      "Email contém caracteres inválidos"
+    ),
+  password: z.string()
+    .min(8, "Senha deve ter no mínimo 8 caracteres")
+    .max(72, "Senha muito longa")
+    .regex(/[A-Z]/, "Senha deve conter letra maiúscula")
+    .regex(/[a-z]/, "Senha deve conter letra minúscula")
+    .regex(/[0-9]/, "Senha deve conter número")
+    .regex(/[@$!%*?&#]/, "Senha deve conter caractere especial"),
+  nomeCompleto: z.string()
+    .trim()
+    .min(3, "Nome deve ter no mínimo 3 caracteres")
+    .max(100, "Nome muito longo")
+    .regex(/^[\p{L}\s'-]+$/u, "Nome contém caracteres inválidos")
+});
+
+const signInSchema = z.object({
+  email: z.string()
+    .trim()
+    .email({ message: "Email inválido" })
+    .max(255, "Email muito longo"),
+  password: z.string()
+    .min(6, "Senha muito curta")
+    .max(72, "Senha muito longa")
+});
 
 interface AuthProps {
   onAuthSuccess: () => void;
@@ -20,15 +55,34 @@ export const Auth = ({ onAuthSuccess }: AuthProps) => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate inputs
+    const result = signUpSchema.safeParse({
+      email: email.trim(),
+      password,
+      nomeCompleto: nomeCompleto.trim()
+    });
+    
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      const errorMessages = Object.values(errors).flat().join(", ");
+      toast({
+        title: "Erro de validação",
+        description: errorMessages,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setLoading(true);
 
     try {
       const { error } = await supabase.auth.signUp({
-        email,
-        password,
+        email: result.data.email,
+        password: result.data.password,
         options: {
           data: {
-            nome_completo: nomeCompleto,
+            nome_completo: result.data.nomeCompleto,
           },
         },
       });
@@ -54,12 +108,30 @@ export const Auth = ({ onAuthSuccess }: AuthProps) => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate inputs
+    const result = signInSchema.safeParse({
+      email: email.trim(),
+      password
+    });
+    
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      const errorMessages = Object.values(errors).flat().join(", ");
+      toast({
+        title: "Erro de validação",
+        description: errorMessages,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setLoading(true);
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: result.data.email,
+        password: result.data.password,
       });
 
       if (error) throw error;
@@ -156,11 +228,11 @@ export const Auth = ({ onAuthSuccess }: AuthProps) => {
                   <Input
                     id="signup-password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder="Mín. 8 caracteres, maiúscula, minúscula, número e especial"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    minLength={6}
+                    minLength={8}
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
