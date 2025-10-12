@@ -129,7 +129,7 @@ const Index = () => {
   const handleCaseChange = (caseId: string) => {
     setSelectedCaseId(parseInt(caseId));
     setAppliedTreatments([]);  // Reset do log de tratamentos
-    setGoalPoints(0);
+    setGoalPoints(0);           // Reset das metas
     resetSimulation();
   };
 

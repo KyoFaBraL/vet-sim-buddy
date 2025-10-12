@@ -403,7 +403,11 @@ export const useSimulation = (caseId: number = 1) => {
               hp_depois: newHp
             })
             .then(({ error }) => {
-              if (error) console.error('Erro ao registrar decisão:', error);
+              if (error) {
+                console.error('Erro ao registrar decisão:', error);
+              } else {
+                console.log('Decisão registrada:', { type: 'treatment', nome: treatmentData.nome, hp: { antes: prev, depois: newHp } });
+              }
             });
         }
         

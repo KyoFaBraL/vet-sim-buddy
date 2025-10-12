@@ -25,6 +25,7 @@ interface LearningGoalsProps {
   parameters: any[];
   elapsedTime: number;
   onGoalAchieved?: (goalId: string, points: number) => void;
+  onReset?: () => void;
 }
 
 export const LearningGoals = ({ 
@@ -32,7 +33,8 @@ export const LearningGoals = ({
   currentState, 
   parameters,
   elapsedTime,
-  onGoalAchieved 
+  onGoalAchieved,
+  onReset 
 }: LearningGoalsProps) => {
   const [goals, setGoals] = useState<LearningGoal[]>([]);
   const [achievedGoals, setAchievedGoals] = useState<Set<string>>(new Set());
@@ -40,11 +42,18 @@ export const LearningGoals = ({
 
   useEffect(() => {
     loadGoals();
+    resetGoals();
   }, [caseId]);
 
   useEffect(() => {
     checkGoals();
   }, [currentState, elapsedTime, goals]);
+
+  const resetGoals = () => {
+    setAchievedGoals(new Set());
+    setTotalPoints(0);
+    onReset?.();
+  };
 
   const loadGoals = async () => {
     const { data } = await supabase

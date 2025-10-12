@@ -23,6 +23,27 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
 
   useEffect(() => {
     loadReports();
+    
+    // Recarregar estatísticas quando houver mudanças em simulation_sessions
+    const channel = supabase
+      .channel('session-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'simulation_sessions'
+        },
+        () => {
+          console.log('Nova sessão detectada, atualizando estatísticas...');
+          loadReports();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [timeRange]);
 
   const loadReports = async () => {
