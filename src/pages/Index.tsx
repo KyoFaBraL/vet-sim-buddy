@@ -49,6 +49,7 @@ const Index = () => {
     elapsedTime,
     hp,
     gameStatus,
+    lastHpChange,
     toggleSimulation,
     resetSimulation,
     applyTreatment,
@@ -309,9 +310,11 @@ const Index = () => {
         {/* HP Display */}
         <div className="mb-8 max-w-2xl mx-auto">
           <HPDisplay 
-            hp={hp}
-            elapsedTime={elapsedTime}
+            hp={hp} 
+            elapsedTime={elapsedTime} 
             gameStatus={gameStatus}
+            animalType={caseData?.paciente || ""}
+            lastHpChange={lastHpChange}
           />
         </div>
 

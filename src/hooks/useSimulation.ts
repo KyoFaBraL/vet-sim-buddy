@@ -34,8 +34,9 @@ export const useSimulation = (caseId: number = 1) => {
   const [caseData, setCaseData] = useState<any>(null);
   const [startTime, setStartTime] = useState<number>(Date.now());
   const [elapsedTime, setElapsedTime] = useState<number>(0);
-  const [hp, setHp] = useState<number>(0);
+  const [hp, setHp] = useState<number>(50);
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
+  const [lastHpChange, setLastHpChange] = useState<number>(0);
   const { toast } = useToast();
 
   // Carregar dados iniciais
@@ -82,8 +83,9 @@ export const useSimulation = (caseId: number = 1) => {
       setCurrentState(initialState);
 
       // Resetar HP e game status
-      setHp(0);
+      setHp(50);
       setGameStatus('playing');
+      setLastHpChange(0);
     } catch (error: any) {
       toast({
         title: "Erro ao carregar caso",
@@ -100,7 +102,7 @@ export const useSimulation = (caseId: number = 1) => {
     
     // Perder HP com o tempo (deterioração do paciente)
     setHp(prev => {
-      const newHp = Math.max(0, prev - 2);
+      const newHp = Math.max(0, prev - 1);
       if (newHp <= 0 && gameStatus === 'playing') {
         setGameStatus('lost');
         setIsRunning(false);
@@ -112,6 +114,7 @@ export const useSimulation = (caseId: number = 1) => {
       }
       return newHp;
     });
+    setLastHpChange(-1);
   }, [currentState, startTime, gameStatus, toast]);
 
   // Timer da simulação
@@ -120,19 +123,19 @@ export const useSimulation = (caseId: number = 1) => {
 
     const interval = setInterval(() => {
       tick();
-    }, 3000); // Atualiza a cada 3 segundos
+    }, 1000); // Atualiza a cada 1 segundo
 
     return () => clearInterval(interval);
   }, [isRunning, tick, gameStatus]);
 
-  // Verificar limite de tempo (10 minutos = 600 segundos)
+  // Verificar limite de tempo (5 minutos = 300 segundos)
   useEffect(() => {
-    if (elapsedTime >= 600 && gameStatus === 'playing') {
+    if (elapsedTime >= 300 && gameStatus === 'playing') {
       setGameStatus('lost');
       setIsRunning(false);
       toast({
         title: "Tempo esgotado",
-        description: "O paciente não resistiu. O tempo máximo de 10 minutos foi atingido.",
+        description: "O paciente não resistiu. O tempo máximo de 5 minutos foi atingido.",
         variant: "destructive",
       });
     }
@@ -147,8 +150,9 @@ export const useSimulation = (caseId: number = 1) => {
     setPreviousState({});
     setStartTime(Date.now());
     setElapsedTime(0);
-    setHp(0);
+    setHp(50);
     setGameStatus('playing');
+    setLastHpChange(0);
     loadCase();
   };
 
@@ -210,6 +214,8 @@ export const useSimulation = (caseId: number = 1) => {
         hpChange = -15;
       }
 
+      setLastHpChange(hpChange);
+      
       setHp(prev => {
         const newHp = Math.min(100, Math.max(0, prev + hpChange));
         
@@ -335,6 +341,7 @@ export const useSimulation = (caseId: number = 1) => {
     elapsedTime,
     hp,
     gameStatus,
+    lastHpChange,
     toggleSimulation,
     resetSimulation,
     applyTreatment,

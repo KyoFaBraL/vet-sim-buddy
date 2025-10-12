@@ -1,15 +1,29 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Heart, Clock, Trophy, Skull } from "lucide-react";
+import { useEffect, useState } from "react";
+import catNormal from "@/assets/cat-normal.png";
+import catHappy from "@/assets/cat-happy.png";
+import catSad from "@/assets/cat-sad.png";
+import catVictory from "@/assets/cat-victory.png";
+import catRip from "@/assets/cat-rip.png";
+import dogNormal from "@/assets/dog-normal.png";
+import dogHappy from "@/assets/dog-happy.png";
+import dogSad from "@/assets/dog-sad.png";
+import dogVictory from "@/assets/dog-victory.png";
+import dogRip from "@/assets/dog-rip.png";
 
 interface HPDisplayProps {
   hp: number;
   elapsedTime: number;
   gameStatus: 'playing' | 'won' | 'lost';
+  animalType: string;
+  lastHpChange: number;
 }
 
-const HPDisplay = ({ hp, elapsedTime, gameStatus }: HPDisplayProps) => {
-  const maxTime = 600; // 10 minutos em segundos
+const HPDisplay = ({ hp, elapsedTime, gameStatus, animalType, lastHpChange }: HPDisplayProps) => {
+  const maxTime = 300; // 5 minutos em segundos
+  const [currentImage, setCurrentImage] = useState<string>("");
   const timeRemaining = Math.max(0, maxTime - elapsedTime);
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = timeRemaining % 60;
@@ -19,6 +33,37 @@ const HPDisplay = ({ hp, elapsedTime, gameStatus }: HPDisplayProps) => {
     if (hp >= 40) return "bg-yellow-500";
     return "bg-red-500";
   };
+
+  const getAnimalImages = () => {
+    const isCat = animalType?.toLowerCase().includes('gato') || animalType?.toLowerCase().includes('felino');
+    return {
+      normal: isCat ? catNormal : dogNormal,
+      happy: isCat ? catHappy : dogHappy,
+      sad: isCat ? catSad : dogSad,
+      victory: isCat ? catVictory : dogVictory,
+      rip: isCat ? catRip : dogRip,
+    };
+  };
+
+  useEffect(() => {
+    const images = getAnimalImages();
+    
+    if (gameStatus === 'won') {
+      setCurrentImage(images.victory);
+    } else if (gameStatus === 'lost' || hp === 0) {
+      setCurrentImage(images.rip);
+    } else if (lastHpChange > 0) {
+      setCurrentImage(images.happy);
+      const timer = setTimeout(() => setCurrentImage(images.normal), 2000);
+      return () => clearTimeout(timer);
+    } else if (lastHpChange < 0 && lastHpChange !== -1) {
+      setCurrentImage(images.sad);
+      const timer = setTimeout(() => setCurrentImage(images.normal), 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setCurrentImage(images.normal);
+    }
+  }, [hp, gameStatus, lastHpChange, animalType]);
 
   const getStatusDisplay = () => {
     if (gameStatus === 'won') {
@@ -50,8 +95,21 @@ const HPDisplay = ({ hp, elapsedTime, gameStatus }: HPDisplayProps) => {
           </div>
         )}
 
-        {/* HP do Paciente */}
-        <div className="space-y-3">
+        {/* Figura do Animal e HP do Paciente */}
+        <div className="flex gap-6 items-start">
+          {/* Figura do Animal */}
+          <div className="flex-shrink-0">
+            <img 
+              src={currentImage} 
+              alt="Patient animal" 
+              className={`w-32 h-32 object-contain ${
+                gameStatus === 'won' ? 'animate-bounce' : ''
+              } ${lastHpChange > 0 && gameStatus === 'playing' ? 'animate-pulse' : ''}`}
+            />
+          </div>
+
+          {/* HP do Paciente */}
+          <div className="flex-1 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Heart className="h-6 w-6 text-red-500" />
@@ -75,6 +133,7 @@ const HPDisplay = ({ hp, elapsedTime, gameStatus }: HPDisplayProps) => {
               ✓ Quadro normalizado! Paciente estável!
             </p>
           )}
+          </div>
         </div>
 
         {/* Tempo Restante */}
