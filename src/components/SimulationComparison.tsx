@@ -1,33 +1,25 @@
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { GitCompare, TrendingUp, Clock, Activity } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { GitCompare, Clock, Target, Pill } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+
+interface Parameter {
+  id: number;
+  nome: string;
+  unidade?: string;
+}
 
 interface Session {
   id: string;
   nome: string;
+  criado_em: string;
   duracao_segundos: number;
   status: string;
-  criado_em: string;
 }
 
 interface SessionHistory {
@@ -36,67 +28,73 @@ interface SessionHistory {
   valor: number;
 }
 
+interface SessionTreatment {
+  tratamento_id: number;
+  timestamp_simulacao: number;
+  aplicado_em: string;
+}
+
 interface ComparisonData {
   session1: {
     info: Session;
     history: SessionHistory[];
-    treatments: any[];
-  } | null;
+    treatments: SessionTreatment[];
+  };
   session2: {
     info: Session;
     history: SessionHistory[];
-    treatments: any[];
-  } | null;
+    treatments: SessionTreatment[];
+  };
 }
 
 interface SimulationComparisonProps {
   caseId: number;
-  parameters: any[];
+  parameters: Parameter[];
 }
 
 export const SimulationComparison = ({ caseId, parameters }: SimulationComparisonProps) => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [selectedSession1, setSelectedSession1] = useState<string>("");
   const [selectedSession2, setSelectedSession2] = useState<string>("");
-  const [comparisonData, setComparisonData] = useState<ComparisonData>({
-    session1: null,
-    session2: null,
-  });
+  const [selectedParameter, setSelectedParameter] = useState<number>(1);
+  const [comparisonData, setComparisonData] = useState<ComparisonData | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedParameter, setSelectedParameter] = useState<number | null>(null);
-  const { toast } = useToast();
+  const [treatments, setTreatments] = useState<any[]>([]);
 
   useEffect(() => {
-    loadSessions();
-  }, [caseId]);
-
-  useEffect(() => {
-    if (parameters.length > 0 && !selectedParameter) {
-      setSelectedParameter(parameters[0].id);
+    if (isOpen) {
+      loadSessions();
+      loadTreatments();
     }
-  }, [parameters]);
+  }, [isOpen, caseId]);
 
-  const loadSessions = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
+  const loadTreatments = async () => {
     const { data } = await supabase
-      .from("simulation_sessions")
-      .select("*")
-      .eq("user_id", user.id)
-      .eq("case_id", caseId)
-      .order("criado_em", { ascending: false });
-
+      .from("tratamentos")
+      .select("*");
+    
     if (data) {
-      setSessions(data);
+      setTreatments(data);
     }
   };
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  const loadSessions = async () => {
+    const { data: user } = await supabase.auth.getUser();
+    if (!user.user) return;
+
+    const { data, error } = await supabase
+      .from("simulation_sessions")
+      .select("*")
+      .eq("user_id", user.user.id)
+      .eq("case_id", caseId)
+      .order("criado_em", { ascending: false });
+
+    if (error) {
+      console.error("Erro ao carregar sessões:", error);
+      return;
+    }
+
+    setSessions(data || []);
   };
 
   const loadSessionData = async (sessionId: string) => {
@@ -112,96 +110,71 @@ export const SimulationComparison = ({ caseId, parameters }: SimulationCompariso
       .eq("session_id", sessionId)
       .order("timestamp");
 
-    const { data: treatments } = await supabase
+    const { data: treatmentsData } = await supabase
       .from("session_treatments")
-      .select("*, tratamentos(*)")
+      .select("*")
       .eq("session_id", sessionId)
       .order("timestamp_simulacao");
 
     return {
       info: sessionInfo,
       history: history || [],
-      treatments: treatments || [],
+      treatments: treatmentsData || []
     };
   };
 
   const compareSimulations = async () => {
-    if (!selectedSession1 || !selectedSession2) {
-      toast({
-        title: "Seleção incompleta",
-        description: "Selecione duas sessões para comparar",
-        variant: "destructive",
-      });
-      return;
-    }
+    if (!selectedSession1 || !selectedSession2) return;
 
-    if (selectedSession1 === selectedSession2) {
-      toast({
-        title: "Sessões idênticas",
-        description: "Selecione duas sessões diferentes",
-        variant: "destructive",
-      });
-      return;
-    }
+    const session1Data = await loadSessionData(selectedSession1);
+    const session2Data = await loadSessionData(selectedSession2);
 
-    setIsLoading(true);
-    try {
-      const [session1Data, session2Data] = await Promise.all([
-        loadSessionData(selectedSession1),
-        loadSessionData(selectedSession2),
-      ]);
+    setComparisonData({
+      session1: session1Data,
+      session2: session2Data
+    });
+  };
 
-      setComparisonData({
-        session1: session1Data,
-        session2: session2Data,
-      });
-
-      toast({
-        title: "Comparação pronta!",
-        description: "Simulações carregadas para análise",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Erro ao carregar simulações",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const getChartData = () => {
-    if (!comparisonData.session1 || !comparisonData.session2 || !selectedParameter) {
-      return [];
-    }
+    if (!comparisonData) return [];
 
-    const timestamps = new Set([
-      ...comparisonData.session1.history.map(h => h.timestamp),
-      ...comparisonData.session2.history.map(h => h.timestamp),
-    ]);
+    const data1 = comparisonData.session1.history
+      .filter(h => h.parametro_id === selectedParameter)
+      .map(h => ({ timestamp: h.timestamp, valor1: h.valor }));
 
-    return Array.from(timestamps).sort((a, b) => a - b).map(timestamp => {
-      const session1Value = comparisonData.session1!.history.find(
-        h => h.timestamp === timestamp && h.parametro_id === selectedParameter
-      );
-      const session2Value = comparisonData.session2!.history.find(
-        h => h.timestamp === timestamp && h.parametro_id === selectedParameter
-      );
+    const data2 = comparisonData.session2.history
+      .filter(h => h.parametro_id === selectedParameter)
+      .map(h => ({ timestamp: h.timestamp, valor2: h.valor }));
+
+    const allTimestamps = [...new Set([...data1.map(d => d.timestamp), ...data2.map(d => d.timestamp)])].sort((a, b) => a - b);
+
+    return allTimestamps.map(timestamp => {
+      const point1 = data1.find(d => d.timestamp === timestamp);
+      const point2 = data2.find(d => d.timestamp === timestamp);
 
       return {
-        time: formatTime(timestamp),
-        [comparisonData.session1!.info.nome]: session1Value ? parseFloat(session1Value.valor.toString()) : null,
-        [comparisonData.session2!.info.nome]: session2Value ? parseFloat(session2Value.valor.toString()) : null,
+        timestamp,
+        valor1: point1?.valor1,
+        valor2: point2?.valor2
       };
     });
+  };
+
+  const getTreatmentName = (treatmentId: number) => {
+    return treatments.find(t => t.id === treatmentId)?.nome || `Tratamento ${treatmentId}`;
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          <GitCompare className="mr-2 h-4 w-4" />
+        <Button variant="outline" className="gap-2">
+          <GitCompare className="h-4 w-4" />
           Comparar Simulações
         </Button>
       </DialogTrigger>
@@ -209,26 +182,22 @@ export const SimulationComparison = ({ caseId, parameters }: SimulationCompariso
         <DialogHeader>
           <DialogTitle>Comparação de Simulações</DialogTitle>
           <DialogDescription>
-            Compare diferentes abordagens ao mesmo caso clínico
+            Compare duas sessões diferentes para analisar diferentes abordagens ao mesmo caso
           </DialogDescription>
         </DialogHeader>
 
         {sessions.length < 2 ? (
           <div className="text-center py-8 text-muted-foreground">
-            <GitCompare className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p className="text-sm">
-              Você precisa de pelo menos 2 sessões salvas para comparar
-            </p>
+            É necessário ter pelo menos 2 sessões salvas para fazer comparações.
           </div>
         ) : (
           <div className="space-y-6">
-            {/* Session Selection */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Simulação 1</label>
+              <div>
+                <label className="text-sm font-medium mb-2 block">Sessão 1</label>
                 <Select value={selectedSession1} onValueChange={setSelectedSession1}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma sessão" />
+                    <SelectValue placeholder="Selecione a primeira sessão" />
                   </SelectTrigger>
                   <SelectContent>
                     {sessions.map((session) => (
@@ -240,11 +209,11 @@ export const SimulationComparison = ({ caseId, parameters }: SimulationCompariso
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Simulação 2</label>
+              <div>
+                <label className="text-sm font-medium mb-2 block">Sessão 2</label>
                 <Select value={selectedSession2} onValueChange={setSelectedSession2}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma sessão" />
+                    <SelectValue placeholder="Selecione a segunda sessão" />
                   </SelectTrigger>
                   <SelectContent>
                     {sessions.map((session) => (
@@ -257,57 +226,63 @@ export const SimulationComparison = ({ caseId, parameters }: SimulationCompariso
               </div>
             </div>
 
-            <Button
-              onClick={compareSimulations}
-              disabled={isLoading || !selectedSession1 || !selectedSession2}
-              className="w-full"
-            >
-              {isLoading ? "Carregando..." : "Comparar"}
+            <Button onClick={compareSimulations} disabled={!selectedSession1 || !selectedSession2} className="w-full">
+              Comparar Sessões
             </Button>
 
-            {/* Comparison Results */}
-            {comparisonData.session1 && comparisonData.session2 && (
+            {comparisonData && (
               <div className="space-y-6">
-                {/* Session Info Comparison */}
+                {/* Session Info Cards */}
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="p-4">
-                    <h4 className="font-semibold mb-3">{comparisonData.session1.info.nome}</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-medium">Sessão 1: {comparisonData.session1.info.nome}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm">
                         <Clock className="h-4 w-4 text-muted-foreground" />
                         <span>Duração: {formatTime(comparisonData.session1.info.duracao_segundos || 0)}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Activity className="h-4 w-4 text-muted-foreground" />
-                        <span>Tratamentos: {comparisonData.session1.treatments.length}</span>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Target className="h-4 w-4 text-muted-foreground" />
+                        <Badge variant={comparisonData.session1.info.status === 'concluida' ? 'default' : 'secondary'}>
+                          {comparisonData.session1.info.status}
+                        </Badge>
                       </div>
-                      <Badge variant="outline">{comparisonData.session1.info.status}</Badge>
-                    </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Pill className="h-4 w-4 text-muted-foreground" />
+                        <span>{comparisonData.session1.treatments.length} tratamentos</span>
+                      </div>
+                    </CardContent>
                   </Card>
 
-                  <Card className="p-4">
-                    <h4 className="font-semibold mb-3">{comparisonData.session2.info.nome}</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-medium">Sessão 2: {comparisonData.session2.info.nome}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm">
                         <Clock className="h-4 w-4 text-muted-foreground" />
                         <span>Duração: {formatTime(comparisonData.session2.info.duracao_segundos || 0)}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Activity className="h-4 w-4 text-muted-foreground" />
-                        <span>Tratamentos: {comparisonData.session2.treatments.length}</span>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Target className="h-4 w-4 text-muted-foreground" />
+                        <Badge variant={comparisonData.session2.info.status === 'concluida' ? 'default' : 'secondary'}>
+                          {comparisonData.session2.info.status}
+                        </Badge>
                       </div>
-                      <Badge variant="outline">{comparisonData.session2.info.status}</Badge>
-                    </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Pill className="h-4 w-4 text-muted-foreground" />
+                        <span>{comparisonData.session2.treatments.length} tratamentos</span>
+                      </div>
+                    </CardContent>
                   </Card>
                 </div>
 
-                {/* Parameter Selection for Chart */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Parâmetro a comparar</label>
-                  <Select
-                    value={selectedParameter?.toString()}
-                    onValueChange={(value) => setSelectedParameter(parseInt(value))}
-                  >
+                {/* Parameter Selection */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Parâmetro para Comparação</label>
+                  <Select value={selectedParameter.toString()} onValueChange={(v) => setSelectedParameter(parseInt(v))}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -321,69 +296,73 @@ export const SimulationComparison = ({ caseId, parameters }: SimulationCompariso
                   </Select>
                 </div>
 
-                {/* Comparison Chart */}
-                <Card className="p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className="h-5 w-5 text-primary" />
-                    <h4 className="font-semibold">Evolução Comparativa</h4>
-                  </div>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={getChartData()}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="time" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey={comparisonData.session1.info.nome}
-                        stroke="#8884d8"
-                        strokeWidth={2}
-                      />
-                      <Line
-                        type="monotone"
-                        dataKey={comparisonData.session2.info.nome}
-                        stroke="#82ca9d"
-                        strokeWidth={2}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
+                {/* Chart */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Evolução do Parâmetro</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart data={getChartData()}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="timestamp" 
+                          label={{ value: 'Tempo (s)', position: 'insideBottom', offset: -5 }}
+                        />
+                        <YAxis label={{ value: parameters.find(p => p.id === selectedParameter)?.unidade || '', angle: -90, position: 'insideLeft' }} />
+                        <Tooltip />
+                        <Legend />
+                        <Line 
+                          type="monotone" 
+                          dataKey="valor1" 
+                          stroke="#8884d8" 
+                          name={comparisonData.session1.info.nome}
+                          strokeWidth={2}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="valor2" 
+                          stroke="#82ca9d" 
+                          name={comparisonData.session2.info.nome}
+                          strokeWidth={2}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </CardContent>
                 </Card>
 
-                {/* Treatments Comparison */}
+                {/* Treatments Timeline */}
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="p-4">
-                    <h4 className="font-semibold mb-3">Tratamentos Aplicados</h4>
-                    <div className="space-y-2">
-                      {comparisonData.session1.treatments.map((treatment, idx) => (
-                        <div key={idx} className="text-sm p-2 bg-muted rounded">
-                          <span className="font-mono text-xs text-muted-foreground">
-                            {formatTime(treatment.timestamp_simulacao)}
-                          </span>
-                          <p className="mt-1">{treatment.tratamentos?.nome}</p>
-                        </div>
-                      ))}
-                      {comparisonData.session1.treatments.length === 0 && (
-                        <p className="text-sm text-muted-foreground">Nenhum tratamento aplicado</p>
-                      )}
-                    </div>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-sm">Tratamentos Aplicados - Sessão 1</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2 max-h-60 overflow-y-auto">
+                        {comparisonData.session1.treatments.map((treatment, idx) => (
+                          <div key={idx} className="text-sm flex justify-between items-center border-b pb-2">
+                            <span>{getTreatmentName(treatment.tratamento_id)}</span>
+                            <Badge variant="outline">{treatment.timestamp_simulacao}s</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
                   </Card>
 
-                  <Card className="p-4">
-                    <h4 className="font-semibold mb-3">Tratamentos Aplicados</h4>
-                    <div className="space-y-2">
-                      {comparisonData.session2.treatments.map((treatment, idx) => (
-                        <div key={idx} className="text-sm p-2 bg-muted rounded">
-                          <span className="font-mono text-xs text-muted-foreground">
-                            {formatTime(treatment.timestamp_simulacao)}
-                          </span>
-                          <p className="mt-1">{treatment.tratamentos?.nome}</p>
-                        </div>
-                      ))}
-                      {comparisonData.session2.treatments.length === 0 && (
-                        <p className="text-sm text-muted-foreground">Nenhum tratamento aplicado</p>
-                      )}
-                    </div>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-sm">Tratamentos Aplicados - Sessão 2</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2 max-h-60 overflow-y-auto">
+                        {comparisonData.session2.treatments.map((treatment, idx) => (
+                          <div key={idx} className="text-sm flex justify-between items-center border-b pb-2">
+                            <span>{getTreatmentName(treatment.tratamento_id)}</span>
+                            <Badge variant="outline">{treatment.timestamp_simulacao}s</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
                   </Card>
                 </div>
               </div>

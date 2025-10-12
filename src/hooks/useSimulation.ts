@@ -183,14 +183,21 @@ export const useSimulation = (caseId: number = 1) => {
 
       if (error) throw error;
 
-      // Aplicar efeitos imediatamente aos parâmetros
+      // Aplicar efeitos aos parâmetros APENAS se forem adequados ou permitir com penalidade menor
       setCurrentState((prevState) => {
         const newState = { ...prevState };
+        
+        // Aplicar os efeitos do tratamento nos parâmetros
         treatmentEffects?.forEach((effect) => {
           const currentValue = newState[effect.id_parametro] || 0;
           const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
-          newState[effect.id_parametro] = currentValue + magnitude;
+          
+          // Se o tratamento é adequado, aplica efeito completo
+          // Se não é adequado, aplica apenas 30% do efeito (penalidade)
+          const effectMultiplier = adequateTreatment ? 1.0 : 0.3;
+          newState[effect.id_parametro] = currentValue + (magnitude * effectMultiplier);
         });
+        
         return newState;
       });
 

@@ -17,6 +17,8 @@ import { SimulationNotes } from "@/components/SimulationNotes";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlerts } from "@/components/SoundAlerts";
+import { SimulationComparison } from "@/components/SimulationComparison";
+import { PerformanceStats } from "@/components/PerformanceStats";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -348,9 +350,12 @@ const Index = () => {
           />
         </div>
 
-        {/* Performance Statistics */}
-        <div className="mb-8">
-          <PerformanceStatistics caseId={selectedCaseId} />
+        {/* Analysis Tools */}
+        <div className="mb-8 space-y-4">
+          <div className="flex gap-4">
+            <SimulationComparison caseId={selectedCaseId} parameters={parameters} />
+          </div>
+          <PerformanceStats caseId={selectedCaseId} />
         </div>
 
         {/* Additional Parameters (Secondary Monitor) */}
