@@ -7,6 +7,8 @@ import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
 import { LearningGoals } from "@/components/LearningGoals";
 import { RoleSelector } from "@/components/RoleSelector";
+import { VoiceCommands } from "@/components/VoiceCommands";
+import { useUserRole } from "@/hooks/useUserRole";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
@@ -49,10 +51,9 @@ interface Treatment {
 
 const Index = () => {
   const { user, loading: authLoading, signOut } = useAuth();
+  const { role: userRole, loading: roleLoading } = useUserRole(user);
   const [selectedCaseId, setSelectedCaseId] = useState(1);
   const [availableCases, setAvailableCases] = useState<any[]>([]);
-  const [userRole, setUserRole] = useState<"professor" | "aluno" | null>(null);
-  const [roleLoading, setRoleLoading] = useState(true);
   const [showTutorial, setShowTutorial] = useState(true);
   
   const {
@@ -92,7 +93,6 @@ const Index = () => {
     if (user) {
       loadTreatments();
       loadCases();
-      checkUserRole();
     }
   }, [user, selectedCaseId]);
 
@@ -128,17 +128,6 @@ const Index = () => {
     if (data) setAvailableCases(data);
   };
 
-  const checkUserRole = async () => {
-    setRoleLoading(true);
-    const { data } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", user?.id)
-      .maybeSingle();
-    
-    setUserRole(data?.role || null);
-    setRoleLoading(false);
-  };
 
   const handleCaseAccessed = (caseId: number) => {
     setSelectedCaseId(caseId);
@@ -236,8 +225,11 @@ const Index = () => {
   }
 
   if (!userRole) {
-    return <RoleSelector userId={user.id} onRoleSet={checkUserRole} />;
+    return <RoleSelector userId={user.id} onRoleSet={() => window.location.reload()} />;
   }
+
+  const isProfessor = userRole === "professor";
+  const isAluno = userRole === "aluno";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
@@ -251,7 +243,12 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold">Simulador Veterinário</h1>
-                <p className="text-sm text-muted-foreground">{user.email}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                  <Badge variant={isProfessor ? "default" : "secondary"} className="text-xs">
+                    {isProfessor ? "👨‍🏫 Professor" : "👨‍🎓 Aluno"}
+                  </Badge>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -303,7 +300,7 @@ const Index = () => {
                   </SelectContent>
                 </Select>
               </div>
-              {userRole === "professor" ? (
+              {isProfessor && (
                 <>
                   <div>
                     <label className="text-sm font-medium mb-2 block">Compartilhar</label>
@@ -314,10 +311,11 @@ const Index = () => {
                     <CaseDataPopulator caseId={selectedCaseId} onDataGenerated={loadTreatments} />
                   </div>
                 </>
-              ) : (
+              )}
+              {isAluno && (
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Gerenciar</label>
-                  <CaseManager onCaseCreated={loadCases} />
+                  <label className="text-sm font-medium mb-2 block">Acessar Caso Compartilhado</label>
+                  <AccessCodeInput onCaseAccessed={handleCaseAccessed} />
                 </div>
               )}
             </CardContent>
@@ -332,6 +330,24 @@ const Index = () => {
             />
           )}
         </div>
+
+        {/* Comandos de Voz (apenas para Alunos) */}
+        {isAluno && selectedCaseId && (
+          <div className="mb-6">
+            <VoiceCommands
+              enabled={isRunning}
+              onCommand={(command) => {
+                if (command.includes("parar") || command.includes("pausar")) {
+                  if (isRunning) toggleSimulation();
+                } else if (command.includes("iniciar") || command.includes("começar")) {
+                  if (!isRunning) toggleSimulation();
+                } else if (command.includes("resetar") || command.includes("reiniciar")) {
+                  resetSimulation();
+                }
+              }}
+            />
+          </div>
+        )}
 
         {/* Controles de Simulação */}
         <Card className="mb-6">
@@ -485,22 +501,37 @@ const Index = () => {
         <div className="space-y-6">
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <Activity className="h-6 w-6 text-primary" />
-            Relatórios e Estatísticas
+            {isProfessor ? "Relatórios e Estatísticas" : "Minhas Estatísticas"}
           </h2>
 
-          <Tabs defaultValue="desempenho" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="desempenho">Desempenho</TabsTrigger>
+          <Tabs defaultValue={isProfessor ? "desempenho" : "badges"} className="w-full">
+            <TabsList className={isProfessor ? "grid w-full grid-cols-5" : "grid w-full grid-cols-3"}>
+              {isProfessor && (
+                <>
+                  <TabsTrigger value="desempenho">Desempenho</TabsTrigger>
+                  <TabsTrigger value="biblioteca">Biblioteca</TabsTrigger>
+                </>
+              )}
               <TabsTrigger value="historico">Histórico</TabsTrigger>
               <TabsTrigger value="comparacao">Comparação</TabsTrigger>
               <TabsTrigger value="badges">Badges</TabsTrigger>
-              <TabsTrigger value="biblioteca">Biblioteca</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="desempenho" className="space-y-6">
-              <PerformanceStatistics caseId={selectedCaseId} />
-              <PerformanceStats caseId={selectedCaseId} />
-            </TabsContent>
+            {isProfessor && (
+              <>
+                <TabsContent value="desempenho" className="space-y-6">
+                  <PerformanceStatistics caseId={selectedCaseId} />
+                  <PerformanceStats caseId={selectedCaseId} />
+                </TabsContent>
+
+                <TabsContent value="biblioteca">
+                  <CaseLibrary 
+                    selectedCaseId={selectedCaseId}
+                    onCaseSelect={(id) => handleCaseChange(id.toString())}
+                  />
+                </TabsContent>
+              </>
+            )}
 
             <TabsContent value="historico">
               <SessionHistory caseId={selectedCaseId} />
@@ -518,16 +549,9 @@ const Index = () => {
             <TabsContent value="badges">
               <BadgeSystem />
             </TabsContent>
-
-            <TabsContent value="biblioteca">
-              <CaseLibrary 
-                selectedCaseId={selectedCaseId}
-                onCaseSelect={(id) => handleCaseChange(id.toString())}
-              />
-            </TabsContent>
           </Tabs>
 
-          {userRole === "professor" && (
+          {isProfessor && (
             <AdvancedReports userRole={userRole} />
           )}
         </div>
