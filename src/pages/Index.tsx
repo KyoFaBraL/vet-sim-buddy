@@ -8,14 +8,12 @@ import HPDisplay from "@/components/HPDisplay";
 import ReportPanel from "@/components/ReportPanel";
 import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
-import { SessionManager } from "@/components/SessionManager";
 import { LearningGoals } from "@/components/LearningGoals";
 import { TreatmentHints } from "@/components/TreatmentHints";
 import { RoleSelector } from "@/components/RoleSelector";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { SimulationNotes } from "@/components/SimulationNotes";
-import { SimulationComparison } from "@/components/SimulationComparison";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlerts } from "@/components/SoundAlerts";
@@ -55,8 +53,6 @@ const Index = () => {
     applyTreatment,
     getParameterStatus,
     getParameterTrend,
-    saveSession,
-    loadSession,
   } = useSimulation(selectedCaseId);
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
@@ -109,6 +105,8 @@ const Index = () => {
   const handleCaseChange = (caseId: string) => {
     setSelectedCaseId(parseInt(caseId));
     setAppliedTreatments([]);
+    setGoalPoints(0);
+    resetSimulation();
   };
 
   // Parâmetros principais para exibir no monitor
@@ -234,19 +232,6 @@ const Index = () => {
               <CaseManager onCaseCreated={loadCases} />
             </div>
           )}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Histórico de Sessões</label>
-            <div className="flex gap-2">
-              <SessionManager 
-                onSaveSession={saveSession}
-                onLoadSession={loadSession}
-              />
-              <SimulationComparison
-                caseId={selectedCaseId}
-                parameters={parameters}
-              />
-            </div>
-          </div>
         </div>
 
         {/* Case Information */}
