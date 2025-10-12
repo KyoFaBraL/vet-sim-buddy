@@ -64,12 +64,30 @@ Condição: ${caseData.condicoes?.nome || 'Não especificada'}
 Parâmetros disponíveis: ${parametros?.map(p => `${p.nome} (${p.unidade})`).join(', ')}
 Tratamentos disponíveis: ${tratamentos?.map(t => t.nome).join(', ')}
 
-Gere valores realistas para os PARÂMETROS SECUNDÁRIOS (NÃO incluir pH, PaO2, PaCO2, FrequenciaCardiaca, PressaoArterial, Lactato) que sejam compatíveis com esta condição veterinária.
+Gere valores REALISTAS e CLINICAMENTE COMPATÍVEIS para TODOS os parâmetros vitais deste paciente ${caseData.especie}, considerando a condição "${caseData.condicoes?.nome || 'especificada'}".
+
+IMPORTANTE: Os valores devem variar de acordo com a espécie do paciente. Para ${caseData.especie}:
+- pH: valores entre 7.35-7.45 (normal), ajustar conforme acidose/alcalose da condição
+- PaO2: valores entre 80-100 mmHg (normal), reduzir se houver comprometimento respiratório
+- PaCO2: valores entre 35-45 mmHg (normal), ajustar conforme condição respiratória
+- FrequenciaCardiaca: valores específicos para ${caseData.especie} (canino: 60-140 bpm, felino: 140-220 bpm)
+- PressaoArterial: valores específicos para ${caseData.especie} (canino/felino: 110-140 mmHg sistólica)
+- Lactato: valores entre 0.5-2.0 mmol/L (normal), aumentar conforme gravidade
+
+Inclua também os PARÂMETROS SECUNDÁRIOS relevantes que sejam compatíveis com esta condição.
 
 Também sugira os 3-5 tratamentos mais adequados para este caso, com justificativa e prioridade (1-5, sendo 1 a mais alta).
 
 Retorne APENAS um JSON válido no seguinte formato:
 {
+  "parametrosPrimarios": [
+    {"nome": "pH", "valor": 7.35},
+    {"nome": "PaO2", "valor": 85.0},
+    {"nome": "PaCO2", "valor": 40.0},
+    {"nome": "FrequenciaCardiaca", "valor": 120.0},
+    {"nome": "PressaoArterial", "valor": 125.0},
+    {"nome": "Lactato", "valor": 1.5}
+  ],
   "parametrosSecundarios": [
     {"nome": "NomeParametro", "valor": 0.00}
   ],
@@ -127,6 +145,38 @@ Retorne APENAS um JSON válido no seguinte formato:
     }
 
     const generatedData = JSON.parse(jsonMatch[0]);
+
+    // Inserir parâmetros primários (valores iniciais do caso)
+    const valoresIniciaisCaso = [];
+    if (generatedData.parametrosPrimarios) {
+      for (const paramData of generatedData.parametrosPrimarios) {
+        const parametro = parametros?.find(p => p.nome === paramData.nome);
+        if (parametro) {
+          valoresIniciaisCaso.push({
+            id_caso: caseId,
+            id_parametro: parametro.id,
+            valor: paramData.valor
+          });
+        }
+      }
+
+      if (valoresIniciaisCaso.length > 0) {
+        // Deletar dados antigos
+        await supabase
+          .from('valores_iniciais_caso')
+          .delete()
+          .eq('id_caso', caseId);
+
+        // Inserir novos
+        const { error: insertError } = await supabase
+          .from('valores_iniciais_caso')
+          .insert(valoresIniciaisCaso);
+
+        if (insertError) {
+          console.error('Erro ao inserir valores iniciais:', insertError);
+        }
+      }
+    }
 
     // Inserir parâmetros secundários no banco
     const parametrosSecundarios = [];
@@ -198,6 +248,7 @@ Retorne APENAS um JSON válido no seguinte formato:
     return new Response(
       JSON.stringify({
         success: true,
+        parametrosPrimarios: valoresIniciaisCaso.length,
         parametrosSecundarios: parametrosSecundarios.length,
         tratamentosAdequados: tratamentosCaso.length,
         data: generatedData

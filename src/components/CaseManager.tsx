@@ -94,20 +94,43 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Usuário não autenticado");
 
-      const { error } = await supabase.from("casos_clinicos").insert({
-        nome: formData.nome,
-        descricao: formData.descricao,
-        especie: formData.especie,
-        id_condicao_primaria: parseInt(formData.id_condicao_primaria),
-        user_id: user.id,
-      });
+      const { data: newCase, error } = await supabase
+        .from("casos_clinicos")
+        .insert({
+          nome: formData.nome,
+          descricao: formData.descricao,
+          especie: formData.especie,
+          id_condicao_primaria: parseInt(formData.id_condicao_primaria),
+          user_id: user.id,
+        })
+        .select()
+        .single();
 
       if (error) throw error;
 
       toast({
         title: "Caso criado!",
-        description: "Seu caso personalizado foi salvo com sucesso.",
+        description: "Gerando parâmetros e tratamentos com IA...",
       });
+
+      // Acionar IA para popular dados do caso
+      const { error: populateError } = await supabase.functions.invoke('populate-case-data', {
+        body: { caseId: newCase.id }
+      });
+
+      if (populateError) {
+        console.error('Erro ao popular dados do caso:', populateError);
+        toast({
+          title: "Caso criado com avisos",
+          description: "O caso foi criado mas houve erro ao gerar dados automáticos.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Caso completo!",
+          description: "Parâmetros e tratamentos foram gerados automaticamente pela IA.",
+        });
+      }
 
       setFormData({
         nome: "",
