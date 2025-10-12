@@ -2,6 +2,16 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Lightbulb, Loader2, AlertCircle, Target, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,12 +29,14 @@ interface TreatmentHintsProps {
   currentState: Record<number, number>;
   parameters: any[];
   caseData: any;
+  onHpChange: (delta: number) => void;
 }
 
-export const TreatmentHints = ({ currentState, parameters, caseData }: TreatmentHintsProps) => {
+export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange }: TreatmentHintsProps) => {
   const [hints, setHints] = useState<Hint[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [revealed, setRevealed] = useState<number[]>([]);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const { toast } = useToast();
 
   const getPriorityColor = (priority: string) => {
@@ -58,12 +70,20 @@ export const TreatmentHints = ({ currentState, parameters, caseData }: Treatment
     setRevealed([]);
     
     try {
+      // Buscar tratamentos disponíveis
+      const { data: treatmentsData, error: treatmentsError } = await supabase
+        .from("tratamentos")
+        .select("id, nome, descricao, tipo");
+
+      if (treatmentsError) throw treatmentsError;
+
       const { data, error } = await supabase.functions.invoke('treatment-hints', {
         body: {
           currentState,
           parameters,
           condition: caseData?.condicoes?.nome || "Desconhecida",
-          caseDescription: caseData?.descricao || "Sem descrição"
+          caseDescription: caseData?.descricao || "Sem descrição",
+          availableTreatments: treatmentsData || []
         }
       });
 
@@ -77,10 +97,13 @@ export const TreatmentHints = ({ currentState, parameters, caseData }: Treatment
 
       setHints(data.hints || []);
       
+      // Aplicar penalidade de 10 HP
+      onHpChange(-10);
+      
       if (data.hints && data.hints.length > 0) {
         toast({
           title: "Dicas geradas!",
-          description: `${data.hints.length} sugestões de tratamento disponíveis`,
+          description: `${data.hints.length} sugestões de tratamento disponíveis. Penalidade: -10 HP`,
         });
       }
     } catch (error: any) {
@@ -92,7 +115,12 @@ export const TreatmentHints = ({ currentState, parameters, caseData }: Treatment
       });
     } finally {
       setIsLoading(false);
+      setShowConfirmDialog(false);
     }
+  };
+
+  const handleGenerateClick = () => {
+    setShowConfirmDialog(true);
   };
 
   const revealHint = (index: number) => {
@@ -100,31 +128,52 @@ export const TreatmentHints = ({ currentState, parameters, caseData }: Treatment
   };
 
   return (
-    <Card className="p-6">
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold">Sistema de Dicas</h3>
+    <>
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Usar Sistema de Dicas?</AlertDialogTitle>
+            <AlertDialogDescription>
+              O sistema de dicas irá analisar o estado atual do paciente e sugerir tratamentos apropriados.
+              <br /><br />
+              <strong className="text-destructive">⚠️ Atenção: Usar as dicas custará 10 HP</strong>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={generateHints}>
+              Confirmar (-10 HP)
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <Card className="p-6">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Sistema de Dicas</h3>
+            </div>
+            <Button
+              onClick={handleGenerateClick}
+              disabled={isLoading}
+              size="sm"
+              variant="outline"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Analisando...
+                </>
+              ) : (
+                <>
+                  <Lightbulb className="mr-2 h-4 w-4" />
+                  Gerar Dicas (-10 HP)
+                </>
+              )}
+            </Button>
           </div>
-          <Button
-            onClick={generateHints}
-            disabled={isLoading}
-            size="sm"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analisando...
-              </>
-            ) : (
-              <>
-                <Lightbulb className="mr-2 h-4 w-4" />
-                Gerar Dicas
-              </>
-            )}
-          </Button>
-        </div>
 
         {hints.length === 0 && !isLoading && (
           <div className="text-center py-8 text-muted-foreground">
@@ -212,7 +261,8 @@ export const TreatmentHints = ({ currentState, parameters, caseData }: Treatment
             <p>💡 Dica pedagógica: Tente aplicar os tratamentos na ordem de prioridade sugerida</p>
           </div>
         )}
-      </div>
-    </Card>
+        </div>
+      </Card>
+    </>
   );
 };

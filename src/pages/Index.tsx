@@ -55,6 +55,7 @@ const Index = () => {
     applyTreatment,
     getParameterStatus,
     getParameterTrend,
+    changeHp,
   } = useSimulation(selectedCaseId);
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
@@ -322,6 +323,7 @@ const Index = () => {
             currentState={currentState}
             parameters={parameters}
             caseData={caseData}
+            onHpChange={changeHp}
           />
           <TreatmentPanel
             treatments={treatments}

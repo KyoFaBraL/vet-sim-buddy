@@ -99,34 +99,42 @@ export const useSimulation = (caseId: number = 1) => {
   const tick = useCallback(() => {
     setPreviousState(currentState);
     setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
-    
-    // Perder HP com o tempo (deterioração do paciente)
-    setHp(prev => {
-      const newHp = Math.max(0, prev - 1);
-      if (newHp <= 0 && gameStatus === 'playing') {
-        setGameStatus('lost');
-        setIsRunning(false);
-        toast({
-          title: "Paciente faleceu",
-          description: "O HP chegou a zero. Tente novamente!",
-          variant: "destructive",
-        });
-      }
-      return newHp;
-    });
-    setLastHpChange(-1);
-  }, [currentState, startTime, gameStatus, toast]);
+  }, [currentState, startTime]);
 
-  // Timer da simulação
+  // Timer da simulação - atualiza a cada segundo
   useEffect(() => {
     if (!isRunning || gameStatus !== 'playing') return;
 
     const interval = setInterval(() => {
       tick();
-    }, 1000); // Atualiza a cada 1 segundo
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [isRunning, tick, gameStatus]);
+
+  // HP decay - perde 1 HP a cada 5 segundos
+  useEffect(() => {
+    if (!isRunning || gameStatus !== 'playing') return;
+
+    const hpDecayInterval = setInterval(() => {
+      setHp(prev => {
+        const newHp = Math.max(0, prev - 1);
+        if (newHp <= 0 && gameStatus === 'playing') {
+          setGameStatus('lost');
+          setIsRunning(false);
+          toast({
+            title: "Paciente faleceu",
+            description: "O HP chegou a zero. Tente novamente!",
+            variant: "destructive",
+          });
+        }
+        return newHp;
+      });
+      setLastHpChange(-1);
+    }, 5000); // Atualiza a cada 5 segundos
+
+    return () => clearInterval(hpDecayInterval);
+  }, [isRunning, gameStatus, toast]);
 
   // Verificar limite de tempo (5 minutos = 300 segundos)
   useEffect(() => {
@@ -351,6 +359,25 @@ export const useSimulation = (caseId: number = 1) => {
     });
   };
 
+  const changeHp = (delta: number) => {
+    setHp(prev => {
+      const newHp = Math.min(100, Math.max(0, prev + delta));
+      
+      if (newHp <= 0 && gameStatus === 'playing') {
+        setGameStatus('lost');
+        setIsRunning(false);
+        toast({
+          title: "Paciente faleceu",
+          description: "O HP chegou a zero. Tente novamente!",
+          variant: "destructive",
+        });
+      }
+      
+      return newHp;
+    });
+    setLastHpChange(delta);
+  };
+
   return {
     parameters,
     currentState,
@@ -368,5 +395,6 @@ export const useSimulation = (caseId: number = 1) => {
     getParameterTrend,
     saveSession,
     loadSession,
+    changeHp,
   };
 };

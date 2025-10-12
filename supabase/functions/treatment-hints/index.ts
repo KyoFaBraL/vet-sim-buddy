@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { currentState, parameters, condition, caseDescription } = await req.json();
+    const { currentState, parameters, condition, caseDescription, availableTreatments } = await req.json();
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -28,10 +28,16 @@ serve(async (req) => {
       return `${p.nome}: ${value.toFixed(2)} ${p.unidade || ''} (Normal: ${min}-${max}) ${isAbnormal ? '⚠️ ANORMAL' : '✓'}`;
     }).join('\n');
 
+    // Construir lista de tratamentos disponíveis
+    const treatmentsContext = availableTreatments.map((t: any) => 
+      `- ${t.nome}: ${t.descricao || ''}`
+    ).join('\n');
+
     const systemPrompt = `Você é um especialista em medicina veterinária, focado em distúrbios ácido-base e tratamento de emergências.
 Sua função é analisar o estado atual do paciente e fornecer dicas progressivas de tratamento.
 
 IMPORTANTE:
+- Sugira APENAS tratamentos da lista de tratamentos disponíveis
 - Seja específico e educativo
 - Explique o PORQUÊ de cada sugestão
 - Priorize os parâmetros mais críticos
@@ -44,6 +50,9 @@ CONDIÇÃO: ${condition}
 
 PARÂMETROS ATUAIS:
 ${parametersContext}
+
+TRATAMENTOS DISPONÍVEIS:
+${treatmentsContext}
 
 Com base neste estado, forneça 2-3 dicas progressivas de tratamento. Para cada dica:
 1. Identifique o problema principal
