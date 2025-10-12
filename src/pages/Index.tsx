@@ -306,9 +306,46 @@ const Index = () => {
           />
         </div>
 
+        {/* Additional Parameters (Secondary Monitor) - Below Patient Display */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <span className="h-1 w-8 bg-primary rounded-full" />
+            Parâmetros Secundários
+          </h2>
+          <div className="p-6 rounded-xl bg-card border-2 shadow-card">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {parameters
+                .filter((p) => !mainParameters.includes(p.nome))
+                .map((param) => {
+                  const value = currentState[param.id] || 0;
+                  const { isNormal, isCritical } = getParameterStatus(param.id, value);
+
+                  return (
+                    <div key={param.id} className="space-y-1">
+                      <div className="text-xs text-muted-foreground font-medium">
+                        {param.nome}
+                      </div>
+                      <div className={`text-2xl font-bold font-mono ${
+                        isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
+                      }`}>
+                        {value.toFixed(2)}
+                        {param.unidade && (
+                          <span className="text-sm ml-1 text-muted-foreground">
+                            {param.unidade}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+
         {/* Learning Goals */}
         <div className="mb-8">
           <LearningGoals
+            key={selectedCaseId}
             caseId={selectedCaseId}
             currentState={currentState}
             parameters={parameters}
@@ -320,10 +357,12 @@ const Index = () => {
         {/* Treatment Hints and Treatments */}
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <TreatmentHints
+            key={selectedCaseId}
             currentState={currentState}
             parameters={parameters}
             caseData={caseData}
             onHpChange={changeHp}
+            availableTreatments={treatments}
           />
           <TreatmentPanel
             treatments={treatments}
@@ -360,41 +399,6 @@ const Index = () => {
           <PerformanceStats caseId={selectedCaseId} />
         </div>
 
-        {/* Additional Parameters (Secondary Monitor) */}
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <span className="h-1 w-8 bg-primary rounded-full" />
-            Parâmetros Secundários
-          </h2>
-          <div className="p-6 rounded-xl bg-card border-2 shadow-card">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {parameters
-                .filter((p) => !mainParameters.includes(p.nome))
-                .map((param) => {
-                  const value = currentState[param.id] || 0;
-                  const { isNormal, isCritical } = getParameterStatus(param.id, value);
-
-                  return (
-                    <div key={param.id} className="space-y-1">
-                      <div className="text-xs text-muted-foreground font-medium">
-                        {param.nome}
-                      </div>
-                      <div className={`text-2xl font-bold font-mono ${
-                        isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
-                      }`}>
-                        {value.toFixed(2)}
-                        {param.unidade && (
-                          <span className="text-sm ml-1 text-muted-foreground">
-                            {param.unidade}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
 
         {/* Footer Info */}
         <div className="mt-12 text-center text-sm text-muted-foreground">

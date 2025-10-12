@@ -30,9 +30,15 @@ interface TreatmentHintsProps {
   parameters: any[];
   caseData: any;
   onHpChange: (delta: number) => void;
+  availableTreatments?: Array<{
+    id: number;
+    nome: string;
+    descricao: string;
+    tipo: string;
+  }>;
 }
 
-export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange }: TreatmentHintsProps) => {
+export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange, availableTreatments = [] }: TreatmentHintsProps) => {
   const [hints, setHints] = useState<Hint[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [revealed, setRevealed] = useState<number[]>([]);
@@ -70,20 +76,13 @@ export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange 
     setRevealed([]);
     
     try {
-      // Buscar tratamentos disponíveis
-      const { data: treatmentsData, error: treatmentsError } = await supabase
-        .from("tratamentos")
-        .select("id, nome, descricao, tipo");
-
-      if (treatmentsError) throw treatmentsError;
-
       const { data, error } = await supabase.functions.invoke('treatment-hints', {
         body: {
           currentState,
           parameters,
           condition: caseData?.condicoes?.nome || "Desconhecida",
           caseDescription: caseData?.descricao || "Sem descrição",
-          availableTreatments: treatmentsData || []
+          availableTreatments
         }
       });
 
