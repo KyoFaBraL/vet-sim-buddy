@@ -314,6 +314,33 @@ export type Database = {
         }
         Relationships: []
       }
+      professor_students: {
+        Row: {
+          ativo: boolean
+          criado_em: string
+          id: string
+          notas: string | null
+          professor_id: string
+          student_id: string
+        }
+        Insert: {
+          ativo?: boolean
+          criado_em?: string
+          id?: string
+          notas?: string | null
+          professor_id: string
+          student_id: string
+        }
+        Update: {
+          ativo?: boolean
+          criado_em?: string
+          id?: string
+          notas?: string | null
+          professor_id?: string
+          student_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

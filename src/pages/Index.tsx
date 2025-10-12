@@ -22,6 +22,8 @@ import { GuidedTutorial } from "@/components/GuidedTutorial";
 import { AdvancedReports } from "@/components/AdvancedReports";
 import { TreatmentFeedback } from "@/components/TreatmentFeedback";
 import { CaseLibrary } from "@/components/CaseLibrary";
+import { StudentManagement } from "@/components/StudentManagement";
+import { StudentReports } from "@/components/StudentReports";
 import { SimulationModeSelector } from "@/components/SimulationModeSelector";
 import { SessionFeedbackReport } from "@/components/SessionFeedbackReport";
 import ParameterChart from "@/components/ParameterChart";
@@ -297,12 +299,20 @@ const Index = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue="statistics" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
+                <Tabs defaultValue="students" className="w-full">
+                  <TabsList className="grid w-full grid-cols-5">
+                    <TabsTrigger value="students">Gerenciar Alunos</TabsTrigger>
+                    <TabsTrigger value="reports">Relatórios Alunos</TabsTrigger>
                     <TabsTrigger value="statistics">Estatísticas</TabsTrigger>
                     <TabsTrigger value="advanced">Relatórios Avançados</TabsTrigger>
                     <TabsTrigger value="library">Biblioteca</TabsTrigger>
                   </TabsList>
+                  <TabsContent value="students" className="space-y-4">
+                    <StudentManagement />
+                  </TabsContent>
+                  <TabsContent value="reports" className="space-y-4">
+                    <StudentReports />
+                  </TabsContent>
                   <TabsContent value="statistics" className="space-y-4">
                     <PerformanceStatistics caseId={selectedCaseId} />
                   </TabsContent>
