@@ -35,10 +35,11 @@ const HPDisplay = ({ hp, elapsedTime, gameStatus, animalType, lastHpChange }: HP
   };
 
   const getAnimalImages = () => {
-    // Detectar tipo de animal (canino ou felino)
-    const isCat = animalType?.toLowerCase().includes('gato') || 
-                  animalType?.toLowerCase().includes('felino') ||
-                  animalType?.toLowerCase().includes('cat');
+    // Detectar tipo de animal com base na espécie (canino = cão, felino = gato)
+    const animalLower = animalType?.toLowerCase() || '';
+    const isCat = animalLower.includes('felino') || 
+                  animalLower.includes('gato') || 
+                  animalLower.includes('cat');
     
     return {
       normal: isCat ? catNormal : dogNormal,

@@ -99,7 +99,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
         .insert({
           nome: formData.nome,
           descricao: formData.descricao,
-          especie: formData.especie,
+          especie: formData.especie.toLowerCase(), // Normalizar para minúsculo
           id_condicao_primaria: parseInt(formData.id_condicao_primaria),
           user_id: user.id,
         })
@@ -107,6 +107,8 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
         .single();
 
       if (error) throw error;
+
+      console.log('Caso criado com espécie:', newCase.especie);
 
       toast({
         title: "Caso criado!",

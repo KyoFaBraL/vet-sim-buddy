@@ -61,6 +61,12 @@ export const useSimulation = (caseId: number = 1) => {
         .single();
 
       if (caseError) throw caseError;
+      
+      // Garantir que a espécie seja normalizada
+      if (caso) {
+        caso.especie = caso.especie?.toLowerCase() || 'canino';
+      }
+      
       setCaseData(caso);
 
       // Carregar parâmetros
