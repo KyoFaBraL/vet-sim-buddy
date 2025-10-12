@@ -128,7 +128,7 @@ const Index = () => {
 
   const handleCaseChange = (caseId: string) => {
     setSelectedCaseId(parseInt(caseId));
-    setAppliedTreatments([]);
+    setAppliedTreatments([]);  // Reset do log de tratamentos
     setGoalPoints(0);
     resetSimulation();
   };
@@ -389,11 +389,13 @@ const Index = () => {
             parameters={parameters}
             caseData={caseData}
             onHpChange={changeHp}
+            disabled={!isRunning}
             availableTreatments={treatments}
           />
           <TreatmentPanel
             treatments={treatments}
             onApplyTreatment={handleApplyTreatment}
+            disabled={!isRunning}
           />
         </div>
 

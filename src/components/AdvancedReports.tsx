@@ -62,8 +62,8 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
 
       // Status distribution
       const statusDist = [
-        { name: 'Vitória', value: sessions.filter(s => s.status === 'vitoria').length, color: '#22c55e' },
-        { name: 'Derrota', value: sessions.filter(s => s.status === 'derrota').length, color: '#ef4444' },
+        { name: 'Vitória', value: sessions.filter(s => s.status === 'won' || s.status === 'vitoria').length, color: '#22c55e' },
+        { name: 'Derrota', value: sessions.filter(s => s.status === 'lost' || s.status === 'derrota').length, color: '#ef4444' },
         { name: 'Em Andamento', value: sessions.filter(s => s.status === 'em_andamento').length, color: '#6b7280' },
       ];
 

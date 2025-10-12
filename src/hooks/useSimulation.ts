@@ -137,9 +137,41 @@ export const useSimulation = (caseId: number = 1) => {
     const hpDecayInterval = setInterval(() => {
       setHp(prev => {
         const newHp = Math.max(0, prev - 1);
+        setMinHpDuringSession(minHp => Math.min(minHp, newHp));
+        
         if (newHp <= 0 && gameStatus === 'playing') {
           setGameStatus('lost');
           setIsRunning(false);
+          
+          // Finalizar sessão
+          if (currentSessionId) {
+            const duracao = Math.floor((Date.now() - startTime) / 1000);
+            
+            supabase.auth.getUser().then(({ data: { user } }) => {
+              supabase
+                .from('simulation_sessions')
+                .update({
+                  data_fim: new Date().toISOString(),
+                  duracao_segundos: duracao,
+                  status: 'lost'
+                })
+                .eq('id', currentSessionId)
+                .then(() => {
+                  if (user) {
+                    checkAndAwardBadges({
+                      sessionId: currentSessionId,
+                      userId: user.id,
+                      sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                      usedHints,
+                      minHp: 0,
+                      goalsAchieved: 0,
+                      totalGoals: 0
+                    });
+                  }
+                });
+            });
+          }
+          
           toast({
             title: "Paciente faleceu",
             description: "O HP chegou a zero. Tente novamente!",
@@ -152,26 +184,108 @@ export const useSimulation = (caseId: number = 1) => {
     }, 5000); // Atualiza a cada 5 segundos
 
     return () => clearInterval(hpDecayInterval);
-  }, [isRunning, gameStatus, toast]);
+  }, [isRunning, gameStatus, toast, currentSessionId, startTime, usedHints]);
 
   // Verificar limite de tempo (5 minutos = 300 segundos)
   useEffect(() => {
     if (elapsedTime >= 300 && gameStatus === 'playing') {
       setGameStatus('lost');
       setIsRunning(false);
+      
+          // Finalizar sessão por tempo
+      if (currentSessionId) {
+        const duracao = Math.floor((Date.now() - startTime) / 1000);
+        
+        supabase.auth.getUser().then(({ data: { user } }) => {
+          supabase
+            .from('simulation_sessions')
+            .update({
+              data_fim: new Date().toISOString(),
+              duracao_segundos: duracao,
+              status: 'lost'
+            })
+            .eq('id', currentSessionId)
+            .then(() => {
+              if (user) {
+                checkAndAwardBadges({
+                  sessionId: currentSessionId,
+                  userId: user.id,
+                  sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                  usedHints,
+                  minHp: minHpDuringSession,
+                  goalsAchieved: 0,
+                  totalGoals: 0
+                });
+              }
+            });
+        });
+      }
+      
       toast({
         title: "Tempo esgotado",
         description: "O paciente não resistiu. O tempo máximo de 5 minutos foi atingido.",
         variant: "destructive",
       });
     }
-  }, [elapsedTime, gameStatus, toast]);
+  }, [elapsedTime, gameStatus, toast, currentSessionId, startTime, usedHints, minHpDuringSession]);
 
-  const toggleSimulation = () => {
+  const toggleSimulation = async () => {
+    if (!isRunning) {
+      // Iniciando a simulação - criar nova sessão e resetar log de tratamentos
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data: newSession, error } = await supabase
+        .from('simulation_sessions')
+        .insert({
+          user_id: user.id,
+          case_id: caseId,
+          nome: `Sessão ${new Date().toLocaleString('pt-BR')}`,
+          status: 'em_andamento'
+        })
+        .select()
+        .single();
+
+      if (!error && newSession) {
+        setCurrentSessionId(newSession.id);
+        setStartTime(Date.now());
+        setElapsedTime(0);
+      }
+    } else {
+      // Pausando a simulação
+    }
     setIsRunning((prev) => !prev);
   };
 
-  const resetSimulation = () => {
+  const resetSimulation = async () => {
+    // Finalizar sessão atual se existir
+    if (currentSessionId) {
+      const duracao = Math.floor((Date.now() - startTime) / 1000);
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      await supabase
+        .from('simulation_sessions')
+        .update({
+          data_fim: new Date().toISOString(),
+          duracao_segundos: duracao,
+          status: gameStatus
+        })
+        .eq('id', currentSessionId);
+      
+      // Verificar e conceder badges
+      if (user) {
+        await checkAndAwardBadges({
+          sessionId: currentSessionId,
+          userId: user.id,
+          sessionData: { status: gameStatus, duracao_segundos: duracao, case_id: caseId },
+          usedHints,
+          minHp: minHpDuringSession,
+          goalsAchieved: 0,
+          totalGoals: 0
+        });
+      }
+    }
+    
     setIsRunning(false);
     setPreviousState({});
     setStartTime(Date.now());
@@ -296,6 +410,36 @@ export const useSimulation = (caseId: number = 1) => {
         if (newHp >= 100 && gameStatus === 'playing') {
           setGameStatus('won');
           setIsRunning(false);
+          
+          // Finalizar sessão com vitória
+          if (currentSessionId) {
+            const duracao = Math.floor((Date.now() - startTime) / 1000);
+            
+            supabase.auth.getUser().then(({ data: { user } }) => {
+              supabase
+                .from('simulation_sessions')
+                .update({
+                  data_fim: new Date().toISOString(),
+                  duracao_segundos: duracao,
+                  status: 'won'
+                })
+                .eq('id', currentSessionId)
+                .then(() => {
+                  if (user) {
+                    checkAndAwardBadges({
+                      sessionId: currentSessionId,
+                      userId: user.id,
+                      sessionData: { status: 'won', duracao_segundos: duracao, case_id: caseId },
+                      usedHints,
+                      minHp: newHp,
+                      goalsAchieved: 0,
+                      totalGoals: 0
+                    });
+                  }
+                });
+            });
+          }
+          
           toast({
             title: "🎉 Paciente Estabilizado!",
             description: "Você conseguiu normalizar o quadro do paciente. Parabéns!",
@@ -306,6 +450,36 @@ export const useSimulation = (caseId: number = 1) => {
         if (newHp <= 0 && gameStatus === 'playing') {
           setGameStatus('lost');
           setIsRunning(false);
+          
+          // Finalizar sessão com derrota
+          if (currentSessionId) {
+            const duracao = Math.floor((Date.now() - startTime) / 1000);
+            
+            supabase.auth.getUser().then(({ data: { user } }) => {
+              supabase
+                .from('simulation_sessions')
+                .update({
+                  data_fim: new Date().toISOString(),
+                  duracao_segundos: duracao,
+                  status: 'lost'
+                })
+                .eq('id', currentSessionId)
+                .then(() => {
+                  if (user) {
+                    checkAndAwardBadges({
+                      sessionId: currentSessionId,
+                      userId: user.id,
+                      sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                      usedHints,
+                      minHp: 0,
+                      goalsAchieved: 0,
+                      totalGoals: 0
+                    });
+                  }
+                });
+            });
+          }
+          
           toast({
             title: "Paciente faleceu",
             description: "O HP chegou a zero. Tente novamente!",

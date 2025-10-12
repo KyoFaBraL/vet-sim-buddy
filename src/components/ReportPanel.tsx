@@ -33,10 +33,10 @@ const ReportPanel = ({ caseData, parameters, currentState, history, appliedTreat
   };
 
   const exportToCSV = () => {
-    if (history.length === 0) {
+    if (!caseData) {
       toast({
         title: "Sem dados para exportar",
-        description: "Execute a simulação primeiro para gerar dados",
+        description: "Carregue um caso clínico primeiro",
         variant: "destructive",
       });
       return;
@@ -187,10 +187,10 @@ FIM DO RELATÓRIO
   };
 
   const exportSummary = () => {
-    if (!caseData || history.length === 0) {
+    if (!caseData) {
       toast({
         title: "Sem dados para exportar",
-        description: "Execute a simulação primeiro para gerar dados",
+        description: "Carregue um caso clínico primeiro",
         variant: "destructive",
       });
       return;

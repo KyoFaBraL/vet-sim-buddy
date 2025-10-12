@@ -12,9 +12,10 @@ interface Treatment {
 interface TreatmentPanelProps {
   treatments: Treatment[];
   onApplyTreatment: (treatmentId: number) => void;
+  disabled?: boolean;
 }
 
-const TreatmentPanel = ({ treatments, onApplyTreatment }: TreatmentPanelProps) => {
+const TreatmentPanel = ({ treatments, onApplyTreatment, disabled = false }: TreatmentPanelProps) => {
   return (
     <Card className="border-2">
       <CardHeader>
@@ -34,6 +35,7 @@ const TreatmentPanel = ({ treatments, onApplyTreatment }: TreatmentPanelProps) =
               onClick={() => onApplyTreatment(treatment.id)}
               variant="outline"
               className="h-auto py-3 px-4 justify-start text-left w-full"
+              disabled={disabled}
             >
               <div className="flex flex-col gap-2 w-full">
                 <div className="font-semibold">{treatment.nome}</div>

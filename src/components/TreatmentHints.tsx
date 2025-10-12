@@ -30,6 +30,7 @@ interface TreatmentHintsProps {
   parameters: any[];
   caseData: any;
   onHpChange: (delta: number) => void;
+  disabled?: boolean;
   availableTreatments?: Array<{
     id: number;
     nome: string;
@@ -38,7 +39,7 @@ interface TreatmentHintsProps {
   }>;
 }
 
-export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange, availableTreatments = [] }: TreatmentHintsProps) => {
+export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange, disabled = false, availableTreatments = [] }: TreatmentHintsProps) => {
   const [hints, setHints] = useState<Hint[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [revealed, setRevealed] = useState<number[]>([]);
@@ -156,7 +157,7 @@ export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange,
             </div>
             <Button
               onClick={handleGenerateClick}
-              disabled={isLoading}
+              disabled={isLoading || disabled}
               size="sm"
               variant="outline"
             >

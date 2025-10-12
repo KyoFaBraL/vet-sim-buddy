@@ -41,7 +41,7 @@ export const checkAndAwardBadges = async (params: CheckBadgeParams) => {
       .eq('user_id', userId);
 
     const totalSessions = sessions?.length || 0;
-    const victorySessions = sessions?.filter(s => s.status === 'vitoria').length || 0;
+    const victorySessions = sessions?.filter(s => s.status === 'won' || s.status === 'vitoria').length || 0;
     const uniqueCases = new Set(sessions?.map(s => s.case_id) || []);
 
     // Verificar cada badge
@@ -54,20 +54,20 @@ export const checkAndAwardBadges = async (params: CheckBadgeParams) => {
 
       switch (criterio.tipo) {
         case 'primeira_vitoria':
-          shouldAward = sessionData.status === 'vitoria' && victorySessions === 1;
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && victorySessions === 1;
           break;
 
         case 'sem_dicas':
-          shouldAward = sessionData.status === 'vitoria' && !usedHints;
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && !usedHints;
           break;
 
         case 'tempo_recorde':
-          shouldAward = sessionData.status === 'vitoria' && 
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && 
                        sessionData.duracao_segundos <= criterio.tempo_maximo;
           break;
 
         case 'todas_metas':
-          shouldAward = sessionData.status === 'vitoria' && 
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && 
                        goalsAchieved === totalGoals && totalGoals > 0;
           break;
 
@@ -76,7 +76,7 @@ export const checkAndAwardBadges = async (params: CheckBadgeParams) => {
           break;
 
         case 'hp_alto':
-          shouldAward = sessionData.status === 'vitoria' && minHp >= criterio.hp_minimo;
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && minHp >= criterio.hp_minimo;
           break;
 
         case 'casos_diferentes':
