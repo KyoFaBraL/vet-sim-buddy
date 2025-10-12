@@ -1,1 +1,27 @@
 project_id = "ztyjbhzcvhaafjvkqmvv"
+
+[auth]
+enabled = true
+site_url = "http://localhost:54321"
+additional_redirect_urls = ["https://localhost:54321"]
+jwt_expiry = 3600
+enable_signup = true
+enable_email_signup = true
+enable_phone_signup = false
+enable_email_confirmations = false
+enable_phone_confirmations = false
+
+[auth.external]
+enabled = false
+
+[db]
+pooler_enabled = false
+
+[functions.analyze-custom-case]
+verify_jwt = false
+
+[functions.treatment-hints]
+verify_jwt = false
+
+[functions.populate-case-data]
+verify_jwt = false

@@ -67,7 +67,7 @@ export const useSimulation = (caseId: number = 1) => {
       if (paramsError) throw paramsError;
       setParameters(params || []);
 
-      // Carregar valores iniciais
+      // Carregar valores iniciais (parâmetros principais)
       const { data: valoresIniciais, error: valoresError } = await supabase
         .from("valores_iniciais_caso")
         .select("*")
@@ -75,11 +75,25 @@ export const useSimulation = (caseId: number = 1) => {
 
       if (valoresError) throw valoresError;
 
+      // Carregar parâmetros secundários
+      const { data: parametrosSecundarios } = await supabase
+        .from("parametros_secundarios_caso")
+        .select("parametro_id, valor")
+        .eq("case_id", caseId);
+
       // Montar estado inicial
       const initialState: SimulationState = {};
+      
+      // Adicionar valores principais
       valoresIniciais?.forEach((valor) => {
         initialState[valor.id_parametro] = typeof valor.valor === 'number' ? valor.valor : parseFloat(valor.valor);
       });
+
+      // Adicionar valores secundários
+      parametrosSecundarios?.forEach((valor) => {
+        initialState[valor.parametro_id] = typeof valor.valor === 'number' ? valor.valor : parseFloat(valor.valor);
+      });
+
       setCurrentState(initialState);
 
       // Resetar HP e game status

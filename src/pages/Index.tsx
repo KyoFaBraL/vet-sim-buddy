@@ -19,6 +19,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlerts } from "@/components/SoundAlerts";
 import { SimulationComparison } from "@/components/SimulationComparison";
 import { PerformanceStats } from "@/components/PerformanceStats";
+import { SessionHistory } from "@/components/SessionHistory";
+import { CaseDataPopulator } from "@/components/CaseDataPopulator";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -69,14 +71,29 @@ const Index = () => {
       loadCases();
       checkUserRole();
     }
-  }, [user]);
+  }, [user, selectedCaseId]);
 
   const loadTreatments = async () => {
-    const { data } = await supabase
+    // Carregar tratamentos gerais
+    const { data: allTreatments } = await supabase
       .from("tratamentos")
       .select("*");
     
-    if (data) setTreatments(data);
+    // Carregar tratamentos específicos do caso (se existirem)
+    const { data: caseTreatments } = await supabase
+      .from("tratamentos_caso")
+      .select("tratamento_id")
+      .eq("case_id", selectedCaseId);
+    
+    if (caseTreatments && caseTreatments.length > 0) {
+      // Filtrar apenas tratamentos adequados para este caso
+      const treatmentIds = caseTreatments.map(ct => ct.tratamento_id);
+      const filteredTreatments = allTreatments?.filter(t => treatmentIds.includes(t.id)) || [];
+      setTreatments(filteredTreatments);
+    } else {
+      // Usar todos os tratamentos se não houver específicos
+      if (allTreatments) setTreatments(allTreatments);
+    }
   };
 
   const loadCases = async () => {
@@ -225,10 +242,16 @@ const Index = () => {
             </Select>
           </div>
           {userRole === "professor" ? (
-            <div>
-              <label className="text-sm font-medium mb-2 block">Compartilhar Caso</label>
-              <CaseShareManager availableCases={availableCases} />
-            </div>
+            <>
+              <div>
+                <label className="text-sm font-medium mb-2 block">Compartilhar Caso</label>
+                <CaseShareManager availableCases={availableCases} />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block">IA do Caso</label>
+                <CaseDataPopulator caseId={selectedCaseId} onDataGenerated={loadTreatments} />
+              </div>
+            </>
           ) : (
             <div>
               <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
@@ -397,6 +420,7 @@ const Index = () => {
             <SimulationComparison caseId={selectedCaseId} parameters={parameters} />
           </div>
           <PerformanceStats caseId={selectedCaseId} />
+          <SessionHistory caseId={selectedCaseId} />
         </div>
 
 

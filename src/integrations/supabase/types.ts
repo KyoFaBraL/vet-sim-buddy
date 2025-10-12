@@ -260,6 +260,30 @@ export type Database = {
         }
         Relationships: []
       }
+      parametros_secundarios_caso: {
+        Row: {
+          case_id: number
+          criado_em: string
+          id: string
+          parametro_id: number
+          valor: number
+        }
+        Insert: {
+          case_id: number
+          criado_em?: string
+          id?: string
+          parametro_id: number
+          valor: number
+        }
+        Update: {
+          case_id?: number
+          criado_em?: string
+          id?: string
+          parametro_id?: number
+          valor?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -568,6 +592,33 @@ export type Database = {
         }
         Update: {
           condicao_id?: number
+          criado_em?: string
+          id?: string
+          justificativa?: string | null
+          prioridade?: number
+          tratamento_id?: number
+        }
+        Relationships: []
+      }
+      tratamentos_caso: {
+        Row: {
+          case_id: number
+          criado_em: string
+          id: string
+          justificativa: string | null
+          prioridade: number
+          tratamento_id: number
+        }
+        Insert: {
+          case_id: number
+          criado_em?: string
+          id?: string
+          justificativa?: string | null
+          prioridade?: number
+          tratamento_id: number
+        }
+        Update: {
+          case_id?: number
           criado_em?: string
           id?: string
           justificativa?: string | null
