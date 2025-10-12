@@ -903,6 +903,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      get_student_id_by_email: {
+        Args: { student_email: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

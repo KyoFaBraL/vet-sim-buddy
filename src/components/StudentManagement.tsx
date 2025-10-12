@@ -85,28 +85,20 @@ export const StudentManagement = () => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) return;
 
-      // Buscar o ID do aluno pelo email
-      const { data: studentProfile, error: profileError } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("email", studentEmail.trim().toLowerCase())
-        .single();
+      // Usar função segura para buscar ID do aluno
+      const { data: studentId, error: functionError } = await supabase
+        .rpc("get_student_id_by_email", {
+          student_email: studentEmail.trim().toLowerCase()
+        });
 
-      if (profileError || !studentProfile) {
-        toast.error("Aluno não encontrado. Verifique o email.");
+      if (functionError) {
+        console.error("Erro ao buscar aluno:", functionError);
+        toast.error("Erro ao buscar aluno");
         return;
       }
 
-      // Verificar se o aluno tem role de aluno
-      const { data: roleData } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", studentProfile.id)
-        .eq("role", "aluno")
-        .single();
-
-      if (!roleData) {
-        toast.error("O usuário encontrado não é um aluno.");
+      if (!studentId) {
+        toast.error("Aluno não encontrado. Verifique se o email está correto e se o usuário tem perfil de aluno.");
         return;
       }
 
@@ -115,7 +107,7 @@ export const StudentManagement = () => {
         .from("professor_students")
         .insert({
           professor_id: userData.user.id,
-          student_id: studentProfile.id,
+          student_id: studentId,
         });
 
       if (insertError) {
