@@ -216,10 +216,8 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="canino">Canino</SelectItem>
-                  <SelectItem value="felino">Felino</SelectItem>
-                  <SelectItem value="equino">Equino</SelectItem>
-                  <SelectItem value="bovino">Bovino</SelectItem>
+                  <SelectItem value="canino">Canino (Cão)</SelectItem>
+                  <SelectItem value="felino">Felino (Gato)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
