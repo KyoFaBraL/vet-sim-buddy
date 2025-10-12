@@ -43,27 +43,37 @@ export const StudentReports = () => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) return;
 
-      // Buscar alunos vinculados
-      const { data: studentsData, error: studentsError } = await supabase
+      // Buscar relacionamentos professor-aluno
+      const { data: relationships, error: relError } = await supabase
         .from("professor_students")
-        .select(`
-          student_id,
-          profiles!professor_students_student_id_fkey (
-            email,
-            nome_completo
-          )
-        `)
+        .select("student_id")
         .eq("professor_id", userData.user.id)
         .eq("ativo", true);
 
-      if (studentsError) throw studentsError;
+      if (relError) throw relError;
+
+      if (!relationships || relationships.length === 0) {
+        setStudents([]);
+        setIsLoading(false);
+        return;
+      }
+
+      const studentIds = relationships.map(r => r.student_id);
+
+      // Buscar perfis dos alunos
+      const { data: profiles, error: profileError } = await supabase
+        .from("profiles")
+        .select("id, email, nome_completo")
+        .in("id", studentIds);
+
+      if (profileError) throw profileError;
 
       const reports: StudentReport[] = [];
 
-      for (const student of studentsData || []) {
-        const studentId = student.student_id;
-        const studentEmail = (student.profiles as any)?.email || "N/A";
-        const studentName = (student.profiles as any)?.nome_completo || "N/A";
+      for (const profile of profiles || []) {
+        const studentId = profile.id;
+        const studentEmail = profile.email || "N/A";
+        const studentName = profile.nome_completo || "N/A";
 
         // Buscar sessões
         const { data: sessions } = await supabase

@@ -39,33 +39,42 @@ export const StudentManagement = () => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) return;
 
-      const { data, error } = await supabase
+      // Buscar relacionamentos professor-aluno
+      const { data: relationships, error: relError } = await supabase
         .from("professor_students")
-        .select(`
-          id,
-          student_id,
-          criado_em,
-          ativo,
-          notas,
-          profiles!professor_students_student_id_fkey (
-            email,
-            nome_completo
-          )
-        `)
+        .select("id, student_id, criado_em, ativo, notas")
         .eq("professor_id", userData.user.id)
         .eq("ativo", true);
 
-      if (error) throw error;
+      if (relError) throw relError;
 
-      const formattedStudents = (data || []).map((item: any) => ({
-        id: item.id,
-        student_id: item.student_id,
-        email: item.profiles?.email || "Email não disponível",
-        nome_completo: item.profiles?.nome_completo || "Nome não disponível",
-        criado_em: item.criado_em,
-        ativo: item.ativo,
-        notas: item.notas,
-      }));
+      if (!relationships || relationships.length === 0) {
+        setStudents([]);
+        return;
+      }
+
+      // Buscar perfis dos alunos
+      const studentIds = relationships.map(r => r.student_id);
+      const { data: profiles, error: profileError } = await supabase
+        .from("profiles")
+        .select("id, email, nome_completo")
+        .in("id", studentIds);
+
+      if (profileError) throw profileError;
+
+      // Combinar dados
+      const formattedStudents = relationships.map((rel) => {
+        const profile = profiles?.find(p => p.id === rel.student_id);
+        return {
+          id: rel.id,
+          student_id: rel.student_id,
+          email: profile?.email || "Email não disponível",
+          nome_completo: profile?.nome_completo || "Nome não disponível",
+          criado_em: rel.criado_em,
+          ativo: rel.ativo,
+          notas: rel.notas,
+        };
+      });
 
       setStudents(formattedStudents);
     } catch (error) {
