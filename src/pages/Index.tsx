@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
-import { Activity, LogOut } from "lucide-react";
+import { Activity, LogOut, Settings } from "lucide-react";
 import MonitorDisplay from "@/components/MonitorDisplay";
 import CaseInfo from "@/components/CaseInfo";
 import SimulationControls from "@/components/SimulationControls";
-import TreatmentPanel from "@/components/TreatmentPanel";
-import HPDisplay from "@/components/HPDisplay";
-import ReportPanel from "@/components/ReportPanel";
 import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
 import { LearningGoals } from "@/components/LearningGoals";
-import { TreatmentHints } from "@/components/TreatmentHints";
 import { RoleSelector } from "@/components/RoleSelector";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
-import { SimulationNotes } from "@/components/SimulationNotes";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
@@ -26,17 +21,21 @@ import { GuidedTutorial } from "@/components/GuidedTutorial";
 import { AdvancedReports } from "@/components/AdvancedReports";
 import { TreatmentFeedback } from "@/components/TreatmentFeedback";
 import { CaseLibrary } from "@/components/CaseLibrary";
-import { DiagnosticChallenge } from "@/components/DiagnosticChallenge";
 import { SimulationModeSelector } from "@/components/SimulationModeSelector";
 import { SessionFeedbackReport } from "@/components/SessionFeedbackReport";
 import ParameterChart from "@/components/ParameterChart";
+import { PatientMonitor } from "@/components/PatientMonitor";
+import { SimulationWorkspace } from "@/components/SimulationWorkspace";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { parameterDescriptions } from "@/constants/parameterDescriptions";
 
 type SimulationMode = 'practice' | 'evaluation';
@@ -242,21 +241,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="inline-flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-primary/10">
-                <Activity className="h-8 w-8 text-primary" />
+      <div className="container mx-auto px-4 py-6">
+        {/* Header Compacto */}
+        <header className="mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Activity className="h-6 w-6 text-primary" />
               </div>
-              <div className="text-left">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  Simulador Veterinário
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  Bem-vindo, {user.email}
-                </p>
+              <div>
+                <h1 className="text-2xl font-bold">Simulador Veterinário</h1>
+                <p className="text-sm text-muted-foreground">{user.email}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -267,45 +262,32 @@ const Index = () => {
                 isRunning={isRunning}
               />
               <ThemeToggle />
-              <Button variant="outline" onClick={signOut}>
-                <LogOut className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="sm" onClick={signOut}>
+                <LogOut className="h-4 w-4 mr-2" />
                 Sair
               </Button>
             </div>
           </div>
-          <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto">
-            Sistema de simulação médica veterinária para distúrbios ácido-base
-          </p>
-        </div>
+        </header>
 
-        {/* Access Code Input for Students */}
-        {userRole === "aluno" && (
-          <div className="mb-8 max-w-2xl mx-auto">
-            <AccessCodeInput onCaseAccessed={handleCaseAccessed} />
-          </div>
-        )}
+        <Separator className="mb-6" />
 
-        {/* Tabs para organizar interface */}
-        <Tabs defaultValue="simulacao" className="mb-8">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4">
-            <TabsTrigger value="simulacao">Simulação</TabsTrigger>
-            <TabsTrigger value="biblioteca">Biblioteca de Casos</TabsTrigger>
-            <TabsTrigger value="evolucao">Evolução Temporal</TabsTrigger>
-            <TabsTrigger value="comparacao">Comparação</TabsTrigger>
-          </TabsList>
+        {/* Seleção de Modo e Caso */}
+        <div className="mb-6 space-y-4">
+          <SimulationModeSelector
+            currentMode={simulationMode}
+            onModeChange={setSimulationMode}
+            disabled={isRunning}
+          />
 
-          <TabsContent value="simulacao" className="space-y-8">
-            {/* Modo de Simulação */}
-            <div className="max-w-4xl mx-auto">
-              <SimulationModeSelector
-                currentMode={simulationMode}
-                onModeChange={setSimulationMode}
-                disabled={isRunning}
-              />
-            </div>
-
-            {/* Case Selection and Management */}
-            <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Settings className="h-5 w-5" />
+                Configuração do Caso
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Caso Selecionado</label>
                 <Select value={selectedCaseId.toString()} onValueChange={handleCaseChange}>
@@ -324,7 +306,7 @@ const Index = () => {
               {userRole === "professor" ? (
                 <>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Compartilhar Caso</label>
+                    <label className="text-sm font-medium mb-2 block">Compartilhar</label>
                     <CaseShareManager availableCases={availableCases} />
                   </div>
                   <div>
@@ -334,89 +316,77 @@ const Index = () => {
                 </>
               ) : (
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
+                  <label className="text-sm font-medium mb-2 block">Gerenciar</label>
                   <CaseManager onCaseCreated={loadCases} />
                 </div>
               )}
-            </div>
+            </CardContent>
+          </Card>
 
-            {/* Case Information */}
-            {caseData && (
-              <div>
-                <CaseInfo
-                  caseName={caseData.nome}
-                  description={caseData.descricao}
-                  species={caseData.especie}
-                  condition={caseData.condicoes?.nome || "N/A"}
-                />
-              </div>
-            )}
+          {caseData && (
+            <CaseInfo
+              caseName={caseData.nome}
+              description={caseData.descricao}
+              species={caseData.especie}
+              condition={caseData.condicoes?.nome || "N/A"}
+            />
+          )}
+        </div>
 
-            {/* Simulation Controls */}
-            <div className="flex justify-center">
+        {/* Controles de Simulação */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
               <SimulationControls
                 isRunning={isRunning}
                 onToggle={toggleSimulation}
                 onReset={resetSimulation}
               />
-            </div>
-
-            {/* Monitor Grid */}
-            <div>
-              <div className="p-6 rounded-xl bg-gradient-to-br from-monitor-bg to-monitor-bg/80 border-4 border-monitor-grid shadow-monitor">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {mainParameters.map((paramName) => {
-                    const param = parameters.find((p) => p.nome === paramName);
-                    if (!param) return null;
-
-                    const value = currentState[param.id] || 0;
-                    const { isNormal, isCritical } = getParameterStatus(param.id, value);
-
-                    return (
-                      <MonitorDisplay
-                        key={param.id}
-                        label={param.nome}
-                        value={value}
-                        unit={param.unidade || ""}
-                        isNormal={isNormal}
-                        isCritical={isCritical}
-                        tooltip={parameterDescriptions[param.nome]}
-                        trend={getParameterTrend(param.id, value)}
-                        previousValue={previousState[param.id]}
-                      />
-                    );
-                  })}
-                </div>
-
-                {/* Heartbeat Line Indicator */}
-                {isRunning && (
-                  <div className="mt-6 flex items-center gap-2 text-monitor-text/70">
-                    <div className="h-2 w-2 rounded-full bg-monitor-normal animate-pulse" />
-                    <span className="text-sm font-mono">SIMULAÇÃO ATIVA</span>
-                  </div>
-                )}
+              <div className="flex gap-4">
+                <Badge variant="outline" className="text-lg px-4 py-2">
+                  🎯 Metas: {goalPoints}
+                </Badge>
+                <Badge variant="outline" className="text-lg px-4 py-2">
+                  🔬 Diagnósticos: {diagnosticPoints}
+                </Badge>
               </div>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* HP Display */}
-            <div className="max-w-2xl mx-auto">
-              <HPDisplay 
-                hp={hp} 
-                elapsedTime={elapsedTime} 
-                gameStatus={gameStatus}
-                animalType={caseData?.especie || ""}
-                lastHpChange={lastHpChange}
-              />
-            </div>
+        {/* ÁREA PRINCIPAL DE SIMULAÇÃO */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+          {/* Coluna Esquerda: Monitor do Paciente */}
+          <div className="space-y-6">
+            <PatientMonitor
+              hp={hp}
+              elapsedTime={elapsedTime}
+              gameStatus={gameStatus}
+              animalType={caseData?.especie || ""}
+              lastHpChange={lastHpChange}
+              parameters={parameters}
+              currentState={currentState}
+              getParameterStatus={getParameterStatus}
+              getParameterTrend={getParameterTrend}
+            />
 
-            {/* Additional Parameters (Secondary Monitor) */}
-            <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                <span className="h-1 w-8 bg-primary rounded-full" />
-                Parâmetros Secundários
-              </h2>
-              <div className="p-6 rounded-xl bg-card border-2 shadow-card">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Metas de Aprendizado */}
+            <LearningGoals
+              key={selectedCaseId}
+              caseId={selectedCaseId}
+              currentState={currentState}
+              parameters={parameters}
+              elapsedTime={elapsedTime}
+              onGoalAchieved={handleGoalAchieved}
+            />
+
+            {/* Parâmetros Secundários */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Parâmetros Secundários</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {parameters
                     .filter((p) => !mainParameters.includes(p.nome))
                     .map((param) => {
@@ -424,16 +394,20 @@ const Index = () => {
                       const { isNormal, isCritical } = getParameterStatus(param.id, value);
 
                       return (
-                        <div key={param.id} className="space-y-1">
+                        <div key={param.id} className={`p-2 rounded-lg border ${
+                          isCritical ? 'border-destructive bg-destructive/10' : 
+                          !isNormal ? 'border-warning bg-warning/10' : 
+                          'border-success bg-success/10'
+                        }`}>
                           <div className="text-xs text-muted-foreground font-medium">
                             {param.nome}
                           </div>
-                          <div className={`text-2xl font-bold font-mono ${
+                          <div className={`text-lg font-bold font-mono ${
                             isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
                           }`}>
                             {value.toFixed(2)}
                             {param.unidade && (
-                              <span className="text-sm ml-1 text-muted-foreground">
+                              <span className="text-xs ml-1 text-muted-foreground">
                                 {param.unidade}
                               </span>
                             )}
@@ -442,98 +416,48 @@ const Index = () => {
                       );
                     })}
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
+          </div>
 
-            {/* Learning Goals, Treatments, Diagnostic Challenge, and Reports in Grid */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-8">
-                <LearningGoals
-                  key={selectedCaseId}
-                  caseId={selectedCaseId}
-                  currentState={currentState}
-                  parameters={parameters}
-                  elapsedTime={elapsedTime}
-                  onGoalAchieved={handleGoalAchieved}
-                />
-
-                <DiagnosticChallenge
-                  caseId={selectedCaseId}
-                  currentState={currentState}
-                  parameters={parameters}
-                  onSuccess={() => {
-                    setDiagnosticPoints(prev => prev + 10);
-                    changeHp(5); // Bônus de HP por diagnóstico correto
-                  }}
-                  disabled={!isRunning}
-                />
-
-                <TreatmentPanel
-                  treatments={treatments}
-                  onApplyTreatment={handleApplyTreatment}
-                  disabled={!isRunning}
-                />
-
-                <TreatmentHints
-                  currentState={currentState}
-                  parameters={parameters}
-                  caseData={caseData}
-                  onHpChange={changeHp}
-                  disabled={!isRunning}
-                  simulationMode={simulationMode}
-                  availableTreatments={treatments}
-                />
-              </div>
-
-              <div className="space-y-8">
-                <ReportPanel
-                  parameters={parameters}
-                  currentState={currentState}
-                  caseData={caseData}
-                  history={history}
-                />
-
-                <SimulationNotes
-                  caseId={selectedCaseId}
-                  elapsedTime={elapsedTime}
-                  currentState={currentState}
-                  onNotesChange={setAddTreatmentLogFn}
-                />
-
-                {/* Feedback Report (appears when session ends in evaluation mode) */}
-                {completedSessionId && simulationMode === 'evaluation' && (
-                  <SessionFeedbackReport 
-                    sessionId={completedSessionId}
-                  />
-                )}
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="biblioteca">
-            <CaseLibrary 
-              selectedCaseId={selectedCaseId}
-              onCaseSelect={(id) => handleCaseChange(id.toString())}
-            />
-          </TabsContent>
-
-          <TabsContent value="evolucao">
-            <ParameterChart 
-              history={history}
+          {/* Coluna Direita: Workspace */}
+          <div>
+            <SimulationWorkspace
+              isRunning={isRunning}
+              simulationMode={simulationMode}
+              treatments={treatments}
+              onApplyTreatment={handleApplyTreatment}
+              currentState={currentState}
               parameters={parameters}
-              selectedParameters={parameters.filter(p => mainParameters.includes(p.nome)).map(p => p.id)}
+              caseData={caseData}
+              onHpChange={changeHp}
+              caseId={selectedCaseId}
+              elapsedTime={elapsedTime}
+              onDiagnosticSuccess={() => {
+                setDiagnosticPoints(prev => prev + 10);
+                changeHp(5);
+              }}
+              onNotesChange={setAddTreatmentLogFn}
             />
-          </TabsContent>
+          </div>
+        </div>
 
-          <TabsContent value="comparacao">
-            {user && (
-              <SessionComparison
-                currentCaseId={selectedCaseId}
-                userId={user.id}
+        {/* Gráfico de Evolução */}
+        <div className="mb-6">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg">Evolução Temporal</CardTitle>
+              <CardDescription>Linha do tempo dos parâmetros principais</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ParameterChart 
+                history={history}
+                parameters={parameters}
+                selectedParameters={parameters.filter(p => mainParameters.includes(p.nome)).map(p => p.id)}
               />
-            )}
-          </TabsContent>
-        </Tabs>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Feedback Visual de Tratamento */}
         {feedbackData && (
@@ -548,23 +472,88 @@ const Index = () => {
           />
         )}
 
-        {/* Statistics and Advanced Features */}
-        <div className="space-y-8">
-          <BadgeSystem />
-          <PerformanceStatistics caseId={selectedCaseId} />
-          <AdvancedReports userRole={userRole || undefined} />
-          <PerformanceStats caseId={selectedCaseId} />
-          <SessionHistory caseId={selectedCaseId} />
+        {/* Relatório de Feedback (Modo Avaliação) */}
+        {completedSessionId && simulationMode === 'evaluation' && (
+          <div className="mb-6">
+            <SessionFeedbackReport sessionId={completedSessionId} />
+          </div>
+        )}
+
+        {/* SEÇÃO DE RELATÓRIOS E ESTATÍSTICAS */}
+        <Separator className="my-8" />
+        
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <Activity className="h-6 w-6 text-primary" />
+            Relatórios e Estatísticas
+          </h2>
+
+          <Tabs defaultValue="desempenho" className="w-full">
+            <TabsList className="grid w-full grid-cols-5">
+              <TabsTrigger value="desempenho">Desempenho</TabsTrigger>
+              <TabsTrigger value="historico">Histórico</TabsTrigger>
+              <TabsTrigger value="comparacao">Comparação</TabsTrigger>
+              <TabsTrigger value="badges">Badges</TabsTrigger>
+              <TabsTrigger value="biblioteca">Biblioteca</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="desempenho" className="space-y-6">
+              <PerformanceStatistics caseId={selectedCaseId} />
+              <PerformanceStats caseId={selectedCaseId} />
+            </TabsContent>
+
+            <TabsContent value="historico">
+              <SessionHistory caseId={selectedCaseId} />
+            </TabsContent>
+
+            <TabsContent value="comparacao">
+              {user && (
+                <SessionComparison
+                  currentCaseId={selectedCaseId}
+                  userId={user.id}
+                />
+              )}
+            </TabsContent>
+
+            <TabsContent value="badges">
+              <BadgeSystem />
+            </TabsContent>
+
+            <TabsContent value="biblioteca">
+              <CaseLibrary 
+                selectedCaseId={selectedCaseId}
+                onCaseSelect={(id) => handleCaseChange(id.toString())}
+              />
+            </TabsContent>
+          </Tabs>
+
+          {userRole === "professor" && (
+            <AdvancedReports userRole={userRole} />
+          )}
         </div>
 
-
-        {/* Footer Info */}
-        <div className="mt-12 text-center text-sm text-muted-foreground">
+        {/* Footer */}
+        <div className="mt-12 text-center text-sm text-muted-foreground border-t pt-6">
           <p>
             Simulador desenvolvido para fins educacionais e pesquisa em medicina veterinária
           </p>
         </div>
       </div>
+
+      {/* Tutorial */}
+      {showTutorial && selectedCaseId && (
+        <Dialog open={showTutorial} onOpenChange={setShowTutorial}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Tutorial Guiado</DialogTitle>
+              <DialogDescription>
+                Aprenda a usar o simulador passo a passo
+              </DialogDescription>
+            </DialogHeader>
+            <GuidedTutorial caseId={selectedCaseId} onClose={() => setShowTutorial(false)} />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
