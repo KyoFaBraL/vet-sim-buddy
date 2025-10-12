@@ -313,7 +313,7 @@ const Index = () => {
             hp={hp} 
             elapsedTime={elapsedTime} 
             gameStatus={gameStatus}
-            animalType={caseData?.paciente || ""}
+            animalType={caseData?.especie || ""}
             lastHpChange={lastHpChange}
           />
         </div>
