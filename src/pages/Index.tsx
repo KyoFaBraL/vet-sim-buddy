@@ -7,7 +7,7 @@ import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
 import { LearningGoals } from "@/components/LearningGoals";
 import { RoleSelector } from "@/components/RoleSelector";
-import { VoiceCommands } from "@/components/VoiceCommands";
+
 import { useUserRole } from "@/hooks/useUserRole";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
@@ -423,21 +423,6 @@ const Index = () => {
           />
         )}
 
-        {/* Comandos de Voz */}
-        {selectedCaseId && (
-          <VoiceCommands
-            enabled={isRunning}
-            onCommand={(command) => {
-              if (command.includes("parar") || command.includes("pausar")) {
-                if (isRunning) toggleSimulation();
-              } else if (command.includes("iniciar") || command.includes("começar")) {
-                if (!isRunning) toggleSimulation();
-              } else if (command.includes("resetar") || command.includes("reiniciar")) {
-                resetSimulation();
-              }
-            }}
-          />
-        )}
 
         {/* Controles de Simulação */}
         <Card>

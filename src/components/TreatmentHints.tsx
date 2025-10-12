@@ -84,7 +84,8 @@ export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange,
           parameters,
           condition: caseData?.condicoes?.nome || "Desconhecida",
           caseDescription: caseData?.descricao || "Sem descrição",
-          availableTreatments
+          availableTreatments,
+          caseId: caseData?.id
         }
       });
 

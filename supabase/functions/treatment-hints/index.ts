@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { currentState, parameters, condition, caseDescription, availableTreatments } = await req.json();
+    const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = await req.json();
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -28,10 +28,41 @@ serve(async (req) => {
       return `${p.nome}: ${value.toFixed(2)} ${p.unidade || ''} (Normal: ${min}-${max}) ${isAbnormal ? '⚠️ ANORMAL' : '✓'}`;
     }).join('\n');
 
+    // Se temos caseId, buscar tratamentos adequados específicos do caso
+    let appropriateTreatments: Array<{nome: string, descricao: string, prioridade: number, justificativa: string}> = [];
+    if (caseId) {
+      const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.74.0');
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      const { data: caseTreatments } = await supabase
+        .from('tratamentos_caso')
+        .select('tratamento_id, prioridade, justificativa, tratamentos(nome, descricao)')
+        .eq('case_id', caseId)
+        .order('prioridade', { ascending: true });
+      
+      if (caseTreatments && caseTreatments.length > 0) {
+        appropriateTreatments = caseTreatments.map((ct: any) => ({
+          nome: ct.tratamentos.nome,
+          descricao: ct.tratamentos.descricao,
+          prioridade: ct.prioridade,
+          justificativa: ct.justificativa
+        }));
+      }
+    }
+
     // Construir lista de tratamentos disponíveis
     const treatmentsContext = availableTreatments.map((t: any) => 
       `- ${t.nome}: ${t.descricao || ''}`
     ).join('\n');
+    
+    // Se temos tratamentos adequados, adicionar contexto adicional
+    const appropriateTreatmentsContext = appropriateTreatments.length > 0 
+      ? `\n\nTRATAMENTOS ADEQUADOS PARA ESTE CASO (priorize estes):\n${appropriateTreatments.map((t: any) => 
+          `- ${t.nome} (Prioridade ${t.prioridade}): ${t.justificativa || t.descricao}`
+        ).join('\n')}`
+      : '';
 
     const systemPrompt = `Você é um especialista em medicina veterinária, focado em distúrbios ácido-base e tratamento de emergências.
 Sua função é analisar o estado atual do paciente e fornecer dicas progressivas de tratamento.
@@ -52,7 +83,7 @@ PARÂMETROS ATUAIS:
 ${parametersContext}
 
 TRATAMENTOS DISPONÍVEIS:
-${treatmentsContext}
+${treatmentsContext}${appropriateTreatmentsContext}
 
 Com base neste estado, forneça 2-3 dicas progressivas de tratamento. Para cada dica:
 1. Identifique o problema principal

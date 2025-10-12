@@ -330,24 +330,25 @@ export const useSimulation = (caseId: number = 1) => {
 
       // Verificar se é caso personalizado (tem user_id)
       if (caseData?.user_id) {
-        // Usar IA para analisar caso personalizado
-        try {
-          const { data: analysisData, error: aiError } = await supabase.functions.invoke('analyze-custom-case', {
-            body: { 
-              caseData, 
-              treatmentName: treatmentData.nome,
-              currentState
-            }
-          });
+        // Verificar na tabela tratamentos_caso para casos personalizados
+        const { data: caseTreatment } = await supabase
+          .from("tratamentos_caso")
+          .select("prioridade, justificativa")
+          .eq("case_id", caseData?.id)
+          .eq("tratamento_id", treatmentId)
+          .maybeSingle();
 
-          if (!aiError && analysisData) {
-            isAdequate = analysisData.adequado;
-            eficacia = analysisData.eficacia;
-            justificativa = analysisData.justificativa;
-            hpChange = isAdequate ? 20 : -15;
+        isAdequate = !!caseTreatment;
+        eficacia = isAdequate ? 1.0 : 0.3;
+        justificativa = caseTreatment?.justificativa || "";
+        
+        if (caseTreatment) {
+          switch (caseTreatment.prioridade) {
+            case 1: hpChange = 25; break;
+            case 2: hpChange = 15; break;
+            case 3: hpChange = 10; break;
+            default: hpChange = 10; break;
           }
-        } catch (error) {
-          console.error('Erro ao analisar caso personalizado:', error);
         }
       } else {
         // Verificar gabarito para casos pré-definidos
@@ -367,6 +368,7 @@ export const useSimulation = (caseId: number = 1) => {
             case 1: hpChange = 25; break;
             case 2: hpChange = 15; break;
             case 3: hpChange = 10; break;
+            default: hpChange = 10; break;
           }
         }
       }
