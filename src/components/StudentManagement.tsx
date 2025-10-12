@@ -3,9 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { UserPlus, X, Users, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -23,16 +25,44 @@ interface Student {
   criado_em: string;
   ativo: boolean;
   notas: string | null;
+  turma_id: string | null;
+}
+
+interface Turma {
+  id: string;
+  nome: string;
 }
 
 export const StudentManagement = () => {
   const [students, setStudents] = useState<Student[]>([]);
+  const [turmas, setTurmas] = useState<Turma[]>([]);
   const [studentEmail, setStudentEmail] = useState("");
+  const [selectedTurma, setSelectedTurma] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadStudents();
+    loadTurmas();
   }, []);
+
+  const loadTurmas = async () => {
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) return;
+
+      const { data, error } = await supabase
+        .from("turmas")
+        .select("id, nome")
+        .eq("professor_id", userData.user.id)
+        .eq("ativo", true)
+        .order("nome");
+
+      if (error) throw error;
+      setTurmas(data || []);
+    } catch (error) {
+      console.error("Erro ao carregar turmas:", error);
+    }
+  };
 
   const loadStudents = async () => {
     try {
@@ -42,7 +72,7 @@ export const StudentManagement = () => {
       // Buscar relacionamentos professor-aluno
       const { data: relationships, error: relError } = await supabase
         .from("professor_students")
-        .select("id, student_id, criado_em, ativo, notas")
+        .select("id, student_id, criado_em, ativo, notas, turma_id")
         .eq("professor_id", userData.user.id)
         .eq("ativo", true);
 
@@ -73,6 +103,7 @@ export const StudentManagement = () => {
           criado_em: rel.criado_em,
           ativo: rel.ativo,
           notas: rel.notas,
+          turma_id: rel.turma_id,
         };
       });
 
@@ -83,7 +114,9 @@ export const StudentManagement = () => {
     }
   };
 
-  const addStudent = async () => {
+  const addStudent = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    
     if (!studentEmail.trim()) {
       toast.error("Digite o email do aluno");
       return;
@@ -117,6 +150,7 @@ export const StudentManagement = () => {
         .insert({
           professor_id: userData.user.id,
           student_id: studentId,
+          turma_id: selectedTurma || null,
         });
 
       if (insertError) {
@@ -130,12 +164,29 @@ export const StudentManagement = () => {
 
       toast.success("Aluno adicionado com sucesso!");
       setStudentEmail("");
+      setSelectedTurma("");
       loadStudents();
     } catch (error) {
       console.error("Erro ao adicionar aluno:", error);
       toast.error("Erro ao adicionar aluno");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const changeTurma = async (studentRelId: string, turmaId: string | null) => {
+    try {
+      const { error } = await supabase
+        .from("professor_students")
+        .update({ turma_id: turmaId })
+        .eq("id", studentRelId);
+
+      if (error) throw error;
+      toast.success("Turma atualizada!");
+      loadStudents();
+    } catch (error) {
+      console.error("Erro ao alterar turma:", error);
+      toast.error("Erro ao alterar turma do aluno");
     }
   };
 
@@ -202,21 +253,41 @@ export const StudentManagement = () => {
       <CardContent>
         <div className="space-y-4">
           {/* Adicionar Aluno */}
-          <div className="flex gap-2">
-            <Input
-              placeholder="Email do aluno"
-              value={studentEmail}
-              onChange={(e) => setStudentEmail(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && addStudent()}
-            />
-            <Button
-              onClick={addStudent}
-              disabled={isLoading}
-            >
+          <form onSubmit={addStudent} className="space-y-4">
+            <div className="grid gap-4">
+              <div>
+                <Label htmlFor="email">Email do Aluno</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="aluno@exemplo.com"
+                  value={studentEmail}
+                  onChange={(e) => setStudentEmail(e.target.value)}
+                  disabled={isLoading}
+                />
+              </div>
+              <div>
+                <Label htmlFor="turma">Turma (Opcional)</Label>
+                <Select value={selectedTurma} onValueChange={setSelectedTurma}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione uma turma" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Sem turma</SelectItem>
+                    {turmas.map((turma) => (
+                      <SelectItem key={turma.id} value={turma.id}>
+                        {turma.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <Button type="submit" disabled={isLoading}>
               <UserPlus className="h-4 w-4 mr-2" />
-              Adicionar
+              {isLoading ? "Adicionando..." : "Adicionar Aluno"}
             </Button>
-          </div>
+          </form>
 
           {/* Lista de Alunos */}
           {students.length === 0 ? (
@@ -231,6 +302,7 @@ export const StudentManagement = () => {
                 <TableRow>
                   <TableHead>Nome</TableHead>
                   <TableHead>Email</TableHead>
+                  <TableHead>Turma</TableHead>
                   <TableHead>Cadastrado em</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
@@ -242,6 +314,24 @@ export const StudentManagement = () => {
                       {student.nome_completo}
                     </TableCell>
                     <TableCell>{student.email}</TableCell>
+                    <TableCell>
+                      <Select
+                        value={student.turma_id || ""}
+                        onValueChange={(value) => changeTurma(student.id, value || null)}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Sem turma" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">Sem turma</SelectItem>
+                          {turmas.map((turma) => (
+                            <SelectItem key={turma.id} value={turma.id}>
+                              {turma.nome}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
                     <TableCell>
                       {new Date(student.criado_em).toLocaleDateString("pt-BR")}
                     </TableCell>

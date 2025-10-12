@@ -322,6 +322,7 @@ export type Database = {
           notas: string | null
           professor_id: string
           student_id: string
+          turma_id: string | null
         }
         Insert: {
           ativo?: boolean
@@ -330,6 +331,7 @@ export type Database = {
           notas?: string | null
           professor_id: string
           student_id: string
+          turma_id?: string | null
         }
         Update: {
           ativo?: boolean
@@ -338,8 +340,17 @@ export type Database = {
           notas?: string | null
           professor_id?: string
           student_id?: string
+          turma_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "professor_students_turma_id_fkey"
+            columns: ["turma_id"]
+            isOneToOne: false
+            referencedRelation: "turmas"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -722,6 +733,42 @@ export type Database = {
           justificativa?: string | null
           prioridade?: number
           tratamento_id?: number
+        }
+        Relationships: []
+      }
+      turmas: {
+        Row: {
+          ano_letivo: string | null
+          ativo: boolean
+          atualizado_em: string
+          criado_em: string
+          descricao: string | null
+          id: string
+          nome: string
+          periodo: string | null
+          professor_id: string
+        }
+        Insert: {
+          ano_letivo?: string | null
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          nome: string
+          periodo?: string | null
+          professor_id: string
+        }
+        Update: {
+          ano_letivo?: string | null
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          nome?: string
+          periodo?: string | null
+          professor_id?: string
         }
         Relationships: []
       }

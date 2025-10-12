@@ -22,6 +22,7 @@ import { GuidedTutorial } from "@/components/GuidedTutorial";
 import { AdvancedReports } from "@/components/AdvancedReports";
 import { TreatmentFeedback } from "@/components/TreatmentFeedback";
 import { CaseLibrary } from "@/components/CaseLibrary";
+import { ClassManager } from "@/components/ClassManager";
 import { StudentManagement } from "@/components/StudentManagement";
 import { StudentReports } from "@/components/StudentReports";
 import { SimulationModeSelector } from "@/components/SimulationModeSelector";
@@ -299,12 +300,16 @@ const Index = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue="students" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="students">Gerenciar Alunos</TabsTrigger>
-                    <TabsTrigger value="reports">Relatórios Alunos</TabsTrigger>
+                <Tabs defaultValue="classes" className="w-full">
+                  <TabsList className="grid w-full grid-cols-4">
+                    <TabsTrigger value="classes">Turmas</TabsTrigger>
+                    <TabsTrigger value="students">Alunos</TabsTrigger>
+                    <TabsTrigger value="reports">Relatórios</TabsTrigger>
                     <TabsTrigger value="library">Biblioteca</TabsTrigger>
                   </TabsList>
+                  <TabsContent value="classes" className="space-y-4">
+                    <ClassManager />
+                  </TabsContent>
                   <TabsContent value="students" className="space-y-4">
                     <StudentManagement />
                   </TabsContent>
