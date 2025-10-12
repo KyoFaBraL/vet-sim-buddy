@@ -167,15 +167,55 @@ export const useSimulation = (caseId: number = 1) => {
 
       if (treatmentError) throw treatmentError;
 
-      // Verificar se o tratamento é adequado para a condição
-      const { data: adequateTreatment } = await supabase
-        .from("tratamentos_adequados")
-        .select("prioridade")
-        .eq("condicao_id", caseData?.id_condicao_primaria)
-        .eq("tratamento_id", treatmentId)
-        .maybeSingle();
+      let isAdequate = false;
+      let eficacia = 0.3;
+      let justificativa = "";
+      let hpChange = -15;
 
-      // Carregar efeitos do tratamento
+      // Verificar se é caso personalizado (tem user_id)
+      if (caseData?.user_id) {
+        // Usar IA para analisar caso personalizado
+        try {
+          const { data: analysisData, error: aiError } = await supabase.functions.invoke('analyze-custom-case', {
+            body: { 
+              caseData, 
+              treatmentName: treatmentData.nome,
+              currentState
+            }
+          });
+
+          if (!aiError && analysisData) {
+            isAdequate = analysisData.adequado;
+            eficacia = analysisData.eficacia;
+            justificativa = analysisData.justificativa;
+            hpChange = isAdequate ? 20 : -15;
+          }
+        } catch (error) {
+          console.error('Erro ao analisar caso personalizado:', error);
+        }
+      } else {
+        // Verificar gabarito para casos pré-definidos
+        const { data: adequateTreatment } = await supabase
+          .from("tratamentos_adequados")
+          .select("prioridade, justificativa")
+          .eq("condicao_id", caseData?.id_condicao_primaria)
+          .eq("tratamento_id", treatmentId)
+          .maybeSingle();
+
+        isAdequate = !!adequateTreatment;
+        eficacia = isAdequate ? 1.0 : 0.3;
+        justificativa = adequateTreatment?.justificativa || "";
+        
+        if (adequateTreatment) {
+          switch (adequateTreatment.prioridade) {
+            case 1: hpChange = 25; break;
+            case 2: hpChange = 15; break;
+            case 3: hpChange = 10; break;
+          }
+        }
+      }
+
+      // Carregar e aplicar efeitos do tratamento
       const { data: treatmentEffects, error } = await supabase
         .from("efeitos_tratamento")
         .select("*")
@@ -183,50 +223,23 @@ export const useSimulation = (caseId: number = 1) => {
 
       if (error) throw error;
 
-      // Aplicar efeitos aos parâmetros APENAS se forem adequados ou permitir com penalidade menor
       setCurrentState((prevState) => {
         const newState = { ...prevState };
         
-        // Aplicar os efeitos do tratamento nos parâmetros
         treatmentEffects?.forEach((effect) => {
           const currentValue = newState[effect.id_parametro] || 0;
           const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
-          
-          // Se o tratamento é adequado, aplica efeito completo
-          // Se não é adequado, aplica apenas 30% do efeito (penalidade)
-          const effectMultiplier = adequateTreatment ? 1.0 : 0.3;
-          newState[effect.id_parametro] = currentValue + (magnitude * effectMultiplier);
+          newState[effect.id_parametro] = currentValue + (magnitude * eficacia);
         });
         
         return newState;
       });
-
-      // Calcular impacto no HP baseado na adequação do tratamento
-      let hpChange = 0;
-      if (adequateTreatment) {
-        // Tratamento adequado - ganha HP
-        switch (adequateTreatment.prioridade) {
-          case 1: // Alta prioridade
-            hpChange = 25;
-            break;
-          case 2: // Média prioridade
-            hpChange = 15;
-            break;
-          case 3: // Baixa prioridade
-            hpChange = 10;
-            break;
-        }
-      } else {
-        // Tratamento inadequado - perde HP
-        hpChange = -15;
-      }
 
       setLastHpChange(hpChange);
       
       setHp(prev => {
         const newHp = Math.min(100, Math.max(0, prev + hpChange));
         
-        // Verificar vitória
         if (newHp >= 100 && gameStatus === 'playing') {
           setGameStatus('won');
           setIsRunning(false);
@@ -237,7 +250,6 @@ export const useSimulation = (caseId: number = 1) => {
           });
         }
         
-        // Verificar derrota
         if (newHp <= 0 && gameStatus === 'playing') {
           setGameStatus('lost');
           setIsRunning(false);
@@ -252,9 +264,9 @@ export const useSimulation = (caseId: number = 1) => {
       });
 
       toast({
-        title: adequateTreatment ? "✓ Tratamento Correto" : "✗ Tratamento Inadequado",
-        description: `${treatmentData.nome} foi aplicado. HP ${hpChange > 0 ? '+' : ''}${hpChange}`,
-        variant: adequateTreatment ? "default" : "destructive",
+        title: isAdequate ? "✓ Tratamento Correto" : "✗ Tratamento Inadequado",
+        description: justificativa || `${treatmentData.nome} foi aplicado. HP ${hpChange > 0 ? '+' : ''}${hpChange}`,
+        variant: isAdequate ? "default" : "destructive",
       });
 
       return treatmentData.nome;

@@ -35,7 +35,11 @@ const HPDisplay = ({ hp, elapsedTime, gameStatus, animalType, lastHpChange }: HP
   };
 
   const getAnimalImages = () => {
-    const isCat = animalType?.toLowerCase().includes('gato') || animalType?.toLowerCase().includes('felino');
+    // Detectar tipo de animal (canino ou felino)
+    const isCat = animalType?.toLowerCase().includes('gato') || 
+                  animalType?.toLowerCase().includes('felino') ||
+                  animalType?.toLowerCase().includes('cat');
+    
     return {
       normal: isCat ? catNormal : dogNormal,
       happy: isCat ? catHappy : dogHappy,
