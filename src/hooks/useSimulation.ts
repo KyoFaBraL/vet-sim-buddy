@@ -30,12 +30,12 @@ export const useSimulation = (caseId: number = 1) => {
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [currentState, setCurrentState] = useState<SimulationState>({});
   const [previousState, setPreviousState] = useState<SimulationState>({});
-  const [effects, setEffects] = useState<Effect[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [caseData, setCaseData] = useState<any>(null);
-  const [history, setHistory] = useState<HistoryPoint[]>([]);
   const [startTime, setStartTime] = useState<number>(Date.now());
   const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [hp, setHp] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
   const { toast } = useToast();
 
   // Carregar dados iniciais
@@ -81,16 +81,9 @@ export const useSimulation = (caseId: number = 1) => {
       });
       setCurrentState(initialState);
 
-      // Carregar efeitos da condição
-      if (caso?.id_condicao_primaria) {
-        const { data: efeitosData, error: efeitosError } = await supabase
-          .from("efeitos_condicao")
-          .select("*")
-          .eq("id_condicao", caso.id_condicao_primaria);
-
-        if (efeitosError) throw efeitosError;
-        setEffects(efeitosData || []);
-      }
+      // Resetar HP e game status
+      setHp(0);
+      setGameStatus('playing');
     } catch (error: any) {
       toast({
         title: "Erro ao carregar caso",
@@ -100,45 +93,50 @@ export const useSimulation = (caseId: number = 1) => {
     }
   };
 
-  // Motor da simulação - aplica efeitos aos parâmetros
+  // Motor da simulação - atualiza timer e verifica condição de derrota
   const tick = useCallback(() => {
-    setCurrentState((prevState) => {
-      // Salvar estado anterior antes de atualizar
-      setPreviousState(prevState);
-      
-      const newState = { ...prevState };
-      
-      effects.forEach((effect) => {
-        const currentValue = newState[effect.id_parametro] || 0;
-        const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
-        // Aplicar 10% da magnitude por tick (para evolução gradual)
-        newState[effect.id_parametro] = currentValue + (magnitude * 0.1);
-      });
-
-      // Adicionar ao histórico
-      setHistory((prevHistory) => [
-        ...prevHistory,
-        {
-          timestamp: Date.now() - startTime,
-          values: { ...newState },
-        },
-      ]);
-
-      return newState;
+    setPreviousState(currentState);
+    setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
+    
+    // Perder HP com o tempo (deterioração do paciente)
+    setHp(prev => {
+      const newHp = Math.max(0, prev - 2);
+      if (newHp <= 0 && gameStatus === 'playing') {
+        setGameStatus('lost');
+        setIsRunning(false);
+        toast({
+          title: "Paciente faleceu",
+          description: "O HP chegou a zero. Tente novamente!",
+          variant: "destructive",
+        });
+      }
+      return newHp;
     });
-  }, [effects, startTime]);
+  }, [currentState, startTime, gameStatus, toast]);
 
   // Timer da simulação
   useEffect(() => {
-    if (!isRunning) return;
+    if (!isRunning || gameStatus !== 'playing') return;
 
     const interval = setInterval(() => {
       tick();
-      setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
-    }, 2000); // Atualiza a cada 2 segundos
+    }, 3000); // Atualiza a cada 3 segundos
 
     return () => clearInterval(interval);
-  }, [isRunning, tick, startTime]);
+  }, [isRunning, tick, gameStatus]);
+
+  // Verificar limite de tempo (10 minutos = 600 segundos)
+  useEffect(() => {
+    if (elapsedTime >= 600 && gameStatus === 'playing') {
+      setGameStatus('lost');
+      setIsRunning(false);
+      toast({
+        title: "Tempo esgotado",
+        description: "O paciente não resistiu. O tempo máximo de 10 minutos foi atingido.",
+        variant: "destructive",
+      });
+    }
+  }, [elapsedTime, gameStatus, toast]);
 
   const toggleSimulation = () => {
     setIsRunning((prev) => !prev);
@@ -146,10 +144,11 @@ export const useSimulation = (caseId: number = 1) => {
 
   const resetSimulation = () => {
     setIsRunning(false);
-    setHistory([]);
     setPreviousState({});
     setStartTime(Date.now());
     setElapsedTime(0);
+    setHp(0);
+    setGameStatus('playing');
     loadCase();
   };
 
@@ -164,6 +163,14 @@ export const useSimulation = (caseId: number = 1) => {
 
       if (treatmentError) throw treatmentError;
 
+      // Verificar se o tratamento é adequado para a condição
+      const { data: adequateTreatment } = await supabase
+        .from("tratamentos_adequados")
+        .select("prioridade")
+        .eq("condicao_id", caseData?.id_condicao_primaria)
+        .eq("tratamento_id", treatmentId)
+        .maybeSingle();
+
       // Carregar efeitos do tratamento
       const { data: treatmentEffects, error } = await supabase
         .from("efeitos_tratamento")
@@ -172,7 +179,7 @@ export const useSimulation = (caseId: number = 1) => {
 
       if (error) throw error;
 
-      // Aplicar efeitos imediatamente
+      // Aplicar efeitos imediatamente aos parâmetros
       setCurrentState((prevState) => {
         const newState = { ...prevState };
         treatmentEffects?.forEach((effect) => {
@@ -183,9 +190,58 @@ export const useSimulation = (caseId: number = 1) => {
         return newState;
       });
 
+      // Calcular impacto no HP baseado na adequação do tratamento
+      let hpChange = 0;
+      if (adequateTreatment) {
+        // Tratamento adequado - ganha HP
+        switch (adequateTreatment.prioridade) {
+          case 1: // Alta prioridade
+            hpChange = 25;
+            break;
+          case 2: // Média prioridade
+            hpChange = 15;
+            break;
+          case 3: // Baixa prioridade
+            hpChange = 10;
+            break;
+        }
+      } else {
+        // Tratamento inadequado - perde HP
+        hpChange = -15;
+      }
+
+      setHp(prev => {
+        const newHp = Math.min(100, Math.max(0, prev + hpChange));
+        
+        // Verificar vitória
+        if (newHp >= 100 && gameStatus === 'playing') {
+          setGameStatus('won');
+          setIsRunning(false);
+          toast({
+            title: "🎉 Paciente Estabilizado!",
+            description: "Você conseguiu normalizar o quadro do paciente. Parabéns!",
+            variant: "default",
+          });
+        }
+        
+        // Verificar derrota
+        if (newHp <= 0 && gameStatus === 'playing') {
+          setGameStatus('lost');
+          setIsRunning(false);
+          toast({
+            title: "Paciente faleceu",
+            description: "O HP chegou a zero. Tente novamente!",
+            variant: "destructive",
+          });
+        }
+        
+        return newHp;
+      });
+
       toast({
-        title: "Tratamento aplicado",
-        description: `${treatmentData.nome} foi aplicado ao paciente`,
+        title: adequateTreatment ? "✓ Tratamento Correto" : "✗ Tratamento Inadequado",
+        description: `${treatmentData.nome} foi aplicado. HP ${hpChange > 0 ? '+' : ''}${hpChange}`,
+        variant: adequateTreatment ? "default" : "destructive",
       });
 
       return treatmentData.nome;
@@ -230,11 +286,9 @@ export const useSimulation = (caseId: number = 1) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    // Calcular duração
     const duracao = Math.floor((Date.now() - startTime) / 1000);
 
-    // Criar sessão
-    const { data: session, error: sessionError } = await supabase
+    const { error: sessionError } = await supabase
       .from("simulation_sessions")
       .insert({
         user_id: user.id,
@@ -243,39 +297,18 @@ export const useSimulation = (caseId: number = 1) => {
         notas,
         data_fim: new Date().toISOString(),
         duracao_segundos: duracao,
-        status: 'concluida'
-      })
-      .select()
-      .single();
+        status: gameStatus === 'won' ? 'concluida' : 'em_andamento'
+      });
 
-    if (sessionError || !session) {
+    if (sessionError) {
       console.error("Erro ao salvar sessão:", sessionError);
       return;
-    }
-
-    // Salvar histórico de parâmetros
-    const historyData = history.flatMap(point =>
-      Object.entries(point.values).map(([paramId, value]) => ({
-        session_id: session.id,
-        timestamp: point.timestamp,
-        parametro_id: parseInt(paramId),
-        valor: Number(value)
-      }))
-    );
-
-    const { error: historyError } = await supabase
-      .from("session_history")
-      .insert(historyData);
-
-    if (historyError) {
-      console.error("Erro ao salvar histórico:", historyError);
     }
 
     console.log("Sessão salva com sucesso!");
   };
 
   const loadSession = async (sessionId: string) => {
-    // Carregar dados da sessão
     const { data: session, error: sessionError } = await supabase
       .from("simulation_sessions")
       .select("*")
@@ -287,42 +320,10 @@ export const useSimulation = (caseId: number = 1) => {
       return;
     }
 
-    // Carregar histórico
-    const { data: historyData, error: historyError } = await supabase
-      .from("session_history")
-      .select("*")
-      .eq("session_id", sessionId)
-      .order("timestamp");
-
-    if (historyError) {
-      console.error("Erro ao carregar histórico:", historyError);
-      return;
-    }
-
-    // Reconstruir histórico
-    const reconstructedHistory: HistoryPoint[] = [];
-    const timestamps = [...new Set(historyData?.map(h => h.timestamp) || [])];
-
-    timestamps.forEach(timestamp => {
-      const stateAtTime: Record<number, number> = {};
-      historyData
-        ?.filter(h => h.timestamp === timestamp)
-        .forEach(h => {
-          stateAtTime[h.parametro_id] = parseFloat(h.valor.toString());
-        });
-      
-      reconstructedHistory.push({
-        timestamp,
-        values: stateAtTime
-      });
+    toast({
+      title: "Sessão carregada",
+      description: "Sessão anterior foi restaurada",
     });
-
-    setHistory(reconstructedHistory);
-    
-    // Definir estado atual como o último ponto do histórico
-    if (reconstructedHistory.length > 0) {
-      setCurrentState(reconstructedHistory[reconstructedHistory.length - 1].values);
-    }
   };
 
   return {
@@ -331,8 +332,9 @@ export const useSimulation = (caseId: number = 1) => {
     previousState,
     isRunning,
     caseData,
-    history,
     elapsedTime,
+    hp,
+    gameStatus,
     toggleSimulation,
     resetSimulation,
     applyTreatment,

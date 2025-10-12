@@ -4,7 +4,7 @@ import MonitorDisplay from "@/components/MonitorDisplay";
 import CaseInfo from "@/components/CaseInfo";
 import SimulationControls from "@/components/SimulationControls";
 import TreatmentPanel from "@/components/TreatmentPanel";
-import ParameterChart from "@/components/ParameterChart";
+import HPDisplay from "@/components/HPDisplay";
 import ReportPanel from "@/components/ReportPanel";
 import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
@@ -46,8 +46,9 @@ const Index = () => {
     previousState,
     isRunning,
     caseData,
-    history,
     elapsedTime,
+    hp,
+    gameStatus,
     toggleSimulation,
     resetSimulation,
     applyTreatment,
@@ -305,6 +306,15 @@ const Index = () => {
           </div>
         </div>
 
+        {/* HP Display */}
+        <div className="mb-8 max-w-2xl mx-auto">
+          <HPDisplay 
+            hp={hp}
+            elapsedTime={elapsedTime}
+            gameStatus={gameStatus}
+          />
+        </div>
+
         {/* Learning Goals */}
         <div className="mb-8">
           <LearningGoals
@@ -313,14 +323,6 @@ const Index = () => {
             parameters={parameters}
             elapsedTime={elapsedTime}
             onGoalAchieved={handleGoalAchieved}
-          />
-        </div>
-
-        {/* Temporal Charts */}
-        <div className="mb-8">
-          <ParameterChart 
-            history={history}
-            parameters={parameters}
           />
         </div>
 
@@ -334,7 +336,6 @@ const Index = () => {
           <TreatmentPanel
             treatments={treatments}
             onApplyTreatment={handleApplyTreatment}
-            conditionId={caseData?.id_condicao_primaria}
           />
         </div>
 
@@ -354,7 +355,7 @@ const Index = () => {
             caseData={caseData}
             parameters={parameters}
             currentState={currentState}
-            history={history}
+            history={[]}
             appliedTreatments={appliedTreatments}
           />
         </div>
