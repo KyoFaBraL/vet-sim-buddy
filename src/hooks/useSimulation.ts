@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { checkAndAwardBadges } from "@/utils/badgeChecker";
 
 interface Parameter {
   id: number;
@@ -37,6 +38,9 @@ export const useSimulation = (caseId: number = 1) => {
   const [hp, setHp] = useState<number>(50);
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
   const [lastHpChange, setLastHpChange] = useState<number>(0);
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [usedHints, setUsedHints] = useState(false);
+  const [minHpDuringSession, setMinHpDuringSession] = useState(50);
   const { toast } = useToast();
 
   // Carregar dados iniciais
@@ -175,6 +179,9 @@ export const useSimulation = (caseId: number = 1) => {
     setHp(50);
     setGameStatus('playing');
     setLastHpChange(0);
+    setCurrentSessionId(null);
+    setUsedHints(false);
+    setMinHpDuringSession(50);
     loadCase();
   };
 
@@ -261,6 +268,30 @@ export const useSimulation = (caseId: number = 1) => {
       
       setHp(prev => {
         const newHp = Math.min(100, Math.max(0, prev + hpChange));
+        
+        // Atualizar HP mínimo
+        setMinHpDuringSession(minHp => Math.min(minHp, newHp));
+        
+        // Registrar decisão
+        if (currentSessionId) {
+          supabase
+            .from('session_decisions')
+            .insert({
+              session_id: currentSessionId,
+              timestamp_simulacao: elapsedTime,
+              tipo: 'treatment',
+              dados: {
+                nome: treatmentData.nome,
+                adequado: isAdequate,
+                justificativa
+              },
+              hp_antes: prev,
+              hp_depois: newHp
+            })
+            .then(({ error }) => {
+              if (error) console.error('Erro ao registrar decisão:', error);
+            });
+        }
         
         if (newHp >= 100 && gameStatus === 'playing') {
           setGameStatus('won');
@@ -374,22 +405,32 @@ export const useSimulation = (caseId: number = 1) => {
   };
 
   const changeHp = (delta: number) => {
+    if (delta < 0 && delta === -10) {
+      // Registrar uso de dica
+      setUsedHints(true);
+      if (currentSessionId) {
+        supabase
+          .from('session_decisions')
+          .insert({
+            session_id: currentSessionId,
+            timestamp_simulacao: elapsedTime,
+            tipo: 'hint_used',
+            dados: { penalidade: delta },
+            hp_antes: hp,
+            hp_depois: hp + delta
+          })
+          .then(({ error }) => {
+            if (error) console.error('Erro ao registrar uso de dica:', error);
+          });
+      }
+    }
+
     setHp(prev => {
       const newHp = Math.min(100, Math.max(0, prev + delta));
-      
-      if (newHp <= 0 && gameStatus === 'playing') {
-        setGameStatus('lost');
-        setIsRunning(false);
-        toast({
-          title: "Paciente faleceu",
-          description: "O HP chegou a zero. Tente novamente!",
-          variant: "destructive",
-        });
-      }
-      
+      setMinHpDuringSession(minHp => Math.min(minHp, newHp));
+      setLastHpChange(delta);
       return newHp;
     });
-    setLastHpChange(delta);
   };
 
   return {

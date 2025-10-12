@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      badges: {
+        Row: {
+          criado_em: string
+          criterio: Json
+          descricao: string
+          icone: string
+          id: string
+          nome: string
+          tipo: string
+        }
+        Insert: {
+          criado_em?: string
+          criterio: Json
+          descricao: string
+          icone: string
+          id?: string
+          nome: string
+          tipo: string
+        }
+        Update: {
+          criado_em?: string
+          criterio?: Json
+          descricao?: string
+          icone?: string
+          id?: string
+          nome?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
       casos_clinicos: {
         Row: {
           criado_em: string | null
@@ -304,6 +334,47 @@ export type Database = {
           nome_completo?: string | null
         }
         Relationships: []
+      }
+      session_decisions: {
+        Row: {
+          criado_em: string
+          dados: Json
+          hp_antes: number | null
+          hp_depois: number | null
+          id: string
+          session_id: string
+          timestamp_simulacao: number
+          tipo: string
+        }
+        Insert: {
+          criado_em?: string
+          dados: Json
+          hp_antes?: number | null
+          hp_depois?: number | null
+          id?: string
+          session_id: string
+          timestamp_simulacao: number
+          tipo: string
+        }
+        Update: {
+          criado_em?: string
+          dados?: Json
+          hp_antes?: number | null
+          hp_depois?: number | null
+          id?: string
+          session_id?: string
+          timestamp_simulacao?: number
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_decisions_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "simulation_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       session_history: {
         Row: {
@@ -627,6 +698,86 @@ export type Database = {
         }
         Relationships: []
       }
+      tutorial_steps: {
+        Row: {
+          acao_esperada: Json | null
+          case_id: number | null
+          criado_em: string
+          descricao: string
+          dica: string | null
+          id: string
+          ordem: number
+          titulo: string
+        }
+        Insert: {
+          acao_esperada?: Json | null
+          case_id?: number | null
+          criado_em?: string
+          descricao: string
+          dica?: string | null
+          id?: string
+          ordem: number
+          titulo: string
+        }
+        Update: {
+          acao_esperada?: Json | null
+          case_id?: number | null
+          criado_em?: string
+          descricao?: string
+          dica?: string | null
+          id?: string
+          ordem?: number
+          titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tutorial_steps_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "casos_clinicos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_badges: {
+        Row: {
+          badge_id: string
+          conquistado_em: string
+          id: string
+          session_id: string | null
+          user_id: string
+        }
+        Insert: {
+          badge_id: string
+          conquistado_em?: string
+          id?: string
+          session_id?: string | null
+          user_id: string
+        }
+        Update: {
+          badge_id?: string
+          conquistado_em?: string
+          id?: string
+          session_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_badges_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "simulation_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           criado_em: string
@@ -647,6 +798,38 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_tutorial_progress: {
+        Row: {
+          completado: boolean
+          completado_em: string | null
+          id: string
+          tutorial_step_id: string
+          user_id: string
+        }
+        Insert: {
+          completado?: boolean
+          completado_em?: string | null
+          id?: string
+          tutorial_step_id: string
+          user_id: string
+        }
+        Update: {
+          completado?: boolean
+          completado_em?: string | null
+          id?: string
+          tutorial_step_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_tutorial_progress_tutorial_step_id_fkey"
+            columns: ["tutorial_step_id"]
+            isOneToOne: false
+            referencedRelation: "tutorial_steps"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       valores_iniciais_caso: {
         Row: {

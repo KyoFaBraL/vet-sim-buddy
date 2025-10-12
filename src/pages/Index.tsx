@@ -21,6 +21,9 @@ import { SimulationComparison } from "@/components/SimulationComparison";
 import { PerformanceStats } from "@/components/PerformanceStats";
 import { SessionHistory } from "@/components/SessionHistory";
 import { CaseDataPopulator } from "@/components/CaseDataPopulator";
+import { BadgeSystem } from "@/components/BadgeSystem";
+import { GuidedTutorial } from "@/components/GuidedTutorial";
+import { AdvancedReports } from "@/components/AdvancedReports";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -41,6 +44,7 @@ const Index = () => {
   const [availableCases, setAvailableCases] = useState<any[]>([]);
   const [userRole, setUserRole] = useState<"professor" | "aluno" | null>(null);
   const [roleLoading, setRoleLoading] = useState(true);
+  const [showTutorial, setShowTutorial] = useState(true);
   
   const {
     parameters,
@@ -416,6 +420,17 @@ const Index = () => {
 
         {/* Analysis Tools */}
         <div className="mb-8 space-y-4">
+          {/* Tutorial Guiado */}
+          {showTutorial && userRole === "aluno" && (
+            <GuidedTutorial caseId={selectedCaseId} onClose={() => setShowTutorial(false)} />
+          )}
+
+          {/* Badges e Conquistas */}
+          <BadgeSystem />
+
+          {/* Relatórios Avançados */}
+          <AdvancedReports userRole={userRole || undefined} />
+
           <div className="flex gap-4">
             <SimulationComparison caseId={selectedCaseId} parameters={parameters} />
           </div>
