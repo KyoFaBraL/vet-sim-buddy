@@ -111,6 +111,41 @@ const Index = () => {
     }
   };
 
+  const handleCaseAccessed = async (caseId: number) => {
+    try {
+      // Buscar o caso compartilhado diretamente (RLS permite acesso público a casos ativos)
+      const { data: caseData, error } = await supabase
+        .from("casos_clinicos")
+        .select("id, nome, especie, descricao, user_id")
+        .eq("id", caseId)
+        .single();
+
+      if (error) throw error;
+
+      // Adicionar caso à lista se não existir
+      setAvailableCases(prev => {
+        const exists = prev.some(c => c.id === caseId);
+        if (!exists && caseData) {
+          return [...prev, caseData];
+        }
+        return prev;
+      });
+
+      setSelectedCaseId(caseId);
+      toast({
+        title: "Caso carregado!",
+        description: `Você agora tem acesso ao caso "${caseData?.nome}".`,
+      });
+    } catch (error: any) {
+      console.error("Erro ao carregar caso compartilhado:", error);
+      toast({
+        title: "Erro ao carregar caso",
+        description: error.message || "Não foi possível carregar o caso compartilhado.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const loadTreatments = async () => {
     const { data, error } = await supabase
       .from("tratamentos")
@@ -373,15 +408,7 @@ const Index = () => {
 
             {/* Acesso a Casos Compartilhados */}
             <div className="pt-4 border-t">
-              <AccessCodeInput 
-                onCaseAccessed={(caseId) => {
-                  setSelectedCaseId(caseId);
-                  toast({
-                    title: "Caso carregado!",
-                    description: "Você agora tem acesso ao caso compartilhado.",
-                  });
-                }}
-              />
+              <AccessCodeInput onCaseAccessed={handleCaseAccessed} />
             </div>
           </CardContent>
         </Card>
