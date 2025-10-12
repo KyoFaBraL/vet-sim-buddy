@@ -6,7 +6,7 @@ import SimulationControls from "@/components/SimulationControls";
 import { Auth } from "@/components/Auth";
 import { CaseManager } from "@/components/CaseManager";
 import { LearningGoals } from "@/components/LearningGoals";
-import { RoleSelector } from "@/components/RoleSelector";
+
 
 import { useUserRole } from "@/hooks/useUserRole";
 import { CaseShareManager } from "@/components/CaseShareManager";
@@ -186,7 +186,14 @@ const Index = () => {
   }
 
   if (userRole === null) {
-    return <RoleSelector userId={user.id} onRoleSet={() => window.location.reload()} />;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
+        <div className="text-center">
+          <Activity className="h-12 w-12 animate-pulse mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Configurando sua conta...</p>
+        </div>
+      </div>
+    );
   }
 
   // ============================================

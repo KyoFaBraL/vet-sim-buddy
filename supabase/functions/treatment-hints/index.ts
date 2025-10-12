@@ -11,6 +11,15 @@ serve(async (req) => {
   }
 
   try {
+    // Validate authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: corsHeaders }
+      );
+    }
+
     const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = await req.json();
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
@@ -33,8 +42,10 @@ serve(async (req) => {
     if (caseId) {
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.74.0');
       const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-      const supabase = createClient(supabaseUrl, supabaseKey);
+      const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+        global: { headers: { Authorization: authHeader } }
+      });
       
       const { data: caseTreatments } = await supabase
         .from('tratamentos_caso')

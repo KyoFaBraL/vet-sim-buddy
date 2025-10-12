@@ -13,19 +13,31 @@ serve(async (req) => {
   }
 
   try {
+    // Validate authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!;
+
+    // Create client with user's token (enforces RLS)
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
     const { sessionId } = await req.json();
     
     if (!sessionId) {
       throw new Error('Session ID é obrigatório');
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!;
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Buscar dados da sessão
+    // Fetch session data (RLS will ensure user owns this session)
     const { data: session, error: sessionError } = await supabase
       .from('simulation_sessions')
       .select('*, casos_clinicos(*)')
@@ -33,7 +45,10 @@ serve(async (req) => {
       .single();
 
     if (sessionError || !session) {
-      throw new Error('Sessão não encontrada');
+      return new Response(
+        JSON.stringify({ error: 'Session not found or access denied' }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     // Buscar decisões da sessão

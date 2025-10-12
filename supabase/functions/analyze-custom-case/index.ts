@@ -14,6 +14,15 @@ serve(async (req) => {
   }
 
   try {
+    // Validate authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: corsHeaders }
+      );
+    }
+
     const { caseData, treatmentName, currentState } = await req.json();
 
     const prompt = `Você é um veterinário especialista em medicina intensiva. Analise o seguinte caso clínico e o tratamento aplicado.

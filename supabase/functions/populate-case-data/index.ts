@@ -13,6 +13,47 @@ serve(async (req) => {
   }
 
   try {
+    // 1. Validate authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!;
+
+    // 2. Create client with user's token (enforces RLS)
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    // 3. Verify user
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // 4. Check professor role
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .single();
+
+    if (roleData?.role !== 'professor') {
+      return new Response(
+        JSON.stringify({ error: 'Forbidden: Professor role required' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { caseId } = await req.json();
     
     if (!caseId) {
@@ -22,13 +63,7 @@ serve(async (req) => {
       );
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!;
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Buscar dados do caso
+    // 5. Fetch case data (RLS will verify ownership)
     const { data: caseData, error: caseError } = await supabase
       .from('casos_clinicos')
       .select('*, condicoes(*)')
@@ -38,7 +73,7 @@ serve(async (req) => {
     if (caseError || !caseData) {
       console.error('Erro ao buscar caso:', caseError);
       return new Response(
-        JSON.stringify({ error: 'Caso não encontrado' }),
+        JSON.stringify({ error: 'Case not found or access denied' }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
