@@ -31,6 +31,7 @@ export const useSimulation = (caseId: number = 1) => {
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [currentState, setCurrentState] = useState<SimulationState>({});
   const [previousState, setPreviousState] = useState<SimulationState>({});
+  const [history, setHistory] = useState<HistoryPoint[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [caseData, setCaseData] = useState<any>(null);
   const [startTime, setStartTime] = useState<number>(Date.now());
@@ -123,6 +124,12 @@ export const useSimulation = (caseId: number = 1) => {
   const tick = useCallback(() => {
     setPreviousState(currentState);
     setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
+    
+    // Adicionar ponto ao histórico
+    setHistory(prev => [...prev, {
+      timestamp: Date.now() - startTime,
+      values: currentState
+    }]);
   }, [currentState, startTime]);
 
   // Timer da simulação - atualiza a cada segundo
@@ -621,6 +628,7 @@ export const useSimulation = (caseId: number = 1) => {
     parameters,
     currentState,
     previousState,
+    history,
     isRunning,
     caseData,
     elapsedTime,

@@ -24,11 +24,15 @@ import { CaseDataPopulator } from "@/components/CaseDataPopulator";
 import { BadgeSystem } from "@/components/BadgeSystem";
 import { GuidedTutorial } from "@/components/GuidedTutorial";
 import { AdvancedReports } from "@/components/AdvancedReports";
+import { TreatmentFeedback } from "@/components/TreatmentFeedback";
+import { CaseLibrary } from "@/components/CaseLibrary";
+import ParameterChart from "@/components/ParameterChart";
 import { useSimulation } from "@/hooks/useSimulation";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parameterDescriptions } from "@/constants/parameterDescriptions";
 
 interface Treatment {
@@ -50,6 +54,7 @@ const Index = () => {
     parameters,
     currentState,
     previousState,
+    history,
     isRunning,
     caseData,
     elapsedTime,
@@ -68,6 +73,11 @@ const Index = () => {
   const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
   const [goalPoints, setGoalPoints] = useState(0);
   const [addTreatmentLogFn, setAddTreatmentLogFn] = useState<((treatmentName: string) => Promise<void>) | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackData, setFeedbackData] = useState<{
+    treatmentName: string;
+    effects: Array<{nome: string; valorAntes: number; valorDepois: number; unidade: string}>;
+  } | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -144,9 +154,37 @@ const Index = () => {
   ];
 
   const handleApplyTreatment = async (treatmentId: number) => {
+    // Capturar estado antes do tratamento
+    const estadoAntes = { ...currentState };
+    
     const treatmentName = await applyTreatment(treatmentId);
     if (treatmentName) {
       setAppliedTreatments(prev => [...prev, `${new Date().toLocaleTimeString('pt-BR')}: ${treatmentName}`]);
+      
+      // Aguardar um pequeno delay para capturar o novo estado
+      setTimeout(() => {
+        const estadoDepois = currentState;
+        
+        // Identificar parâmetros afetados (principais)
+        const mainParamNames = ['pH', 'PaO2', 'PaCO2', 'FrequenciaCardiaca', 'PressaoArterial', 'Lactato'];
+        const parametrosAfetados = parameters
+          .filter(p => mainParamNames.includes(p.nome))
+          .map(p => ({
+            nome: p.nome,
+            valorAntes: estadoAntes[p.id] || 0,
+            valorDepois: estadoDepois[p.id] || 0,
+            unidade: p.unidade || ''
+          }))
+          .filter(p => Math.abs(p.valorDepois - p.valorAntes) > 0.01); // Apenas mudanças significativas
+
+        if (parametrosAfetados.length > 0) {
+          setFeedbackData({
+            treatmentName,
+            effects: parametrosAfetados
+          });
+          setShowFeedback(true);
+        }
+      }, 100);
       
       // Log tratamento nas notas clínicas automaticamente
       if (addTreatmentLogFn) {
@@ -228,209 +266,234 @@ const Index = () => {
           </div>
         )}
 
-        {/* Case Selection and Management */}
-        <div className="mb-8 grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Selecionar Caso</label>
-            <Select value={selectedCaseId.toString()} onValueChange={handleCaseChange}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {availableCases.map((caso) => (
-                  <SelectItem key={caso.id} value={caso.id.toString()}>
-                    {caso.nome} {caso.user_id ? "(Personalizado)" : ""}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          {userRole === "professor" ? (
-            <>
-              <div>
-                <label className="text-sm font-medium mb-2 block">Compartilhar Caso</label>
-                <CaseShareManager availableCases={availableCases} />
+        {/* Tabs para organizar interface */}
+        <Tabs defaultValue="simulacao" className="mb-8">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3">
+            <TabsTrigger value="simulacao">Simulação</TabsTrigger>
+            <TabsTrigger value="biblioteca">Biblioteca de Casos</TabsTrigger>
+            <TabsTrigger value="evolucao">Evolução Temporal</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="simulacao" className="space-y-8">
+            {/* Case Selection and Management */}
+            <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Caso Selecionado</label>
+                <Select value={selectedCaseId.toString()} onValueChange={handleCaseChange}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableCases.map((caso) => (
+                      <SelectItem key={caso.id} value={caso.id.toString()}>
+                        {caso.nome} {caso.user_id ? "(Personalizado)" : ""}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <div>
-                <label className="text-sm font-medium mb-2 block">IA do Caso</label>
-                <CaseDataPopulator caseId={selectedCaseId} onDataGenerated={loadTreatments} />
-              </div>
-            </>
-          ) : (
-            <div>
-              <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
-              <CaseManager onCaseCreated={loadCases} />
-            </div>
-          )}
-        </div>
-
-        {/* Case Information */}
-        {caseData && (
-          <div className="mb-8">
-            <CaseInfo
-              caseName={caseData.nome}
-              description={caseData.descricao}
-              species={caseData.especie}
-              condition={caseData.condicoes?.nome || "N/A"}
-            />
-          </div>
-        )}
-
-        {/* Simulation Controls */}
-        <div className="mb-8 flex justify-center">
-          <SimulationControls
-            isRunning={isRunning}
-            onToggle={toggleSimulation}
-            onReset={resetSimulation}
-          />
-        </div>
-
-        {/* Monitor Grid */}
-        <div className="mb-8">
-          <div className="p-6 rounded-xl bg-gradient-to-br from-monitor-bg to-monitor-bg/80 border-4 border-monitor-grid shadow-monitor">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {mainParameters.map((paramName) => {
-                const param = parameters.find((p) => p.nome === paramName);
-                if (!param) return null;
-
-                const value = currentState[param.id] || 0;
-                const { isNormal, isCritical } = getParameterStatus(param.id, value);
-
-                return (
-                  <MonitorDisplay
-                    key={param.id}
-                    label={param.nome}
-                    value={value}
-                    unit={param.unidade || ""}
-                    isNormal={isNormal}
-                    isCritical={isCritical}
-                    tooltip={parameterDescriptions[param.nome]}
-                    trend={getParameterTrend(param.id, value)}
-                    previousValue={previousState[param.id]}
-                  />
-                );
-              })}
+              {userRole === "professor" ? (
+                <>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Compartilhar Caso</label>
+                    <CaseShareManager availableCases={availableCases} />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">IA do Caso</label>
+                    <CaseDataPopulator caseId={selectedCaseId} onDataGenerated={loadTreatments} />
+                  </div>
+                </>
+              ) : (
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Gerenciar Casos</label>
+                  <CaseManager onCaseCreated={loadCases} />
+                </div>
+              )}
             </div>
 
-            {/* Heartbeat Line Indicator */}
-            {isRunning && (
-              <div className="mt-6 flex items-center gap-2 text-monitor-text/70">
-                <div className="h-2 w-2 rounded-full bg-monitor-normal animate-pulse" />
-                <span className="text-sm font-mono">SIMULAÇÃO ATIVA</span>
+            {/* Case Information */}
+            {caseData && (
+              <div>
+                <CaseInfo
+                  caseName={caseData.nome}
+                  description={caseData.descricao}
+                  species={caseData.especie}
+                  condition={caseData.condicoes?.nome || "N/A"}
+                />
               </div>
             )}
-          </div>
-        </div>
 
-        {/* HP Display */}
-        <div className="mb-8 max-w-2xl mx-auto">
-          <HPDisplay 
-            hp={hp} 
-            elapsedTime={elapsedTime} 
-            gameStatus={gameStatus}
-            animalType={caseData?.especie || ""}
-            lastHpChange={lastHpChange}
-          />
-        </div>
-
-        {/* Additional Parameters (Secondary Monitor) - Below Patient Display */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <span className="h-1 w-8 bg-primary rounded-full" />
-            Parâmetros Secundários
-          </h2>
-          <div className="p-6 rounded-xl bg-card border-2 shadow-card">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {parameters
-                .filter((p) => !mainParameters.includes(p.nome))
-                .map((param) => {
-                  const value = currentState[param.id] || 0;
-                  const { isNormal, isCritical } = getParameterStatus(param.id, value);
-
-                  return (
-                    <div key={param.id} className="space-y-1">
-                      <div className="text-xs text-muted-foreground font-medium">
-                        {param.nome}
-                      </div>
-                      <div className={`text-2xl font-bold font-mono ${
-                        isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
-                      }`}>
-                        {value.toFixed(2)}
-                        {param.unidade && (
-                          <span className="text-sm ml-1 text-muted-foreground">
-                            {param.unidade}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+            {/* Simulation Controls */}
+            <div className="flex justify-center">
+              <SimulationControls
+                isRunning={isRunning}
+                onToggle={toggleSimulation}
+                onReset={resetSimulation}
+              />
             </div>
-          </div>
-        </div>
 
-        {/* Learning Goals */}
-        <div className="mb-8">
-          <LearningGoals
-            key={selectedCaseId}
-            caseId={selectedCaseId}
-            currentState={currentState}
-            parameters={parameters}
-            elapsedTime={elapsedTime}
-            onGoalAchieved={handleGoalAchieved}
+            {/* Monitor Grid */}
+            <div>
+              <div className="p-6 rounded-xl bg-gradient-to-br from-monitor-bg to-monitor-bg/80 border-4 border-monitor-grid shadow-monitor">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {mainParameters.map((paramName) => {
+                    const param = parameters.find((p) => p.nome === paramName);
+                    if (!param) return null;
+
+                    const value = currentState[param.id] || 0;
+                    const { isNormal, isCritical } = getParameterStatus(param.id, value);
+
+                    return (
+                      <MonitorDisplay
+                        key={param.id}
+                        label={param.nome}
+                        value={value}
+                        unit={param.unidade || ""}
+                        isNormal={isNormal}
+                        isCritical={isCritical}
+                        tooltip={parameterDescriptions[param.nome]}
+                        trend={getParameterTrend(param.id, value)}
+                        previousValue={previousState[param.id]}
+                      />
+                    );
+                  })}
+                </div>
+
+                {/* Heartbeat Line Indicator */}
+                {isRunning && (
+                  <div className="mt-6 flex items-center gap-2 text-monitor-text/70">
+                    <div className="h-2 w-2 rounded-full bg-monitor-normal animate-pulse" />
+                    <span className="text-sm font-mono">SIMULAÇÃO ATIVA</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* HP Display */}
+            <div className="max-w-2xl mx-auto">
+              <HPDisplay 
+                hp={hp} 
+                elapsedTime={elapsedTime} 
+                gameStatus={gameStatus}
+                animalType={caseData?.especie || ""}
+                lastHpChange={lastHpChange}
+              />
+            </div>
+
+            {/* Additional Parameters (Secondary Monitor) */}
+            <div>
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span className="h-1 w-8 bg-primary rounded-full" />
+                Parâmetros Secundários
+              </h2>
+              <div className="p-6 rounded-xl bg-card border-2 shadow-card">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {parameters
+                    .filter((p) => !mainParameters.includes(p.nome))
+                    .map((param) => {
+                      const value = currentState[param.id] || 0;
+                      const { isNormal, isCritical } = getParameterStatus(param.id, value);
+
+                      return (
+                        <div key={param.id} className="space-y-1">
+                          <div className="text-xs text-muted-foreground font-medium">
+                            {param.nome}
+                          </div>
+                          <div className={`text-2xl font-bold font-mono ${
+                            isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
+                          }`}>
+                            {value.toFixed(2)}
+                            {param.unidade && (
+                              <span className="text-sm ml-1 text-muted-foreground">
+                                {param.unidade}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
+
+            {/* Learning Goals, Treatments, and Reports in Grid */}
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-8">
+                <LearningGoals
+                  key={selectedCaseId}
+                  caseId={selectedCaseId}
+                  currentState={currentState}
+                  parameters={parameters}
+                  elapsedTime={elapsedTime}
+                  onGoalAchieved={handleGoalAchieved}
+                />
+
+                <TreatmentPanel
+                  treatments={treatments}
+                  onApplyTreatment={handleApplyTreatment}
+                  disabled={!isRunning}
+                />
+
+                <TreatmentHints
+                  currentState={currentState}
+                  parameters={parameters}
+                  caseData={caseData}
+                  onHpChange={changeHp}
+                  disabled={!isRunning}
+                />
+              </div>
+
+              <div className="space-y-8">
+                <ReportPanel
+                  parameters={parameters}
+                  currentState={currentState}
+                  caseData={caseData}
+                  history={history}
+                />
+
+                <SimulationNotes
+                  caseId={selectedCaseId}
+                  elapsedTime={elapsedTime}
+                  currentState={currentState}
+                  onNotesChange={setAddTreatmentLogFn}
+                />
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="biblioteca">
+            <CaseLibrary 
+              selectedCaseId={selectedCaseId}
+              onCaseSelect={(id) => handleCaseChange(id.toString())}
+            />
+          </TabsContent>
+
+          <TabsContent value="evolucao">
+            <ParameterChart 
+              history={history}
+              parameters={parameters}
+              selectedParameters={parameters.filter(p => mainParameters.includes(p.nome)).map(p => p.id)}
+            />
+          </TabsContent>
+        </Tabs>
+
+        {/* Feedback Visual de Tratamento */}
+        {feedbackData && (
+          <TreatmentFeedback
+            treatmentName={feedbackData.treatmentName}
+            effects={feedbackData.effects}
+            show={showFeedback}
+            onHide={() => {
+              setShowFeedback(false);
+              setFeedbackData(null);
+            }}
           />
-        </div>
+        )}
 
-        {/* Treatment Hints and Treatments */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <TreatmentHints
-            key={selectedCaseId}
-            currentState={currentState}
-            parameters={parameters}
-            caseData={caseData}
-            onHpChange={changeHp}
-            disabled={!isRunning}
-            availableTreatments={treatments}
-          />
-          <TreatmentPanel
-            treatments={treatments}
-            onApplyTreatment={handleApplyTreatment}
-            disabled={!isRunning}
-          />
-        </div>
-
-        {/* Simulation Notes */}
-        <div className="mb-8">
-          <SimulationNotes
-            caseId={selectedCaseId}
-            elapsedTime={elapsedTime}
-            currentState={currentState}
-            onNotesChange={(addTreatmentLog) => setAddTreatmentLogFn(() => addTreatmentLog)}
-          />
-        </div>
-
-        {/* Report Export */}
-        <div className="mb-8">
-          <ReportPanel
-            caseData={caseData}
-            parameters={parameters}
-            currentState={currentState}
-            history={[]}
-            appliedTreatments={appliedTreatments}
-          />
-        </div>
-
-        {/* Analysis Tools */}
-        <div className="mb-8 space-y-4">
-          {/* Tutorial Guiado */}
-          {showTutorial && userRole === "aluno" && (
-            <GuidedTutorial caseId={selectedCaseId} onClose={() => setShowTutorial(false)} />
-          )}
-
-          {/* Badges e Conquistas */}
+        {/* Statistics and Advanced Features */}
+        <div className="space-y-8">
           <BadgeSystem />
-
-          {/* Relatórios Avançados */}
+          <PerformanceStatistics caseId={selectedCaseId} />
           <AdvancedReports userRole={userRole || undefined} />
 
           <div className="flex gap-4">
