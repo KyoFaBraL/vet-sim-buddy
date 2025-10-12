@@ -24,7 +24,6 @@ interface Student {
   nome_completo: string;
   criado_em: string;
   ativo: boolean;
-  notas: string | null;
   turma_id: string | null;
 }
 
@@ -72,7 +71,7 @@ export const StudentManagement = () => {
       // Buscar relacionamentos professor-aluno
       const { data: relationships, error: relError } = await supabase
         .from("professor_students")
-        .select("id, student_id, criado_em, ativo, notas, turma_id")
+        .select("id, student_id, criado_em, ativo, turma_id")
         .eq("professor_id", userData.user.id)
         .eq("ativo", true);
 
@@ -102,7 +101,6 @@ export const StudentManagement = () => {
           nome_completo: profile?.nome_completo || "Nome não disponível",
           criado_em: rel.criado_em,
           ativo: rel.ativo,
-          notas: rel.notas,
           turma_id: rel.turma_id,
         };
       });

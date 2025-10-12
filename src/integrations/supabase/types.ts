@@ -87,6 +87,13 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "casos_clinicos_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "student_profiles_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       condicoes: {
@@ -314,12 +321,38 @@ export type Database = {
         }
         Relationships: []
       }
+      professor_private_notes: {
+        Row: {
+          atualizado_em: string
+          criado_em: string
+          id: string
+          nota: string
+          professor_id: string
+          student_id: string
+        }
+        Insert: {
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          nota: string
+          professor_id: string
+          student_id: string
+        }
+        Update: {
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          nota?: string
+          professor_id?: string
+          student_id?: string
+        }
+        Relationships: []
+      }
       professor_students: {
         Row: {
           ativo: boolean
           criado_em: string
           id: string
-          notas: string | null
           professor_id: string
           student_id: string
           turma_id: string | null
@@ -328,7 +361,6 @@ export type Database = {
           ativo?: boolean
           criado_em?: string
           id?: string
-          notas?: string | null
           professor_id: string
           student_id: string
           turma_id?: string | null
@@ -337,7 +369,6 @@ export type Database = {
           ativo?: boolean
           criado_em?: string
           id?: string
-          notas?: string | null
           professor_id?: string
           student_id?: string
           turma_id?: string | null
@@ -659,6 +690,13 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "simulation_sessions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "student_profiles_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       tratamentos: {
@@ -943,7 +981,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      student_profiles_safe: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          nome_completo: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          nome_completo?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          nome_completo?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       generate_access_code: {
