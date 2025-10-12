@@ -37,9 +37,10 @@ interface TreatmentHintsProps {
     descricao: string;
     tipo: string;
   }>;
+  simulationMode?: 'practice' | 'evaluation';
 }
 
-export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange, disabled = false, availableTreatments = [] }: TreatmentHintsProps) => {
+export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange, disabled = false, availableTreatments = [], simulationMode = 'practice' }: TreatmentHintsProps) => {
   const [hints, setHints] = useState<Hint[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [revealed, setRevealed] = useState<number[]>([]);
@@ -97,13 +98,16 @@ export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange,
 
       setHints(data.hints || []);
       
-      // Aplicar penalidade de 10 HP
-      onHpChange(-10);
+      // Aplicar penalidade apenas em modo avaliação
+      if (simulationMode === 'evaluation') {
+        onHpChange(-10);
+      }
       
       if (data.hints && data.hints.length > 0) {
+        const penaltyText = simulationMode === 'evaluation' ? ' Penalidade: -10 HP' : '';
         toast({
           title: "Dicas geradas!",
-          description: `${data.hints.length} sugestões de tratamento disponíveis. Penalidade: -10 HP`,
+          description: `${data.hints.length} sugestões de tratamento disponíveis.${penaltyText}`,
         });
       }
     } catch (error: any) {
@@ -136,13 +140,17 @@ export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange,
             <AlertDialogDescription>
               O sistema de dicas irá analisar o estado atual do paciente e sugerir tratamentos apropriados.
               <br /><br />
-              <strong className="text-destructive">⚠️ Atenção: Usar as dicas custará 10 HP</strong>
+              {simulationMode === 'evaluation' ? (
+                <strong className="text-destructive">⚠️ Atenção: Usar as dicas custará 10 HP</strong>
+              ) : (
+                <span className="text-muted-foreground">💡 Modo Prática: sem penalidade de HP</span>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction onClick={generateHints}>
-              Confirmar (-10 HP)
+              {simulationMode === 'evaluation' ? 'Confirmar (-10 HP)' : 'Confirmar'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -169,7 +177,7 @@ export const TreatmentHints = ({ currentState, parameters, caseData, onHpChange,
               ) : (
                 <>
                   <Lightbulb className="mr-2 h-4 w-4" />
-                  Gerar Dicas (-10 HP)
+                  Gerar Dicas {simulationMode === 'evaluation' ? '(-10 HP)' : ''}
                 </>
               )}
             </Button>

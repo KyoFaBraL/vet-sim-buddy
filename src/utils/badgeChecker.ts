@@ -13,6 +13,7 @@ interface CheckBadgeParams {
   minHp: number;
   goalsAchieved: number;
   totalGoals: number;
+  treatmentCount?: number;
 }
 
 export const checkAndAwardBadges = async (params: CheckBadgeParams) => {
@@ -81,6 +82,26 @@ export const checkAndAwardBadges = async (params: CheckBadgeParams) => {
 
         case 'casos_diferentes':
           shouldAward = uniqueCases.size >= criterio.quantidade;
+          break;
+
+        // Novos badges expandidos
+        case 'velocidade_estabilizacao':
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && 
+                       sessionData.duracao_segundos <= criterio.tempo_estabilizacao;
+          break;
+
+        case 'economia_tratamentos':
+          const treatmentCount = params.treatmentCount || 0;
+          shouldAward = (sessionData.status === 'won' || sessionData.status === 'vitoria') && 
+                       treatmentCount <= criterio.max_tratamentos;
+          break;
+
+        case 'serie_vitorias':
+          // Verificar últimas N sessões consecutivas
+          const recentSessions = sessions
+            ?.slice(0, criterio.quantidade)
+            .every(s => s.status === 'won' || s.status === 'vitoria');
+          shouldAward = recentSessions && sessions && sessions.length >= criterio.quantidade;
           break;
       }
 

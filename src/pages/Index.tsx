@@ -16,8 +16,8 @@ import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { SimulationNotes } from "@/components/SimulationNotes";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { SoundAlerts } from "@/components/SoundAlerts";
-import { SimulationComparison } from "@/components/SimulationComparison";
+import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
+import { SessionComparison } from "@/components/SessionComparison";
 import { PerformanceStats } from "@/components/PerformanceStats";
 import { SessionHistory } from "@/components/SessionHistory";
 import { CaseDataPopulator } from "@/components/CaseDataPopulator";
@@ -260,7 +260,7 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <SoundAlerts
+              <SoundAlertsExtended
                 parameters={parameters}
                 currentState={currentState}
                 getParameterStatus={getParameterStatus}
@@ -287,10 +287,11 @@ const Index = () => {
 
         {/* Tabs para organizar interface */}
         <Tabs defaultValue="simulacao" className="mb-8">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4">
             <TabsTrigger value="simulacao">Simulação</TabsTrigger>
             <TabsTrigger value="biblioteca">Biblioteca de Casos</TabsTrigger>
             <TabsTrigger value="evolucao">Evolução Temporal</TabsTrigger>
+            <TabsTrigger value="comparacao">Comparação</TabsTrigger>
           </TabsList>
 
           <TabsContent value="simulacao" className="space-y-8">
@@ -478,7 +479,9 @@ const Index = () => {
                   parameters={parameters}
                   caseData={caseData}
                   onHpChange={changeHp}
-                  disabled={!isRunning || simulationMode === 'evaluation'}
+                  disabled={!isRunning}
+                  simulationMode={simulationMode}
+                  availableTreatments={treatments}
                 />
               </div>
 
@@ -521,6 +524,15 @@ const Index = () => {
               selectedParameters={parameters.filter(p => mainParameters.includes(p.nome)).map(p => p.id)}
             />
           </TabsContent>
+
+          <TabsContent value="comparacao">
+            {user && (
+              <SessionComparison
+                currentCaseId={selectedCaseId}
+                userId={user.id}
+              />
+            )}
+          </TabsContent>
         </Tabs>
 
         {/* Feedback Visual de Tratamento */}
@@ -541,10 +553,6 @@ const Index = () => {
           <BadgeSystem />
           <PerformanceStatistics caseId={selectedCaseId} />
           <AdvancedReports userRole={userRole || undefined} />
-
-          <div className="flex gap-4">
-            <SimulationComparison caseId={selectedCaseId} parameters={parameters} />
-          </div>
           <PerformanceStats caseId={selectedCaseId} />
           <SessionHistory caseId={selectedCaseId} />
         </div>
