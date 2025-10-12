@@ -85,7 +85,7 @@ export const RoleSelector = ({ userId, onRoleSet }: RoleSelectorProps) => {
                     <div className="flex items-center gap-2">
                       <Badge variant="default">Professor</Badge>
                       <span className="text-sm text-muted-foreground">
-                        Compartilhar casos com alunos
+                        Criar e gerenciar casos
                       </span>
                     </div>
                   </SelectItem>

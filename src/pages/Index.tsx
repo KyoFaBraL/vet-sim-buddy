@@ -15,7 +15,6 @@ import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
 import { SessionComparison } from "@/components/SessionComparison";
-import { PerformanceStats } from "@/components/PerformanceStats";
 import { SessionHistory } from "@/components/SessionHistory";
 import { CaseDataPopulator } from "@/components/CaseDataPopulator";
 import { BadgeSystem } from "@/components/BadgeSystem";
@@ -39,6 +38,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { parameterDescriptions } from "@/constants/parameterDescriptions";
+import { useToast } from "@/hooks/use-toast";
 
 type SimulationMode = 'practice' | 'evaluation';
 
@@ -55,6 +55,7 @@ const Index = () => {
   const [selectedCaseId, setSelectedCaseId] = useState(1);
   const [availableCases, setAvailableCases] = useState<any[]>([]);
   const [showTutorial, setShowTutorial] = useState(true);
+  const { toast } = useToast();
   
   const {
     parameters,
@@ -96,118 +97,48 @@ const Index = () => {
     }
   }, [user, selectedCaseId]);
 
-  const loadTreatments = async () => {
-    // Carregar tratamentos gerais
-    const { data: allTreatments } = await supabase
-      .from("tratamentos")
-      .select("*");
-    
-    // Carregar tratamentos específicos do caso (se existirem)
-    const { data: caseTreatments } = await supabase
-      .from("tratamentos_caso")
-      .select("tratamento_id")
-      .eq("case_id", selectedCaseId);
-    
-    if (caseTreatments && caseTreatments.length > 0) {
-      // Filtrar apenas tratamentos adequados para este caso
-      const treatmentIds = caseTreatments.map(ct => ct.tratamento_id);
-      const filteredTreatments = allTreatments?.filter(t => treatmentIds.includes(t.id)) || [];
-      setTreatments(filteredTreatments);
-    } else {
-      // Usar todos os tratamentos se não houver específicos
-      if (allTreatments) setTreatments(allTreatments);
-    }
-  };
-
   const loadCases = async () => {
-    const { data } = await supabase
-      .from("casos_clinicos")
-      .select("id, nome, especie, user_id")
-      .order("criado_em", { ascending: false });
-    
-    if (data) setAvailableCases(data);
-  };
+    try {
+      const { data, error } = await supabase
+        .from("casos_clinicos")
+        .select("id, nome, especie, descricao, user_id")
+        .order("id");
 
-
-  const handleCaseAccessed = (caseId: number) => {
-    setSelectedCaseId(caseId);
-    loadCases();
-  };
-
-  const handleCaseChange = (caseId: string) => {
-    setSelectedCaseId(parseInt(caseId));
-    setAppliedTreatments([]);  // Reset do log de tratamentos
-    setGoalPoints(0);           // Reset das metas
-    setDiagnosticPoints(0);     // Reset dos pontos de diagnóstico
-    setCompletedSessionId(null); // Reset da sessão
-    resetSimulation();
-  };
-
-  const handleSimulationEnd = (sessionId: string) => {
-    setCompletedSessionId(sessionId);
-    if (simulationMode === 'evaluation') {
-      setShowFeedbackDialog(true);
+      if (error) throw error;
+      setAvailableCases(data || []);
+    } catch (error) {
+      console.error("Erro ao carregar casos:", error);
     }
   };
 
-  // Parâmetros principais para exibir no monitor
-  const mainParameters = [
-    'pH',
-    'PaO2',
-    'PaCO2',
-    'FrequenciaCardiaca',
-    'PressaoArterial',
-    'Lactato',
-  ];
+  const loadTreatments = async () => {
+    const { data, error } = await supabase
+      .from("tratamentos")
+      .select("*")
+      .order("nome");
 
-  const handleApplyTreatment = async (treatmentId: number) => {
-    // Capturar estado antes do tratamento
-    const estadoAntes = { ...currentState };
-    
-    const treatmentName = await applyTreatment(treatmentId);
-    if (treatmentName) {
-      setAppliedTreatments(prev => [...prev, `${new Date().toLocaleTimeString('pt-BR')}: ${treatmentName}`]);
-      
-      // Aguardar um pequeno delay para capturar o novo estado
-      setTimeout(() => {
-        const estadoDepois = currentState;
-        
-        // Identificar parâmetros afetados (principais)
-        const mainParamNames = ['pH', 'PaO2', 'PaCO2', 'FrequenciaCardiaca', 'PressaoArterial', 'Lactato'];
-        const parametrosAfetados = parameters
-          .filter(p => mainParamNames.includes(p.nome))
-          .map(p => ({
-            nome: p.nome,
-            valorAntes: estadoAntes[p.id] || 0,
-            valorDepois: estadoDepois[p.id] || 0,
-            unidade: p.unidade || ''
-          }))
-          .filter(p => Math.abs(p.valorDepois - p.valorAntes) > 0.01); // Apenas mudanças significativas
-
-        if (parametrosAfetados.length > 0) {
-          setFeedbackData({
-            treatmentName,
-            effects: parametrosAfetados
-          });
-          setShowFeedback(true);
-        }
-      }, 100);
-      
-      // Log tratamento nas notas clínicas automaticamente
-      if (addTreatmentLogFn) {
-        await addTreatmentLogFn(treatmentName);
-      }
+    if (error) {
+      console.error("Erro ao carregar tratamentos:", error);
+      return;
     }
+
+    setTreatments(data || []);
   };
 
   const handleGoalAchieved = (goalId: string, points: number) => {
     setGoalPoints(prev => prev + points);
   };
 
-  if (authLoading) {
+  const isProfessor = userRole === 'professor';
+  const isAluno = userRole === 'aluno';
+
+  if (authLoading || roleLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">Carregando...</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
+        <div className="text-center">
+          <Activity className="h-12 w-12 animate-pulse mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Carregando...</p>
+        </div>
       </div>
     );
   }
@@ -216,141 +147,273 @@ const Index = () => {
     return <Auth onAuthSuccess={() => {}} />;
   }
 
-  if (roleLoading) {
+  if (userRole === null) {
+    return <RoleSelector userId={user.id} onRoleSet={() => window.location.reload()} />;
+  }
+
+  // ============================================
+  // INTERFACE DO PROFESSOR - Criação e Gerenciamento de Casos
+  // ============================================
+  if (isProfessor) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">Carregando perfil...</p>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+        {/* Header do Professor */}
+        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Activity className="h-8 w-8 text-primary" />
+                <div>
+                  <h1 className="text-xl font-bold">Simulador Veterinário</h1>
+                  <p className="text-sm text-muted-foreground">Painel do Professor</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Badge variant="default">Professor</Badge>
+                <span className="text-sm text-muted-foreground">{user.email}</span>
+                <ThemeToggle />
+                <Button variant="outline" size="icon" onClick={signOut}>
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Conteúdo Principal do Professor */}
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* Seção de Criação de Casos */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Gerenciamento de Casos Clínicos</CardTitle>
+                <CardDescription>
+                  Crie e gerencie casos clínicos para seus alunos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CaseManager onCaseCreated={loadCases} />
+              </CardContent>
+            </Card>
+
+            {/* Seção de Geração de Dados com IA */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Casos Existentes</CardTitle>
+                <CardDescription>
+                  Gere dados adicionais com IA para casos existentes
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {availableCases.length > 0 ? (
+                  availableCases.map((caso) => (
+                    <div key={caso.id} className="border rounded-lg p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h3 className="font-semibold">{caso.nome}</h3>
+                          <p className="text-sm text-muted-foreground capitalize">
+                            Espécie: {caso.especie}
+                          </p>
+                          {caso.descricao && (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {caso.descricao}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <CaseDataPopulator 
+                        caseId={caso.id} 
+                        onDataGenerated={() => {
+                          toast({
+                            title: "Dados gerados!",
+                            description: "Os dados do caso foram atualizados com sucesso.",
+                          });
+                        }}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-muted-foreground py-8">
+                    Nenhum caso disponível. Crie seu primeiro caso acima.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Seção de Compartilhamento */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Compartilhar Casos com Alunos</CardTitle>
+                <CardDescription>
+                  Gere códigos de acesso para seus alunos acessarem os casos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CaseShareManager availableCases={availableCases} />
+              </CardContent>
+            </Card>
+
+            {/* Seção de Relatórios */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Relatórios e Estatísticas</CardTitle>
+                <CardDescription>
+                  Acompanhe o desempenho dos alunos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="statistics" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="statistics">Estatísticas</TabsTrigger>
+                    <TabsTrigger value="advanced">Relatórios Avançados</TabsTrigger>
+                    <TabsTrigger value="library">Biblioteca</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="statistics" className="space-y-4">
+                    <PerformanceStatistics caseId={selectedCaseId} />
+                  </TabsContent>
+                  <TabsContent value="advanced" className="space-y-4">
+                    <AdvancedReports />
+                  </TabsContent>
+                  <TabsContent value="library" className="space-y-4">
+                    <CaseLibrary onCaseSelect={(caseId) => console.log("Caso selecionado:", caseId)} selectedCaseId={selectedCaseId} />
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t mt-12 py-6 text-center text-sm text-muted-foreground">
+          <p>
+            Este é um simulador educacional. Os casos são fictícios e destinados
+            apenas para fins de aprendizado.
+          </p>
+        </footer>
       </div>
     );
   }
 
-  if (!userRole) {
-    return <RoleSelector userId={user.id} onRoleSet={() => window.location.reload()} />;
-  }
-
-  const isProfessor = userRole === "professor";
-  const isAluno = userRole === "aluno";
+  // ============================================
+  // INTERFACE DO ALUNO - Simulação
+  // ============================================
+  const secondaryParameters = parameters.filter(
+    (p) => !['pH', 'PaCO2', 'HCO3-', 'FrequenciaCardiaca'].includes(p.nome)
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-      <div className="container mx-auto px-4 py-6">
-        {/* Header Compacto */}
-        <header className="mb-6">
+      {/* Header do Aluno */}
+      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Activity className="h-6 w-6 text-primary" />
-              </div>
+              <Activity className="h-8 w-8 text-primary" />
               <div>
-                <h1 className="text-2xl font-bold">Simulador Veterinário</h1>
-                <div className="flex items-center gap-2">
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
-                  <Badge variant={isProfessor ? "default" : "secondary"} className="text-xs">
-                    {isProfessor ? "👨‍🏫 Professor" : "👨‍🎓 Aluno"}
-                  </Badge>
-                </div>
+                <h1 className="text-xl font-bold">Simulador Veterinário</h1>
+                <p className="text-sm text-muted-foreground">Modo Aluno</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <SoundAlertsExtended
+            <div className="flex items-center gap-3">
+              <Badge variant="secondary">Aluno</Badge>
+              <span className="text-sm text-muted-foreground">{user.email}</span>
+              <SoundAlertsExtended 
                 parameters={parameters}
                 currentState={currentState}
                 getParameterStatus={getParameterStatus}
                 isRunning={isRunning}
               />
               <ThemeToggle />
-              <Button variant="outline" size="sm" onClick={signOut}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Sair
+              <Button variant="outline" size="icon" onClick={signOut}>
+                <LogOut className="h-4 w-4" />
               </Button>
             </div>
           </div>
-        </header>
-
-        <Separator className="mb-6" />
-
-        {/* Seleção de Modo e Caso */}
-        <div className="mb-6 space-y-4">
-          <SimulationModeSelector
-            currentMode={simulationMode}
-            onModeChange={setSimulationMode}
-            disabled={isRunning}
-          />
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Settings className="h-5 w-5" />
-                Configuração do Caso
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="grid md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Caso Selecionado</label>
-                <Select value={selectedCaseId.toString()} onValueChange={handleCaseChange}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availableCases.map((caso) => (
-                      <SelectItem key={caso.id} value={caso.id.toString()}>
-                        {caso.nome} {caso.user_id ? "(Personalizado)" : ""}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {isProfessor && (
-                <>
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Compartilhar</label>
-                    <CaseShareManager availableCases={availableCases} />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">IA do Caso</label>
-                    <CaseDataPopulator caseId={selectedCaseId} onDataGenerated={loadTreatments} />
-                  </div>
-                </>
-              )}
-              {isAluno && (
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Acessar Caso Compartilhado</label>
-                  <AccessCodeInput onCaseAccessed={handleCaseAccessed} />
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {caseData && (
-            <CaseInfo
-              caseName={caseData.nome}
-              description={caseData.descricao}
-              species={caseData.especie}
-              condition={caseData.condicoes?.nome || "N/A"}
-            />
-          )}
         </div>
+      </header>
 
-        {/* Comandos de Voz (apenas para Alunos) */}
-        {isAluno && selectedCaseId && (
-          <div className="mb-6">
-            <VoiceCommands
-              enabled={isRunning}
-              onCommand={(command) => {
-                if (command.includes("parar") || command.includes("pausar")) {
-                  if (isRunning) toggleSimulation();
-                } else if (command.includes("iniciar") || command.includes("começar")) {
-                  if (!isRunning) toggleSimulation();
-                } else if (command.includes("resetar") || command.includes("reiniciar")) {
-                  resetSimulation();
-                }
-              }}
-            />
-          </div>
+      {/* Conteúdo Principal */}
+      <main className="container mx-auto px-4 py-6 space-y-6">
+        {/* Configuração de Simulação - Apenas para Alunos */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              Configuração da Simulação
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Modo de Simulação */}
+            <div>
+              <SimulationModeSelector 
+                currentMode={simulationMode}
+                onModeChange={setSimulationMode}
+              />
+            </div>
+
+            {/* Seleção de Caso */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Caso Clínico</label>
+              <Select
+                value={selectedCaseId.toString()}
+                onValueChange={(value) => setSelectedCaseId(parseInt(value))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione um caso" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableCases.map((caso) => (
+                    <SelectItem key={caso.id} value={caso.id.toString()}>
+                      {caso.nome} ({caso.especie})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Acesso a Casos Compartilhados */}
+            <div className="pt-4 border-t">
+              <AccessCodeInput 
+                onCaseAccessed={(caseId) => {
+                  setSelectedCaseId(caseId);
+                  toast({
+                    title: "Caso carregado!",
+                    description: "Você agora tem acesso ao caso compartilhado.",
+                  });
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Informações do Caso */}
+        {caseData && (
+          <CaseInfo
+            caseName={caseData.nome}
+            description={caseData.descricao}
+            species={caseData.especie}
+            condition={caseData.condicoes?.nome || "N/A"}
+          />
+        )}
+
+        {/* Comandos de Voz */}
+        {selectedCaseId && (
+          <VoiceCommands
+            enabled={isRunning}
+            onCommand={(command) => {
+              if (command.includes("parar") || command.includes("pausar")) {
+                if (isRunning) toggleSimulation();
+              } else if (command.includes("iniciar") || command.includes("começar")) {
+                if (!isRunning) toggleSimulation();
+              } else if (command.includes("resetar") || command.includes("reiniciar")) {
+                resetSimulation();
+              }
+            }}
+          />
         )}
 
         {/* Controles de Simulação */}
-        <Card className="mb-6">
+        <Card>
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <SimulationControls
@@ -371,8 +434,8 @@ const Index = () => {
         </Card>
 
         {/* ÁREA PRINCIPAL DE SIMULAÇÃO */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          {/* Coluna Esquerda: Monitor do Paciente */}
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Coluna Esquerda: Monitor do Paciente e Metas */}
           <div className="space-y-6">
             <PatientMonitor
               hp={hp}
@@ -398,185 +461,148 @@ const Index = () => {
 
             {/* Parâmetros Secundários */}
             <Card>
-              <CardHeader className="pb-3">
+              <CardHeader>
                 <CardTitle className="text-lg">Parâmetros Secundários</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {parameters
-                    .filter((p) => !mainParameters.includes(p.nome))
-                    .map((param) => {
-                      const value = currentState[param.id] || 0;
-                      const { isNormal, isCritical } = getParameterStatus(param.id, value);
-
-                      return (
-                        <div key={param.id} className={`p-2 rounded-lg border ${
-                          isCritical ? 'border-destructive bg-destructive/10' : 
-                          !isNormal ? 'border-warning bg-warning/10' : 
-                          'border-success bg-success/10'
-                        }`}>
-                          <div className="text-xs text-muted-foreground font-medium">
-                            {param.nome}
-                          </div>
-                          <div className={`text-lg font-bold font-mono ${
-                            isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
-                          }`}>
-                            {value.toFixed(2)}
-                            {param.unidade && (
-                              <span className="text-xs ml-1 text-muted-foreground">
-                                {param.unidade}
-                              </span>
-                            )}
-                          </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {secondaryParameters.map((param) => {
+                    const status = getParameterStatus(param.id, currentState[param.id]);
+                    const statusVariant = status.isCritical ? 'destructive' : !status.isNormal ? 'default' : 'secondary';
+                    return (
+                      <div key={param.nome} className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium">{param.nome}</span>
+                          <Badge variant={statusVariant}>
+                            {currentState[param.id]?.toFixed(1)} {param.unidade}
+                          </Badge>
                         </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Coluna Direita: Workspace */}
+          {/* Coluna Direita: Workspace (Tratamentos, Dicas, Diagnóstico, Notas) */}
           <div>
             <SimulationWorkspace
               isRunning={isRunning}
               simulationMode={simulationMode}
               treatments={treatments}
-              onApplyTreatment={handleApplyTreatment}
+              onApplyTreatment={async (treatmentId: number) => {
+                const treatment = treatments.find(t => t.id === treatmentId);
+                
+                if (treatment) {
+                  setAppliedTreatments([...appliedTreatments, treatment.nome]);
+                  applyTreatment(treatmentId);
+                  setShowFeedback(true);
+                  setFeedbackData({
+                    treatmentName: treatment.nome,
+                    effects: []
+                  });
+
+                  if (addTreatmentLogFn) {
+                    await addTreatmentLogFn(treatment.nome);
+                  }
+                }
+              }}
               currentState={currentState}
               parameters={parameters}
               caseData={caseData}
               onHpChange={changeHp}
               caseId={selectedCaseId}
               elapsedTime={elapsedTime}
-              onDiagnosticSuccess={() => {
-                setDiagnosticPoints(prev => prev + 10);
-                changeHp(5);
-              }}
-              onNotesChange={setAddTreatmentLogFn}
+              onDiagnosticSuccess={() => setDiagnosticPoints(prev => prev + 10)}
+              onNotesChange={(fn) => setAddTreatmentLogFn(() => fn)}
             />
           </div>
         </div>
 
-        {/* Gráfico de Evolução */}
-        <div className="mb-6">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Evolução Temporal</CardTitle>
-              <CardDescription>Linha do tempo dos parâmetros principais</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ParameterChart 
-                history={history}
-                parameters={parameters}
-                selectedParameters={parameters.filter(p => mainParameters.includes(p.nome)).map(p => p.id)}
-              />
-            </CardContent>
-          </Card>
-        </div>
+        {/* Gráfico de Evolução Temporal */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Evolução Temporal dos Parâmetros</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ParameterChart history={history} parameters={parameters} />
+          </CardContent>
+        </Card>
 
-        {/* Feedback Visual de Tratamento */}
+        {/* Feedback de Tratamento */}
         {feedbackData && (
           <TreatmentFeedback
             treatmentName={feedbackData.treatmentName}
             effects={feedbackData.effects}
             show={showFeedback}
-            onHide={() => {
-              setShowFeedback(false);
-              setFeedbackData(null);
-            }}
+            onHide={() => setShowFeedback(false)}
           />
         )}
 
-        {/* Relatório de Feedback (Modo Avaliação) */}
-        {completedSessionId && simulationMode === 'evaluation' && (
-          <div className="mb-6">
-            <SessionFeedbackReport sessionId={completedSessionId} />
-          </div>
+        {/* Relatório de Feedback da Sessão */}
+        {completedSessionId && (
+          <Dialog open={showFeedbackDialog} onOpenChange={setShowFeedbackDialog}>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Relatório de Desempenho</DialogTitle>
+                <DialogDescription>
+                  Análise detalhada da sua sessão de simulação
+                </DialogDescription>
+              </DialogHeader>
+              <SessionFeedbackReport sessionId={completedSessionId} />
+            </DialogContent>
+          </Dialog>
         )}
 
-        {/* SEÇÃO DE RELATÓRIOS E ESTATÍSTICAS */}
+        {/* Seção de Relatórios e Estatísticas - Apenas para Alunos */}
         <Separator className="my-8" />
         
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <Activity className="h-6 w-6 text-primary" />
-            {isProfessor ? "Relatórios e Estatísticas" : "Minhas Estatísticas"}
-          </h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Meu Progresso</CardTitle>
+            <CardDescription>
+              Acompanhe suas sessões e conquistas
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="history" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="history">Histórico</TabsTrigger>
+                <TabsTrigger value="comparison">Comparação</TabsTrigger>
+                <TabsTrigger value="badges">Conquistas</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="history" className="space-y-4">
+                <SessionHistory />
+              </TabsContent>
+              
+              <TabsContent value="comparison" className="space-y-4">
+                <SessionComparison currentCaseId={selectedCaseId} userId={user.id} />
+              </TabsContent>
+              
+              <TabsContent value="badges" className="space-y-4">
+                <BadgeSystem />
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </main>
 
-          <Tabs defaultValue={isProfessor ? "desempenho" : "badges"} className="w-full">
-            <TabsList className={isProfessor ? "grid w-full grid-cols-5" : "grid w-full grid-cols-3"}>
-              {isProfessor && (
-                <>
-                  <TabsTrigger value="desempenho">Desempenho</TabsTrigger>
-                  <TabsTrigger value="biblioteca">Biblioteca</TabsTrigger>
-                </>
-              )}
-              <TabsTrigger value="historico">Histórico</TabsTrigger>
-              <TabsTrigger value="comparacao">Comparação</TabsTrigger>
-              <TabsTrigger value="badges">Badges</TabsTrigger>
-            </TabsList>
+      {/* Footer */}
+      <footer className="border-t mt-12 py-6 text-center text-sm text-muted-foreground">
+        <p>
+          Este é um simulador educacional. Os casos são fictícios e destinados
+          apenas para fins de aprendizado.
+        </p>
+      </footer>
 
-            {isProfessor && (
-              <>
-                <TabsContent value="desempenho" className="space-y-6">
-                  <PerformanceStatistics caseId={selectedCaseId} />
-                  <PerformanceStats caseId={selectedCaseId} />
-                </TabsContent>
-
-                <TabsContent value="biblioteca">
-                  <CaseLibrary 
-                    selectedCaseId={selectedCaseId}
-                    onCaseSelect={(id) => handleCaseChange(id.toString())}
-                  />
-                </TabsContent>
-              </>
-            )}
-
-            <TabsContent value="historico">
-              <SessionHistory caseId={selectedCaseId} />
-            </TabsContent>
-
-            <TabsContent value="comparacao">
-              {user && (
-                <SessionComparison
-                  currentCaseId={selectedCaseId}
-                  userId={user.id}
-                />
-              )}
-            </TabsContent>
-
-            <TabsContent value="badges">
-              <BadgeSystem />
-            </TabsContent>
-          </Tabs>
-
-          {isProfessor && (
-            <AdvancedReports userRole={userRole} />
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-12 text-center text-sm text-muted-foreground border-t pt-6">
-          <p>
-            Simulador desenvolvido para fins educacionais e pesquisa em medicina veterinária
-          </p>
-        </div>
-      </div>
-
-      {/* Tutorial */}
+      {/* Tutorial Guiado */}
       {showTutorial && selectedCaseId && (
-        <Dialog open={showTutorial} onOpenChange={setShowTutorial}>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Tutorial Guiado</DialogTitle>
-              <DialogDescription>
-                Aprenda a usar o simulador passo a passo
-              </DialogDescription>
-            </DialogHeader>
-            <GuidedTutorial caseId={selectedCaseId} onClose={() => setShowTutorial(false)} />
-          </DialogContent>
-        </Dialog>
+        <GuidedTutorial
+          caseId={selectedCaseId}
+          onClose={() => setShowTutorial(false)}
+        />
       )}
     </div>
   );
