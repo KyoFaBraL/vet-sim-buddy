@@ -192,6 +192,30 @@ export type Database = {
           },
         ]
       }
+      email_lookup_attempts: {
+        Row: {
+          attempted_at: string
+          found: boolean
+          id: string
+          professor_id: string
+          searched_email: string
+        }
+        Insert: {
+          attempted_at?: string
+          found: boolean
+          id?: string
+          professor_id: string
+          searched_email: string
+        }
+        Update: {
+          attempted_at?: string
+          found?: boolean
+          id?: string
+          professor_id?: string
+          searched_email?: string
+        }
+        Relationships: []
+      }
       metas_alcancadas: {
         Row: {
           alcancada_em: string
