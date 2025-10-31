@@ -120,7 +120,7 @@ export const useSimulation = (caseId: number = 1) => {
     }
   };
 
-  // Motor da simulação - atualiza timer e verifica condição de derrota
+  // Motor da simulação - atualiza timer e salva histórico
   const tick = useCallback(() => {
     setPreviousState(currentState);
     setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
@@ -130,7 +130,25 @@ export const useSimulation = (caseId: number = 1) => {
       timestamp: Date.now() - startTime,
       values: currentState
     }]);
-  }, [currentState, startTime]);
+    
+    // Salvar histórico no banco de dados
+    if (currentSessionId && isRunning) {
+      const timestamp = Math.floor((Date.now() - startTime) / 1000);
+      const historyData = parameters.map(param => ({
+        session_id: currentSessionId,
+        timestamp: timestamp,
+        parametro_id: param.id,
+        valor: currentState[param.id] || 0
+      }));
+      
+      supabase
+        .from('session_history')
+        .insert(historyData)
+        .then(({ error }) => {
+          if (error) console.error('Erro ao salvar histórico:', error);
+        });
+    }
+  }, [currentState, startTime, currentSessionId, isRunning, parameters]);
 
   // Timer da simulação - atualiza a cada segundo
   useEffect(() => {
@@ -151,6 +169,7 @@ export const useSimulation = (caseId: number = 1) => {
       setHp(prev => {
         const newHp = Math.max(0, prev - 1);
         setMinHpDuringSession(minHp => Math.min(minHp, newHp));
+        setLastHpChange(-1);
         
         if (newHp <= 0 && gameStatus === 'playing') {
           setGameStatus('lost');
@@ -193,11 +212,10 @@ export const useSimulation = (caseId: number = 1) => {
         }
         return newHp;
       });
-      setLastHpChange(-1);
-    }, 5000); // Atualiza a cada 5 segundos
+    }, 5000);
 
     return () => clearInterval(hpDecayInterval);
-  }, [isRunning, gameStatus, toast, currentSessionId, startTime, usedHints]);
+  }, [isRunning, gameStatus, toast, currentSessionId, startTime, usedHints, caseId]);
 
   // Verificar limite de tempo (5 minutos = 300 segundos)
   useEffect(() => {
@@ -313,11 +331,21 @@ export const useSimulation = (caseId: number = 1) => {
   };
 
   const applyTreatment = async (treatmentId: number) => {
+    // Validar estado do jogo
+    if (gameStatus !== 'playing') {
+      toast({
+        title: "Ação não permitida",
+        description: "Não é possível aplicar tratamentos após o fim do jogo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       // Carregar informações do tratamento
       const { data: treatmentData, error: treatmentError } = await supabase
         .from("tratamentos")
-        .select("nome")
+        .select("nome, descricao, tipo")
         .eq("id", treatmentId)
         .single();
 
@@ -401,8 +429,9 @@ export const useSimulation = (caseId: number = 1) => {
         // Atualizar HP mínimo
         setMinHpDuringSession(minHp => Math.min(minHp, newHp));
         
-        // Registrar decisão
+        // Registrar decisão e tratamento aplicado
         if (currentSessionId) {
+          // Registrar decisão
           supabase
             .from('session_decisions')
             .insert({
@@ -423,6 +452,18 @@ export const useSimulation = (caseId: number = 1) => {
               } else {
                 console.log('Decisão registrada:', { type: 'treatment', nome: treatmentData.nome, hp: { antes: prev, depois: newHp } });
               }
+            });
+          
+          // Registrar tratamento aplicado
+          supabase
+            .from('session_treatments')
+            .insert({
+              session_id: currentSessionId,
+              tratamento_id: treatmentId,
+              timestamp_simulacao: elapsedTime
+            })
+            .then(({ error }) => {
+              if (error) console.error('Erro ao registrar tratamento:', error);
             });
         }
         
@@ -608,18 +649,15 @@ export const useSimulation = (caseId: number = 1) => {
             session_id: currentSessionId,
             timestamp_simulacao: elapsedTime,
             tipo: 'hint_used',
-            dados: { penalidade: delta },
+            dados: { penalidade_hp: delta },
             hp_antes: hp,
-            hp_depois: hp + delta
-          })
-          .then(({ error }) => {
-            if (error) console.error('Erro ao registrar uso de dica:', error);
+            hp_depois: Math.max(0, Math.min(100, hp + delta))
           });
       }
     }
-
+    
     setHp(prev => {
-      const newHp = Math.min(100, Math.max(0, prev + delta));
+      const newHp = Math.max(0, Math.min(100, prev + delta));
       setMinHpDuringSession(minHp => Math.min(minHp, newHp));
       setLastHpChange(delta);
       return newHp;
