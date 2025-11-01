@@ -1,7 +1,34 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { checkAndAwardBadges } from "@/utils/badgeChecker";
+
+// Utility function for retrying critical database operations
+async function retryOperation(
+  operation: () => Promise<any>,
+  maxRetries = 3,
+  operationName = 'operation'
+): Promise<{ success: boolean; error?: any }> {
+  for (let i = 0; i < maxRetries; i++) {
+    const result = await operation();
+    if (!result.error) return { success: true };
+    
+    console.warn(`${operationName} failed (attempt ${i + 1}/${maxRetries}):`, result.error);
+    
+    if (i < maxRetries - 1) {
+      // Exponential backoff: wait 1s, 2s, 3s
+      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+    }
+  }
+  
+  // Return last failed result
+  const finalResult = await operation();
+  if (finalResult.error) {
+    console.error(`${operationName} failed after ${maxRetries} attempts:`, finalResult.error);
+    return { success: false, error: finalResult.error };
+  }
+  return { success: true };
+}
 
 interface Parameter {
   id: number;
@@ -42,7 +69,16 @@ export const useSimulation = (caseId: number = 1) => {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [usedHints, setUsedHints] = useState(false);
   const [minHpDuringSession, setMinHpDuringSession] = useState(50);
+  const [isApplyingTreatment, setIsApplyingTreatment] = useState(false);
   const { toast } = useToast();
+  
+  // Buffer for batching session history inserts
+  const historyBuffer = useRef<Array<{
+    session_id: string;
+    timestamp: number;
+    parametro_id: number;
+    valor: number;
+  }>>([]);
 
   // Carregar dados iniciais
   useEffect(() => {
@@ -131,7 +167,7 @@ export const useSimulation = (caseId: number = 1) => {
       values: currentState
     }]);
     
-    // Salvar histórico no banco de dados
+    // Adicionar ao buffer de histórico para batch insert
     if (currentSessionId && isRunning) {
       const timestamp = Math.floor((Date.now() - startTime) / 1000);
       const historyData = parameters.map(param => ({
@@ -141,12 +177,7 @@ export const useSimulation = (caseId: number = 1) => {
         valor: currentState[param.id] || 0
       }));
       
-      supabase
-        .from('session_history')
-        .insert(historyData)
-        .then(({ error }) => {
-          if (error) console.error('Erro ao salvar histórico:', error);
-        });
+      historyBuffer.current.push(...historyData);
     }
   }, [currentState, startTime, currentSessionId, isRunning, parameters]);
 
@@ -160,6 +191,38 @@ export const useSimulation = (caseId: number = 1) => {
 
     return () => clearInterval(interval);
   }, [isRunning, tick, gameStatus]);
+
+  // Batch flush session history every 5 seconds
+  useEffect(() => {
+    if (!isRunning || !currentSessionId) return;
+
+    const flushInterval = setInterval(() => {
+      if (historyBuffer.current.length > 0) {
+        const dataToInsert = [...historyBuffer.current];
+        historyBuffer.current = [];
+        
+        supabase
+          .from('session_history')
+          .insert(dataToInsert)
+          .then(({ error }) => {
+            if (error) {
+              console.error('Erro ao salvar histórico em lote:', error);
+              // Re-add to buffer for retry on next flush
+              historyBuffer.current.push(...dataToInsert);
+            }
+          });
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(flushInterval);
+      // Flush remaining data on unmount
+      if (historyBuffer.current.length > 0) {
+        supabase.from('session_history').insert(historyBuffer.current);
+        historyBuffer.current = [];
+      }
+    };
+  }, [isRunning, currentSessionId]);
 
   // HP decay - perde 1 HP a cada 5 segundos
   useEffect(() => {
@@ -175,32 +238,42 @@ export const useSimulation = (caseId: number = 1) => {
           setGameStatus('lost');
           setIsRunning(false);
           
-          // Finalizar sessão
+          // Finalizar sessão com retry
           if (currentSessionId) {
             const duracao = Math.floor((Date.now() - startTime) / 1000);
             
             supabase.auth.getUser().then(({ data: { user } }) => {
-              supabase
-                .from('simulation_sessions')
-                .update({
-                  data_fim: new Date().toISOString(),
-                  duracao_segundos: duracao,
-                  status: 'lost'
-                })
-                .eq('id', currentSessionId)
-                .then(() => {
-                  if (user) {
-                    checkAndAwardBadges({
-                      sessionId: currentSessionId,
-                      userId: user.id,
-                      sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
-                      usedHints,
-                      minHp: 0,
-                      goalsAchieved: 0,
-                      totalGoals: 0
-                    });
-                  }
-                });
+              retryOperation(
+                async () => supabase
+                  .from('simulation_sessions')
+                  .update({
+                    data_fim: new Date().toISOString(),
+                    duracao_segundos: duracao,
+                    status: 'lost'
+                  })
+                  .eq('id', currentSessionId)
+                  .select(),
+                3,
+                'Finalização de sessão (HP zero)'
+              ).then(({ success, error }) => {
+                if (!success) {
+                  toast({
+                    title: "Erro ao salvar sessão",
+                    description: "Não foi possível salvar o resultado da sessão.",
+                    variant: "destructive",
+                  });
+                } else if (user) {
+                  checkAndAwardBadges({
+                    sessionId: currentSessionId,
+                    userId: user.id,
+                    sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                    usedHints,
+                    minHp: 0,
+                    goalsAchieved: 0,
+                    totalGoals: 0
+                  });
+                }
+              });
             });
           }
           
@@ -223,32 +296,42 @@ export const useSimulation = (caseId: number = 1) => {
       setGameStatus('lost');
       setIsRunning(false);
       
-          // Finalizar sessão por tempo
+      // Finalizar sessão por tempo com retry
       if (currentSessionId) {
         const duracao = Math.floor((Date.now() - startTime) / 1000);
         
         supabase.auth.getUser().then(({ data: { user } }) => {
-          supabase
-            .from('simulation_sessions')
-            .update({
-              data_fim: new Date().toISOString(),
-              duracao_segundos: duracao,
-              status: 'lost'
-            })
-            .eq('id', currentSessionId)
-            .then(() => {
-              if (user) {
-                checkAndAwardBadges({
-                  sessionId: currentSessionId,
-                  userId: user.id,
-                  sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
-                  usedHints,
-                  minHp: minHpDuringSession,
-                  goalsAchieved: 0,
-                  totalGoals: 0
-                });
-              }
-            });
+          retryOperation(
+            async () => supabase
+              .from('simulation_sessions')
+              .update({
+                data_fim: new Date().toISOString(),
+                duracao_segundos: duracao,
+                status: 'lost'
+              })
+              .eq('id', currentSessionId)
+              .select(),
+            3,
+            'Finalização de sessão (timeout)'
+          ).then(({ success, error }) => {
+            if (!success) {
+              toast({
+                title: "Erro ao salvar sessão",
+                description: "Não foi possível salvar o resultado da sessão.",
+                variant: "destructive",
+              });
+            } else if (user) {
+              checkAndAwardBadges({
+                sessionId: currentSessionId,
+                userId: user.id,
+                sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                usedHints,
+                minHp: minHpDuringSession,
+                goalsAchieved: 0,
+                totalGoals: 0
+              });
+            }
+          });
         });
       }
       
@@ -331,6 +414,12 @@ export const useSimulation = (caseId: number = 1) => {
   };
 
   const applyTreatment = async (treatmentId: number) => {
+    // Prevenir múltiplas aplicações simultâneas (race condition protection)
+    if (isApplyingTreatment) {
+      console.log('Tratamento já em aplicação, ignorando click duplicado');
+      return;
+    }
+
     // Validar estado do jogo
     if (gameStatus !== 'playing') {
       toast({
@@ -340,6 +429,8 @@ export const useSimulation = (caseId: number = 1) => {
       });
       return;
     }
+
+    setIsApplyingTreatment(true);
 
     try {
       // Carregar informações do tratamento
@@ -429,74 +520,92 @@ export const useSimulation = (caseId: number = 1) => {
         // Atualizar HP mínimo
         setMinHpDuringSession(minHp => Math.min(minHp, newHp));
         
-        // Registrar decisão e tratamento aplicado
+        // Registrar decisão e tratamento aplicado com retry
         if (currentSessionId) {
-          // Registrar decisão
-          supabase
-            .from('session_decisions')
-            .insert({
-              session_id: currentSessionId,
-              timestamp_simulacao: elapsedTime,
-              tipo: 'treatment',
-              dados: {
-                nome: treatmentData.nome,
-                adequado: isAdequate,
-                justificativa
-              },
-              hp_antes: prev,
-              hp_depois: newHp
-            })
-            .then(({ error }) => {
-              if (error) {
-                console.error('Erro ao registrar decisão:', error);
-              } else {
-                console.log('Decisão registrada:', { type: 'treatment', nome: treatmentData.nome, hp: { antes: prev, depois: newHp } });
-              }
-            });
+          // Registrar decisão com retry
+          retryOperation(
+            async () => supabase
+              .from('session_decisions')
+              .insert({
+                session_id: currentSessionId,
+                timestamp_simulacao: elapsedTime,
+                tipo: 'treatment',
+                dados: {
+                  nome: treatmentData.nome,
+                  adequado: isAdequate,
+                  justificativa
+                },
+                hp_antes: prev,
+                hp_depois: newHp
+              })
+              .select(),
+            2,
+            'Registro de decisão'
+          ).then(({ success, error }) => {
+            if (!success) {
+              console.error('Erro ao registrar decisão após retries:', error);
+            } else {
+              console.log('Decisão registrada:', { type: 'treatment', nome: treatmentData.nome, hp: { antes: prev, depois: newHp } });
+            }
+          });
           
-          // Registrar tratamento aplicado
-          supabase
-            .from('session_treatments')
-            .insert({
-              session_id: currentSessionId,
-              tratamento_id: treatmentId,
-              timestamp_simulacao: elapsedTime
-            })
-            .then(({ error }) => {
-              if (error) console.error('Erro ao registrar tratamento:', error);
-            });
+          // Registrar tratamento aplicado com retry
+          retryOperation(
+            async () => supabase
+              .from('session_treatments')
+              .insert({
+                session_id: currentSessionId,
+                tratamento_id: treatmentId,
+                timestamp_simulacao: elapsedTime
+              })
+              .select(),
+            2,
+            'Registro de tratamento'
+          ).then(({ success, error }) => {
+            if (!success) console.error('Erro ao registrar tratamento após retries:', error);
+          });
         }
         
         if (newHp >= 100 && gameStatus === 'playing') {
           setGameStatus('won');
           setIsRunning(false);
           
-          // Finalizar sessão com vitória
+          // Finalizar sessão com vitória (com retry)
           if (currentSessionId) {
             const duracao = Math.floor((Date.now() - startTime) / 1000);
             
             supabase.auth.getUser().then(({ data: { user } }) => {
-              supabase
-                .from('simulation_sessions')
-                .update({
-                  data_fim: new Date().toISOString(),
-                  duracao_segundos: duracao,
-                  status: 'won'
-                })
-                .eq('id', currentSessionId)
-                .then(() => {
-                  if (user) {
-                    checkAndAwardBadges({
-                      sessionId: currentSessionId,
-                      userId: user.id,
-                      sessionData: { status: 'won', duracao_segundos: duracao, case_id: caseId },
-                      usedHints,
-                      minHp: newHp,
-                      goalsAchieved: 0,
-                      totalGoals: 0
-                    });
-                  }
-                });
+              retryOperation(
+                async () => supabase
+                  .from('simulation_sessions')
+                  .update({
+                    data_fim: new Date().toISOString(),
+                    duracao_segundos: duracao,
+                    status: 'won'
+                  })
+                  .eq('id', currentSessionId)
+                  .select(),
+                3,
+                'Finalização de sessão (vitória)'
+              ).then(({ success, error }) => {
+                if (!success) {
+                  toast({
+                    title: "Aviso",
+                    description: "Vitória registrada, mas houve erro ao salvar no servidor.",
+                    variant: "destructive",
+                  });
+                } else if (user) {
+                  checkAndAwardBadges({
+                    sessionId: currentSessionId,
+                    userId: user.id,
+                    sessionData: { status: 'won', duracao_segundos: duracao, case_id: caseId },
+                    usedHints,
+                    minHp: newHp,
+                    goalsAchieved: 0,
+                    totalGoals: 0
+                  });
+                }
+              });
             });
           }
           
@@ -511,32 +620,42 @@ export const useSimulation = (caseId: number = 1) => {
           setGameStatus('lost');
           setIsRunning(false);
           
-          // Finalizar sessão com derrota
+          // Finalizar sessão com derrota (com retry)
           if (currentSessionId) {
             const duracao = Math.floor((Date.now() - startTime) / 1000);
             
             supabase.auth.getUser().then(({ data: { user } }) => {
-              supabase
-                .from('simulation_sessions')
-                .update({
-                  data_fim: new Date().toISOString(),
-                  duracao_segundos: duracao,
-                  status: 'lost'
-                })
-                .eq('id', currentSessionId)
-                .then(() => {
-                  if (user) {
-                    checkAndAwardBadges({
-                      sessionId: currentSessionId,
-                      userId: user.id,
-                      sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
-                      usedHints,
-                      minHp: 0,
-                      goalsAchieved: 0,
-                      totalGoals: 0
-                    });
-                  }
-                });
+              retryOperation(
+                async () => supabase
+                  .from('simulation_sessions')
+                  .update({
+                    data_fim: new Date().toISOString(),
+                    duracao_segundos: duracao,
+                    status: 'lost'
+                  })
+                  .eq('id', currentSessionId)
+                  .select(),
+                3,
+                'Finalização de sessão (derrota por tratamento)'
+              ).then(({ success, error }) => {
+                if (!success) {
+                  toast({
+                    title: "Erro ao salvar sessão",
+                    description: "Não foi possível salvar o resultado da sessão.",
+                    variant: "destructive",
+                  });
+                } else if (user) {
+                  checkAndAwardBadges({
+                    sessionId: currentSessionId,
+                    userId: user.id,
+                    sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                    usedHints,
+                    minHp: 0,
+                    goalsAchieved: 0,
+                    totalGoals: 0
+                  });
+                }
+              });
             });
           }
           
@@ -564,6 +683,8 @@ export const useSimulation = (caseId: number = 1) => {
         variant: "destructive",
       });
       return null;
+    } finally {
+      setIsApplyingTreatment(false);
     }
   };
 
