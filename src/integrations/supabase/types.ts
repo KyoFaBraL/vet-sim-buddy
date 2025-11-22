@@ -1025,10 +1025,7 @@ export type Database = {
       }
     }
     Functions: {
-      generate_access_code: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      generate_access_code: { Args: never; Returns: string }
       get_student_id_by_email: {
         Args: { student_email: string }
         Returns: string

@@ -181,16 +181,12 @@ const Index = () => {
     );
   }
 
-  if (!user) {
-    return <Auth onAuthSuccess={() => {}} />;
-  }
-
-  if (userRole === null) {
+  if (!user || userRole === null) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
         <div className="text-center">
           <Activity className="h-12 w-12 animate-pulse mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">Configurando sua conta...</p>
+          <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
     );
