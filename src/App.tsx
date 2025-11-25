@@ -8,34 +8,49 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AuthProfessor from "./pages/AuthProfessor";
 import AuthAluno from "./pages/AuthAluno";
+import ProfessorDashboard from "./pages/ProfessorDashboard";
 import { RoleSelection } from "./components/RoleSelection";
 import { useAuth } from "./hooks/useAuth";
+import { useUserRole } from "./hooks/useUserRole";
 
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading } = useUserRole(user);
   
-  if (loading) {
-    return null;
+  if (authLoading || roleLoading) {
+    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
   }
   
   if (!user) {
     return <Navigate to="/" replace />;
+  }
+
+  // Redirecionar professores para o painel de professor
+  if (role === 'professor' && window.location.pathname === '/app') {
+    return <Navigate to="/professor" replace />;
+  }
+
+  // Redirecionar alunos para o simulador
+  if (role === 'aluno' && window.location.pathname === '/professor') {
+    return <Navigate to="/app" replace />;
   }
   
   return <>{children}</>;
 };
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading } = useUserRole(user);
   
-  if (loading) {
-    return null;
+  if (authLoading || roleLoading) {
+    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
   }
   
-  if (user) {
-    return <Navigate to="/app" replace />;
+  if (user && role) {
+    // Redirecionar para o painel correto baseado na role
+    return <Navigate to={role === 'professor' ? '/professor' : '/app'} replace />;
   }
   
   return <>{children}</>;
@@ -67,6 +82,11 @@ const App = () => (
             <Route path="/app" element={
               <ProtectedRoute>
                 <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/professor" element={
+              <ProtectedRoute>
+                <ProfessorDashboard />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

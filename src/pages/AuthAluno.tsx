@@ -108,7 +108,7 @@ export default function AuthAluno() {
           description: "Você foi autenticado como aluno com sucesso.",
         });
         
-        navigate("/");
+        navigate("/app");
       }
     } catch (error: any) {
       toast({
@@ -172,7 +172,7 @@ export default function AuthAluno() {
         description: "Bem-vindo de volta.",
       });
       
-      navigate("/");
+      navigate("/app");
     } catch (error: any) {
       toast({
         title: "Erro ao fazer login",
