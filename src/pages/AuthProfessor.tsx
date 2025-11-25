@@ -101,7 +101,7 @@ export default function AuthProfessor() {
           description: "Sua conta de professor foi criada com sucesso.",
         });
         
-        navigate("/");
+        navigate("/professor");
       }
     } catch (error: any) {
       toast({
@@ -165,7 +165,7 @@ export default function AuthProfessor() {
         description: "Bem-vindo ao painel do professor.",
       });
       
-      navigate("/");
+      navigate("/professor");
     } catch (error: any) {
       toast({
         title: "Erro ao fazer login",
