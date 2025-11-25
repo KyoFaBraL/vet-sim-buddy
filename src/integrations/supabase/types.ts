@@ -1037,6 +1037,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      register_aluno: {
+        Args: { email: string; nome_completo: string; user_id: string }
+        Returns: Json
+      }
+      register_professor: {
+        Args: { email: string; nome_completo: string; user_id: string }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "professor" | "aluno"
