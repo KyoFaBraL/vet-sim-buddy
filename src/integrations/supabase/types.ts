@@ -345,6 +345,45 @@ export type Database = {
         }
         Relationships: []
       }
+      professor_access_keys: {
+        Row: {
+          access_key: string
+          ativo: boolean | null
+          criado_em: string | null
+          criado_por: string | null
+          descricao: string | null
+          expira_em: string | null
+          id: string
+          usado: boolean | null
+          usado_em: string | null
+          usado_por: string | null
+        }
+        Insert: {
+          access_key: string
+          ativo?: boolean | null
+          criado_em?: string | null
+          criado_por?: string | null
+          descricao?: string | null
+          expira_em?: string | null
+          id?: string
+          usado?: boolean | null
+          usado_em?: string | null
+          usado_por?: string | null
+        }
+        Update: {
+          access_key?: string
+          ativo?: boolean | null
+          criado_em?: string | null
+          criado_por?: string | null
+          descricao?: string | null
+          expira_em?: string | null
+          id?: string
+          usado?: boolean | null
+          usado_em?: string | null
+          usado_por?: string | null
+        }
+        Relationships: []
+      }
       professor_private_notes: {
         Row: {
           atualizado_em: string
@@ -1043,6 +1082,10 @@ export type Database = {
       }
       register_professor: {
         Args: { email: string; nome_completo: string; user_id: string }
+        Returns: Json
+      }
+      validate_professor_key: {
+        Args: { key_to_validate: string }
         Returns: Json
       }
     }

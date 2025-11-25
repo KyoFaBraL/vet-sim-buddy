@@ -21,7 +21,10 @@ const signUpSchema = z.object({
   fullName: z.string()
     .trim()
     .min(3, "Nome deve ter no mínimo 3 caracteres")
-    .max(100, "Nome muito longo")
+    .max(100, "Nome muito longo"),
+  accessKey: z.string()
+    .trim()
+    .min(8, "Chave de acesso inválida")
 });
 
 const signInSchema = z.object({
@@ -38,6 +41,7 @@ export default function AuthProfessor() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [accessKey, setAccessKey] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -48,7 +52,8 @@ export default function AuthProfessor() {
     const result = signUpSchema.safeParse({
       email: email.trim(),
       password,
-      fullName: fullName.trim()
+      fullName: fullName.trim(),
+      accessKey: accessKey.trim()
     });
     
     if (!result.success) {
@@ -65,6 +70,19 @@ export default function AuthProfessor() {
     setLoading(true);
 
     try {
+      // Validar chave de acesso primeiro
+      const { data: keyValidation, error: keyError } = await supabase
+        .rpc('validate_professor_key', {
+          key_to_validate: result.data.accessKey
+        });
+
+      if (keyError) throw keyError;
+
+      const validationResult = keyValidation as { valid: boolean; message: string };
+      if (!validationResult.valid) {
+        throw new Error(validationResult.message);
+      }
+
       const redirectUrl = `${window.location.origin}/`;
       
       const { data, error } = await supabase.auth.signUp({
@@ -208,6 +226,17 @@ export default function AuthProfessor() {
 
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-key">Chave de Acesso Professor</Label>
+                    <Input
+                      id="signup-key"
+                      type="text"
+                      placeholder="Solicite a chave com um professor existente"
+                      value={accessKey}
+                      onChange={(e) => setAccessKey(e.target.value.toUpperCase())}
+                      required
+                    />
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-name">Nome Completo</Label>
                     <Input

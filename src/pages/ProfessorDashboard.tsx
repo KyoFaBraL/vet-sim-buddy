@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Users, BookOpen, BarChart3, Settings } from "lucide-react";
+import { LogOut, Users, BookOpen, BarChart3, Settings, Key } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { StudentManagement } from "@/components/StudentManagement";
 import { StudentReports } from "@/components/StudentReports";
 import { CaseManager } from "@/components/CaseManager";
 import { CaseShareManager } from "@/components/CaseShareManager";
+import { ProfessorAccessKeys } from "@/components/ProfessorAccessKeys";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function ProfessorDashboard() {
@@ -50,7 +51,7 @@ export default function ProfessorDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="students" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="students">
               <Users className="h-4 w-4 mr-2" />
               Alunos
@@ -66,6 +67,10 @@ export default function ProfessorDashboard() {
             <TabsTrigger value="reports">
               <BarChart3 className="h-4 w-4 mr-2" />
               Relatórios
+            </TabsTrigger>
+            <TabsTrigger value="keys">
+              <Key className="h-4 w-4 mr-2" />
+              Chaves
             </TabsTrigger>
           </TabsList>
 
@@ -137,6 +142,10 @@ export default function ProfessorDashboard() {
                 <StudentReports />
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="keys" className="space-y-4">
+            <ProfessorAccessKeys />
           </TabsContent>
         </Tabs>
       </div>
