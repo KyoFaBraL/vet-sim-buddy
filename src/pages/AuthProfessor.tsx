@@ -81,26 +81,20 @@ export default function AuthProfessor() {
       if (error) throw error;
 
       if (data.user) {
-        // Criar perfil do professor
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .insert({
-            id: data.user.id,
-            email: result.data.email,
-            nome_completo: result.data.fullName,
-          });
-
-        if (profileError) throw profileError;
-
-        // Criar role de professor
-        const { error: roleError } = await supabase
-          .from("user_roles")
-          .insert({
+        // Registrar professor usando função segura do banco
+        const { data: registerData, error: registerError } = await supabase
+          .rpc('register_professor', {
             user_id: data.user.id,
-            role: "professor"
+            email: result.data.email,
+            nome_completo: result.data.fullName
           });
 
-        if (roleError) throw roleError;
+        if (registerError) throw registerError;
+        
+        const registerResult = registerData as { success: boolean; message: string };
+        if (!registerResult.success) {
+          throw new Error(registerResult.message);
+        }
 
         toast({
           title: "Cadastro realizado!",

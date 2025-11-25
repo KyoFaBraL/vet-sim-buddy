@@ -86,8 +86,23 @@ export default function AuthAluno() {
 
       if (error) throw error;
 
-      // Verificar se o usuário foi criado com papel de aluno (automático via trigger)
+      // Verificar se o usuário foi criado com papel de aluno
       if (data.user) {
+        // Registrar aluno usando função segura do banco
+        const { data: registerData, error: registerError } = await supabase
+          .rpc('register_aluno', {
+            user_id: data.user.id,
+            email: result.data.email,
+            nome_completo: result.data.nomeCompleto
+          });
+
+        if (registerError) throw registerError;
+        
+        const registerResult = registerData as { success: boolean; message: string };
+        if (!registerResult.success) {
+          throw new Error(registerResult.message);
+        }
+
         toast({
           title: "Conta criada!",
           description: "Você foi autenticado como aluno com sucesso.",
