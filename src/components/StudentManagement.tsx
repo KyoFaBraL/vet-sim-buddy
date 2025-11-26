@@ -36,7 +36,7 @@ export const StudentManagement = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [studentEmail, setStudentEmail] = useState("");
-  const [selectedTurma, setSelectedTurma] = useState<string>("");
+  const [selectedTurma, setSelectedTurma] = useState<string>("none");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -148,7 +148,7 @@ export const StudentManagement = () => {
         .insert({
           professor_id: userData.user.id,
           student_id: studentId,
-          turma_id: selectedTurma || null,
+          turma_id: selectedTurma === "none" ? null : selectedTurma,
         });
 
       if (insertError) {
@@ -162,7 +162,7 @@ export const StudentManagement = () => {
 
       toast.success("Aluno adicionado com sucesso!");
       setStudentEmail("");
-      setSelectedTurma("");
+      setSelectedTurma("none");
       loadStudents();
     } catch (error) {
       console.error("Erro ao adicionar aluno:", error);
@@ -271,7 +271,7 @@ export const StudentManagement = () => {
                     <SelectValue placeholder="Selecione uma turma" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Sem turma</SelectItem>
+                    <SelectItem value="none">Sem turma</SelectItem>
                     {turmas.map((turma) => (
                       <SelectItem key={turma.id} value={turma.id}>
                         {turma.nome}
@@ -314,14 +314,14 @@ export const StudentManagement = () => {
                     <TableCell>{student.email}</TableCell>
                     <TableCell>
                       <Select
-                        value={student.turma_id || ""}
-                        onValueChange={(value) => changeTurma(student.id, value || null)}
+                        value={student.turma_id || "none"}
+                        onValueChange={(value) => changeTurma(student.id, value === "none" ? null : value)}
                       >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Sem turma" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="">Sem turma</SelectItem>
+                          <SelectItem value="none">Sem turma</SelectItem>
                           {turmas.map((turma) => (
                             <SelectItem key={turma.id} value={turma.id}>
                               {turma.nome}
