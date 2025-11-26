@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowUp, ArrowDown, RefreshCw } from "lucide-react";
+import { ArrowUp, ArrowDown, RefreshCw, Search } from "lucide-react";
 
 interface User {
   id: string;
@@ -20,6 +22,8 @@ export function UserManagement() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [roleFilter, setRoleFilter] = useState<string>("all");
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -65,6 +69,21 @@ export function UserManagement() {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const filteredUsers = useMemo(() => {
+    return users.filter((userData) => {
+      const matchesSearch = 
+        userData.nome_completo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        userData.email?.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesRole = 
+        roleFilter === "all" || 
+        (roleFilter === "none" && !userData.role) ||
+        userData.role === roleFilter;
+      
+      return matchesSearch && matchesRole;
+    });
+  }, [users, searchTerm, roleFilter]);
 
   const promoteToProf = async (userId: string) => {
     setActionLoading(userId);
@@ -167,6 +186,28 @@ export function UserManagement() {
         </div>
       </CardHeader>
       <CardContent>
+        <div className="flex gap-4 mb-6">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por nome ou email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Select value={roleFilter} onValueChange={setRoleFilter}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Filtrar por nível" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos os níveis</SelectItem>
+              <SelectItem value="professor">Professor</SelectItem>
+              <SelectItem value="aluno">Aluno</SelectItem>
+              <SelectItem value="none">Sem Role</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -178,7 +219,14 @@ export function UserManagement() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((userData) => (
+            {filteredUsers.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                  Nenhum usuário encontrado
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredUsers.map((userData) => (
               <TableRow key={userData.id}>
                 <TableCell className="font-medium">
                   {userData.nome_completo || "Sem nome"}
@@ -225,7 +273,8 @@ export function UserManagement() {
                   )}
                 </TableCell>
               </TableRow>
-            ))}
+              ))
+            )}
           </TableBody>
         </Table>
       </CardContent>
