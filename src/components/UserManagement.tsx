@@ -196,7 +196,7 @@ export function UserManagement() {
               className="pl-10"
             />
           </div>
-          <Select value={roleFilter} onValueChange={setRoleFilter}>
+          <Select value={roleFilter || "all"} onValueChange={setRoleFilter}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Filtrar por nível" />
             </SelectTrigger>
