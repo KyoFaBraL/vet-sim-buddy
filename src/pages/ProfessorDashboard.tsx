@@ -11,6 +11,7 @@ import { StudentReports } from "@/components/StudentReports";
 import { CaseManager } from "@/components/CaseManager";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { ProfessorAccessKeys } from "@/components/ProfessorAccessKeys";
+import { UserManagement } from "@/components/UserManagement";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function ProfessorDashboard() {
@@ -51,7 +52,7 @@ export default function ProfessorDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="students" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="students">
               <Users className="h-4 w-4 mr-2" />
               Alunos
@@ -71,6 +72,10 @@ export default function ProfessorDashboard() {
             <TabsTrigger value="keys">
               <Key className="h-4 w-4 mr-2" />
               Chaves
+            </TabsTrigger>
+            <TabsTrigger value="users">
+              <Users className="h-4 w-4 mr-2" />
+              Usuários
             </TabsTrigger>
           </TabsList>
 
@@ -146,6 +151,10 @@ export default function ProfessorDashboard() {
 
           <TabsContent value="keys" className="space-y-4">
             <ProfessorAccessKeys />
+          </TabsContent>
+
+          <TabsContent value="users" className="space-y-4">
+            <UserManagement />
           </TabsContent>
         </Tabs>
       </div>
