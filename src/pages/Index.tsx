@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Activity, LogOut, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
+import vetbalanceLogo from "@/assets/vetbalance-logo.png";
 import MonitorDisplay from "@/components/MonitorDisplay";
 import CaseInfo from "@/components/CaseInfo";
 import SimulationControls from "@/components/SimulationControls";
@@ -174,7 +175,7 @@ const Index = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
         <div className="text-center">
-          <Activity className="h-12 w-12 animate-pulse mx-auto mb-4 text-primary" />
+          <img src={vetbalanceLogo} alt="VetBalance" className="h-16 w-16 animate-pulse mx-auto mb-4" />
           <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
@@ -185,7 +186,7 @@ const Index = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
         <div className="text-center">
-          <Activity className="h-12 w-12 animate-pulse mx-auto mb-4 text-primary" />
+          <img src={vetbalanceLogo} alt="VetBalance" className="h-16 w-16 animate-pulse mx-auto mb-4" />
           <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
@@ -203,9 +204,9 @@ const Index = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Activity className="h-8 w-8 text-primary" />
+                <img src={vetbalanceLogo} alt="VetBalance Logo" className="h-12 w-12 object-contain" />
                 <div>
-                  <h1 className="text-xl font-bold">Simulador Veterinário</h1>
+                  <h1 className="text-xl font-bold">VetBalance</h1>
                   <p className="text-sm text-muted-foreground">Painel do Professor</p>
                 </div>
               </div>
@@ -353,9 +354,9 @@ const Index = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Activity className="h-8 w-8 text-primary" />
+              <img src={vetbalanceLogo} alt="VetBalance Logo" className="h-12 w-12 object-contain" />
               <div>
-                <h1 className="text-xl font-bold">Simulador Veterinário</h1>
+                <h1 className="text-xl font-bold">VetBalance</h1>
                 <p className="text-sm text-muted-foreground">Modo Aluno</p>
               </div>
             </div>

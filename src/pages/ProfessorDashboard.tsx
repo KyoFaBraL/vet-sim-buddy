@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { LogOut, Users, BookOpen, BarChart3, Settings, Key } from "lucide-react";
+import vetbalanceLogo from "@/assets/vetbalance-logo.png";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -31,12 +32,10 @@ export default function ProfessorDashboard() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Users className="h-6 w-6 text-primary" />
-                </div>
+                <img src={vetbalanceLogo} alt="VetBalance Logo" className="h-14 w-14 object-contain" />
                 <div>
-                  <CardTitle className="text-2xl">Portal do Professor</CardTitle>
-                  <CardDescription>Gerencie turmas, alunos e casos clínicos</CardDescription>
+                  <CardTitle className="text-2xl">VetBalance</CardTitle>
+                  <CardDescription>Portal do Professor</CardDescription>
                 </div>
               </div>
               <div className="flex items-center gap-2">
