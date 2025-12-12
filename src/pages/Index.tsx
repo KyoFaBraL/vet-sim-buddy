@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { LogOut, Settings } from "lucide-react";
-import vetbalanceLogo from "@/assets/vetbalance-logo.png";
+import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import MonitorDisplay from "@/components/MonitorDisplay";
 import CaseInfo from "@/components/CaseInfo";
 import SimulationControls from "@/components/SimulationControls";
@@ -175,7 +175,7 @@ const Index = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
         <div className="text-center">
-          <img src={vetbalanceLogo} alt="VetBalance" className="h-16 w-16 animate-pulse mx-auto mb-4" />
+          <VetBalanceLogo className="h-16 w-16 animate-pulse mx-auto mb-4" />
           <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
@@ -186,7 +186,7 @@ const Index = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30">
         <div className="text-center">
-          <img src={vetbalanceLogo} alt="VetBalance" className="h-16 w-16 animate-pulse mx-auto mb-4" />
+          <VetBalanceLogo className="h-16 w-16 animate-pulse mx-auto mb-4" />
           <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
@@ -204,7 +204,7 @@ const Index = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <img src={vetbalanceLogo} alt="VetBalance Logo" className="h-12 w-12 object-contain" />
+                <VetBalanceLogo className="h-12 w-12 object-contain" />
                 <div>
                   <h1 className="text-xl font-bold">VetBalance</h1>
                   <p className="text-sm text-muted-foreground">Painel do Professor</p>
@@ -354,7 +354,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src={vetbalanceLogo} alt="VetBalance Logo" className="h-12 w-12 object-contain" />
+              <VetBalanceLogo className="h-12 w-12 object-contain" />
               <div>
                 <h1 className="text-xl font-bold">VetBalance</h1>
                 <p className="text-sm text-muted-foreground">Modo Aluno</p>
