@@ -15,8 +15,8 @@ export const RoleSelection = () => {
           <div className="flex items-center gap-3">
             <Activity className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-xl font-bold">Simulador Veterinário</h1>
-              <p className="text-sm text-muted-foreground">Sistema de Aprendizado Gamificado</p>
+              <h1 className="text-xl font-bold">VetBalance</h1>
+              <p className="text-sm text-muted-foreground">Simulador Gamificado de UTI em Distúrbios Ácido-Base</p>
             </div>
           </div>
           <ThemeToggle />
@@ -118,7 +118,7 @@ export const RoleSelection = () => {
 
       {/* Footer */}
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-        <p>Sistema de simulação veterinária gamificado para equilíbrio ácido-base</p>
+        <p>VetBalance - Simulador gamificado de UTI veterinária para distúrbios ácido-base</p>
       </footer>
     </div>
   );
