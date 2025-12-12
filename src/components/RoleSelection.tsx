@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Activity, GraduationCap, UserCheck } from "lucide-react";
+import { GraduationCap, UserCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
+import vetbalanceLogo from "@/assets/vetbalance-logo.png";
 
 export const RoleSelection = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export const RoleSelection = () => {
       <header className="border-b bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Activity className="h-8 w-8 text-primary" />
+            <img src={vetbalanceLogo} alt="VetBalance Logo" className="h-12 w-12 object-contain" />
             <div>
               <h1 className="text-xl font-bold">VetBalance</h1>
               <p className="text-sm text-muted-foreground">Simulador Gamificado de UTI em Distúrbios Ácido-Base</p>
