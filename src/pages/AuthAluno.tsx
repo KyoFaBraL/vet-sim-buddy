@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, GraduationCap } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
+import vetbalanceLogo from "@/assets/vetbalance-logo.png";
 
 const signUpSchema = z.object({
   email: z.string()
@@ -198,12 +199,10 @@ export default function AuthAluno() {
         
         <Card>
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-secondary/10 flex items-center justify-center">
-              <GraduationCap className="h-6 w-6 text-secondary-foreground" />
-            </div>
-            <CardTitle>Portal do Aluno</CardTitle>
+            <img src={vetbalanceLogo} alt="VetBalance Logo" className="mx-auto mb-4 h-16 w-16 object-contain" />
+            <CardTitle>VetBalance</CardTitle>
             <CardDescription>
-              Entre ou crie sua conta de aluno
+              Portal do Aluno
             </CardDescription>
           </CardHeader>
           <CardContent>

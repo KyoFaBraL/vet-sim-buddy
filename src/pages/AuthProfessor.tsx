@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, UserCheck } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
+import vetbalanceLogo from "@/assets/vetbalance-logo.png";
 
 const signUpSchema = z.object({
   email: z.string()
@@ -209,12 +210,10 @@ export default function AuthProfessor() {
         
         <Card>
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-              <UserCheck className="h-6 w-6 text-primary" />
-            </div>
-            <CardTitle>Portal do Professor</CardTitle>
+            <img src={vetbalanceLogo} alt="VetBalance Logo" className="mx-auto mb-4 h-16 w-16 object-contain" />
+            <CardTitle>VetBalance</CardTitle>
             <CardDescription>
-              Entre com sua conta de professor
+              Portal do Professor
             </CardDescription>
           </CardHeader>
           <CardContent>
