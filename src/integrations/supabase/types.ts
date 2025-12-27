@@ -1070,6 +1070,14 @@ export type Database = {
         Args: { student_email: string }
         Returns: string
       }
+      get_student_profile_for_professor: {
+        Args: { student_user_id: string }
+        Returns: {
+          created_at: string
+          id: string
+          nome_completo: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
