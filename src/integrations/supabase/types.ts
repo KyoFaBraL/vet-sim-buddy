@@ -84,13 +84,6 @@ export type Database = {
             foreignKeyName: "casos_clinicos_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "all_users_with_roles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "casos_clinicos_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
@@ -757,13 +750,6 @@ export type Database = {
             foreignKeyName: "simulation_sessions_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "all_users_with_roles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "simulation_sessions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
@@ -1058,31 +1044,11 @@ export type Database = {
       }
     }
     Views: {
-      all_users_with_roles: {
-        Row: {
-          created_at: string | null
-          email: string | null
-          id: string | null
-          nome_completo: string | null
-          role: Database["public"]["Enums"]["app_role"] | null
-        }
-        Relationships: []
-      }
       student_profiles_safe: {
         Row: {
           created_at: string | null
           id: string | null
           nome_completo: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string | null
-          nome_completo?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string | null
-          nome_completo?: string | null
         }
         Relationships: []
       }
