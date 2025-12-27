@@ -1042,6 +1042,45 @@ export type Database = {
           },
         ]
       }
+      weekly_ranking_history: {
+        Row: {
+          criado_em: string
+          id: string
+          points: number
+          position: number
+          total_sessions: number
+          user_id: string
+          week_end: string
+          week_start: string
+          win_rate: number
+          wins: number
+        }
+        Insert: {
+          criado_em?: string
+          id?: string
+          points?: number
+          position: number
+          total_sessions?: number
+          user_id: string
+          week_end: string
+          week_start: string
+          win_rate?: number
+          wins?: number
+        }
+        Update: {
+          criado_em?: string
+          id?: string
+          points?: number
+          position?: number
+          total_sessions?: number
+          user_id?: string
+          week_end?: string
+          week_start?: string
+          win_rate?: number
+          wins?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       student_profiles_safe: {
