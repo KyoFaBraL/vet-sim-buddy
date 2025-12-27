@@ -90,34 +90,42 @@ export default function AuthAluno() {
 
       if (error) throw error;
 
-      // Verificar se o usuário foi criado com papel de aluno
+      // Check if user was created successfully
       if (data.user) {
-        // Registrar aluno usando função segura do banco
-        const { data: registerData, error: registerError } = await supabase
-          .rpc('register_aluno', {
-            user_id: data.user.id,
-            email: result.data.email,
-            nome_completo: result.data.nomeCompleto
+        // Check if this is a new signup or an existing user
+        // The handle_new_user trigger automatically creates profile and assigns 'aluno' role
+        if (data.session) {
+          // User was signed up and logged in (auto-confirm is enabled)
+          toast({
+            title: "Conta criada!",
+            description: "Você foi autenticado como aluno com sucesso.",
           });
-
-        if (registerError) throw registerError;
-        
-        const registerResult = registerData as { success: boolean; message: string };
-        if (!registerResult.success) {
-          throw new Error(registerResult.message);
+          navigate("/app");
+        } else {
+          // User needs to confirm email
+          toast({
+            title: "Verifique seu email",
+            description: "Enviamos um link de confirmação para o seu email.",
+          });
         }
-
+      } else if (data.user === null && !error) {
+        // This can happen if user already exists
         toast({
-          title: "Conta criada!",
-          description: "Você foi autenticado como aluno com sucesso.",
+          title: "Email já cadastrado",
+          description: "Este email já está registrado. Por favor, faça login.",
         });
-        
-        navigate("/app");
       }
     } catch (error: any) {
+      // Handle specific error cases
+      let errorMessage = error.message;
+      
+      if (error.message?.includes("User already registered")) {
+        errorMessage = "Este email já está cadastrado. Por favor, faça login.";
+      }
+      
       toast({
         title: "Erro ao criar conta",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
