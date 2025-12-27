@@ -17,7 +17,7 @@ export const RoleSelection = () => {
             <VetBalanceLogo className="h-12 w-12 object-contain" />
             <div>
               <h1 className="text-xl font-bold">VetBalance</h1>
-              <p className="text-sm text-muted-foreground">Simulador Gamificado de UTI em Distúrbios Ácido-Base</p>
+              <p className="text-sm text-muted-foreground">Simulador Gamificado de Cuidados Críticos em Distúrbios Ácidos Básicos</p>
             </div>
           </div>
           <ThemeToggle />
@@ -119,7 +119,7 @@ export const RoleSelection = () => {
 
       {/* Footer */}
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-        <p>VetBalance - Simulador gamificado de UTI veterinária para distúrbios ácido-base</p>
+        <p>VetBalance - Simulador gamificado de cuidados críticos em distúrbios ácidos básicos para cães e gatos</p>
       </footer>
     </div>
   );

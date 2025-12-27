@@ -213,7 +213,7 @@ export default function AuthAluno() {
             <VetBalanceLogo className="mx-auto mb-4 h-16 w-16 object-contain" />
             <CardTitle>VetBalance</CardTitle>
             <CardDescription>
-              Portal do Aluno
+              Simulador de Cuidados Críticos em Distúrbios Ácidos Básicos - Portal do Aluno
             </CardDescription>
           </CardHeader>
           <CardContent>

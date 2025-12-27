@@ -177,7 +177,7 @@ export default function ResetPassword() {
             <VetBalanceLogo className="mx-auto mb-4 h-16 w-16 object-contain" />
             <CardTitle>VetBalance</CardTitle>
             <CardDescription>
-              {viewMode === "request" && "Recuperação de Senha"}
+              Simulador de Cuidados Críticos - {viewMode === "request" && "Recuperação de Senha"}
               {viewMode === "update" && "Nova Senha"}
               {viewMode === "success" && "Senha Atualizada"}
             </CardDescription>

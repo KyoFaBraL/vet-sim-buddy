@@ -35,7 +35,7 @@ export default function ProfessorDashboard() {
                 <VetBalanceLogo className="h-14 w-14 object-contain" />
                 <div>
                   <CardTitle className="text-2xl">VetBalance</CardTitle>
-                  <CardDescription>Portal do Professor</CardDescription>
+                  <CardDescription>Simulador de Cuidados Críticos - Portal do Professor</CardDescription>
                 </div>
               </div>
               <div className="flex items-center gap-2">
