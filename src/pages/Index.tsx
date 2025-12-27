@@ -13,6 +13,8 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { CaseShareManager } from "@/components/CaseShareManager";
 import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
+import { WinLossStats } from "@/components/WinLossStats";
+import { StudentRanking } from "@/components/StudentRanking";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
 import { SessionComparison } from "@/components/SessionComparison";
@@ -589,8 +591,10 @@ const Index = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="history" className="w-full">
-              <TabsList className="grid w-full grid-cols-5">
+            <Tabs defaultValue="winloss" className="w-full">
+              <TabsList className="grid w-full grid-cols-7">
+                <TabsTrigger value="winloss">Vitórias</TabsTrigger>
+                <TabsTrigger value="ranking">Ranking</TabsTrigger>
                 <TabsTrigger value="history">Histórico</TabsTrigger>
                 <TabsTrigger value="comparison">Comparação</TabsTrigger>
                 <TabsTrigger value="badges">Conquistas</TabsTrigger>
@@ -598,6 +602,14 @@ const Index = () => {
                 <TabsTrigger value="reports">Relatórios</TabsTrigger>
               </TabsList>
               
+              <TabsContent value="winloss" className="space-y-4">
+                <WinLossStats caseId={selectedCaseId} />
+              </TabsContent>
+
+              <TabsContent value="ranking" className="space-y-4">
+                <StudentRanking />
+              </TabsContent>
+
               <TabsContent value="history" className="space-y-4">
                 <SessionHistory />
               </TabsContent>
