@@ -157,9 +157,9 @@ export const Auth = ({ onAuthSuccess }: AuthProps) => {
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Autenticação</CardTitle>
+          <CardTitle>VetBalance</CardTitle>
           <CardDescription>
-            Entre ou crie uma conta para gerenciar seus casos personalizados
+            Simulador de Cuidados Críticos - Entre ou crie uma conta
           </CardDescription>
         </CardHeader>
         <CardContent>

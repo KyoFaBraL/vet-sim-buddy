@@ -203,7 +203,7 @@ export default function AuthProfessor() {
             <VetBalanceLogo className="mx-auto mb-4 h-16 w-16 object-contain" />
             <CardTitle>VetBalance</CardTitle>
             <CardDescription>
-              Portal do Professor
+              Simulador de Cuidados Críticos em Distúrbios Ácidos Básicos - Portal do Professor
             </CardDescription>
           </CardHeader>
           <CardContent>
