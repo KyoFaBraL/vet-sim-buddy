@@ -167,7 +167,7 @@ export default function AuthProfessor() {
         .from("user_roles")
         .select("role")
         .eq("user_id", data.user.id)
-        .single();
+        .maybeSingle();
 
       if (roleError || roleData?.role !== 'professor') {
         await supabase.auth.signOut();

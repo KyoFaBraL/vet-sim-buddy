@@ -75,10 +75,13 @@ export default function AuthAluno() {
     setLoading(true);
 
     try {
+      const redirectUrl = `${window.location.origin}/`;
+      
       const { data, error } = await supabase.auth.signUp({
         email: result.data.email,
         password: result.data.password,
         options: {
+          emailRedirectTo: redirectUrl,
           data: {
             nome_completo: result.data.nomeCompleto,
           },
@@ -156,7 +159,7 @@ export default function AuthAluno() {
         .from("user_roles")
         .select("role")
         .eq("user_id", data.user.id)
-        .single();
+        .maybeSingle();
 
       if (roleError || roleData?.role !== 'aluno') {
         await supabase.auth.signOut();
