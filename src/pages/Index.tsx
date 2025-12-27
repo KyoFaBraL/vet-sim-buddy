@@ -15,6 +15,8 @@ import { AccessCodeInput } from "@/components/AccessCodeInput";
 import { PerformanceStatistics } from "@/components/PerformanceStatistics";
 import { WinLossStats } from "@/components/WinLossStats";
 import { StudentRanking } from "@/components/StudentRanking";
+import { RankingNotifications } from "@/components/RankingNotifications";
+import { useRankingBadges } from "@/hooks/useRankingBadges";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
 import { SessionComparison } from "@/components/SessionComparison";
@@ -62,6 +64,7 @@ const Index = () => {
   const [availableCases, setAvailableCases] = useState<any[]>([]);
   const [showTutorial, setShowTutorial] = useState(true);
   const { toast } = useToast();
+  const { checkAndAwardBadges } = useRankingBadges();
   
   const {
     parameters,
@@ -102,6 +105,16 @@ const Index = () => {
       loadCases();
     }
   }, [user, selectedCaseId]);
+
+  // Check badges when game status changes to won
+  useEffect(() => {
+    if (gameStatus === 'won') {
+      // Delay to allow session to be saved first
+      setTimeout(() => {
+        checkAndAwardBadges();
+      }, 2000);
+    }
+  }, [gameStatus, checkAndAwardBadges]);
 
   const loadCases = async () => {
     try {
@@ -351,6 +364,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+      {/* Ranking Notifications - Real-time listener */}
+      <RankingNotifications />
       {/* Header do Aluno */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-3">
