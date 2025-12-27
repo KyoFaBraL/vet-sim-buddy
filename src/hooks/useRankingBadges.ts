@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAchievementAnimation } from "@/hooks/useAchievementAnimation";
 
 interface BadgeCriteria {
   type: string;
@@ -22,6 +23,7 @@ interface Badge {
 export const useRankingBadges = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const { toast } = useToast();
+  const { celebrateAchievement } = useAchievementAnimation();
 
   useEffect(() => {
     const getUser = async () => {
@@ -137,6 +139,9 @@ export const useRankingBadges = () => {
             });
 
           if (!error) {
+            // Trigger celebration animation
+            celebrateAchievement('badge');
+            
             toast({
               title: `${badge.icone} Nova conquista desbloqueada!`,
               description: `${badge.nome}: ${badge.descricao}`,
@@ -148,7 +153,7 @@ export const useRankingBadges = () => {
     } catch (error) {
       console.error("Error checking badges:", error);
     }
-  }, [userId, toast]);
+  }, [userId, toast, celebrateAchievement]);
 
   return { checkAndAwardBadges };
 };
