@@ -302,6 +302,17 @@ export default function AuthProfessor() {
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
+                  
+                  <div className="text-center mt-4">
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="text-sm text-muted-foreground hover:text-primary"
+                      onClick={() => navigate("/reset-password")}
+                    >
+                      Esqueci minha senha
+                    </Button>
+                  </div>
                 </form>
               </TabsContent>
             </Tabs>
