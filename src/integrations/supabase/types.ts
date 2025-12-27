@@ -1072,10 +1072,20 @@ export type Database = {
         Args: { email: string; nome_completo: string; user_id: string }
         Returns: Json
       }
-      register_professor: {
-        Args: { email: string; nome_completo: string; user_id: string }
-        Returns: Json
-      }
+      register_professor:
+        | {
+            Args: { email: string; nome_completo: string; user_id: string }
+            Returns: Json
+          }
+        | {
+            Args: {
+              access_key?: string
+              email: string
+              nome_completo: string
+              user_id: string
+            }
+            Returns: Json
+          }
       validate_professor_key: {
         Args: { key_to_validate: string }
         Returns: Json

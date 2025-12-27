@@ -71,19 +71,6 @@ export default function AuthProfessor() {
     setLoading(true);
 
     try {
-      // Validar chave de acesso primeiro
-      const { data: keyValidation, error: keyError } = await supabase
-        .rpc('validate_professor_key', {
-          key_to_validate: result.data.accessKey
-        });
-
-      if (keyError) throw keyError;
-
-      const validationResult = keyValidation as { valid: boolean; message: string };
-      if (!validationResult.valid) {
-        throw new Error(validationResult.message);
-      }
-
       const redirectUrl = `${window.location.origin}/`;
       
       const { data, error } = await supabase.auth.signUp({
@@ -100,18 +87,21 @@ export default function AuthProfessor() {
       if (error) throw error;
 
       if (data.user) {
-        // Registrar professor usando função segura do banco
+        // Registrar professor usando função segura do banco (valida chave internamente)
         const { data: registerData, error: registerError } = await supabase
           .rpc('register_professor', {
             user_id: data.user.id,
             email: result.data.email,
-            nome_completo: result.data.fullName
+            nome_completo: result.data.fullName,
+            access_key: result.data.accessKey
           });
 
         if (registerError) throw registerError;
         
         const registerResult = registerData as { success: boolean; message: string };
         if (!registerResult.success) {
+          // Se falhou o registro, fazer logout para limpar estado
+          await supabase.auth.signOut();
           throw new Error(registerResult.message);
         }
 
