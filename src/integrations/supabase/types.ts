@@ -1086,6 +1086,7 @@ export type Database = {
         Returns: boolean
       }
       promote_to_professor: { Args: { target_user_id: string }; Returns: Json }
+      purge_old_email_lookups: { Args: never; Returns: undefined }
       register_aluno: {
         Args: { email: string; nome_completo: string; user_id: string }
         Returns: Json
@@ -1104,6 +1105,10 @@ export type Database = {
             }
             Returns: Json
           }
+      validate_professor_access_key: {
+        Args: { key_to_check: string }
+        Returns: boolean
+      }
       validate_professor_key: {
         Args: { key_to_validate: string }
         Returns: Json
