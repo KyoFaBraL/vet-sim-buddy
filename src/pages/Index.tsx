@@ -17,6 +17,8 @@ import { WinLossStats } from "@/components/WinLossStats";
 import { StudentRanking } from "@/components/StudentRanking";
 import { RankingNotifications } from "@/components/RankingNotifications";
 import { useRankingBadges } from "@/hooks/useRankingBadges";
+import { WeeklyLeaderboard } from "@/components/WeeklyLeaderboard";
+import { useAchievementAnimation } from "@/hooks/useAchievementAnimation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
 import { SessionComparison } from "@/components/SessionComparison";
@@ -65,6 +67,7 @@ const Index = () => {
   const [showTutorial, setShowTutorial] = useState(true);
   const { toast } = useToast();
   const { checkAndAwardBadges } = useRankingBadges();
+  const { celebrateAchievement } = useAchievementAnimation();
   
   const {
     parameters,
@@ -106,15 +109,18 @@ const Index = () => {
     }
   }, [user, selectedCaseId]);
 
-  // Check badges when game status changes to won
+  // Check badges and celebrate when game status changes to won
   useEffect(() => {
     if (gameStatus === 'won') {
-      // Delay to allow session to be saved first
+      // Trigger victory animation immediately
+      celebrateAchievement('victory');
+      
+      // Delay badge check to allow session to be saved first
       setTimeout(() => {
         checkAndAwardBadges();
       }, 2000);
     }
-  }, [gameStatus, checkAndAwardBadges]);
+  }, [gameStatus, checkAndAwardBadges, celebrateAchievement]);
 
   const loadCases = async () => {
     try {
@@ -607,8 +613,9 @@ const Index = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="winloss" className="w-full">
-              <TabsList className="grid w-full grid-cols-7">
+              <TabsList className="grid w-full grid-cols-8">
                 <TabsTrigger value="winloss">Vitórias</TabsTrigger>
+                <TabsTrigger value="weekly">Semanal</TabsTrigger>
                 <TabsTrigger value="ranking">Ranking</TabsTrigger>
                 <TabsTrigger value="history">Histórico</TabsTrigger>
                 <TabsTrigger value="comparison">Comparação</TabsTrigger>
@@ -619,6 +626,10 @@ const Index = () => {
               
               <TabsContent value="winloss" className="space-y-4">
                 <WinLossStats caseId={selectedCaseId} />
+              </TabsContent>
+
+              <TabsContent value="weekly" className="space-y-4">
+                <WeeklyLeaderboard />
               </TabsContent>
 
               <TabsContent value="ranking" className="space-y-4">
