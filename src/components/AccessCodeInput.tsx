@@ -31,15 +31,14 @@ export const AccessCodeInput = ({ onCaseAccessed }: AccessCodeInputProps) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Usuário não autenticado");
 
-      // Buscar caso compartilhado pelo código
-      const { data: sharedCase, error: searchError } = await supabase
-        .from("shared_cases")
-        .select("*")
-        .eq("access_code", accessCode.toUpperCase().trim())
-        .eq("ativo", true)
-        .maybeSingle();
+      // Buscar caso compartilhado usando função segura (SECURITY DEFINER)
+      // Esta função previne enumeração de códigos de acesso
+      const { data: sharedCases, error: searchError } = await supabase
+        .rpc("get_shared_case_by_code", { code: accessCode.trim() });
 
       if (searchError) throw searchError;
+
+      const sharedCase = sharedCases && sharedCases.length > 0 ? sharedCases[0] : null;
 
       if (!sharedCase) {
         toast({

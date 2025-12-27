@@ -1056,6 +1056,16 @@ export type Database = {
     Functions: {
       demote_to_student: { Args: { target_user_id: string }; Returns: Json }
       generate_access_code: { Args: never; Returns: string }
+      get_shared_case_by_code: {
+        Args: { code: string }
+        Returns: {
+          case_id: number
+          descricao: string
+          expira_em: string
+          id: string
+          titulo: string
+        }[]
+      }
       get_student_id_by_email: {
         Args: { student_email: string }
         Returns: string
