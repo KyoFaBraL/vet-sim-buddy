@@ -18,7 +18,9 @@ import { StudentRanking } from "@/components/StudentRanking";
 import { RankingNotifications } from "@/components/RankingNotifications";
 import { useRankingBadges } from "@/hooks/useRankingBadges";
 import { WeeklyLeaderboard } from "@/components/WeeklyLeaderboard";
+import { WeeklyRankingHistory } from "@/components/WeeklyRankingHistory";
 import { useAchievementAnimation } from "@/hooks/useAchievementAnimation";
+import { useWeeklyResetNotification } from "@/hooks/useWeeklyResetNotification";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
 import { SessionComparison } from "@/components/SessionComparison";
@@ -68,6 +70,7 @@ const Index = () => {
   const { toast } = useToast();
   const { checkAndAwardBadges } = useRankingBadges();
   const { celebrateAchievement } = useAchievementAnimation();
+  useWeeklyResetNotification(); // Enable weekly reset notifications
   
   const {
     parameters,
@@ -613,9 +616,10 @@ const Index = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="winloss" className="w-full">
-              <TabsList className="grid w-full grid-cols-8">
+              <TabsList className="grid w-full grid-cols-9">
                 <TabsTrigger value="winloss">Vitórias</TabsTrigger>
                 <TabsTrigger value="weekly">Semanal</TabsTrigger>
+                <TabsTrigger value="evolution">Evolução</TabsTrigger>
                 <TabsTrigger value="ranking">Ranking</TabsTrigger>
                 <TabsTrigger value="history">Histórico</TabsTrigger>
                 <TabsTrigger value="comparison">Comparação</TabsTrigger>
@@ -630,6 +634,10 @@ const Index = () => {
 
               <TabsContent value="weekly" className="space-y-4">
                 <WeeklyLeaderboard />
+              </TabsContent>
+
+              <TabsContent value="evolution" className="space-y-4">
+                <WeeklyRankingHistory />
               </TabsContent>
 
               <TabsContent value="ranking" className="space-y-4">
