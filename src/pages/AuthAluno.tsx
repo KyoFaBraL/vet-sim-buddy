@@ -237,7 +237,17 @@ export default function AuthAluno() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="login-password">Senha</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="login-password">Senha</Label>
+                      <Button
+                        type="button"
+                        variant="link"
+                        className="px-0 h-auto text-xs text-muted-foreground hover:text-primary"
+                        onClick={() => navigate('/reset-password')}
+                      >
+                        Esqueci minha senha
+                      </Button>
+                    </div>
                     <Input
                       id="login-password"
                       type="password"

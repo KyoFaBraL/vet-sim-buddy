@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AuthProfessor from "./pages/AuthProfessor";
 import AuthAluno from "./pages/AuthAluno";
+import ResetPassword from "./pages/ResetPassword";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import { RoleSelection } from "./components/RoleSelection";
 import { useAuth } from "./hooks/useAuth";
@@ -79,6 +80,7 @@ const App = () => (
                 <AuthAluno />
               </PublicRoute>
             } />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/app" element={
               <ProtectedRoute>
                 <Index />
