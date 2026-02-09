@@ -85,8 +85,8 @@ export const StudentManagement = () => {
       // Buscar perfis dos alunos
       const studentIds = relationships.map(r => r.student_id);
       const { data: profiles, error: profileError } = await supabase
-        .from("profiles")
-        .select("id, email, nome_completo")
+        .from("student_profiles_safe")
+        .select("id, nome_completo")
         .in("id", studentIds);
 
       if (profileError) throw profileError;
@@ -97,7 +97,7 @@ export const StudentManagement = () => {
         return {
           id: rel.id,
           student_id: rel.student_id,
-          email: profile?.email || "Email não disponível",
+          email: "Protegido",
           nome_completo: profile?.nome_completo || "Nome não disponível",
           criado_em: rel.criado_em,
           ativo: rel.ativo,

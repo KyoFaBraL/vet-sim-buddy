@@ -85,8 +85,8 @@ export const StudentReports = () => {
 
       // Buscar perfis dos alunos
       const { data: profiles, error: profileError } = await supabase
-        .from("profiles")
-        .select("id, email, nome_completo")
+        .from("student_profiles_safe")
+        .select("id, nome_completo")
         .in("id", studentIds);
 
       if (profileError) throw profileError;
@@ -95,7 +95,7 @@ export const StudentReports = () => {
 
       for (const profile of profiles || []) {
         const studentId = profile.id;
-        const studentEmail = profile.email || "N/A";
+        const studentEmail = "Protegido";
         const studentName = profile.nome_completo || "N/A";
 
         // Buscar sessões
