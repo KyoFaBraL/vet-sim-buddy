@@ -13,7 +13,7 @@
 
 O VetBalance é um software educacional gamificado, desenvolvido como ferramenta de m-learning, que simula cenários clínicos veterinários de equilíbrio ácido-base em cães e gatos. O sistema permite que estudantes pratiquem a identificação e o tratamento de distúrbios como acidose metabólica, alcalose respiratória, cetoacidose diabética e hipercapnia em ambiente virtual seguro, com feedback imediato e rastreabilidade completa de decisões.
 
-O software está disponível como aplicação web responsiva (PWA) e como aplicativo Android (APK via Capacitor), atendendo à proposta de aprendizagem móvel com dispositivos amplamente acessíveis.
+O software está disponível como aplicação web responsiva (PWA), acessível via navegadores modernos em desktop e dispositivos móveis, atendendo à proposta de aprendizagem móvel com dispositivos amplamente acessíveis.
 
 ---
 
@@ -44,7 +44,7 @@ O software está disponível como aplicação web responsiva (PWA) e como aplica
 | **Frontend** | React 18, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, Recharts |
 | **Backend** | PostgreSQL (Supabase), 5 Edge Functions (Deno), Row Level Security (RLS) |
 | **IA** | Google Gemini 2.5, OpenAI GPT — feedback de sessão, dicas de tratamento, geração de casos |
-| **Mobile** | Capacitor.js 8.0 — Android APK com SplashScreen, StatusBar, PushNotifications |
+| **Mobile** | PWA responsiva — compatível com navegadores mobile (Chrome, Safari, Firefox) |
 | **Banco de Dados** | 32 tabelas com RLS em todas, autenticação por papel (professor/aluno) |
 
 ### Algoritmo de Simulação (Resumo)
@@ -102,4 +102,4 @@ A validação seguirá metodologia comparativa com **40 estudantes** randomizado
 ---
 
 **Software desenvolvido e disponível em:** https://vetbalance.app.br  
-**Compatível com:** Navegadores modernos (Chrome, Firefox, Safari, Edge) e Android 6.0+
+**Compatível com:** Navegadores modernos (Chrome, Firefox, Safari, Edge) em desktop e dispositivos móveis

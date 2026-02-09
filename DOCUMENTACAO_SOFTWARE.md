@@ -4,7 +4,7 @@
 
 **Versão:** 1.0  
 **Data:** Fevereiro de 2026  
-**Formato:** Progressive Web App (PWA) + Android (APK via Capacitor)  
+**Formato:** Progressive Web App (PWA)  
 **URL de Produção:** https://vetbalance.app.br
 
 ---
@@ -26,7 +26,7 @@
 13. [Sistema de Badges e Conquistas](#13-sistema-de-badges-e-conquistas)
 14. [Ranking e Competição](#14-ranking-e-competição)
 15. [Relatórios e Exportação de Dados](#15-relatórios-e-exportação-de-dados)
-16. [Aplicativo Android (APK)](#16-aplicativo-android-apk)
+16. [Compatibilidade Mobile](#16-compatibilidade-mobile)
 17. [Fluxos de Uso Detalhados](#17-fluxos-de-uso-detalhados)
 18. [Evidências Visuais – Capturas de Tela](#18-evidências-visuais--capturas-de-tela)
 19. [Diagramas Visuais de Fluxo](#19-diagramas-visuais-de-fluxo)
@@ -37,7 +37,7 @@
 
 ## 1. VISÃO GERAL DO SISTEMA
 
-O **VetBalance** é um software educacional gamificado desenvolvido como ferramenta de m-learning para dispositivos móveis Android e navegadores web. O sistema simula cenários clínicos veterinários focados em distúrbios do equilíbrio ácido-base em pequenos animais (cães e gatos), permitindo que estudantes e profissionais pratiquem a identificação e o tratamento dessas condições em ambiente seguro e controlado.
+O **VetBalance** é um software educacional gamificado desenvolvido como ferramenta de m-learning para navegadores web. O sistema simula cenários clínicos veterinários focados em distúrbios do equilíbrio ácido-base em pequenos animais (cães e gatos), permitindo que estudantes e profissionais pratiquem a identificação e o tratamento dessas condições em ambiente seguro e controlado.
 
 ### 1.1 Objetivos do Software
 
@@ -93,11 +93,6 @@ O **VetBalance** é um software educacional gamificado desenvolvido como ferrame
 │  │ Autenticação integrada                            │      │
 │  └──────────────────────────────────────────────────┘      │
 ├─────────────────────────────────────────────────────────────┤
-│                    CAMADA MOBILE                             │
-│  ┌──────────────────────────────────────────────────┐      │
-│  │ Capacitor.js → Android APK                        │      │
-│  │ Plugins: StatusBar, SplashScreen, PushNotifications│     │
-│  └──────────────────────────────────────────────────┘      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -145,16 +140,6 @@ O sistema adota o padrão **Component-Based Architecture** com separação clara
 | **Edge Functions (Deno)** | Lógica de servidor serverless |
 | **Row Level Security (RLS)** | Segurança em nível de linha |
 
-### 3.3 Mobile
-
-| Tecnologia | Versão | Finalidade |
-|-----------|--------|-----------|
-| **Capacitor** | 8.0+ | Bridge nativo para Android |
-| **@capacitor/android** | 8.0+ | Plataforma Android |
-| **@capacitor/status-bar** | 8.0+ | Controle da barra de status |
-| **@capacitor/splash-screen** | 8.0+ | Tela de abertura |
-| **@capacitor/push-notifications** | 8.0+ | Notificações push |
-| **@capacitor/haptics** | 8.0+ | Feedback tátil |
 
 ---
 
@@ -670,7 +655,6 @@ Ao conquistar um badge, o sistema dispara:
 ### 14.3 Notificações
 
 - **Notificações do navegador:** Solicitação de permissão na primeira visita
-- **Notificações push (Android):** Via Capacitor PushNotifications
 - **Toast in-app:** Para eventos de ranking e conquistas
 - **Alerta de reset semanal:** Segunda-feira com resumo da semana anterior
 
@@ -717,48 +701,17 @@ HISTÓRICO DA SIMULAÇÃO
 
 ---
 
-## 16. APLICATIVO ANDROID (APK)
+## 16. COMPATIBILIDADE MOBILE
 
-### 16.1 Configuração do Capacitor
+O VetBalance é uma Progressive Web App (PWA) totalmente responsiva, compatível com navegadores modernos em dispositivos desktop e mobile. A interface se adapta automaticamente a diferentes tamanhos de tela, garantindo usabilidade em smartphones e tablets.
 
-```typescript
-// capacitor.config.ts
-{
-  appId: 'app.lovable.c2000202419f4c818714b9b661f20061',
-  appName: 'VetBalance',
-  webDir: 'dist',
-  plugins: {
-    SplashScreen: { launchShowDuration: 2000, backgroundColor: '#0f172a' },
-    StatusBar: { style: 'DARK', backgroundColor: '#0f172a' },
-    PushNotifications: { presentationOptions: ['badge', 'sound', 'alert'] }
-  }
-}
-```
+**Navegadores compatíveis:**
+- Google Chrome 90+
+- Mozilla Firefox 90+
+- Safari 14+
+- Microsoft Edge 90+
 
-### 16.2 Plugins Android
-
-| Plugin | Versão | Funcionalidade |
-|--------|--------|---------------|
-| `@capacitor/android` | 8.0+ | Plataforma Android base |
-| `@capacitor/app` | 8.0+ | Ciclo de vida do app |
-| `@capacitor/haptics` | 8.0+ | Vibração/feedback tátil |
-| `@capacitor/status-bar` | 8.0+ | Personalização da barra de status |
-| `@capacitor/splash-screen` | 8.0+ | Tela de carregamento |
-| `@capacitor/push-notifications` | 8.0+ | Notificações push |
-
-### 16.3 Geração do APK
-
-**Pré-requisitos:**
-- Android Studio (com Android SDK)
-- Java JDK 17+
-- Node.js 18+
-
-**Passos:**
-1. `npm run build` (gera `dist/`)
-2. `npx cap add android` (adiciona plataforma)
-3. `npx cap sync android` (sincroniza web assets)
-4. `npx cap open android` (abre no Android Studio)
-5. Build → Generate Signed APK
+> **Nota:** O aplicativo Android nativo (APK via Capacitor) encontra-se em fase de testes e não está disponível publicamente nesta versão.
 
 ---
 
