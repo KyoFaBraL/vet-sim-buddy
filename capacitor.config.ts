@@ -1,11 +1,11 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.c2000202419f4c818714b9b661f20061',
+  appId: 'br.app.vetbalance',
   appName: 'VetBalance',
   webDir: 'dist',
   server: {
-    url: 'https://c2000202-419f-4c81-8714-b9b661f20061.lovableproject.com?forceHideBadge=true',
+    url: 'https://vetbalance.app.br',
     cleartext: true
   },
   plugins: {
