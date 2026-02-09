@@ -29,7 +29,7 @@
 16. [Compatibilidade Mobile](#16-compatibilidade-mobile)
 17. [Fluxos de Uso Detalhados](#17-fluxos-de-uso-detalhados)
 18. [Diagramas Visuais de Fluxo](#18-diagramas-visuais-de-fluxo)
-19. [Evidências Visuais – Capturas de Tela Anotadas](#19-evidências-visuais--capturas-de-tela-anotadas)
+19. [Evidências Visuais – Capturas de Tela](#19-evidências-visuais--capturas-de-tela)
 20. [Requisitos de Sistema](#20-requisitos-de-sistema)
 21. [Glossário Técnico](#21-glossário-técnico)
 
@@ -854,259 +854,236 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 
 
 
-## 19. EVIDÊNCIAS VISUAIS – CAPTURAS DE TELA ANOTADAS
+## 19. EVIDÊNCIAS VISUAIS – CAPTURAS DE TELA
 
-Esta seção apresenta as capturas de tela anotadas das principais interfaces do sistema VetBalance, servindo como evidência visual do funcionamento do software para fins de defesa acadêmica.
+Esta seção apresenta as capturas de tela das principais interfaces do sistema VetBalance, servindo como evidência visual do funcionamento do software para fins de defesa acadêmica.
 
-> **Nota:** As capturas de tela foram realizadas em fevereiro de 2026 na versão de produção do sistema, disponível em https://vetbalance.lovable.app, com resolução de 1920×1080 pixels.
+> **Nota:** As capturas de tela a seguir foram realizadas em fevereiro de 2026 na versão de produção do sistema (https://vetbalance.app.br), com resolução de 1920×1080 pixels.
 
 ---
 
-### 19.1 Tela de Seleção de Papel (Tela Inicial)
+### Tela 1 – Seleção de Papel (Tela Inicial)
 
-**URL de acesso:** `https://vetbalance.lovable.app/`  
-**Rota interna:** `/`
+**Rota:** `/`  
+**Descrição:** Tela inicial do sistema onde o usuário escolhe seu perfil de acesso.
 
 ![Tela de Seleção de Papel](docs/screenshots/01-role-selection.png)
 
-**Anotações sobre os elementos da interface:**
+**Elementos identificados:**
+- Logo VetBalance com identidade visual do sistema
+- Dois cards de seleção: "👨‍🏫 Professor" e "👨‍🎓 Aluno"
+- Descrição das funcionalidades de cada papel
+- Botões de acesso que redirecionam para os formulários de autenticação correspondentes
+- Toggle de tema claro/escuro
+- Design responsivo com paleta de cores institucional
 
-| Nº | Elemento | Localização na Tela | Função |
-|----|----------|---------------------|--------|
-| 1 | **Logo VetBalance** | Canto superior esquerdo | Identidade visual — logo com ícone de balança veterinária |
-| 2 | **Subtítulo descritivo** | Abaixo do logo | "Simulador Gamificado de Cuidados Críticos em Distúrbios Ácidos Básicos" |
-| 3 | **Toggle de tema** | Canto superior direito | Alternância entre modo claro (☀️) e escuro (🌙) |
-| 4 | **Título "Bem-vindo!"** | Centro superior | Mensagem de boas-vindas com instrução "Selecione seu tipo de acesso" |
-| 5 | **Card "Professor"** | Coluna esquerda | Ícone de UserCheck, descrição das funcionalidades docentes (criar casos, acompanhar alunos, gerar relatórios, organizar turmas), botão "Entrar como Professor" |
-| 6 | **Card "Aluno"** | Coluna direita | Ícone de GraduationCap, descrição das funcionalidades discentes (simular casos, aplicar tratamentos, conquistar badges, acessar histórico), botão "Entrar como Aluno" |
-| 7 | **Rodapé** | Base da página | Texto institucional "VetBalance - Simulador gamificado de cuidados críticos em distúrbios ácidos básicos para cães e gatos" |
-
-**Análise de design:** Layout responsivo em grid de 2 colunas (`md:grid-cols-2`), com efeito hover nos cards (sombra e borda), fundo em gradiente sutil (`from-background via-background to-muted/30`). A separação visual clara entre os dois perfis segue o princípio de controle de acesso baseado em papéis (RBAC).
+**Finalidade educacional:** Permite a segregação clara de papéis, garantindo que professores e alunos acessem funcionalidades adequadas ao seu perfil.
 
 ---
 
-### 19.2 Tela de Autenticação do Aluno
+### Tela 2 – Login/Cadastro do Aluno
 
-**URL de acesso:** `https://vetbalance.lovable.app/auth/aluno`  
-**Rota interna:** `/auth/aluno`
+**Rota:** `/auth/aluno`  
+**Descrição:** Formulário de autenticação para estudantes.
 
 ![Tela de Login do Aluno](docs/screenshots/02-auth-aluno.png)
 
-**Anotações sobre os elementos da interface:**
+**Elementos identificados:**
+- Logo VetBalance
+- Formulário com campos: Nome Completo, E-mail, Senha
+- Alternância entre modo "Entrar" e "Cadastrar"
+- Validação de campos em tempo real
+- Link para recuperação de senha
+- Botão "Voltar" para retornar à seleção de papel
 
-| Nº | Elemento | Localização na Tela | Função |
-|----|----------|---------------------|--------|
-| 1 | **Logo VetBalance** | Topo centralizado | Identidade visual consistente com a tela inicial |
-| 2 | **Título "Portal do Aluno"** | Abaixo do logo | Identificação clara do tipo de acesso |
-| 3 | **Abas "Entrar" / "Cadastrar"** | Topo do formulário | Alternância entre modos de login e registro |
-| 4 | **Campo "E-mail"** | Área central | Input de e-mail com validação em tempo real |
-| 5 | **Campo "Senha"** | Abaixo do e-mail | Input de senha com requisitos mínimos de segurança |
-| 6 | **Campo "Nome Completo"** | Visível no modo Cadastro | Campo obrigatório para registro de novos alunos |
-| 7 | **Link "Esqueceu a senha?"** | Abaixo dos campos | Redireciona para `/reset-password` para recuperação via e-mail |
-| 8 | **Botão "Entrar"** | Base do formulário | Submit do formulário de autenticação |
-| 9 | **Botão "Voltar"** | Abaixo do botão principal | Retorno à tela de seleção de papel (`/`) |
-
-**Fluxo de segurança:** Após o cadastro, o sistema envia um e-mail de verificação. O aluno só consegue acessar o simulador após confirmar o endereço de e-mail, prevenindo cadastros com e-mails inválidos.
+**Segurança:** Verificação de e-mail obrigatória antes do primeiro acesso.
 
 ---
 
-### 19.3 Tela de Autenticação do Professor
+### Tela 3 – Login/Cadastro do Professor
 
-**URL de acesso:** `https://vetbalance.lovable.app/auth/professor`  
-**Rota interna:** `/auth/professor`
+**Rota:** `/auth/professor`  
+**Descrição:** Formulário de autenticação para professores com campo adicional de chave de acesso.
 
 ![Tela de Login do Professor](docs/screenshots/03-auth-professor.png)
 
-**Anotações sobre os elementos da interface:**
+**Elementos identificados:**
+- Formulário com campos: Nome Completo, E-mail, Senha, **Chave de Acesso**
+- Campo exclusivo de chave de acesso institucional (obrigatório no cadastro)
+- Validação da chave contra o banco de dados (`professor_access_keys`)
+- Mesma alternância entre modos de login e cadastro
 
-| Nº | Elemento | Localização na Tela | Função |
-|----|----------|---------------------|--------|
-| 1 | **Logo VetBalance** | Topo centralizado | Mesma identidade visual |
-| 2 | **Título "Portal do Professor"** | Abaixo do logo | Identificação do acesso docente |
-| 3 | **Abas "Entrar" / "Cadastrar"** | Topo do formulário | Alternância entre login e registro |
-| 4 | **Campo "E-mail"** | Área central | Input de e-mail institucional |
-| 5 | **Campo "Senha"** | Abaixo do e-mail | Input de senha |
-| 6 | **Campo "Nome Completo"** | Visível no modo Cadastro | Nome do professor |
-| 7 | **Campo "Chave de Acesso"** | Visível no modo Cadastro | **Elemento diferencial** — chave institucional obrigatória para registro como professor |
-| 8 | **Botão "Entrar"** | Base do formulário | Submit de autenticação |
-| 9 | **Botão "Voltar"** | Abaixo do principal | Retorno à seleção de papel |
-
-**Mecanismo de segurança diferencial:** O campo "Chave de Acesso" é validado contra a tabela `professor_access_keys` do banco de dados. Apenas chaves ativas, não expiradas e não utilizadas são aceitas. Após o uso, a chave é marcada como consumida (`usado = true`), impedindo reutilização. Este mecanismo garante que somente professores autorizados pela coordenação do curso possam se registrar no sistema.
+**Segurança:** A chave de acesso garante que apenas professores autorizados pela instituição possam se registrar como docentes no sistema.
 
 ---
 
-### 19.4 Dashboard do Aluno (Simulador)
+### Tela 4 – Dashboard do Aluno (Simulador)
 
-**URL de acesso:** `https://vetbalance.lovable.app/app`  
-**Rota interna:** `/app` (requer autenticação como aluno)
+**Rota:** `/app` (requer autenticação como aluno)  
+**Descrição:** Interface principal do simulador com todas as ferramentas de simulação.
 
-> ⚠️ **Tela protegida por autenticação.** A captura desta tela requer login como aluno no sistema.
+> ⚠️ **Nota:** Esta tela requer login como aluno. Para captura manual, acesse https://vetbalance.app.br/auth/aluno e faça login.
 
-**Descrição anotada dos elementos da interface:**
-
-| Nº | Elemento | Componente React | Função |
-|----|----------|-----------------|--------|
-| 1 | **Seletor de caso clínico** | `CaseLibrary` | Dropdown com casos clínicos disponíveis (próprios + compartilhados via código de acesso) |
-| 2 | **Seletor de modo** | `SimulationModeSelector` | Alternância entre "Prática" (com dicas de IA) e "Avaliação" (sem dicas, pontuação oficial) |
-| 3 | **Controles de simulação** | `SimulationControls` | Botões Iniciar (▶), Pausar (⏸), Resetar (↺) com estados visuais |
-| 4 | **Monitor do paciente** | `PatientMonitor` | Mascote animado (cão/gato), barra de HP com cores dinâmicas (verde >70%, amarelo >40%, vermelho ≤40%), parâmetros vitais principais (pH, pCO₂, HCO₃⁻) com indicadores de tendência |
-| 5 | **Informações do caso** | `CaseInfo` | Card com espécie, condição, descrição clínica do caso selecionado |
-| 6 | **Área de trabalho** | `SimulationWorkspace` | Abas internas: Tratamentos, Dicas (IA), Diagnóstico, Notas |
-| 7 | **Painel de tratamentos** | `TreatmentPanel` | Lista de 8 tratamentos organizados por tipo com botões de aplicação |
-| 8 | **Gráficos de evolução** | `ParameterChart` | Gráficos Recharts com evolução temporal de cada parâmetro |
-| 9 | **Timer** | Integrado ao `PatientMonitor` | Cronômetro no formato `MM:SS` |
-| 10 | **Abas laterais** | Sistema de Tabs | Simulação, Badges, Ranking Semanal, Histórico, Evolução, Metas |
-
-**Mecânica de gamificação visível:** A barra de HP muda de cor conforme o estado do paciente, o mascote (componente `PatientMonitor`) alterna entre 5 expressões (happy, normal, sad, rip, victory), e o feedback de tratamento exibe variações de HP com animação (+25, -15, etc.).
+**Elementos esperados:**
+- **Seletor de caso clínico** (dropdown com casos disponíveis)
+- **Monitor de parâmetros** em tempo real (pH, PaO₂, PaCO₂, FC, PA, etc.)
+- **Barra de HP** do paciente virtual (0-100) com cores dinâmicas
+- **Mascote animado** (cão/gato com expressão baseada no HP)
+- **Painel de tratamentos** com botões para cada terapia disponível
+- **Controles de simulação:** Iniciar, Pausar, Resetar
+- **Timer** com contagem regressiva (limite de 5 minutos)
+- **Abas:** Simulação, Diagnóstico, Notas, Badges, Ranking, Histórico, Evolução
+- **Gráficos** de evolução temporal dos parâmetros (Recharts)
+- **Modo de simulação:** Prática (com dicas) ou Avaliação (sem dicas)
+- **Feedback visual:** Cores verdes para tratamentos adequados, vermelhas para inadequados
 
 ---
 
-### 19.5 Monitor de Parâmetros em Tempo Real
+### Tela 5 – Monitor de Parâmetros em Tempo Real
 
-**Componente:** `PatientMonitor` + `MonitorDisplay`  
-**Contexto:** Visível durante simulação ativa
+**Rota:** `/app` (durante simulação ativa)  
+**Descrição:** Visualização detalhada dos parâmetros fisiológicos do paciente.
 
-**Descrição anotada dos elementos:**
-
-| Nº | Elemento | Função |
-|----|----------|--------|
-| 1 | **Cards de parâmetros** | Cards individuais com borda colorida: verde (normal), amarelo (atenção), vermelho (crítico) |
-| 2 | **Valores numéricos** | Valor atual em fonte mono grande (`text-2xl font-bold font-mono`) com unidade |
-| 3 | **Indicadores de tendência** | Ícones: ↑ TrendingUp (vermelho), ↓ TrendingDown (azul), → Minus (cinza) |
-| 4 | **Parâmetros principais** | pH, pCO₂, HCO₃⁻ em grid de 3 colunas com destaque visual |
-| 5 | **Imagem do mascote** | Cão ou gato com expressão baseada no HP atual (5 estados possíveis) |
-| 6 | **Barra de HP** | Progress bar com transição suave de 500ms e cores dinâmicas |
-| 7 | **Indicador de HP change** | Número flutuante animado (+/- HP) posicionado sobre o mascote |
-
-**Algoritmo de classificação:** Os parâmetros são classificados em tempo real usando faixas de referência carregadas do banco de dados (`valor_minimo`, `valor_maximo`). Valores fora da faixa normal acionam alertas visuais e sonoros (componente `SoundAlerts`).
+**Elementos esperados:**
+- Cards individuais para cada parâmetro com:
+  - Nome do parâmetro e unidade
+  - Valor atual em destaque
+  - Indicador de tendência (↑ subindo, ↓ descendo, → estável)
+  - Faixa normal de referência
+  - Cor de alerta (verde=normal, amarelo=atenção, vermelho=crítico)
+- Gráfico de linha temporal mostrando evolução de cada parâmetro
+- Alertas sonoros para parâmetros fora da faixa normal
 
 ---
 
-### 19.6 Painel de Tratamentos
+### Tela 6 – Painel de Tratamentos
 
-**Componente:** `TreatmentPanel`  
-**Contexto:** Aba "Tratamentos" na área de trabalho
+**Rota:** `/app` (durante simulação ativa)  
+**Descrição:** Interface de seleção e aplicação de tratamentos.
 
-**Descrição anotada dos elementos:**
-
-| Nº | Elemento | Função |
-|----|----------|--------|
-| 1 | **Título "Tratamentos Disponíveis"** | Header com ícone de seringa (`Syringe`) |
-| 2 | **Descrição** | "Selecione um tratamento para aplicar ao paciente" |
-| 3 | **Lista de tratamentos** | Botões `variant="outline"` em grid vertical com nome e descrição |
-| 4 | **Estado desabilitado** | Tratamentos ficam inativos (`disabled`) quando a simulação não está rodando |
-
-**Tratamentos disponíveis no sistema:**
-- Bicarbonato de Sódio (Alcalinizante)
-- Oxigenoterapia (Suporte Respiratório)
-- Fluidoterapia (Suporte Circulatório)
-- Ventilação Mecânica (Respiratório)
-- Insulina Regular (Medicamento)
-- Antiemético (Medicamento)
-- Sondagem Uretral (Procedimento)
-- Fluidoterapia com KCl (Fluido)
-
-**Feedback de tratamento:** Após aplicação, o componente `TreatmentFeedback` exibe se o tratamento foi adequado ou inadequado para a condição do caso, com variação de HP correspondente.
+**Elementos esperados:**
+- Lista de 8 tratamentos disponíveis organizados por tipo:
+  - Alcalinizante: Bicarbonato de Sódio
+  - Suporte Respiratório: Oxigenoterapia
+  - Suporte Circulatório: Fluidoterapia
+  - Respiratório: Ventilação Mecânica
+  - Medicamentos: Insulina Regular, Antiemético
+  - Procedimento: Sondagem Uretral
+  - Fluido: Fluidoterapia com KCl
+- Botões de aplicação com ícones
+- Feedback imediato: variação do HP (+25, +15, +10, ou -15)
+- Indicação visual do efeito (positivo em verde, negativo em vermelho)
 
 ---
 
-### 19.7 Sistema de Badges
+### Tela 7 – Sistema de Badges
 
-**Componente:** `BadgeSystem`  
-**Contexto:** Aba "Badges" no dashboard do aluno
+**Rota:** `/app` (aba "Badges")  
+**Descrição:** Visualização das conquistas do aluno.
 
-**Descrição anotada dos elementos:**
-
-| Nº | Elemento | Função |
-|----|----------|--------|
-| 1 | **Grid de badges** | 17 badges em categorias: Bronze, Prata, Ouro, Streaks, Milestones, Performance, Ranking |
-| 2 | **Badge conquistado** | Cor vibrante, ícone visível, data de conquista exibida |
-| 3 | **Badge não conquistado** | Opacidade reduzida, critério de desbloqueio visível ao hover |
-| 4 | **Animação de conquista** | Confetti (biblioteca `canvas-confetti`) + notificação toast |
-| 5 | **Contagem** | Indicador "X de 17 badges conquistados" |
+**Elementos esperados:**
+- Grid de 17 badges organizados por categoria (Bronze, Prata, Ouro, Streaks, Milestones, Performance, Ranking)
+- Badges conquistados com cor vibrante e data de conquista
+- Badges não conquistados em cinza/opaco com critério de desbloqueio
+- Animação de confetti ao conquistar novo badge
+- Contagem de badges: conquistados/total
 
 ---
 
-### 19.8 Ranking Semanal
+### Tela 8 – Ranking Semanal
 
-**Componente:** `WeeklyLeaderboard`  
-**Contexto:** Aba "Semanal" no dashboard do aluno
+**Rota:** `/app` (aba "Semanal")  
+**Descrição:** Leaderboard com posições semanais e reset automático.
 
-**Descrição anotada dos elementos:**
-
-| Nº | Elemento | Função |
-|----|----------|--------|
-| 1 | **Tabela de ranking** | Colunas: Posição, Nome, Vitórias, Pontos, Taxa de Sucesso |
-| 2 | **Destaque top 3** | Ícones de medalha: 🥇 ouro, 🥈 prata, 🥉 bronze |
-| 3 | **Posição do aluno logado** | Linha destacada com fundo diferenciado |
-| 4 | **Período da semana** | Indicador da semana atual com datas de início e fim |
-| 5 | **Reset automático** | Rankings reiniciam semanalmente, com histórico preservado na tabela `weekly_ranking_history` |
+**Elementos esperados:**
+- Tabela/lista de posições dos alunos
+- Colunas: Posição, Nome, Vitórias, Pontos, Taxa de Sucesso
+- Destaque para top 3 (ouro, prata, bronze)
+- Indicador de período da semana atual
+- Posição do aluno logado em destaque
+- Atualização em tempo real via WebSocket
 
 ---
 
-### 19.9 Dashboard do Professor
+### Tela 9 – Histórico de Evolução no Ranking
 
-**URL de acesso:** `https://vetbalance.lovable.app/professor`  
-**Rota interna:** `/professor` (requer autenticação como professor)
+**Rota:** `/app` (aba "Evolução")  
+**Descrição:** Gráfico de evolução do aluno ao longo das semanas.
 
-> ⚠️ **Tela protegida por autenticação.** A captura desta tela requer login como professor.
-
-**Descrição anotada dos elementos:**
-
-| Nº | Elemento | Aba | Função |
-|----|----------|-----|--------|
-| 1 | **Header** | — | Logo VetBalance, título "Portal do Professor", toggle de tema, botão "Sair" |
-| 2 | **Aba "Alunos"** | `students` | Gerenciamento de alunos vinculados (componente `StudentManagement`) |
-| 3 | **Aba "Turmas"** | `classes` | Criação e organização de turmas (componente `ClassManager`) |
-| 4 | **Aba "Casos Clínicos"** | `cases` | Grid com `CaseManager` (criar/editar casos) e `CaseShareManager` (compartilhar via código) |
-| 5 | **Aba "Relatórios"** | `reports` | Estatísticas de desempenho dos alunos (componente `StudentReports`) |
-| 6 | **Aba "Chaves"** | `keys` | Geração de chaves de acesso para novos professores (componente `ProfessorAccessKeys`) |
-| 7 | **Aba "Usuários"** | `users` | Gerenciamento de papéis e promoção/demoção de usuários (componente `UserManagement`) |
-
-**Layout:** Navegação em 6 abas horizontais (`grid-cols-6`), cada uma com ícone Lucide e conteúdo em cards padronizados.
+**Elementos esperados:**
+- Gráfico de linha com eixo X = semanas, eixo Y = posição no ranking
+- Lista de registros semanais com: posição, vitórias, sessões, pontos, taxa
+- Resumo da performance geral
 
 ---
 
-### 19.10 Resultados de Simulação
+### Tela 10 – Dashboard do Professor
 
-**Contexto:** Exibidos automaticamente ao final de cada simulação.
+**Rota:** `/professor` (requer autenticação como professor)  
+**Descrição:** Painel de gerenciamento para professores.
 
-#### Vitória (HP estabilizado)
-| Elemento | Descrição |
-|----------|-----------|
-| Mascote | Expressão de vitória (`cat-victory.png` ou `dog-victory.png`) |
-| Animação | Efeito confetti em canvas sobre toda a tela |
-| Badge | Indicador "🎉 Vitória!" em destaque |
-| Feedback IA | Relatório gerado via edge function `generate-session-feedback` |
+> ⚠️ **Nota:** Esta tela requer login como professor. Para captura manual, acesse https://vetbalance.app.br/auth/professor e faça login.
 
-#### Derrota (HP = 0 ou tempo esgotado)
-| Elemento | Descrição |
-|----------|-----------|
-| Mascote | Expressão de falecimento (`cat-rip.png` ou `dog-rip.png`) |
-| Badge | Indicador "💀 Derrota" em vermelho |
-| Sugestões | Feedback com sugestões de melhoria baseadas nos tratamentos aplicados |
+**Elementos esperados:**
+- **Gerenciador de Casos:** Criar, editar, deletar casos clínicos
+- **CaseDataPopulator:** Geração automática de dados via IA
+- **Compartilhamento:** Geração de códigos de acesso para alunos
+- **Biblioteca de Casos:** Visualização de todos os casos criados
+- **Gerenciamento de Turmas:** Criação e administração de turmas
+- **Gerenciamento de Alunos:** Vínculo professor-aluno por e-mail
+- **Relatórios:** Estatísticas individuais e por turma
+- **Ranking de Alunos:** Visualização de desempenho comparativo
+- **Chaves de Acesso:** Geração de chaves para novos professores
 
 ---
 
-### 19.11 Instruções para Captura das Telas Autenticadas
+### Tela 11 – Resultado de Simulação (Vitória)
 
-As telas 19.4 a 19.10 requerem autenticação no sistema. Para capturá-las manualmente:
+**Descrição:** Tela exibida quando o aluno estabiliza o paciente (HP ≥ 100).
 
-1. **Acesse** https://vetbalance.lovable.app
-2. **Faça login** como aluno (para telas 19.4–19.8, 19.10) ou professor (para tela 19.9)
-3. **Capture a tela** usando:
+**Elementos esperados:**
+- Mascote do paciente com expressão de vitória
+- Animação de confetti (canvas-confetti)
+- Mensagem: "Paciente Estabilizado!"
+- Resumo: duração, tratamentos aplicados, HP final
+- Botões: Ver Feedback (IA), Exportar Relatório, Nova Simulação
+- Badge notification (se aplicável)
+
+---
+
+### Tela 12 – Resultado de Simulação (Derrota)
+
+**Descrição:** Tela exibida quando HP chega a zero ou tempo esgota.
+
+**Elementos esperados:**
+- Mascote com expressão triste/falecido
+- Mensagem: "Paciente Faleceu" ou "Tempo Esgotado"
+- Resumo do que aconteceu
+- Sugestões de melhoria
+- Botão para tentar novamente
+
+---
+
+### Instruções para Captura Manual das Telas Internas
+
+Para capturar as telas que requerem autenticação, siga os passos:
+
+1. **Acesse** https://vetbalance.app.br
+2. **Faça login** como aluno ou professor
+3. **Use a ferramenta de captura de tela** do sistema operacional:
    - **Windows:** `Win + Shift + S` (Recorte e Anotação)
-   - **macOS:** `Cmd + Shift + 4`
-   - **Linux:** `PrtScr` ou Flameshot
-4. **Salve** na pasta `docs/screenshots/` com a nomenclatura:
+   - **macOS:** `Cmd + Shift + 4` (Captura de área)
+   - **Linux:** `PrtScr` ou ferramenta Flameshot
+4. **Salve** as capturas na pasta `docs/screenshots/` do projeto com nomenclatura:
    - `04-dashboard-aluno.png`
    - `05-monitor-parametros.png`
    - `06-painel-tratamentos.png`
    - `07-sistema-badges.png`
    - `08-ranking-semanal.png`
-   - `09-dashboard-professor.png`
-   - `10-resultado-vitoria.png`
-   - `11-resultado-derrota.png`
+   - `09-historico-evolucao.png`
+   - `10-dashboard-professor.png`
+   - `11-resultado-vitoria.png`
+   - `12-resultado-derrota.png`
 
 ---
 
