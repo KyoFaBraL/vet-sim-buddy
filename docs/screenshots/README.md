@@ -21,7 +21,7 @@ Esta pasta contém as capturas de tela anotadas das principais interfaces do sis
 
 ## Como capturar
 
-1. Acesse **https://vetbalance.lovable.app**
+1. Acesse **https://vetbalance.app.br**
 2. Para telas públicas (01-03): capture diretamente
 3. Para telas internas (04-12): faça login como aluno ou professor
 4. Resolução recomendada: **1920×1080 pixels**
