@@ -28,8 +28,9 @@
 15. [Relatórios e Exportação de Dados](#15-relatórios-e-exportação-de-dados)
 16. [Aplicativo Android (APK)](#16-aplicativo-android-apk)
 17. [Fluxos de Uso Detalhados](#17-fluxos-de-uso-detalhados)
-18. [Requisitos de Sistema](#18-requisitos-de-sistema)
-19. [Glossário Técnico](#19-glossário-técnico)
+18. [Evidências Visuais – Capturas de Tela](#18-evidências-visuais--capturas-de-tela)
+19. [Requisitos de Sistema](#19-requisitos-de-sistema)
+20. [Glossário Técnico](#20-glossário-técnico)
 
 ---
 
@@ -891,9 +892,305 @@ O sistema está funcional e disponível em produção em https://vetbalance.lova
 
 ---
 
+## 18. EVIDÊNCIAS VISUAIS – CAPTURAS DE TELA
+
+Esta seção apresenta as capturas de tela das principais interfaces do sistema VetBalance, servindo como evidência visual do funcionamento do software para fins de defesa acadêmica.
+
+> **Nota:** As capturas de tela a seguir foram realizadas em fevereiro de 2026 na versão de produção do sistema (https://vetbalance.lovable.app), com resolução de 1920×1080 pixels.
+
+---
+
+### Tela 1 – Seleção de Papel (Tela Inicial)
+
+**Rota:** `/`  
+**Descrição:** Tela inicial do sistema onde o usuário escolhe seu perfil de acesso.
+
+![Tela de Seleção de Papel](docs/screenshots/01-role-selection.png)
+
+**Elementos identificados:**
+- Logo VetBalance com identidade visual do sistema
+- Dois cards de seleção: "👨‍🏫 Professor" e "👨‍🎓 Aluno"
+- Descrição das funcionalidades de cada papel
+- Botões de acesso que redirecionam para os formulários de autenticação correspondentes
+- Toggle de tema claro/escuro
+- Design responsivo com paleta de cores institucional
+
+**Finalidade educacional:** Permite a segregação clara de papéis, garantindo que professores e alunos acessem funcionalidades adequadas ao seu perfil.
+
+---
+
+### Tela 2 – Login/Cadastro do Aluno
+
+**Rota:** `/auth/aluno`  
+**Descrição:** Formulário de autenticação para estudantes.
+
+![Tela de Login do Aluno](docs/screenshots/02-auth-aluno.png)
+
+**Elementos identificados:**
+- Logo VetBalance
+- Formulário com campos: Nome Completo, E-mail, Senha
+- Alternância entre modo "Entrar" e "Cadastrar"
+- Validação de campos em tempo real
+- Link para recuperação de senha
+- Botão "Voltar" para retornar à seleção de papel
+
+**Segurança:** Verificação de e-mail obrigatória antes do primeiro acesso.
+
+---
+
+### Tela 3 – Login/Cadastro do Professor
+
+**Rota:** `/auth/professor`  
+**Descrição:** Formulário de autenticação para professores com campo adicional de chave de acesso.
+
+![Tela de Login do Professor](docs/screenshots/03-auth-professor.png)
+
+**Elementos identificados:**
+- Formulário com campos: Nome Completo, E-mail, Senha, **Chave de Acesso**
+- Campo exclusivo de chave de acesso institucional (obrigatório no cadastro)
+- Validação da chave contra o banco de dados (`professor_access_keys`)
+- Mesma alternância entre modos de login e cadastro
+
+**Segurança:** A chave de acesso garante que apenas professores autorizados pela instituição possam se registrar como docentes no sistema.
+
+---
+
+### Tela 4 – Dashboard do Aluno (Simulador)
+
+**Rota:** `/app` (requer autenticação como aluno)  
+**Descrição:** Interface principal do simulador com todas as ferramentas de simulação.
+
+> ⚠️ **Nota:** Esta tela requer login como aluno. Para captura manual, acesse https://vetbalance.lovable.app/auth/aluno e faça login.
+
+**Elementos esperados:**
+- **Seletor de caso clínico** (dropdown com casos disponíveis)
+- **Monitor de parâmetros** em tempo real (pH, PaO₂, PaCO₂, FC, PA, etc.)
+- **Barra de HP** do paciente virtual (0-100) com cores dinâmicas
+- **Mascote animado** (cão/gato com expressão baseada no HP)
+- **Painel de tratamentos** com botões para cada terapia disponível
+- **Controles de simulação:** Iniciar, Pausar, Resetar
+- **Timer** com contagem regressiva (limite de 5 minutos)
+- **Abas:** Simulação, Diagnóstico, Notas, Badges, Ranking, Histórico, Evolução
+- **Gráficos** de evolução temporal dos parâmetros (Recharts)
+- **Modo de simulação:** Prática (com dicas) ou Avaliação (sem dicas)
+- **Feedback visual:** Cores verdes para tratamentos adequados, vermelhas para inadequados
+
+---
+
+### Tela 5 – Monitor de Parâmetros em Tempo Real
+
+**Rota:** `/app` (durante simulação ativa)  
+**Descrição:** Visualização detalhada dos parâmetros fisiológicos do paciente.
+
+**Elementos esperados:**
+- Cards individuais para cada parâmetro com:
+  - Nome do parâmetro e unidade
+  - Valor atual em destaque
+  - Indicador de tendência (↑ subindo, ↓ descendo, → estável)
+  - Faixa normal de referência
+  - Cor de alerta (verde=normal, amarelo=atenção, vermelho=crítico)
+- Gráfico de linha temporal mostrando evolução de cada parâmetro
+- Alertas sonoros para parâmetros fora da faixa normal
+
+---
+
+### Tela 6 – Painel de Tratamentos
+
+**Rota:** `/app` (durante simulação ativa)  
+**Descrição:** Interface de seleção e aplicação de tratamentos.
+
+**Elementos esperados:**
+- Lista de 8 tratamentos disponíveis organizados por tipo:
+  - Alcalinizante: Bicarbonato de Sódio
+  - Suporte Respiratório: Oxigenoterapia
+  - Suporte Circulatório: Fluidoterapia
+  - Respiratório: Ventilação Mecânica
+  - Medicamentos: Insulina Regular, Antiemético
+  - Procedimento: Sondagem Uretral
+  - Fluido: Fluidoterapia com KCl
+- Botões de aplicação com ícones
+- Feedback imediato: variação do HP (+25, +15, +10, ou -15)
+- Indicação visual do efeito (positivo em verde, negativo em vermelho)
+
+---
+
+### Tela 7 – Sistema de Badges
+
+**Rota:** `/app` (aba "Badges")  
+**Descrição:** Visualização das conquistas do aluno.
+
+**Elementos esperados:**
+- Grid de 17 badges organizados por categoria (Bronze, Prata, Ouro, Streaks, Milestones, Performance, Ranking)
+- Badges conquistados com cor vibrante e data de conquista
+- Badges não conquistados em cinza/opaco com critério de desbloqueio
+- Animação de confetti ao conquistar novo badge
+- Contagem de badges: conquistados/total
+
+---
+
+### Tela 8 – Ranking Semanal
+
+**Rota:** `/app` (aba "Semanal")  
+**Descrição:** Leaderboard com posições semanais e reset automático.
+
+**Elementos esperados:**
+- Tabela/lista de posições dos alunos
+- Colunas: Posição, Nome, Vitórias, Pontos, Taxa de Sucesso
+- Destaque para top 3 (ouro, prata, bronze)
+- Indicador de período da semana atual
+- Posição do aluno logado em destaque
+- Atualização em tempo real via WebSocket
+
+---
+
+### Tela 9 – Histórico de Evolução no Ranking
+
+**Rota:** `/app` (aba "Evolução")  
+**Descrição:** Gráfico de evolução do aluno ao longo das semanas.
+
+**Elementos esperados:**
+- Gráfico de linha com eixo X = semanas, eixo Y = posição no ranking
+- Lista de registros semanais com: posição, vitórias, sessões, pontos, taxa
+- Resumo da performance geral
+
+---
+
+### Tela 10 – Dashboard do Professor
+
+**Rota:** `/professor` (requer autenticação como professor)  
+**Descrição:** Painel de gerenciamento para professores.
+
+> ⚠️ **Nota:** Esta tela requer login como professor. Para captura manual, acesse https://vetbalance.lovable.app/auth/professor e faça login.
+
+**Elementos esperados:**
+- **Gerenciador de Casos:** Criar, editar, deletar casos clínicos
+- **CaseDataPopulator:** Geração automática de dados via IA
+- **Compartilhamento:** Geração de códigos de acesso para alunos
+- **Biblioteca de Casos:** Visualização de todos os casos criados
+- **Gerenciamento de Turmas:** Criação e administração de turmas
+- **Gerenciamento de Alunos:** Vínculo professor-aluno por e-mail
+- **Relatórios:** Estatísticas individuais e por turma
+- **Ranking de Alunos:** Visualização de desempenho comparativo
+- **Chaves de Acesso:** Geração de chaves para novos professores
+
+---
+
+### Tela 11 – Resultado de Simulação (Vitória)
+
+**Descrição:** Tela exibida quando o aluno estabiliza o paciente (HP ≥ 100).
+
+**Elementos esperados:**
+- Mascote do paciente com expressão de vitória
+- Animação de confetti (canvas-confetti)
+- Mensagem: "Paciente Estabilizado!"
+- Resumo: duração, tratamentos aplicados, HP final
+- Botões: Ver Feedback (IA), Exportar Relatório, Nova Simulação
+- Badge notification (se aplicável)
+
+---
+
+### Tela 12 – Resultado de Simulação (Derrota)
+
+**Descrição:** Tela exibida quando HP chega a zero ou tempo esgota.
+
+**Elementos esperados:**
+- Mascote com expressão triste/falecido
+- Mensagem: "Paciente Faleceu" ou "Tempo Esgotado"
+- Resumo do que aconteceu
+- Sugestões de melhoria
+- Botão para tentar novamente
+
+---
+
+### Instruções para Captura Manual das Telas Internas
+
+Para capturar as telas que requerem autenticação, siga os passos:
+
+1. **Acesse** https://vetbalance.lovable.app
+2. **Faça login** como aluno ou professor
+3. **Use a ferramenta de captura de tela** do sistema operacional:
+   - **Windows:** `Win + Shift + S` (Recorte e Anotação)
+   - **macOS:** `Cmd + Shift + 4` (Captura de área)
+   - **Linux:** `PrtScr` ou ferramenta Flameshot
+4. **Salve** as capturas na pasta `docs/screenshots/` do projeto com nomenclatura:
+   - `04-dashboard-aluno.png`
+   - `05-monitor-parametros.png`
+   - `06-painel-tratamentos.png`
+   - `07-sistema-badges.png`
+   - `08-ranking-semanal.png`
+   - `09-historico-evolucao.png`
+   - `10-dashboard-professor.png`
+   - `11-resultado-vitoria.png`
+   - `12-resultado-derrota.png`
+
+---
+
+## 19. REQUISITOS DE SISTEMA
+
+### 19.1 Versão Web (PWA)
+
+| Requisito | Especificação |
+|-----------|--------------|
+| **Navegador** | Chrome 90+, Firefox 88+, Safari 14+, Edge 90+ |
+| **Resolução** | Mínimo 320px (responsivo) |
+| **Conexão** | Internet necessária para persistência de dados |
+| **JavaScript** | Habilitado |
+
+### 19.2 Versão Android (APK)
+
+| Requisito | Especificação |
+|-----------|--------------|
+| **Android** | 6.0 (API 23) ou superior |
+| **Armazenamento** | ~30 MB |
+| **RAM** | 2 GB mínimo recomendado |
+| **Conexão** | Internet necessária |
+
+---
+
+## 20. GLOSSÁRIO TÉCNICO
+
+| Termo | Definição |
+|-------|-----------|
+| **RLS** | Row Level Security – políticas de segurança em nível de linha no banco de dados |
+| **Edge Function** | Função serverless executada na borda da rede (Deno runtime) |
+| **SPA** | Single Page Application – aplicação de página única |
+| **PWA** | Progressive Web App – aplicação web com capacidades nativas |
+| **HP** | Health Points – pontos de vida do paciente virtual |
+| **Tick** | Ciclo de atualização da simulação (1 segundo) |
+| **Badge** | Conquista/medalha desbloqueada por mérito |
+| **Batch Insert** | Inserção em lote para otimização de performance |
+| **Backoff Exponencial** | Estratégia de retry com intervalos crescentes |
+| **Gamificação** | Uso de mecânicas de jogos em contextos educacionais |
+| **m-learning** | Mobile Learning – aprendizagem via dispositivos móveis |
+| **Acidose** | Condição de pH sanguíneo abaixo de 7.35 |
+| **Alcalose** | Condição de pH sanguíneo acima de 7.45 |
+| **Anion Gap** | Diferença entre cátions e ânions medidos no sangue |
+| **HCO₃** | Bicarbonato – principal tampão do sangue |
+| **PaCO₂** | Pressão parcial de dióxido de carbono arterial |
+| **PaO₂** | Pressão parcial de oxigênio arterial |
+
+---
+
+## CONSIDERAÇÕES FINAIS
+
+O VetBalance representa uma solução tecnológica completa para o ensino de equilíbrio ácido-base em medicina veterinária, integrando:
+
+1. **Simulação em tempo real** com motor de tick-based e persistência completa
+2. **Gamificação multicamada** com HP, badges, rankings e animações
+3. **Inteligência Artificial** para geração de conteúdo e feedback personalizado
+4. **Segurança robusta** com RLS em todas as tabelas e autenticação por papel
+5. **Multiplataforma** (Web + Android) via Capacitor
+6. **Ferramentas docentes** completas para criação, compartilhamento e análise
+7. **Rastreabilidade total** de decisões, tratamentos e evolução de parâmetros
+
+O sistema está funcional e disponível em produção em https://vetbalance.lovable.app, pronto para validação com grupos experimentais conforme metodologia proposta.
+
+---
+
 **Documento gerado em:** Fevereiro de 2026  
 **Versão do documento:** 1.0  
 **Total de componentes:** 60+ componentes React  
 **Total de tabelas:** 32 tabelas PostgreSQL  
 **Total de Edge Functions:** 5 funções serverless  
-**Total de linhas de código:** ~15.000+ linhas TypeScript/TSX
+**Total de linhas de código:** ~15.000+ linhas TypeScript/TSX  
+**Total de capturas de tela:** 12 telas documentadas (3 capturadas automaticamente + 9 com descrição para captura manual)
