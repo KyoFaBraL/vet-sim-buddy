@@ -8,7 +8,7 @@ A aprendizagem móvel (m-learning) emerge como alternativa promissora, aproveita
 
 ## OBJETIVO
 
-Desenvolver e validar um software educacional gamificado, em modalidade m-learning para dispositivos móveis Android, voltado ao treinamento de estudantes e profissionais da clínica médica veterinária de pequenos animais, focando especificamente na identificação e tratamento de distúrbios do equilíbrio ácido-base em cães e gatos, através de simulações clínicas interativas que promovam aprendizagem ativa e tomada de decisão em tempo real.
+Desenvolver e validar um software educacional gamificado, em modalidade m-learning acessível via navegadores web em dispositivos móveis, voltado ao treinamento de estudantes e profissionais da clínica médica veterinária de pequenos animais, focando especificamente na identificação e tratamento de distúrbios do equilíbrio ácido-base em cães e gatos, através de simulações clínicas interativas que promovam aprendizagem ativa e tomada de decisão em tempo real.
 
 ## MATERIAL E MÉTODOS
 
