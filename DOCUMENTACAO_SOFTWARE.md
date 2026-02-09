@@ -28,8 +28,8 @@
 15. [Relatórios e Exportação de Dados](#15-relatórios-e-exportação-de-dados)
 16. [Compatibilidade Mobile](#16-compatibilidade-mobile)
 17. [Fluxos de Uso Detalhados](#17-fluxos-de-uso-detalhados)
-18. [Evidências Visuais – Capturas de Tela](#18-evidências-visuais--capturas-de-tela)
-19. [Diagramas Visuais de Fluxo](#19-diagramas-visuais-de-fluxo)
+18. [Diagramas Visuais de Fluxo](#18-diagramas-visuais-de-fluxo)
+19. [Evidências Visuais – Capturas de Tela](#19-evidências-visuais--capturas-de-tela)
 20. [Requisitos de Sistema](#20-requisitos-de-sistema)
 21. [Glossário Técnico](#21-glossário-técnico)
 
@@ -805,9 +805,9 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 
 ---
 
-## 19. REQUISITOS DE SISTEMA
+## 20. REQUISITOS DE SISTEMA
 
-### 19.1 Versão Web (PWA)
+### 20.1 Versão Web (PWA)
 
 | Requisito | Especificação |
 |-----------|--------------|
@@ -816,7 +816,7 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 | **Conexão** | Internet necessária para persistência de dados |
 | **JavaScript** | Habilitado |
 
-### 19.2 Versão Android (APK)
+### 20.2 Versão Android (APK)
 
 | Requisito | Especificação |
 |-----------|--------------|
@@ -827,7 +827,7 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 
 ---
 
-## 20. GLOSSÁRIO TÉCNICO
+## 21. GLOSSÁRIO TÉCNICO
 
 | Termo | Definição |
 |-------|-----------|
@@ -851,23 +851,10 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 
 ---
 
-## CONSIDERAÇÕES FINAIS
 
-O VetBalance representa uma solução tecnológica completa para o ensino de equilíbrio ácido-base em medicina veterinária, integrando:
 
-1. **Simulação em tempo real** com motor de tick-based e persistência completa
-2. **Gamificação multicamada** com HP, badges, rankings e animações
-3. **Inteligência Artificial** para geração de conteúdo e feedback personalizado
-4. **Segurança robusta** com RLS em todas as tabelas e autenticação por papel
-5. **Multiplataforma** (Web + Android) via Capacitor
-6. **Ferramentas docentes** completas para criação, compartilhamento e análise
-7. **Rastreabilidade total** de decisões, tratamentos e evolução de parâmetros
 
-O sistema está funcional e disponível em produção em https://vetbalance.app.br, pronto para validação com grupos experimentais conforme metodologia proposta.
-
----
-
-## 18. EVIDÊNCIAS VISUAIS – CAPTURAS DE TELA
+## 19. EVIDÊNCIAS VISUAIS – CAPTURAS DE TELA
 
 Esta seção apresenta as capturas de tela das principais interfaces do sistema VetBalance, servindo como evidência visual do funcionamento do software para fins de defesa acadêmica.
 
