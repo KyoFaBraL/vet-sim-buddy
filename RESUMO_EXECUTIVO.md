@@ -5,7 +5,7 @@
 **Programa de Pós-Graduação:** Mestrado em Ciência Animal  
 **Documento:** Resumo Executivo do Software Desenvolvido  
 **Data:** Fevereiro de 2026  
-**URL de Produção:** https://vetbalance.lovable.app
+**URL de Produção:** https://vetbalance.app.br
 
 ---
 
@@ -101,5 +101,5 @@ A validação seguirá metodologia comparativa com **40 estudantes** randomizado
 
 ---
 
-**Software desenvolvido e disponível em:** https://vetbalance.lovable.app  
+**Software desenvolvido e disponível em:** https://vetbalance.app.br  
 **Compatível com:** Navegadores modernos (Chrome, Firefox, Safari, Edge) e Android 6.0+
