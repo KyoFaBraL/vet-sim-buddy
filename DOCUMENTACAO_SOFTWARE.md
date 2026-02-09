@@ -922,7 +922,7 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (requer autenticação como aluno)  
 **Descrição:** Interface principal do simulador com todas as ferramentas de simulação.
 
-> ⚠️ **Nota:** Esta tela requer login como aluno. Para captura manual, acesse https://vetbalance.app.br/auth/aluno e faça login.
+> ⚠️ **Nota:** Esta tela requer login como aluno. Para captura manual, acesse https://vetbalance.lovable.app/auth/aluno e faça login.
 
 **Elementos esperados:**
 - **Seletor de caso clínico** (dropdown com casos disponíveis)
@@ -1022,7 +1022,7 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/professor` (requer autenticação como professor)  
 **Descrição:** Painel de gerenciamento para professores.
 
-> ⚠️ **Nota:** Esta tela requer login como professor. Para captura manual, acesse https://vetbalance.app.br/auth/professor e faça login.
+> ⚠️ **Nota:** Esta tela requer login como professor. Para captura manual, acesse https://vetbalance.lovable.app/auth/professor e faça login.
 
 **Elementos esperados:**
 - **Gerenciador de Casos:** Criar, editar, deletar casos clínicos
@@ -1068,7 +1068,7 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 
 Para capturar as telas que requerem autenticação, siga os passos:
 
-1. **Acesse** https://vetbalance.app.br
+1. **Acesse** https://vetbalance.lovable.app
 2. **Faça login** como aluno ou professor
 3. **Use a ferramenta de captura de tela** do sistema operacional:
    - **Windows:** `Win + Shift + S` (Recorte e Anotação)
