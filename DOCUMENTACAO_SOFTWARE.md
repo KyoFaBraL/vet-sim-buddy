@@ -29,8 +29,9 @@
 16. [Aplicativo Android (APK)](#16-aplicativo-android-apk)
 17. [Fluxos de Uso Detalhados](#17-fluxos-de-uso-detalhados)
 18. [Evidências Visuais – Capturas de Tela](#18-evidências-visuais--capturas-de-tela)
-19. [Requisitos de Sistema](#19-requisitos-de-sistema)
-20. [Glossário Técnico](#20-glossário-técnico)
+19. [Diagramas Visuais de Fluxo](#19-diagramas-visuais-de-fluxo)
+20. [Requisitos de Sistema](#20-requisitos-de-sistema)
+21. [Glossário Técnico](#21-glossário-técnico)
 
 ---
 
@@ -830,9 +831,30 @@ HISTÓRICO DA SIMULAÇÃO
 
 ---
 
-## 18. REQUISITOS DE SISTEMA
+## 18. DIAGRAMAS VISUAIS DE FLUXO
 
-### 18.1 Versão Web (PWA)
+Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_MERMAID.md](DIAGRAMAS_MERMAID.md)**, contendo 10 diagramas em formato Mermaid:
+
+| # | Diagrama | Tipo | Descrição |
+|---|----------|------|-----------|
+| 1 | Arquitetura Geral do Sistema | Graph TB | Visão completa das 5 camadas (Apresentação, Lógica, Backend, Persistência, Mobile) |
+| 2 | Fluxo de Autenticação e Autorização | Flowchart | Desde o acesso inicial até o redirecionamento por papel |
+| 3 | Ciclo de Vida da Simulação | Flowchart | Loop principal, HP decay, aplicação de tratamentos, condições de vitória/derrota |
+| 4 | Sistema de Tratamentos e Validação | Flowchart | Validação contra gabarito, cálculo de HP, aplicação de efeitos |
+| 5 | Modelo Entidade-Relacionamento | ER Diagram | 18 entidades principais com seus atributos e relacionamentos |
+| 6 | Fluxo do Professor | Flowchart | Criação de casos, geração com IA, compartilhamento, gerenciamento de turmas |
+| 7 | Sistema de Gamificação | Flowchart | HP, badges (17), ranking semanal, recompensas visuais |
+| 8 | Fluxo de Dados em Tempo Real | Sequence Diagram | Comunicação entre browser, hooks, buffer, banco e realtime |
+| 9 | Segurança e Controle de Acesso | Flowchart | RLS por tabela, funções de segurança, autenticação por papel |
+| 10 | Arquitetura Mobile (Capacitor) | Flowchart | Bridge web→nativo, plugins, geração de APK |
+
+> **Renderização:** Os diagramas podem ser visualizados no GitHub, no [Mermaid Live Editor](https://mermaid.live), ou exportados para PNG/SVG via `@mermaid-js/mermaid-cli`.
+
+---
+
+## 19. REQUISITOS DE SISTEMA
+
+### 19.1 Versão Web (PWA)
 
 | Requisito | Especificação |
 |-----------|--------------|
@@ -841,7 +863,7 @@ HISTÓRICO DA SIMULAÇÃO
 | **Conexão** | Internet necessária para persistência de dados |
 | **JavaScript** | Habilitado |
 
-### 18.2 Versão Android (APK)
+### 19.2 Versão Android (APK)
 
 | Requisito | Especificação |
 |-----------|--------------|
@@ -852,7 +874,7 @@ HISTÓRICO DA SIMULAÇÃO
 
 ---
 
-## 19. GLOSSÁRIO TÉCNICO
+## 20. GLOSSÁRIO TÉCNICO
 
 | Termo | Definição |
 |-------|-----------|
@@ -1122,52 +1144,6 @@ Para capturar as telas que requerem autenticação, siga os passos:
    - `10-dashboard-professor.png`
    - `11-resultado-vitoria.png`
    - `12-resultado-derrota.png`
-
----
-
-## 19. REQUISITOS DE SISTEMA
-
-### 19.1 Versão Web (PWA)
-
-| Requisito | Especificação |
-|-----------|--------------|
-| **Navegador** | Chrome 90+, Firefox 88+, Safari 14+, Edge 90+ |
-| **Resolução** | Mínimo 320px (responsivo) |
-| **Conexão** | Internet necessária para persistência de dados |
-| **JavaScript** | Habilitado |
-
-### 19.2 Versão Android (APK)
-
-| Requisito | Especificação |
-|-----------|--------------|
-| **Android** | 6.0 (API 23) ou superior |
-| **Armazenamento** | ~30 MB |
-| **RAM** | 2 GB mínimo recomendado |
-| **Conexão** | Internet necessária |
-
----
-
-## 20. GLOSSÁRIO TÉCNICO
-
-| Termo | Definição |
-|-------|-----------|
-| **RLS** | Row Level Security – políticas de segurança em nível de linha no banco de dados |
-| **Edge Function** | Função serverless executada na borda da rede (Deno runtime) |
-| **SPA** | Single Page Application – aplicação de página única |
-| **PWA** | Progressive Web App – aplicação web com capacidades nativas |
-| **HP** | Health Points – pontos de vida do paciente virtual |
-| **Tick** | Ciclo de atualização da simulação (1 segundo) |
-| **Badge** | Conquista/medalha desbloqueada por mérito |
-| **Batch Insert** | Inserção em lote para otimização de performance |
-| **Backoff Exponencial** | Estratégia de retry com intervalos crescentes |
-| **Gamificação** | Uso de mecânicas de jogos em contextos educacionais |
-| **m-learning** | Mobile Learning – aprendizagem via dispositivos móveis |
-| **Acidose** | Condição de pH sanguíneo abaixo de 7.35 |
-| **Alcalose** | Condição de pH sanguíneo acima de 7.45 |
-| **Anion Gap** | Diferença entre cátions e ânions medidos no sangue |
-| **HCO₃** | Bicarbonato – principal tampão do sangue |
-| **PaCO₂** | Pressão parcial de dióxido de carbono arterial |
-| **PaO₂** | Pressão parcial de oxigênio arterial |
 
 ---
 
