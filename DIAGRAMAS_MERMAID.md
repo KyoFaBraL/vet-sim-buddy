@@ -79,7 +79,7 @@ graph TB
 
 ```mermaid
 flowchart TD
-    A["Usuário acessa<br/>vetbalance.lovable.app"] --> B{"Já está<br/>autenticado?"}
+    A["Usuário acessa<br/>vetbalance.app.br"] --> B{"Já está<br/>autenticado?"}
     B -- Sim --> C{"Qual papel?"}
     B -- Não --> D["Tela de Seleção<br/>de Papel (/)"]
 
