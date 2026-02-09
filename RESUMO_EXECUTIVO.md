@@ -80,7 +80,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 ## 6. VALIDAÇÃO PROPOSTA
 
-A validação seguirá metodologia comparativa com **40 estudantes** randomizados em dois grupos (n=20 cada):
+A validação seguirá metodologia comparativa com **20 estudantes** randomizados em dois grupos (n=10 cada):
 - **Grupo experimental:** Com acesso ao VetBalance durante 3 semanas
 - **Grupo controle:** Sem acesso ao software
 
