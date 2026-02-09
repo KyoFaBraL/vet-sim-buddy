@@ -20,7 +20,7 @@ Os estudantes aplicam tratamentos selecionando medicações e procedimentos, rec
 
 Professores podem criar casos personalizados, acompanhar desempenho individual dos alunos através de relatórios detalhados, compartilhar casos via códigos de acesso e realizar análises comparativas entre sessões. O sistema incorpora inteligência artificial (Gemini/GPT) para geração de diagnósticos diferenciais, dicas contextualizadas e feedback personalizado.
 
-A validação seguirá metodologia comparativa com 40 estudantes randomizados em dois grupos (n=20 cada): experimental (com acesso ao software) e controle (sem acesso), durante três semanas. Análise estatística utilizará teste t de Student (α=0,05) comparando médias de desempenho em avaliações convencionais sobre a temática, com processamento estatístico realizado no RStudio.
+A validação seguirá metodologia comparativa com 20 estudantes randomizados em dois grupos (n=10 cada): experimental (com acesso ao software) e controle (sem acesso), durante três semanas. Análise estatística utilizará teste t de Student (α=0,05) comparando médias de desempenho em avaliações convencionais sobre a temática, com processamento estatístico realizado no RStudio.
 
 ## RESULTADOS ESPERADOS
 
