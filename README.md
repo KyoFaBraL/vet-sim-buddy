@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# VetBalance
 
-## Project info
+Simulador gamificado de cuidados críticos veterinários para estudo de distúrbios do equilíbrio ácido-base em cães e gatos.
 
-**URL**: https://lovable.dev/projects/c2000202-419f-4c81-8714-b9b661f20061
+## Sobre o Projeto
 
-## How can I edit this code?
+O VetBalance é uma plataforma educacional interativa voltada ao treinamento de estudantes e profissionais de medicina veterinária na identificação e tratamento de distúrbios do equilíbrio ácido-base em pequenos animais. Utiliza gamificação e simulações clínicas em tempo real para promover aprendizagem ativa.
 
-There are several ways of editing your application.
+## Funcionalidades
 
-**Use Lovable**
+- **Simulação clínica interativa** com parâmetros fisiológicos monitorados em tempo real (FC, FR, temperatura, pH, pCO₂, HCO₃⁻, etc.)
+- **Sistema gamificado** com pontos de vida (HP), badges e ranking semanal
+- **Casos clínicos customizáveis** criados por professores
+- **Diagnóstico diferencial** com suporte de IA
+- **Feedback personalizado** ao final de cada sessão
+- **Histórico de sessões** e relatórios de desempenho
+- **Dois perfis de usuário**: Professor e Aluno
+- **Compartilhamento de casos** via códigos de acesso
+- **Responsivo** para uso em dispositivos móveis (m-learning)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c2000202-419f-4c81-8714-b9b661f20061) and start prompting.
+## Tecnologias
 
-Changes made via Lovable will be committed automatically to this repo.
+- React + TypeScript
+- Tailwind CSS + shadcn/ui
+- Supabase (autenticação, banco de dados, funções serverless)
+- Recharts (gráficos)
+- Framer Motion (animações)
+- Capacitor (compilação Android)
 
-**Use your preferred IDE**
+## Acesso
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Produção**: [vetbalance.app.br](https://vetbalance.app.br)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Instalação Local
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clonar o repositório
+git clone <URL_DO_REPOSITORIO>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Instalar dependências
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Iniciar servidor de desenvolvimento
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Estrutura do Projeto
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/     # Componentes React
+├── hooks/          # Custom hooks
+├── pages/          # Páginas da aplicação
+├── assets/         # Imagens e recursos
+├── constants/      # Constantes e configurações
+├── integrations/   # Integrações com serviços externos
+├── lib/            # Utilitários
+└── utils/          # Funções auxiliares
+```
 
-**Use GitHub Codespaces**
+## Contexto Acadêmico
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Este software é parte de um projeto de mestrado em Ciência Animal, focado na validação de ferramentas digitais gamificadas para o ensino de medicina veterinária intensivista.
 
-## What technologies are used for this project?
+**Palavras-chave:** Gamificação, Ensino veterinário, M-learning, Equilíbrio ácido-base, Simulação clínica.
 
-This project is built with:
+## Licença
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/c2000202-419f-4c81-8714-b9b661f20061) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Todos os direitos reservados.
