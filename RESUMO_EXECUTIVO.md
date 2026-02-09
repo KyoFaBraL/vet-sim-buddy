@@ -84,13 +84,23 @@ A validação seguirá metodologia comparativa com **40 estudantes** randomizado
 - **Grupo experimental:** Com acesso ao VetBalance durante 3 semanas
 - **Grupo controle:** Sem acesso ao software
 
-**Análise estatística:** Teste t de Student (α=0,05) comparando médias de desempenho em avaliações convencionais sobre equilíbrio ácido-base, processadas via IBM SPSS Statistics 26.
+**Análise estatística:** Teste t de Student (α=0,05) comparando médias de desempenho em avaliações convencionais sobre equilíbrio ácido-base, com processamento estatístico realizado no **RStudio**.
 
 **Resultados esperados:** O grupo experimental deverá apresentar desempenho significativamente superior, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base em medicina veterinária.
 
 ---
 
-## 7. DOCUMENTAÇÃO COMPLEMENTAR
+## 7. JUSTIFICATIVA PARA PRORROGAÇÃO
+
+Apesar da conclusão técnica do simulador, a etapa de **validação clínica com a turma de veterinária é um requisito indispensável** para a conclusão da dissertação.
+
+**Justificativa:** A execução dos testes depende do calendário acadêmico e da disponibilidade das turmas de graduação para a coleta de dados de campo.
+
+**Solicitação:** Diante da necessidade de concluir este ciclo de testes práticos, realizar o processamento estatístico no RStudio e redigir a discussão final dos dados, solicita-se a **prorrogação do prazo de defesa do mestrado**.
+
+---
+
+## 8. DOCUMENTAÇÃO COMPLEMENTAR
 
 | Documento | Conteúdo |
 |-----------|----------|
