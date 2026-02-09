@@ -649,7 +649,7 @@ flowchart TD
     end
 
     subgraph SERVER["☁️ Servidor"]
-        PREVIEW["Preview URL<br/>(lovableproject.com)"]
+        PREVIEW["Preview URL<br/>(vetbalance.app.br)"]
         SUPA["Supabase<br/>Backend"]
     end
 
