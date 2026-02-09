@@ -12,8 +12,8 @@ import { ArrowUp, ArrowDown, RefreshCw, Search } from "lucide-react";
 
 interface User {
   id: string;
-  email: string;
-  nome_completo: string;
+  email?: string | null;
+  nome_completo: string | null;
   created_at: string;
   role: "professor" | "aluno" | null;
 }
@@ -34,7 +34,7 @@ export function UserManagement() {
       // Buscar perfis
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
-        .select("*")
+        .select("id, nome_completo, created_at")
         .order("created_at", { ascending: false });
 
       if (profilesError) throw profilesError;
