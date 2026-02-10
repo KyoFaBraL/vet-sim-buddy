@@ -31,11 +31,9 @@ export function UserManagement() {
     try {
       setLoading(true);
       
-      // Buscar perfis
+      // Buscar perfis via RPC segura (sem expor emails)
       const { data: profiles, error: profilesError } = await supabase
-        .from("profiles")
-        .select("id, nome_completo, created_at")
-        .order("created_at", { ascending: false });
+        .rpc("get_all_profiles_for_admin");
 
       if (profilesError) throw profilesError;
 
