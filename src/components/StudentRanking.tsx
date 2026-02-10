@@ -64,9 +64,9 @@ export const StudentRanking = ({ showCurrentUser = true }: StudentRankingProps) 
         return;
       }
 
-      // Get all user profiles
+      // Get all user profiles (via safe view, no email exposed)
       const { data: profiles } = await supabase
-        .from("profiles")
+        .from("student_profiles_safe")
         .select("id, nome_completo");
 
       // Get all goals achieved

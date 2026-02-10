@@ -29,7 +29,7 @@ export const RankingNotifications = ({ enabled = true }: RankingNotificationsPro
       if (!sessions) return [];
 
       const { data: profiles } = await supabase
-        .from("profiles")
+        .from("student_profiles_safe")
         .select("id, nome_completo");
 
       // Aggregate wins by user

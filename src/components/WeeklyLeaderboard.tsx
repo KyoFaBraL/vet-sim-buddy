@@ -51,9 +51,9 @@ export const WeeklyLeaderboard = () => {
       // Get unique user IDs
       const userIds = [...new Set(sessions.map(s => s.user_id))];
 
-      // Get profiles for these users
+      // Get profiles for these users (via safe view, no email exposed)
       const { data: profiles } = await supabase
-        .from("profiles")
+        .from("student_profiles_safe")
         .select("id, nome_completo")
         .in("id", userIds);
 
