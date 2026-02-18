@@ -922,7 +922,7 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (requer autenticação como aluno)  
 **Descrição:** Interface principal do simulador com todas as ferramentas de simulação.
 
-> ⚠️ **Nota:** Esta tela requer login como aluno. Para captura manual, acesse https://vetbalance.app.br/auth/aluno e faça login.
+![Tela de Dashboard do Aluno](docs/screenshots/04-dashboard-aluno.png)
 
 **Elementos esperados:**
 - **Seletor de caso clínico** (dropdown com casos disponíveis)
