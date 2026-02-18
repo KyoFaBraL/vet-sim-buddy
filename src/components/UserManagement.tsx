@@ -231,7 +231,9 @@ export function UserManagement() {
                 </TableCell>
                 <TableCell>{userData.email}</TableCell>
                 <TableCell>
-                  {userData.role === "professor" ? (
+                  {userData.role === "admin" ? (
+                    <Badge variant="default" className="bg-destructive">Admin</Badge>
+                  ) : userData.role === "professor" ? (
                     <Badge variant="default">Professor</Badge>
                   ) : userData.role === "aluno" ? (
                     <Badge variant="secondary">Aluno</Badge>

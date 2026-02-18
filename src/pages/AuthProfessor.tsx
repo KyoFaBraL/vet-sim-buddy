@@ -175,7 +175,7 @@ export default function AuthProfessor() {
         .eq("user_id", data.user.id)
         .maybeSingle();
 
-      if (roleError || roleData?.role !== 'professor') {
+      if (roleError || (roleData?.role !== 'professor' && roleData?.role !== 'admin')) {
         await supabase.auth.signOut();
         toast({
           title: "Acesso negado",
