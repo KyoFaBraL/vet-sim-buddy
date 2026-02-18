@@ -29,6 +29,8 @@ export function UserManagement() {
   const [pendingChange, setPendingChange] = useState<{ userId: string; newRole: "professor" | "aluno"; userName: string } | null>(null);
   const [editingName, setEditingName] = useState<string | null>(null);
   const [editNameValue, setEditNameValue] = useState("");
+  const [editingEmail, setEditingEmail] = useState<string | null>(null);
+  const [editEmailValue, setEditEmailValue] = useState("");
   const { user } = useAuth();
   const { role: currentUserRole } = useUserRole(user ?? null);
   const { toast } = useToast();
@@ -78,6 +80,34 @@ export function UserManagement() {
     } catch (error) {
       console.error("Erro ao atualizar nome:", error);
       toast({ title: "Erro", description: "Não foi possível atualizar o nome", variant: "destructive" });
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const saveUserEmail = async (userId: string) => {
+    if (!editEmailValue.trim()) {
+      toast({ title: "Erro", description: "Email não pode ser vazio", variant: "destructive" });
+      return;
+    }
+    setActionLoading(userId);
+    try {
+      const { data, error } = await supabase.rpc("admin_update_user_email", {
+        target_user_id: userId,
+        new_email: editEmailValue,
+      });
+      if (error) throw error;
+      const result = data as { success: boolean; message: string };
+      if (result.success) {
+        toast({ title: "Sucesso", description: result.message });
+        setEditingEmail(null);
+        fetchUsers();
+      } else {
+        toast({ title: "Erro", description: result.message, variant: "destructive" });
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar email:", error);
+      toast({ title: "Erro", description: "Não foi possível atualizar o email", variant: "destructive" });
     } finally {
       setActionLoading(null);
     }
@@ -240,7 +270,46 @@ export function UserManagement() {
                     </div>
                   )}
                 </TableCell>
-                <TableCell>{userData.email}</TableCell>
+                <TableCell>
+                  {isAdmin && editingEmail === userData.id ? (
+                    <div className="flex items-center gap-1">
+                      <Input
+                        value={editEmailValue}
+                        onChange={(e) => setEditEmailValue(e.target.value)}
+                        className="h-8 w-[220px]"
+                        type="email"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") saveUserEmail(userData.id);
+                          if (e.key === "Escape") setEditingEmail(null);
+                        }}
+                        disabled={actionLoading === userData.id}
+                      />
+                      <Button variant="ghost" size="sm" onClick={() => saveUserEmail(userData.id)} disabled={actionLoading === userData.id}>
+                        <Check className="h-4 w-4 text-green-500" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => setEditingEmail(null)}>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      {userData.email}
+                      {isAdmin && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0"
+                          onClick={() => {
+                            setEditingEmail(userData.id);
+                            setEditEmailValue(userData.email || "");
+                          }}
+                        >
+                          <Pencil className="h-3 w-3" />
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell>
                   {userData.role === "admin" ? (
                     <Badge variant="default" className="bg-destructive">Admin</Badge>

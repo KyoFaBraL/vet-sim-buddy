@@ -1093,6 +1093,10 @@ export type Database = {
       }
     }
     Functions: {
+      admin_update_user_email: {
+        Args: { new_email: string; target_user_id: string }
+        Returns: Json
+      }
       admin_update_user_name: {
         Args: { new_name: string; target_user_id: string }
         Returns: Json
