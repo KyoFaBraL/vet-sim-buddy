@@ -1101,6 +1101,7 @@ export type Database = {
           created_at: string
           id: string
           nome_completo: string
+          role: string
         }[]
       }
       get_shared_case_by_code: {
