@@ -55,24 +55,14 @@ export function UserManagement() {
     try {
       setLoading(true);
       
-      // Buscar perfis via RPC segura (sem expor emails)
       const { data: profiles, error: profilesError } = await supabase
         .rpc("get_all_profiles_for_admin");
 
       if (profilesError) throw profilesError;
 
-      // Buscar roles
-      const { data: roles, error: rolesError } = await supabase
-        .from("user_roles")
-        .select("user_id, role");
-
-      if (rolesError) throw rolesError;
-
-      // Combinar dados
-      const rolesMap = new Map(roles?.map(r => [r.user_id, r.role]) || []);
       const usersWithRoles = profiles?.map(profile => ({
         ...profile,
-        role: rolesMap.get(profile.id) || null
+        role: (profile as any).role || null
       })) || [];
 
       setUsers(usersWithRoles);
