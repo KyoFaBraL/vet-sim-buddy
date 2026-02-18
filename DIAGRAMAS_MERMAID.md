@@ -664,7 +664,8 @@ flowchart TD
 
 ---
 
-```
+## Como Renderizar os Diagramas
 
-### Opção 4 – VS Code
-Instale a extensão "Markdown Preview Mermaid Support" e abra o preview do arquivo.
+- **GitHub:** Visualize este arquivo diretamente no GitHub — os diagramas Mermaid são renderizados automaticamente.
+- **Mermaid Live Editor:** Acesse [mermaid.live](https://mermaid.live), cole o código do diagrama e exporte como PNG/SVG.
+- **VS Code:** Instale a extensão "Markdown Preview Mermaid Support" e abra o preview do arquivo.
