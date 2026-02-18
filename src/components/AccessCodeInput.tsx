@@ -99,10 +99,10 @@ export const AccessCodeInput = ({ onCaseAccessed }: AccessCodeInputProps) => {
         </div>
         <div className="flex gap-2">
           <Input
-            placeholder="Digite o código (ex: ABC12345)"
+            placeholder="Digite o código de acesso"
             value={accessCode}
             onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
-            maxLength={8}
+            maxLength={16}
             className="font-mono"
           />
           <Button
