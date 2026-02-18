@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { RefreshCw, Search } from "lucide-react";
 
@@ -25,6 +26,7 @@ export function UserManagement() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
+  const [pendingChange, setPendingChange] = useState<{ userId: string; newRole: "professor" | "aluno"; userName: string } | null>(null);
   const { user } = useAuth();
   const { role: currentUserRole } = useUserRole(user ?? null);
   const { toast } = useToast();
@@ -194,7 +196,7 @@ export function UserManagement() {
                         value={userData.role || "none"}
                         onValueChange={(value) => {
                           if (value === "professor" || value === "aluno") {
-                            changeUserRole(userData.id, value);
+                            setPendingChange({ userId: userData.id, newRole: value, userName: userData.nome_completo || "Sem nome" });
                           }
                         }}
                         disabled={actionLoading === userData.id}
@@ -211,7 +213,7 @@ export function UserManagement() {
                       <>
                         {userData.role === "aluno" && (
                           <Button
-                            onClick={() => changeUserRole(userData.id, "professor")}
+                            onClick={() => setPendingChange({ userId: userData.id, newRole: "professor", userName: userData.nome_completo || "Sem nome" })}
                             disabled={actionLoading === userData.id}
                             size="sm"
                             variant="outline"
@@ -221,7 +223,7 @@ export function UserManagement() {
                         )}
                         {userData.role === "professor" && (
                           <Button
-                            onClick={() => changeUserRole(userData.id, "aluno")}
+                            onClick={() => setPendingChange({ userId: userData.id, newRole: "aluno", userName: userData.nome_completo || "Sem nome" })}
                             disabled={actionLoading === userData.id}
                             size="sm"
                             variant="outline"
@@ -239,6 +241,28 @@ export function UserManagement() {
           </TableBody>
         </Table>
       </CardContent>
+
+      <AlertDialog open={!!pendingChange} onOpenChange={(open) => !open && setPendingChange(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar alteração de nível</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja alterar o nível de <strong>{pendingChange?.userName}</strong> para <strong>{pendingChange?.newRole === "professor" ? "Professor" : "Aluno"}</strong>?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={() => {
+              if (pendingChange) {
+                changeUserRole(pendingChange.userId, pendingChange.newRole);
+                setPendingChange(null);
+              }
+            }}>
+              Confirmar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }
