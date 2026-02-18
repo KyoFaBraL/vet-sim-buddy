@@ -15,7 +15,7 @@ interface User {
   email?: string | null;
   nome_completo: string | null;
   created_at: string;
-  role: "professor" | "aluno" | null;
+  role: "professor" | "aluno" | "admin" | null;
 }
 
 export function UserManagement() {
