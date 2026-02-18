@@ -1105,6 +1105,18 @@ export type Database = {
           role: string
         }[]
       }
+      get_linked_students_for_professor: {
+        Args: never
+        Returns: {
+          ativo: boolean
+          criado_em: string
+          email: string
+          nome_completo: string
+          rel_id: string
+          student_id: string
+          turma_id: string
+        }[]
+      }
       get_shared_case_by_code: {
         Args: { code: string }
         Returns: {
