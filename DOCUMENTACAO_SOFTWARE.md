@@ -858,7 +858,7 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 
 Esta seção apresenta as capturas de tela das principais interfaces do sistema VetBalance, servindo como evidência visual do funcionamento do software para fins de defesa acadêmica.
 
-> **Nota:** As capturas de tela a seguir foram realizadas em fevereiro de 2026 na versão de produção do sistema (https://vetbalance.app.br), com resolução de 1920×1080 pixels. As telas públicas (01-03) são imagens representativas geradas a partir da interface real. Para as telas internas (04-12), consulte as instruções de captura manual ao final desta seção.
+> **Nota:** As capturas de tela a seguir foram realizadas em fevereiro de 2026 na versão de produção do sistema (https://vetbalance.app.br), com resolução de 1920×1080 pixels. Todas as 12 telas foram capturadas e estão disponíveis na pasta `docs/screenshots/` do repositório.
 
 ---
 
@@ -944,7 +944,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (durante simulação ativa)  
 **Descrição:** Visualização detalhada dos parâmetros fisiológicos do paciente.
 
-**Elementos esperados:**
+![Monitor de Parâmetros](docs/screenshots/05-monitor-parametros.png)
+
+**Elementos identificados:**
 - Cards individuais para cada parâmetro com:
   - Nome do parâmetro e unidade
   - Valor atual em destaque
@@ -961,7 +963,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (durante simulação ativa)  
 **Descrição:** Interface de seleção e aplicação de tratamentos.
 
-**Elementos esperados:**
+![Painel de Tratamentos](docs/screenshots/06-painel-tratamentos.png)
+
+**Elementos identificados:**
 - Lista de 8 tratamentos disponíveis organizados por tipo:
   - Alcalinizante: Bicarbonato de Sódio
   - Suporte Respiratório: Oxigenoterapia
@@ -981,7 +985,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (aba "Badges")  
 **Descrição:** Visualização das conquistas do aluno.
 
-**Elementos esperados:**
+![Sistema de Badges](docs/screenshots/07-sistema-badges.png)
+
+**Elementos identificados:**
 - Grid de 17 badges organizados por categoria (Bronze, Prata, Ouro, Streaks, Milestones, Performance, Ranking)
 - Badges conquistados com cor vibrante e data de conquista
 - Badges não conquistados em cinza/opaco com critério de desbloqueio
@@ -995,7 +1001,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (aba "Semanal")  
 **Descrição:** Leaderboard com posições semanais e reset automático.
 
-**Elementos esperados:**
+![Ranking Semanal](docs/screenshots/08-ranking-semanal.png)
+
+**Elementos identificados:**
 - Tabela/lista de posições dos alunos
 - Colunas: Posição, Nome, Vitórias, Pontos, Taxa de Sucesso
 - Destaque para top 3 (ouro, prata, bronze)
@@ -1010,7 +1018,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/app` (aba "Evolução")  
 **Descrição:** Gráfico de evolução do aluno ao longo das semanas.
 
-**Elementos esperados:**
+![Histórico de Evolução](docs/screenshots/09-historico-evolucao.png)
+
+**Elementos identificados:**
 - Gráfico de linha com eixo X = semanas, eixo Y = posição no ranking
 - Lista de registros semanais com: posição, vitórias, sessões, pontos, taxa
 - Resumo da performance geral
@@ -1022,9 +1032,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 **Rota:** `/professor` (requer autenticação como professor)  
 **Descrição:** Painel de gerenciamento para professores.
 
-> ⚠️ **Nota:** Esta tela requer login como professor. Para captura manual, acesse https://vetbalance.app.br/auth/professor e faça login.
+![Dashboard do Professor](docs/screenshots/10-dashboard-professor.png)
 
-**Elementos esperados:**
+**Elementos identificados:**
 - **Gerenciador de Casos:** Criar, editar, deletar casos clínicos
 - **CaseDataPopulator:** Geração automática de dados via IA
 - **Compartilhamento:** Geração de códigos de acesso para alunos
@@ -1041,7 +1051,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 
 **Descrição:** Tela exibida quando o aluno estabiliza o paciente (HP ≥ 100).
 
-**Elementos esperados:**
+![Resultado - Vitória](docs/screenshots/11-resultado-vitoria.png)
+
+**Elementos identificados:**
 - Mascote do paciente com expressão de vitória
 - Animação de confetti (canvas-confetti)
 - Mensagem: "Paciente Estabilizado!"
@@ -1055,7 +1067,9 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 
 **Descrição:** Tela exibida quando HP chega a zero ou tempo esgota.
 
-**Elementos esperados:**
+![Resultado - Derrota](docs/screenshots/12-resultado-derrota.png)
+
+**Elementos identificados:**
 - Mascote com expressão triste/falecido
 - Mensagem: "Paciente Faleceu" ou "Tempo Esgotado"
 - Resumo do que aconteceu
@@ -1064,26 +1078,25 @@ Esta seção apresenta as capturas de tela das principais interfaces do sistema 
 
 ---
 
-### Instruções para Captura Manual das Telas Internas
+### Repositório das Capturas de Tela
 
-Para capturar as telas que requerem autenticação, siga os passos:
+Todas as 12 capturas de tela estão disponíveis no repositório GitHub:  
+📁 [`docs/screenshots/`](https://github.com/KyoFaBraL/vet-sim-buddy/tree/main/docs/screenshots)
 
-1. **Acesse** https://vetbalance.app.br
-2. **Faça login** como aluno ou professor
-3. **Use a ferramenta de captura de tela** do sistema operacional:
-   - **Windows:** `Win + Shift + S` (Recorte e Anotação)
-   - **macOS:** `Cmd + Shift + 4` (Captura de área)
-   - **Linux:** `PrtScr` ou ferramenta Flameshot
-4. **Salve** as capturas na pasta `docs/screenshots/` do projeto com nomenclatura:
-   - `04-dashboard-aluno.png`
-   - `05-monitor-parametros.png`
-   - `06-painel-tratamentos.png`
-   - `07-sistema-badges.png`
-   - `08-ranking-semanal.png`
-   - `09-historico-evolucao.png`
-   - `10-dashboard-professor.png`
-   - `11-resultado-vitoria.png`
-   - `12-resultado-derrota.png`
+| Arquivo | Tela |
+|---------|------|
+| `01-role-selection.png` | Seleção de Papel (Tela Inicial) |
+| `02-auth-aluno.png` | Login/Cadastro do Aluno |
+| `03-auth-professor.png` | Login/Cadastro do Professor |
+| `04-dashboard-aluno.png` | Dashboard do Aluno (Simulador) |
+| `05-monitor-parametros.png` | Monitor de Parâmetros |
+| `06-painel-tratamentos.png` | Painel de Tratamentos |
+| `07-sistema-badges.png` | Sistema de Badges |
+| `08-ranking-semanal.png` | Ranking Semanal |
+| `09-historico-evolucao.png` | Histórico de Evolução |
+| `10-dashboard-professor.png` | Dashboard do Professor |
+| `11-resultado-vitoria.png` | Resultado – Vitória |
+| `12-resultado-derrota.png` | Resultado – Derrota |
 
 ---
 
@@ -1109,4 +1122,4 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 **Total de tabelas:** 32 tabelas PostgreSQL  
 **Total de Edge Functions:** 5 funções serverless  
 **Total de linhas de código:** ~15.000+ linhas TypeScript/TSX  
-**Total de capturas de tela:** 12 telas documentadas (3 capturadas automaticamente + 9 com descrição para captura manual)
+**Total de capturas de tela:** 12 telas documentadas com evidências visuais
