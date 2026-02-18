@@ -65,45 +65,19 @@ export const StudentManagement = () => {
 
   const loadStudents = async () => {
     try {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
+      const { data, error } = await supabase.rpc("get_linked_students_for_professor");
 
-      // Buscar relacionamentos professor-aluno
-      const { data: relationships, error: relError } = await supabase
-        .from("professor_students")
-        .select("id, student_id, criado_em, ativo, turma_id")
-        .eq("professor_id", userData.user.id)
-        .eq("ativo", true);
+      if (error) throw error;
 
-      if (relError) throw relError;
-
-      if (!relationships || relationships.length === 0) {
-        setStudents([]);
-        return;
-      }
-
-      // Buscar perfis dos alunos
-      const studentIds = relationships.map(r => r.student_id);
-      const { data: profiles, error: profileError } = await supabase
-        .from("student_profiles_safe")
-        .select("id, nome_completo")
-        .in("id", studentIds);
-
-      if (profileError) throw profileError;
-
-      // Combinar dados
-      const formattedStudents = relationships.map((rel) => {
-        const profile = profiles?.find(p => p.id === rel.student_id);
-        return {
-          id: rel.id,
-          student_id: rel.student_id,
-          email: "Protegido",
-          nome_completo: profile?.nome_completo || "Nome não disponível",
-          criado_em: rel.criado_em,
-          ativo: rel.ativo,
-          turma_id: rel.turma_id,
-        };
-      });
+      const formattedStudents = (data || []).map((row: any) => ({
+        id: row.rel_id,
+        student_id: row.student_id,
+        email: row.email || "Email não disponível",
+        nome_completo: row.nome_completo || "Nome não disponível",
+        criado_em: row.criado_em,
+        ativo: row.ativo,
+        turma_id: row.turma_id,
+      }));
 
       setStudents(formattedStudents);
     } catch (error) {
