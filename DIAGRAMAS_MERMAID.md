@@ -1,6 +1,6 @@
 # DIAGRAMAS VISUAIS – VETBALANCE
 
-## Diagramas de Fluxo e Arquitetura para Defesa de Mestrado
+## Diagramas de Fluxo e Arquitetura
 
 > **Nota:** Os diagramas abaixo estão em formato Mermaid e podem ser renderizados em:
 > - GitHub (renderiza automaticamente em arquivos `.md`)
