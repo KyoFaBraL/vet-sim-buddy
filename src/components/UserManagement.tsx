@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { RefreshCw, Search } from "lucide-react";
+import { RefreshCw, Search, Pencil, Check, X } from "lucide-react";
 
 interface User {
   id: string;
@@ -27,6 +27,8 @@ export function UserManagement() {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
   const [pendingChange, setPendingChange] = useState<{ userId: string; newRole: "professor" | "aluno"; userName: string } | null>(null);
+  const [editingName, setEditingName] = useState<string | null>(null);
+  const [editNameValue, setEditNameValue] = useState("");
   const { user } = useAuth();
   const { role: currentUserRole } = useUserRole(user ?? null);
   const { toast } = useToast();
@@ -48,6 +50,34 @@ export function UserManagement() {
     } catch (error) {
       console.error("Erro ao alterar role:", error);
       toast({ title: "Erro", description: "Não foi possível alterar o nível do usuário", variant: "destructive" });
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const saveUserName = async (userId: string) => {
+    if (!editNameValue.trim()) {
+      toast({ title: "Erro", description: "Nome não pode ser vazio", variant: "destructive" });
+      return;
+    }
+    setActionLoading(userId);
+    try {
+      const { data, error } = await supabase.rpc("admin_update_user_name", {
+        target_user_id: userId,
+        new_name: editNameValue,
+      });
+      if (error) throw error;
+      const result = data as { success: boolean; message: string };
+      if (result.success) {
+        toast({ title: "Sucesso", description: result.message });
+        setEditingName(null);
+        fetchUsers();
+      } else {
+        toast({ title: "Erro", description: result.message, variant: "destructive" });
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar nome:", error);
+      toast({ title: "Erro", description: "Não foi possível atualizar o nome", variant: "destructive" });
     } finally {
       setActionLoading(null);
     }
@@ -172,7 +202,43 @@ export function UserManagement() {
               filteredUsers.map((userData) => (
               <TableRow key={userData.id}>
                 <TableCell className="font-medium">
-                  {userData.nome_completo || "Sem nome"}
+                  {isAdmin && editingName === userData.id ? (
+                    <div className="flex items-center gap-1">
+                      <Input
+                        value={editNameValue}
+                        onChange={(e) => setEditNameValue(e.target.value)}
+                        className="h-8 w-[200px]"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") saveUserName(userData.id);
+                          if (e.key === "Escape") setEditingName(null);
+                        }}
+                        disabled={actionLoading === userData.id}
+                      />
+                      <Button variant="ghost" size="sm" onClick={() => saveUserName(userData.id)} disabled={actionLoading === userData.id}>
+                        <Check className="h-4 w-4 text-green-500" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => setEditingName(null)}>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      {userData.nome_completo || "Sem nome"}
+                      {isAdmin && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0"
+                          onClick={() => {
+                            setEditingName(userData.id);
+                            setEditNameValue(userData.nome_completo || "");
+                          }}
+                        >
+                          <Pencil className="h-3 w-3" />
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </TableCell>
                 <TableCell>{userData.email}</TableCell>
                 <TableCell>
