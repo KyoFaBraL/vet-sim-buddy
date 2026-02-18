@@ -14,10 +14,23 @@ import { CaseShareManager } from "@/components/CaseShareManager";
 import { ProfessorAccessKeys } from "@/components/ProfessorAccessKeys";
 import { UserManagement } from "@/components/UserManagement";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ProfessorDashboard() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [cases, setCases] = useState<any[]>([]);
+
+  useEffect(() => {
+    const loadCases = async () => {
+      const { data } = await supabase
+        .from("casos_clinicos")
+        .select("id, nome")
+        .order("nome");
+      if (data) setCases(data);
+    };
+    loadCases();
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -128,7 +141,7 @@ export default function ProfessorDashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <CaseShareManager availableCases={[]} />
+                  <CaseShareManager availableCases={cases} />
                 </CardContent>
               </Card>
             </div>
