@@ -1099,6 +1099,7 @@ export type Database = {
         Args: never
         Returns: {
           created_at: string
+          email: string
           id: string
           nome_completo: string
           role: string
