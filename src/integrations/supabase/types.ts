@@ -1093,6 +1093,10 @@ export type Database = {
       }
     }
     Functions: {
+      admin_update_user_name: {
+        Args: { new_name: string; target_user_id: string }
+        Returns: Json
+      }
       demote_to_student: { Args: { target_user_id: string }; Returns: Json }
       generate_access_code: { Args: never; Returns: string }
       get_all_profiles_for_admin: {
