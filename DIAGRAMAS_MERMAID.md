@@ -433,16 +433,8 @@ flowchart TD
     H --> I["Dados salvos nas<br/>tabelas correspondentes"]
     F -- Não --> J["Configurar<br/>manualmente"]
 
-    I --> K{"Compartilhar<br/>com alunos?"}
+    I --> K["✅ Caso criado e<br/>disponível para uso"]
     J --> K
-
-    K -- Sim --> L["Gerar código de acesso<br/>(generate_access_code)"]
-    L --> M["Código: ABC12345<br/>8 caracteres únicos"]
-    M --> N["Definir expiração<br/>(opcional)"]
-    N --> O["Salvar em<br/>shared_cases"]
-    O --> P["📋 Copiar código e<br/>enviar aos alunos"]
-
-    K -- Não --> Q["Caso disponível<br/>apenas para o professor"]
 
     A --> R["Gerenciar Turmas"]
     R --> S["Criar turma:<br/>Nome, Período,<br/>Ano Letivo"]
@@ -452,7 +444,7 @@ flowchart TD
 
     style A fill:#8b5cf6,color:#fff
     style G fill:#f59e0b,color:#fff
-    style M fill:#22c55e,color:#fff
+    style K fill:#22c55e,color:#fff
     style V fill:#3b82f6,color:#fff
 ```
 
