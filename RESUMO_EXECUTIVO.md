@@ -100,7 +100,29 @@ Apesar da conclusão técnica do simulador, a etapa de **validação clínica co
 
 ---
 
-## 8. DOCUMENTAÇÃO COMPLEMENTAR
+## 8. EVIDÊNCIAS VISUAIS
+
+Todas as 12 capturas de tela das principais interfaces do sistema estão disponíveis no repositório:  
+📁 [`docs/screenshots/`](https://github.com/KyoFaBraL/vet-sim-buddy/tree/main/docs/screenshots)
+
+| # | Arquivo | Tela |
+|---|---------|------|
+| 01 | [`01-role-selection.png`](docs/screenshots/01-role-selection.png) | Seleção de Papel (Tela Inicial) |
+| 02 | [`02-auth-aluno.png`](docs/screenshots/02-auth-aluno.png) | Login/Cadastro do Aluno |
+| 03 | [`03-auth-professor.png`](docs/screenshots/03-auth-professor.png) | Login/Cadastro do Professor |
+| 04 | [`04-dashboard-aluno.png`](docs/screenshots/04-dashboard-aluno.png) | Dashboard do Aluno (Simulador) |
+| 05 | [`05-monitor-parametros.png`](docs/screenshots/05-monitor-parametros.png) | Monitor de Parâmetros |
+| 06 | [`06-painel-tratamentos.png`](docs/screenshots/06-painel-tratamentos.png) | Painel de Tratamentos |
+| 07 | [`07-sistema-badges.png`](docs/screenshots/07-sistema-badges.png) | Sistema de Badges |
+| 08 | [`08-ranking-semanal.png`](docs/screenshots/08-ranking-semanal.png) | Ranking Semanal |
+| 09 | [`09-historico-evolucao.png`](docs/screenshots/09-historico-evolucao.png) | Histórico de Evolução |
+| 10 | [`10-dashboard-professor.png`](docs/screenshots/10-dashboard-professor.png) | Dashboard do Professor |
+| 11 | [`11-resultado-vitoria.png`](docs/screenshots/11-resultado-vitoria.png) | Resultado – Vitória |
+| 12 | [`12-resultado-derrota.png`](docs/screenshots/12-resultado-derrota.png) | Resultado – Derrota |
+
+---
+
+## 9. DOCUMENTAÇÃO COMPLEMENTAR
 
 | Documento | Conteúdo |
 |-----------|----------|
