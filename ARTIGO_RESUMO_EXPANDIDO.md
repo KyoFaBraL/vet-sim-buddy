@@ -32,4 +32,26 @@ A plataforma possibilitará formação de repositório de casos clínicos estrut
 
 ---
 
+## EVIDÊNCIAS VISUAIS DO SOFTWARE
+
+As capturas de tela das principais interfaces do VetBalance estão disponíveis no repositório do projeto:  
+📁 [`docs/screenshots/`](https://github.com/KyoFaBraL/vet-sim-buddy/tree/main/docs/screenshots)
+
+| Figura | Descrição |
+|--------|-----------|
+| ![Seleção de Papel](docs/screenshots/01-role-selection.png) | **Figura 1** – Tela inicial de seleção de papel (Professor/Aluno) |
+| ![Login Aluno](docs/screenshots/02-auth-aluno.png) | **Figura 2** – Formulário de autenticação do aluno |
+| ![Login Professor](docs/screenshots/03-auth-professor.png) | **Figura 3** – Formulário de autenticação do professor com chave de acesso |
+| ![Dashboard Aluno](docs/screenshots/04-dashboard-aluno.png) | **Figura 4** – Dashboard principal do simulador (interface do aluno) |
+| ![Monitor de Parâmetros](docs/screenshots/05-monitor-parametros.png) | **Figura 5** – Monitor de parâmetros fisiológicos em tempo real |
+| ![Painel de Tratamentos](docs/screenshots/06-painel-tratamentos.png) | **Figura 6** – Painel de seleção e aplicação de tratamentos |
+| ![Sistema de Badges](docs/screenshots/07-sistema-badges.png) | **Figura 7** – Sistema de badges e conquistas gamificadas |
+| ![Ranking Semanal](docs/screenshots/08-ranking-semanal.png) | **Figura 8** – Leaderboard com ranking semanal dos alunos |
+| ![Histórico de Evolução](docs/screenshots/09-historico-evolucao.png) | **Figura 9** – Histórico de evolução no ranking ao longo das semanas |
+| ![Dashboard Professor](docs/screenshots/10-dashboard-professor.png) | **Figura 10** – Dashboard de gerenciamento do professor |
+| ![Resultado Vitória](docs/screenshots/11-resultado-vitoria.png) | **Figura 11** – Resultado de simulação: paciente estabilizado (vitória) |
+| ![Resultado Derrota](docs/screenshots/12-resultado-derrota.png) | **Figura 12** – Resultado de simulação: paciente faleceu (derrota) |
+
+---
+
 **Palavras-chave:** Gamificação. Ensino veterinário. M-learning. Equilíbrio ácido-base. Simulação clínica.
