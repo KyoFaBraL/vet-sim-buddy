@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserRole } from "@/hooks/useUserRole";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowUp, ArrowDown, RefreshCw, Search } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 
 interface User {
   id: string;
@@ -25,7 +26,30 @@ export function UserManagement() {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
   const { user } = useAuth();
+  const { role: currentUserRole } = useUserRole(user ?? null);
   const { toast } = useToast();
+  const isAdmin = currentUserRole === "admin";
+
+  const changeUserRole = async (userId: string, newRole: "professor" | "aluno") => {
+    setActionLoading(userId);
+    try {
+      const rpcName = newRole === "professor" ? "promote_to_professor" : "demote_to_student";
+      const { data, error } = await supabase.rpc(rpcName, { target_user_id: userId });
+      if (error) throw error;
+      const result = data as { success: boolean; message: string };
+      if (result.success) {
+        toast({ title: "Sucesso", description: result.message });
+        fetchUsers();
+      } else {
+        toast({ title: "Erro", description: result.message, variant: "destructive" });
+      }
+    } catch (error) {
+      console.error("Erro ao alterar role:", error);
+      toast({ title: "Erro", description: "Não foi possível alterar o nível do usuário", variant: "destructive" });
+    } finally {
+      setActionLoading(null);
+    }
+  };
 
   const fetchUsers = async () => {
     try {
@@ -83,77 +107,6 @@ export function UserManagement() {
     });
   }, [users, searchTerm, roleFilter]);
 
-  const promoteToProf = async (userId: string) => {
-    setActionLoading(userId);
-    try {
-      const { data, error } = await supabase.rpc("promote_to_professor", {
-        target_user_id: userId
-      });
-
-      if (error) throw error;
-
-      const result = data as { success: boolean; message: string };
-
-      if (result.success) {
-        toast({
-          title: "Sucesso",
-          description: result.message,
-        });
-        fetchUsers();
-      } else {
-        toast({
-          title: "Erro",
-          description: result.message,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Erro ao promover usuário:", error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível promover o usuário",
-        variant: "destructive",
-      });
-    } finally {
-      setActionLoading(null);
-    }
-  };
-
-  const demoteToStudent = async (userId: string) => {
-    setActionLoading(userId);
-    try {
-      const { data, error } = await supabase.rpc("demote_to_student", {
-        target_user_id: userId
-      });
-
-      if (error) throw error;
-
-      const result = data as { success: boolean; message: string };
-
-      if (result.success) {
-        toast({
-          title: "Sucesso",
-          description: result.message,
-        });
-        fetchUsers();
-      } else {
-        toast({
-          title: "Erro",
-          description: result.message,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Erro ao rebaixar usuário:", error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível rebaixar o usuário",
-        variant: "destructive",
-      });
-    } finally {
-      setActionLoading(null);
-    }
-  };
 
   if (loading) {
     return (
@@ -245,31 +198,49 @@ export function UserManagement() {
                   {new Date(userData.created_at).toLocaleDateString("pt-BR")}
                 </TableCell>
                 <TableCell className="text-right">
-                  {userData.id !== user?.id && (
-                    <>
-                      {userData.role === "aluno" && (
-                        <Button
-                          onClick={() => promoteToProf(userData.id)}
-                          disabled={actionLoading === userData.id}
-                          size="sm"
-                          variant="outline"
-                        >
-                          <ArrowUp className="h-4 w-4 mr-1" />
-                          Promover
-                        </Button>
-                      )}
-                      {userData.role === "professor" && (
-                        <Button
-                          onClick={() => demoteToStudent(userData.id)}
-                          disabled={actionLoading === userData.id}
-                          size="sm"
-                          variant="outline"
-                        >
-                          <ArrowDown className="h-4 w-4 mr-1" />
-                          Rebaixar
-                        </Button>
-                      )}
-                    </>
+                  {userData.id !== user?.id && userData.role !== "admin" && (
+                    isAdmin ? (
+                      <Select
+                        value={userData.role || "none"}
+                        onValueChange={(value) => {
+                          if (value === "professor" || value === "aluno") {
+                            changeUserRole(userData.id, value);
+                          }
+                        }}
+                        disabled={actionLoading === userData.id}
+                      >
+                        <SelectTrigger className="w-[140px] ml-auto">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="professor">Professor</SelectItem>
+                          <SelectItem value="aluno">Aluno</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <>
+                        {userData.role === "aluno" && (
+                          <Button
+                            onClick={() => changeUserRole(userData.id, "professor")}
+                            disabled={actionLoading === userData.id}
+                            size="sm"
+                            variant="outline"
+                          >
+                            Promover
+                          </Button>
+                        )}
+                        {userData.role === "professor" && (
+                          <Button
+                            onClick={() => changeUserRole(userData.id, "aluno")}
+                            disabled={actionLoading === userData.id}
+                            size="sm"
+                            variant="outline"
+                          >
+                            Rebaixar
+                          </Button>
+                        )}
+                      </>
+                    )
                   )}
                 </TableCell>
               </TableRow>
