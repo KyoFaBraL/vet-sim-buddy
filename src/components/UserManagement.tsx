@@ -325,49 +325,24 @@ export function UserManagement() {
                   {new Date(userData.created_at).toLocaleDateString("pt-BR")}
                 </TableCell>
                 <TableCell className="text-right">
-                  {userData.id !== user?.id && userData.role !== "admin" && (
-                    isAdmin ? (
-                      <Select
-                        value={userData.role || "none"}
-                        onValueChange={(value) => {
-                          if (value === "professor" || value === "aluno") {
-                            setPendingChange({ userId: userData.id, newRole: value, userName: userData.nome_completo || "Sem nome" });
-                          }
-                        }}
-                        disabled={actionLoading === userData.id}
-                      >
-                        <SelectTrigger className="w-[140px] ml-auto">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="professor">Professor</SelectItem>
-                          <SelectItem value="aluno">Aluno</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <>
-                        {userData.role === "aluno" && (
-                          <Button
-                            onClick={() => setPendingChange({ userId: userData.id, newRole: "professor", userName: userData.nome_completo || "Sem nome" })}
-                            disabled={actionLoading === userData.id}
-                            size="sm"
-                            variant="outline"
-                          >
-                            Promover
-                          </Button>
-                        )}
-                        {userData.role === "professor" && (
-                          <Button
-                            onClick={() => setPendingChange({ userId: userData.id, newRole: "aluno", userName: userData.nome_completo || "Sem nome" })}
-                            disabled={actionLoading === userData.id}
-                            size="sm"
-                            variant="outline"
-                          >
-                            Rebaixar
-                          </Button>
-                        )}
-                      </>
-                    )
+                  {isAdmin && userData.id !== user?.id && userData.role !== "admin" && (
+                    <Select
+                      value={userData.role || "none"}
+                      onValueChange={(value) => {
+                        if (value === "professor" || value === "aluno") {
+                          setPendingChange({ userId: userData.id, newRole: value, userName: userData.nome_completo || "Sem nome" });
+                        }
+                      }}
+                      disabled={actionLoading === userData.id}
+                    >
+                      <SelectTrigger className="w-[140px] ml-auto">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="professor">Professor</SelectItem>
+                        <SelectItem value="aluno">Aluno</SelectItem>
+                      </SelectContent>
+                    </Select>
                   )}
                 </TableCell>
               </TableRow>
