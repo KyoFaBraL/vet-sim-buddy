@@ -2,12 +2,6 @@
 
 ## Diagramas de Fluxo e Arquitetura
 
-> **Nota:** Os diagramas abaixo estão em formato Mermaid e podem ser renderizados em:
-> - GitHub (renderiza automaticamente em arquivos `.md`)
-> - [Mermaid Live Editor](https://mermaid.live)
-> - VS Code com extensão "Mermaid Preview"
-> - Exportação para PNG/SVG via mermaid-cli: `npx @mermaid-js/mermaid-cli mmdc -i DIAGRAMAS.md -o diagrama.png`
-
 ---
 
 ## Diagrama 1 – Arquitetura Geral do Sistema
@@ -670,21 +664,6 @@ flowchart TD
 
 ---
 
-## Como Renderizar os Diagramas
-
-### Opção 1 – GitHub
-Basta visualizar este arquivo no GitHub. Os diagramas Mermaid são renderizados automaticamente.
-
-### Opção 2 – Mermaid Live Editor
-1. Acesse https://mermaid.live
-2. Copie o código de qualquer diagrama (entre \`\`\`mermaid e \`\`\`)
-3. Cole no editor
-4. Exporte como PNG ou SVG
-
-### Opção 3 – CLI (Exportação em lote)
-```bash
-npm install -g @mermaid-js/mermaid-cli
-mmdc -i DIAGRAMAS_MERMAID.md -o diagrama.png -t dark
 ```
 
 ### Opção 4 – VS Code
