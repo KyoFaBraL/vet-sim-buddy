@@ -28,6 +28,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/" replace />;
   }
 
+  // Admin tem acesso total - redirecionar para painel de professor
+  if (role === 'admin' && window.location.pathname === '/app') {
+    return <Navigate to="/professor" replace />;
+  }
+
   // Redirecionar professores para o painel de professor
   if (role === 'professor' && window.location.pathname === '/app') {
     return <Navigate to="/professor" replace />;
@@ -50,6 +55,8 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   if (user && role) {
+    // Admin vai para o painel de professor (invisível)
+    if (role === 'admin') return <Navigate to="/professor" replace />;
     // Redirecionar para o painel correto baseado na role
     return <Navigate to={role === 'professor' ? '/professor' : '/app'} replace />;
   }
