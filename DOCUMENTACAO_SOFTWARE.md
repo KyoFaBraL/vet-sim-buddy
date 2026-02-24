@@ -1112,19 +1112,20 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 | **Identificador do documento** | VETBALANCE-PVS-001 v1.0 |
 | **Tipo de estudo** | Quase-experimental, controlado, com pré e pós-teste |
 | **Data de início** | 10/03/2026 |
-| **Data de término** | 31/08/2026 |
-| **Duração total** | 6 meses (26 semanas) |
+| **Data de término** | 31/07/2026 |
+| **Duração total** | ~5 meses (20 semanas) |
+| **Agosto/2026** | Reservado para redação e defesa do mestrado |
 
 ### 22.2 Fases do Cronograma
 
 | Fase | Período | Atividades Principais |
 |------|---------|----------------------|
-| **Fase 1 — Preparação** | 10/03 – 10/04/2026 | Aprovação CEP, cadastro de participantes, randomização GE/GC, pré-teste diagnóstico (O₁) |
-| **Fase 2 — Intervenção Inicial** | 11/04 – 10/05/2026 | Aulas teóricas (GE + GC), treinamento e uso supervisionado do SUT pelo GE |
-| **Fase 3 — Avaliação Intermediária 1** | 11/05 – 10/06/2026 | Uso intensivo do SUT, avaliação intermediária 1 (O₂), análise parcial |
-| **Fase 4 — Intervenção Avançada** | 11/06 – 12/07/2026 | Casos avançados, aulas avançadas, modo avaliação (sem IA) |
-| **Fase 5 — Avaliação Final** | 13/07 – 12/08/2026 | Avaliação intermediária 2 (O₃), questionário SUS, pós-teste final (O₄), exportação de dados |
-| **Fase 6 — Análise e Relatório** | 13/08 – 31/08/2026 | Processamento estatístico (RStudio), cruzamento de dados, relatório final IEEE 829 |
+| **Fase 1 — Preparação** | 10/03 – 28/03/2026 | Aprovação CEP, cadastro de participantes, randomização GE/GC, pré-teste diagnóstico (O₁) |
+| **Fase 2 — Intervenção Inicial** | 31/03 – 25/04/2026 | Aulas teóricas (GE + GC), treinamento e uso supervisionado do SUT pelo GE |
+| **Fase 3 — Avaliação Intermediária 1** | 28/04 – 16/05/2026 | Uso intensivo do SUT, avaliação intermediária 1 (O₂), análise parcial |
+| **Fase 4 — Intervenção Avançada** | 19/05 – 06/06/2026 | Casos avançados, aulas avançadas, modo avaliação (sem IA) |
+| **Fase 5 — Avaliação Final** | 09/06 – 27/06/2026 | Avaliação intermediária 2 (O₃), questionário SUS, pós-teste final (O₄), exportação de dados |
+| **Fase 6 — Análise e Relatório** | 30/06 – 31/07/2026 | Processamento estatístico (RStudio), cruzamento de dados, relatório final IEEE 829 |
 
 ### 22.3 Funcionalidades Sob Validação
 
