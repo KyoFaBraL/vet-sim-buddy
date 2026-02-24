@@ -212,53 +212,60 @@ O₄ = Pós-teste final (Junho/2026)
 
 ## 8. PROCEDIMENTOS DE TESTE
 
-### 8.1 Fase 1 — Preparação (Semanas 1–3)
+### 8.1 Fase 1 — Preparação (10/03 – 28/03/2026)
 
-| Semana | Procedimento | Responsável | Entregável |
-|--------|-------------|-------------|------------|
-| 1 | Submissão do protocolo ao Comitê de Ética em Pesquisa (CEP) | Pesquisador | Protocolo aprovado |
-| 2 | Apresentação do projeto aos docentes das disciplinas; cadastro dos participantes no SUT e randomização GE/GC | Pesquisador + Docentes | Ata de reunião; lista de alocação selada |
-| 3 | Aplicação do **pré-teste diagnóstico** (O₁) — ambos os grupos | Docentes | Dados do pré-teste tabulados |
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 1 | 10/03 – 14/03 | Submissão do protocolo ao Comitê de Ética em Pesquisa (CEP) | Pesquisador | Protocolo aprovado |
+| 2 | 17/03 – 21/03 | Apresentação do projeto aos docentes das disciplinas | Pesquisador | Ata de reunião |
+| 2 | 17/03 – 23/03 | Cadastro dos participantes no SUT e randomização GE/GC | Pesquisador + Docentes | Lista de alocação selada |
+| 3 | 24/03 – 28/03 | Aplicação do **pré-teste diagnóstico** (O₁) — ambos os grupos | Docentes | Dados do pré-teste tabulados |
 
-### 8.2 Fase 2 — Intervenção Inicial (Semanas 4–7)
+### 8.2 Fase 2 — Intervenção Inicial (31/03 – 25/04/2026)
 
-| Semana | Procedimento | Responsável | Entregável |
-|--------|-------------|-------------|------------|
-| 4–5 | Aulas teóricas sobre equilíbrio ácido-base (GE + GC) | Docentes | Registro de frequência |
-| 5–6 | Treinamento do GE no SUT: tutorial guiado + primeiros casos | Pesquisador | Logs de conclusão do tutorial |
-| 7 | Uso supervisionado do SUT pelo GE — casos de acidose e alcalose metabólica | Alunos GE | Relatório de sessões |
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 4 | 31/03 – 04/04 | Aulas teóricas sobre equilíbrio ácido-base — parte 1 (GE + GC) | Docentes | Registro de frequência |
+| 5 | 07/04 – 11/04 | Aulas teóricas sobre equilíbrio ácido-base — parte 2 (GE + GC); início do treinamento GE no SUT | Docentes / Pesquisador | Registro de frequência; logs do tutorial |
+| 6 | 14/04 – 18/04 | Treinamento do GE no SUT: tutorial guiado + primeiros casos clínicos | Pesquisador | Logs de conclusão do tutorial |
+| 7 | 21/04 – 25/04 | Uso supervisionado do SUT pelo GE — casos de acidose e alcalose metabólica | Alunos GE | Relatório de sessões |
 
-### 8.3 Fase 3 — Avaliação Intermediária 1 (Semanas 8–10)
+### 8.3 Fase 3 — Avaliação Intermediária 1 (28/04 – 16/05/2026)
 
-| Semana | Procedimento | Responsável | Entregável |
-|--------|-------------|-------------|------------|
-| 8–9 | Uso intensivo do SUT pelo GE; atividades tradicionais pelo GC | Alunos / Docentes | Logs do sistema |
-| 9 | **Avaliação intermediária 1** (O₂) — distúrbios metabólicos | Docentes | Notas tabuladas |
-| 10 | Análise parcial dos dados no RStudio | Pesquisador | Relatório parcial |
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 8 | 28/04 – 02/05 | Uso intensivo do SUT pelo GE; atividades tradicionais pelo GC | Alunos / Docentes | Logs do sistema |
+| 9 | 05/05 – 09/05 | Continuação do uso intensivo GE; preparação da avaliação | Alunos / Docentes | Logs do sistema |
+| 9–10 | 11/05 – 14/05 | **Avaliação intermediária 1** (O₂) — distúrbios metabólicos | Docentes | Notas tabuladas |
+| 10 | 15/05 – 16/05 | Análise parcial dos dados no RStudio | Pesquisador | Relatório parcial |
 
-### 8.4 Fase 4 — Intervenção Avançada (Semanas 11–13)
+### 8.4 Fase 4 — Intervenção Avançada (19/05 – 06/06/2026)
 
-| Semana | Procedimento | Responsável | Entregável |
-|--------|-------------|-------------|------------|
-| 11 | Casos avançados no SUT: cetoacidose diabética, hipercapnia, distúrbios mistos | Alunos GE | Dados de sessões avançadas |
-| 12 | Aulas avançadas sobre compensação e protocolos terapêuticos (GE + GC) | Docentes | Registro de frequência |
-| 13 | Modo Avaliação do SUT (sem dicas de IA) — simulação de cenário real | Alunos GE | Dados do modo avaliação |
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 11 | 19/05 – 23/05 | Casos avançados no SUT: cetoacidose diabética, hipercapnia, distúrbios mistos | Alunos GE | Dados de sessões avançadas |
+| 12 | 25/05 – 01/06 | Aulas avançadas sobre compensação e protocolos terapêuticos (GE + GC) | Docentes | Registro de frequência |
+| 13 | 02/06 – 06/06 | Modo Avaliação do SUT (sem dicas de IA) — simulação de cenário real | Alunos GE | Dados do modo avaliação |
 
-### 8.5 Fase 5 — Avaliação Final e Coleta (Semanas 14–16)
+### 8.5 Fase 5 — Avaliação Final e Coleta (09/06 – 27/06/2026)
 
-| Semana | Procedimento | Responsável | Entregável |
-|--------|-------------|-------------|------------|
-| 14 | Revisão geral no SUT — todos os casos; **Avaliação intermediária 2** (O₃) — distúrbios respiratórios e mistos | Alunos GE / Docentes | Dados consolidados; notas tabuladas |
-| 15 | Aplicação do **questionário de satisfação** (SUS adaptado) ao GE; **Pós-teste final** (O₄) — avaliação abrangente | Pesquisador / Docentes | Respostas tabuladas; notas tabuladas |
-| 16 | Exportação completa dos dados do SUT (CSV/TXT) | Pesquisador | Arquivos de dados |
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 14 | 09/06 – 13/06 | Revisão geral no SUT — todos os casos disponíveis | Alunos GE | Dados consolidados |
+| 14–15 | 14/06 – 16/06 | **Avaliação intermediária 2** (O₃) — distúrbios respiratórios e mistos | Docentes | Notas tabuladas |
+| 15 | 17/06 – 19/06 | Aplicação do **questionário de satisfação** (SUS adaptado) ao GE | Pesquisador | Respostas tabuladas |
+| 15–16 | 20/06 – 23/06 | **Pós-teste final** (O₄) — avaliação abrangente (GE + GC) | Docentes | Notas tabuladas |
+| 16 | 24/06 – 27/06 | Exportação completa dos dados do SUT (CSV/TXT) | Pesquisador | Arquivos de dados |
 
-### 8.6 Fase 6 — Análise e Relatório (Semanas 17–20)
+### 8.6 Fase 6 — Análise e Relatório (30/06 – 31/07/2026)
 
-| Semana | Procedimento | Responsável | Entregável |
-|--------|-------------|-------------|------------|
-| 17–18 | Processamento estatístico: testes t, d de Cohen, correlação de Pearson; análise dos dados do SUT: sessões, win rate, badges, ranking | Pesquisador | Tabelas estatísticas; relatório de uso |
-| 19 | Cruzamento: desempenho no software × notas nas avaliações | Pesquisador | Análise cruzada |
-| 20 | **Relatório final de validação** (IEEE 829 — Test Summary Report) | Pesquisador | Documento final |
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 17 | 30/06 – 04/07 | Processamento estatístico: testes t de Student (pareado e independente), teste de Shapiro-Wilk | Pesquisador | Tabelas estatísticas |
+| 18 | 07/07 – 11/07 | Análise dos dados do SUT: sessões, win rate, badges, ranking; cálculo do d de Cohen | Pesquisador | Relatório de uso |
+| 19 | 14/07 – 18/07 | Cruzamento: desempenho no software × notas nas avaliações; correlação de Pearson | Pesquisador | Análise cruzada |
+| 20 | 21/07 – 28/07 | Redação do relatório final de validação | Pesquisador | Rascunho do relatório |
+| 20 | 29/07 – 31/07 | **Entrega do relatório final de validação** (IEEE 829 — Test Summary Report) | Pesquisador | Documento final ✅ |
 
 > **Nota:** O mês de agosto de 2026 está reservado exclusivamente para a redação da dissertação e defesa do mestrado, com base nos dados consolidados até 31/07/2026.
 
@@ -266,46 +273,102 @@ O₄ = Pós-teste final (Junho/2026)
 
 ## 9. CRONOGRAMA DE EXECUÇÃO
 
+### 9.1 Tabela Cronológica Detalhada
+
+| Sem. | Data Início | Data Fim | Fase | Atividade | Marco (Milestone) |
+|------|------------|----------|------|-----------|-------------------|
+| 1 | 10/03/2026 | 14/03/2026 | F1 — Preparação | Submissão do protocolo ao CEP | |
+| 2 | 17/03/2026 | 23/03/2026 | F1 — Preparação | Apresentação aos docentes; cadastro e randomização GE/GC | |
+| 3 | 24/03/2026 | 28/03/2026 | F1 — Preparação | **Pré-teste diagnóstico (O₁)** | 🔴 O₁ |
+| 4 | 31/03/2026 | 04/04/2026 | F2 — Interv. Inicial | Aulas teóricas — parte 1 (GE + GC) | |
+| 5 | 07/04/2026 | 11/04/2026 | F2 — Interv. Inicial | Aulas teóricas — parte 2; início treinamento GE | |
+| 6 | 14/04/2026 | 18/04/2026 | F2 — Interv. Inicial | Treinamento GE no SUT (tutorial + primeiros casos) | |
+| 7 | 21/04/2026 | 25/04/2026 | F2 — Interv. Inicial | Uso supervisionado GE (acidose/alcalose metabólica) | |
+| 8 | 28/04/2026 | 02/05/2026 | F3 — Aval. Interm. 1 | Uso intensivo GE; atividades tradicionais GC | |
+| 9 | 05/05/2026 | 09/05/2026 | F3 — Aval. Interm. 1 | Continuação uso intensivo GE | |
+| 10 | 11/05/2026 | 16/05/2026 | F3 — Aval. Interm. 1 | **Avaliação intermediária 1 (O₂)**; análise parcial RStudio | 🔴 O₂ |
+| 11 | 19/05/2026 | 23/05/2026 | F4 — Interv. Avançada | Casos avançados GE (cetoacidose, hipercapnia, mistos) | |
+| 12 | 25/05/2026 | 01/06/2026 | F4 — Interv. Avançada | Aulas avançadas (compensação e protocolos) — GE + GC | |
+| 13 | 02/06/2026 | 06/06/2026 | F4 — Interv. Avançada | Modo Avaliação do SUT (sem IA) | |
+| 14 | 09/06/2026 | 16/06/2026 | F5 — Aval. Final | Revisão geral GE; **Avaliação intermediária 2 (O₃)** | 🔴 O₃ |
+| 15 | 17/06/2026 | 23/06/2026 | F5 — Aval. Final | Questionário SUS (GE); **Pós-teste final (O₄)** | 🔴 O₄ |
+| 16 | 24/06/2026 | 27/06/2026 | F5 — Aval. Final | Exportação completa dos dados do SUT (CSV/TXT) | ✅ Coleta encerrada |
+| 17 | 30/06/2026 | 04/07/2026 | F6 — Análise | Processamento estatístico (testes t, Shapiro-Wilk) | |
+| 18 | 07/07/2026 | 11/07/2026 | F6 — Análise | Análise dados SUT (sessões, win rate, badges); d de Cohen | |
+| 19 | 14/07/2026 | 18/07/2026 | F6 — Análise | Cruzamento de dados (software × notas); Pearson | |
+| 20 | 21/07/2026 | 31/07/2026 | F6 — Relatório | Redação e entrega do relatório final IEEE 829 | ✅ Relatório final |
+| — | 01/08/2026 | 31/08/2026 | **MESTRADO** | **Redação da dissertação e defesa** | 🎓 Defesa |
+
+### 9.2 Resumo por Fase
+
+| Fase | Início | Término | Duração | Semanas |
+|------|--------|---------|---------|---------|
+| F1 — Preparação | 10/03/2026 | 28/03/2026 | 19 dias | 1–3 |
+| F2 — Intervenção Inicial | 31/03/2026 | 25/04/2026 | 26 dias | 4–7 |
+| F3 — Avaliação Intermediária 1 | 28/04/2026 | 16/05/2026 | 19 dias | 8–10 |
+| F4 — Intervenção Avançada | 19/05/2026 | 06/06/2026 | 19 dias | 11–13 |
+| F5 — Avaliação Final e Coleta | 09/06/2026 | 27/06/2026 | 19 dias | 14–16 |
+| F6 — Análise e Relatório | 30/06/2026 | 31/07/2026 | 32 dias | 17–20 |
+| **Total da validação** | **10/03/2026** | **31/07/2026** | **144 dias** | **20 semanas** |
+| Mestrado (redação + defesa) | 01/08/2026 | 31/08/2026 | 31 dias | — |
+
+### 9.3 Marcos Críticos (Milestones)
+
+| Marco | Data | Descrição |
+|-------|------|-----------|
+| 🔴 O₁ | 24/03 – 28/03/2026 | Pré-teste diagnóstico (GE + GC) |
+| 🔴 O₂ | 11/05 – 14/05/2026 | Avaliação intermediária 1 — distúrbios metabólicos |
+| 🔴 O₃ | 14/06 – 16/06/2026 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
+| 🔴 O₄ | 20/06 – 23/06/2026 | Pós-teste final — avaliação abrangente |
+| ✅ Coleta | 27/06/2026 | Encerramento da coleta de dados |
+| ✅ Relatório | 31/07/2026 | Entrega do relatório final de validação (IEEE 829) |
+| 🎓 Defesa | Agosto/2026 | Defesa do mestrado |
+
+### 9.4 Diagrama de Gantt
+
 ```mermaid
 gantt
     title Plano de Validação — VetBalance v1.0 (Mar–Jul 2026)
     dateFormat  YYYY-MM-DD
-    axisFormat  %b/%Y
+    axisFormat  %d/%m
 
     section Fase 1 — Preparação
-    Aprovação CEP                     :done, f1a, 2026-03-10, 2026-03-16
+    Aprovação CEP                     :done, f1a, 2026-03-10, 2026-03-14
     Apresentação + Cadastro + Random. :active, f1b, 2026-03-17, 2026-03-23
     Pré-teste diagnóstico (O₁)       :crit, f1c, 2026-03-24, 2026-03-28
 
     section Fase 2 — Intervenção Inicial
-    Aulas teóricas (GE + GC)          :f2a, 2026-03-31, 2026-04-11
-    Treinamento GE no SUT             :f2b, 2026-04-07, 2026-04-18
-    Uso supervisionado GE             :f2c, 2026-04-21, 2026-04-25
+    Aulas teóricas pt.1 (GE + GC)    :f2a, 2026-03-31, 2026-04-04
+    Aulas teóricas pt.2 + Trein. GE  :f2b, 2026-04-07, 2026-04-11
+    Treinamento GE no SUT            :f2c, 2026-04-14, 2026-04-18
+    Uso supervisionado GE            :f2d, 2026-04-21, 2026-04-25
 
     section Fase 3 — Avaliação Intermediária 1
-    Uso intensivo GE + Atividades GC  :f3a, 2026-04-28, 2026-05-09
-    Avaliação intermediária 1 (O₂)   :crit, f3b, 2026-05-11, 2026-05-14
-    Análise parcial RStudio           :f3c, 2026-05-15, 2026-05-16
+    Uso intensivo GE + Atividades GC :f3a, 2026-04-28, 2026-05-09
+    Avaliação intermediária 1 (O₂)  :crit, f3b, 2026-05-11, 2026-05-14
+    Análise parcial RStudio          :f3c, 2026-05-15, 2026-05-16
 
     section Fase 4 — Intervenção Avançada
-    Casos avançados GE                :f4a, 2026-05-19, 2026-05-23
-    Aulas avançadas (GE + GC)         :f4b, 2026-05-25, 2026-06-01
-    Modo Avaliação GE (sem IA)        :f4c, 2026-06-02, 2026-06-06
+    Casos avançados GE               :f4a, 2026-05-19, 2026-05-23
+    Aulas avançadas (GE + GC)        :f4b, 2026-05-25, 2026-06-01
+    Modo Avaliação GE (sem IA)       :f4c, 2026-06-02, 2026-06-06
 
     section Fase 5 — Avaliação Final
-    Revisão geral + Aval. interm. 2 (O₃) :f5a, 2026-06-09, 2026-06-16
-    Questionário SUS + Pós-teste (O₄):crit, f5b, 2026-06-17, 2026-06-23
-    Exportação e tabulação            :f5c, 2026-06-24, 2026-06-27
+    Revisão geral GE                 :f5a, 2026-06-09, 2026-06-13
+    Avaliação intermediária 2 (O₃)  :crit, f5b, 2026-06-14, 2026-06-16
+    Questionário SUS (GE)            :f5c, 2026-06-17, 2026-06-19
+    Pós-teste final (O₄)            :crit, f5d, 2026-06-20, 2026-06-23
+    Exportação e tabulação           :f5e, 2026-06-24, 2026-06-27
 
     section Fase 6 — Análise e Relatório
-    Processamento estatístico + SUT   :f6a, 2026-06-30, 2026-07-11
-    Cruzamento de dados               :f6b, 2026-07-14, 2026-07-18
-    Redação relatório final           :f6c, 2026-07-21, 2026-07-28
-    Relatório final de validação      :crit, f6d, 2026-07-31, 2026-07-31
+    Testes t + Shapiro-Wilk          :f6a, 2026-06-30, 2026-07-04
+    Análise SUT + d de Cohen         :f6b, 2026-07-07, 2026-07-11
+    Cruzamento dados + Pearson       :f6c, 2026-07-14, 2026-07-18
+    Redação relatório final          :f6d, 2026-07-21, 2026-07-28
+    Entrega relatório IEEE 829       :crit, f6e, 2026-07-29, 2026-07-31
 
     section Agosto — Mestrado
-    Redação da dissertação            :milestone, m1, 2026-08-01, 2026-08-01
-    Defesa do mestrado                :milestone, m2, 2026-08-31, 2026-08-31
+    Redação dissertação + Defesa     :milestone, m1, 2026-08-01, 2026-08-31
 ```
 
 ---
@@ -316,12 +379,11 @@ gantt
 
 | ID | Instrumento | Momento | Amostra | Formato |
 |----|-------------|---------|---------|---------|
-| I-01 | Pré-teste diagnóstico | Março/2026 (O₁) | GE + GC | Questões objetivas e discursivas (0–10) |
-| I-01 | Pré-teste diagnóstico | Março/2026 (O₁) | GE + GC | Questões objetivas e discursivas (0–10) |
-| I-02 | Avaliação intermediária 1 | Maio/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) |
-| I-03 | Avaliação intermediária 2 | Junho/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) |
-| I-04 | Pós-teste final | Junho/2026 (O₄) | GE + GC | Questões objetivas e discursivas (0–10) |
-| I-05 | Questionário de satisfação | Junho/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) |
+| I-01 | Pré-teste diagnóstico | 24/03 – 28/03/2026 (O₁) | GE + GC | Questões objetivas e discursivas (0–10) |
+| I-02 | Avaliação intermediária 1 | 11/05 – 14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) |
+| I-03 | Avaliação intermediária 2 | 14/06 – 16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) |
+| I-04 | Pós-teste final | 20/06 – 23/06/2026 (O₄) | GE + GC | Questões objetivas e discursivas (0–10) |
+| I-05 | Questionário de satisfação | 17/06 – 19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) |
 
 ### 10.2 Dados Coletados Automaticamente pelo SUT
 
