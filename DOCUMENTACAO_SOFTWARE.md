@@ -32,6 +32,7 @@
 19. [Evidências Visuais – Capturas de Tela](#19-evidências-visuais--capturas-de-tela)
 20. [Requisitos de Sistema](#20-requisitos-de-sistema)
 21. [Glossário Técnico](#21-glossário-técnico)
+22. [Cronograma de Validação](#22-cronograma-de-validação)
 
 ---
 
@@ -1097,6 +1098,61 @@ Todas as 12 capturas de tela estão disponíveis no repositório GitHub:
 | `10-dashboard-professor.png` | Dashboard do Professor |
 | `11-resultado-vitoria.png` | Resultado – Vitória |
 | `12-resultado-derrota.png` | Resultado – Derrota |
+
+---
+
+## 22. CRONOGRAMA DE VALIDAÇÃO
+
+O processo de validação do VetBalance está formalizado no documento **VETBALANCE-PVS-001 — Plano de Validação de Software**, elaborado conforme as normas IEEE 829-2008, ISO/IEC 25010:2011 e NBR ISO/IEC 12207:2009.
+
+### 22.1 Dados Gerais
+
+| Item | Valor |
+|------|-------|
+| **Identificador do documento** | VETBALANCE-PVS-001 v1.0 |
+| **Tipo de estudo** | Quase-experimental, controlado, com pré e pós-teste |
+| **Data de início** | 10/03/2026 |
+| **Data de término** | 31/08/2026 |
+| **Duração total** | 6 meses (26 semanas) |
+
+### 22.2 Fases do Cronograma
+
+| Fase | Período | Atividades Principais |
+|------|---------|----------------------|
+| **Fase 1 — Preparação** | 10/03 – 10/04/2026 | Aprovação CEP, cadastro de participantes, randomização GE/GC, pré-teste diagnóstico (O₁) |
+| **Fase 2 — Intervenção Inicial** | 11/04 – 10/05/2026 | Aulas teóricas (GE + GC), treinamento e uso supervisionado do SUT pelo GE |
+| **Fase 3 — Avaliação Intermediária 1** | 11/05 – 10/06/2026 | Uso intensivo do SUT, avaliação intermediária 1 (O₂), análise parcial |
+| **Fase 4 — Intervenção Avançada** | 11/06 – 12/07/2026 | Casos avançados, aulas avançadas, modo avaliação (sem IA) |
+| **Fase 5 — Avaliação Final** | 13/07 – 12/08/2026 | Avaliação intermediária 2 (O₃), questionário SUS, pós-teste final (O₄), exportação de dados |
+| **Fase 6 — Análise e Relatório** | 13/08 – 31/08/2026 | Processamento estatístico (RStudio), cruzamento de dados, relatório final IEEE 829 |
+
+### 22.3 Funcionalidades Sob Validação
+
+| ID | Funcionalidade | Módulo de Referência |
+|----|---------------|----------------------|
+| F-01 | Simulação de casos clínicos em tempo real | `useSimulation.ts` |
+| F-02 | Sistema de HP e deterioração temporal | `HPDisplay.tsx` |
+| F-03 | Aplicação e validação de tratamentos | `TreatmentPanel.tsx` |
+| F-04 | Monitoramento de 10 parâmetros fisiológicos | `PatientMonitor.tsx` |
+| F-05 | Sistema de badges e conquistas (17 badges) | `BadgeSystem.tsx` |
+| F-06 | Ranking semanal com reset automático | `WeeklyLeaderboard.tsx` |
+| F-07 | Feedback de sessão via IA | `generate-session-feedback` |
+| F-08 | Modo Prática vs. Modo Avaliação | `SimulationModeSelector.tsx` |
+| F-09 | Exportação de relatórios (CSV/TXT) | `ReportPanel.tsx` |
+| F-10 | Histórico e replay de sessões | `SessionHistory.tsx`, `SessionReplay.tsx` |
+
+### 22.4 Critérios de Aceitação Resumidos
+
+| Critério | Métrica | Valor Alvo |
+|----------|---------|------------|
+| Ganho de aprendizagem GE | Δ(pós − pré-teste) | > 0 com p < 0,05 |
+| Superioridade GE sobre GC | Diferença de médias | p < 0,05 (teste t) |
+| Tamanho do efeito | d de Cohen | d ≥ 0,5 |
+| Correlação software × desempenho | r de Pearson | r ≥ 0,3 com p < 0,05 |
+| Satisfação do usuário | Questionário SUS | Média ≥ 4,0/5,0 |
+| Disponibilidade do SUT | Uptime | ≥ 99% |
+
+> **Documento completo:** Consultar `CRONOGRAMA_VALIDACAO.md` (VETBALANCE-PVS-001 v1.0)
 
 ---
 
