@@ -45,7 +45,7 @@ Verificar se o software atende aos requisitos de qualidade definidos pela ISO/IE
 
 | Item | Valor |
 |------|-------|
-| **Data de início** | 01/03/2026 |
+| **Data de início** | 10/03/2026 |
 | **Data de término** | 31/08/2026 |
 | **Duração total** | 6 meses (26 semanas) |
 
@@ -151,7 +151,7 @@ O₁  X  O₂  O₃  O₄    ← Grupo Experimental (GE)
 O₁     O₂  O₃  O₄    ← Grupo Controle (GC)
 
 Onde:
-O₁ = Pré-teste diagnóstico (Março/2026)
+O₁ = Pré-teste diagnóstico (Março–Abril/2026)
 X  = Intervenção com VetBalance (Abril–Julho/2026)
 O₂ = Avaliação intermediária 1 (Maio/2026)
 O₃ = Avaliação intermediária 2 (Julho/2026)
@@ -275,41 +275,41 @@ gantt
     axisFormat  %b/%Y
 
     section Fase 1 — Preparação
-    Aprovação CEP                     :done, f1a, 2026-03-01, 2026-03-07
-    Apresentação aos docentes         :done, f1b, 2026-03-08, 2026-03-14
-    Cadastro e randomização           :active, f1c, 2026-03-15, 2026-03-21
-    Pré-teste diagnóstico (O₁)       :crit, f1d, 2026-03-22, 2026-03-28
-    Tabulação pré-teste               :f1e, 2026-03-29, 2026-03-31
+    Aprovação CEP                     :done, f1a, 2026-03-10, 2026-03-16
+    Apresentação aos docentes         :done, f1b, 2026-03-17, 2026-03-23
+    Cadastro e randomização           :active, f1c, 2026-03-24, 2026-03-30
+    Pré-teste diagnóstico (O₁)       :crit, f1d, 2026-03-31, 2026-04-06
+    Tabulação pré-teste               :f1e, 2026-04-07, 2026-04-10
 
     section Fase 2 — Intervenção Inicial
-    Aulas teóricas (GE + GC)          :f2a, 2026-04-01, 2026-04-18
-    Treinamento GE no SUT             :f2b, 2026-04-05, 2026-04-25
-    Uso supervisionado GE             :f2c, 2026-04-26, 2026-04-30
+    Aulas teóricas (GE + GC)          :f2a, 2026-04-11, 2026-04-28
+    Treinamento GE no SUT             :f2b, 2026-04-15, 2026-05-05
+    Uso supervisionado GE             :f2c, 2026-05-06, 2026-05-10
 
     section Fase 3 — Avaliação Intermediária 1
-    Uso intensivo GE + Atividades GC  :f3a, 2026-05-01, 2026-05-17
-    Avaliação intermediária 1 (O₂)   :crit, f3b, 2026-05-18, 2026-05-24
-    Análise parcial RStudio           :f3c, 2026-05-25, 2026-05-31
+    Uso intensivo GE + Atividades GC  :f3a, 2026-05-11, 2026-05-27
+    Avaliação intermediária 1 (O₂)   :crit, f3b, 2026-05-28, 2026-06-03
+    Análise parcial RStudio           :f3c, 2026-06-04, 2026-06-10
 
     section Fase 4 — Intervenção Avançada
-    Casos avançados GE                :f4a, 2026-06-01, 2026-06-07
-    Aulas avançadas (GE + GC)         :f4b, 2026-06-08, 2026-06-21
-    Modo Avaliação GE (sem IA)        :f4c, 2026-06-22, 2026-06-28
-    Monitoramento progresso           :f4d, 2026-06-29, 2026-06-30
+    Casos avançados GE                :f4a, 2026-06-11, 2026-06-17
+    Aulas avançadas (GE + GC)         :f4b, 2026-06-18, 2026-07-01
+    Modo Avaliação GE (sem IA)        :f4c, 2026-07-02, 2026-07-08
+    Monitoramento progresso           :f4d, 2026-07-09, 2026-07-12
 
     section Fase 5 — Avaliação Final
-    Revisão geral GE                  :f5a, 2026-07-01, 2026-07-05
-    Avaliação intermediária 2 (O₃)   :crit, f5b, 2026-07-06, 2026-07-12
-    Questionário satisfação (SUS)     :f5c, 2026-07-13, 2026-07-19
-    Pós-teste final (O₄)             :crit, f5d, 2026-07-20, 2026-07-26
-    Exportação e tabulação            :f5e, 2026-07-27, 2026-07-31
+    Revisão geral GE                  :f5a, 2026-07-13, 2026-07-17
+    Avaliação intermediária 2 (O₃)   :crit, f5b, 2026-07-18, 2026-07-24
+    Questionário satisfação (SUS)     :f5c, 2026-07-25, 2026-07-31
+    Pós-teste final (O₄)             :crit, f5d, 2026-08-01, 2026-08-07
+    Exportação e tabulação            :f5e, 2026-08-08, 2026-08-12
 
     section Fase 6 — Análise e Relatório
-    Processamento estatístico         :f6a, 2026-08-01, 2026-08-09
-    Análise dados do SUT              :f6b, 2026-08-10, 2026-08-16
-    Cruzamento de dados               :f6c, 2026-08-17, 2026-08-23
-    Redação e conclusões              :f6d, 2026-08-24, 2026-08-28
-    Relatório final de validação      :crit, f6e, 2026-08-29, 2026-08-31
+    Processamento estatístico         :f6a, 2026-08-13, 2026-08-19
+    Análise dados do SUT              :f6b, 2026-08-20, 2026-08-24
+    Cruzamento de dados               :f6c, 2026-08-25, 2026-08-28
+    Redação e conclusões              :f6d, 2026-08-29, 2026-08-31
+    Relatório final de validação      :crit, f6e, 2026-08-31, 2026-08-31
 ```
 
 ---
