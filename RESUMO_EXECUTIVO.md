@@ -130,6 +130,7 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 | `DIAGRAMAS_MERMAID.md` | 10 diagramas visuais (arquitetura, fluxos, ER, sequência, segurança) |
 | `PERMISSIONS_GUIDE.md` | Guia de permissões e políticas RLS |
 | `ARTIGO_RESUMO_EXPANDIDO.md` | Resumo expandido para publicação |
+| `CRONOGRAMA_VALIDACAO.md` | Cronograma de validação (Mar–Ago 2026) com desenho experimental |
 
 ---
 
