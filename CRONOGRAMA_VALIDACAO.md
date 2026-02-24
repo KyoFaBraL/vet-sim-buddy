@@ -1,231 +1,469 @@
-# CRONOGRAMA DE VALIDAÇÃO – VETBALANCE
+# PLANO DE VALIDAÇÃO DE SOFTWARE – VETBALANCE
 
-## Aplicação do Software em Disciplinas de Medicina Veterinária
-
-**Disciplinas:** Fisiologia Animal e Farmacologia (módulo: Equilíbrio Ácido-Base)  
-**Período:** Março/2026 – Agosto/2026 (6 meses)  
-**Metodologia:** Estudo comparativo randomizado — metade da turma utiliza o VetBalance (Grupo Experimental) e metade não utiliza (Grupo Controle)  
+**Identificador do Documento:** VETBALANCE-PVS-001  
+**Versão:** 1.0  
+**Data de Emissão:** 24 de fevereiro de 2026  
+**Classificação:** Documento Técnico de Validação  
+**Normas de Referência:** IEEE 829-2008 (Standard for Software Test Documentation), ISO/IEC 25010:2011 (Systems and software Quality Requirements and Evaluation — SQuaRE), NBR ISO/IEC 12207:2009 (Processos de Ciclo de Vida de Software)  
 **URL do Software:** https://vetbalance.app.br
 
 ---
 
-## DESENHO EXPERIMENTAL
+## SUMÁRIO
 
-| Item | Descrição |
-|------|-----------|
-| **Tipo de estudo** | Quase-experimental, controlado, com pré e pós-teste |
-| **Disciplina 1** | Fisiologia Animal — equilíbrio ácido-base |
-| **Disciplina 2** | Farmacologia — farmacoterapia dos distúrbios ácido-base |
-| **Divisão dos grupos** | Randomização por sorteio simples em cada disciplina |
-| **Grupo Experimental (GE)** | 50% da turma — acesso ao VetBalance durante todo o período |
-| **Grupo Controle (GC)** | 50% da turma — metodologia tradicional (sem acesso ao software) |
-| **Análise estatística** | Teste t de Student (α=0,05) — processamento no RStudio |
-
----
-
-## CRONOGRAMA DETALHADO
-
-### 📅 MÊS 1 — MARÇO/2026: Preparação e Linha de Base
-
-| Semana | Atividade | Responsável |
-|--------|-----------|-------------|
-| 01–07/03 | Submissão e aprovação do protocolo no Comitê de Ética (se aplicável) | Pesquisador |
-| 08–14/03 | Apresentação do projeto aos docentes das disciplinas | Pesquisador |
-| 15–21/03 | Cadastro dos alunos no sistema e randomização dos grupos (GE e GC) | Pesquisador + Docentes |
-| 22–28/03 | **Pré-teste diagnóstico** — avaliação de conhecimentos prévios sobre equilíbrio ácido-base (ambos os grupos, ambas as disciplinas) | Docentes |
-| 29–31/03 | Tabulação dos resultados do pré-teste no RStudio | Pesquisador |
-
-**Entregas do mês:**
-- ✅ Grupos randomizados e cadastrados
-- ✅ Pré-teste aplicado e tabulado
-- ✅ Linha de base estabelecida
+1. [Introdução](#1-introdução)
+2. [Escopo da Validação](#2-escopo-da-validação)
+3. [Referências Normativas](#3-referências-normativas)
+4. [Definições e Terminologia](#4-definições-e-terminologia)
+5. [Desenho Experimental](#5-desenho-experimental)
+6. [Critérios de Aceitação](#6-critérios-de-aceitação)
+7. [Ambiente de Teste](#7-ambiente-de-teste)
+8. [Procedimentos de Teste](#8-procedimentos-de-teste)
+9. [Cronograma de Execução](#9-cronograma-de-execução)
+10. [Instrumentos de Coleta de Dados](#10-instrumentos-de-coleta-de-dados)
+11. [Métricas de Qualidade de Software](#11-métricas-de-qualidade-de-software)
+12. [Análise Estatística](#12-análise-estatística)
+13. [Rastreabilidade de Dados](#13-rastreabilidade-de-dados)
+14. [Gestão de Riscos](#14-gestão-de-riscos)
+15. [Considerações Éticas](#15-considerações-éticas)
+16. [Critérios de Encerramento](#16-critérios-de-encerramento)
+17. [Aprovações](#17-aprovações)
 
 ---
 
-### 📅 MÊS 2 — ABRIL/2026: Início da Intervenção
+## 1. INTRODUÇÃO
 
-| Semana | Atividade | Responsável |
-|--------|-----------|-------------|
-| 01–04/04 | **Fisiologia Animal:** Aulas teóricas sobre equilíbrio ácido-base (GE + GC) | Docente Fisiologia |
-| 05–11/04 | **GE Fisiologia:** Treinamento no VetBalance — tutorial guiado + primeiros casos | Pesquisador |
-| 12–18/04 | **Farmacologia:** Aulas teóricas sobre farmacoterapia ácido-base (GE + GC) | Docente Farmacologia |
-| 19–25/04 | **GE Farmacologia:** Treinamento no VetBalance — tutorial guiado + primeiros casos | Pesquisador |
-| 26–30/04 | Monitoramento do uso do software (logs, sessões, badges) | Pesquisador |
+### 1.1 Propósito
 
-**Entregas do mês:**
-- ✅ Aulas teóricas ministradas em ambas as disciplinas
-- ✅ GE treinado e utilizando o software
-- ✅ Primeiro ciclo de monitoramento
+Este documento estabelece o plano de validação do software educacional **VetBalance**, definindo os procedimentos, critérios e cronograma para avaliação da eficácia pedagógica do sistema como ferramenta de m-learning gamificada no ensino de equilíbrio ácido-base em medicina veterinária.
 
----
+### 1.2 Objetivo da Validação
 
-### 📅 MÊS 3 — MAIO/2026: Uso Intensivo e Primeira Avaliação
+Verificar se o software atende aos requisitos de qualidade definidos pela ISO/IEC 25010 e se produz resultados pedagógicos mensuráveis e estatisticamente significativos quando utilizado como recurso complementar ao ensino presencial.
 
-| Semana | Atividade | Responsável |
-|--------|-----------|-------------|
-| 01–10/05 | **GE:** Uso contínuo do VetBalance — casos de acidose e alcalose metabólica | Alunos GE |
-| 11–17/05 | **GC:** Atividades complementares tradicionais (estudos de caso em papel, discussões) | Docentes |
-| 18–24/05 | **Avaliação intermediária 1** — prova teórico-prática sobre distúrbios metabólicos (GE + GC, ambas disciplinas) | Docentes |
-| 25–31/05 | Tabulação e análise parcial dos resultados no RStudio | Pesquisador |
+### 1.3 Escopo Temporal
 
-**Entregas do mês:**
-- ✅ Avaliação intermediária 1 aplicada
-- ✅ Dados parciais analisados
-- ✅ Relatório de uso do software (sessões, win rate, badges conquistados)
+| Item | Valor |
+|------|-------|
+| **Data de início** | 01/03/2026 |
+| **Data de término** | 31/08/2026 |
+| **Duração total** | 6 meses (26 semanas) |
 
 ---
 
-### 📅 MÊS 4 — JUNHO/2026: Aprofundamento e Casos Complexos
+## 2. ESCOPO DA VALIDAÇÃO
 
-| Semana | Atividade | Responsável |
-|--------|-----------|-------------|
-| 01–07/06 | **GE:** Casos avançados no VetBalance — cetoacidose diabética, hipercapnia, distúrbios mistos | Alunos GE |
-| 08–14/06 | **Fisiologia:** Aulas sobre compensação respiratória e renal (GE + GC) | Docente Fisiologia |
-| 15–21/06 | **Farmacologia:** Aulas sobre protocolos terapêuticos avançados (GE + GC) | Docente Farmacologia |
-| 22–28/06 | **GE:** Modo avaliação do VetBalance (sem dicas de IA) — simulação de cenário real | Alunos GE |
-| 29–30/06 | Monitoramento do progresso e ranking semanal | Pesquisador |
+### 2.1 Item de Teste
 
-**Entregas do mês:**
-- ✅ Casos complexos completados pelo GE
-- ✅ Conteúdo avançado ministrado em ambas as disciplinas
-- ✅ Segundo ciclo de monitoramento
+| Atributo | Descrição |
+|----------|-----------|
+| **Nome do software** | VetBalance |
+| **Versão** | 1.0 (produção) |
+| **Tipo** | Aplicação web responsiva (PWA) |
+| **Plataforma** | Navegadores modernos (Chrome ≥ 90, Firefox ≥ 88, Safari ≥ 14, Edge ≥ 90) |
+| **Stack tecnológico** | React 18, TypeScript, Tailwind CSS, PostgreSQL (Supabase), Edge Functions (Deno) |
+| **URL de produção** | https://vetbalance.app.br |
 
----
+### 2.2 Funcionalidades Sob Teste
 
-### 📅 MÊS 5 — JULHO/2026: Segunda Avaliação e Coleta Final
+| ID | Funcionalidade | Módulo |
+|----|---------------|--------|
+| F-01 | Simulação de casos clínicos em tempo real | `useSimulation.ts` |
+| F-02 | Sistema de HP (Health Points) e deterioração temporal | `HPDisplay.tsx` |
+| F-03 | Aplicação e validação de tratamentos | `TreatmentPanel.tsx` |
+| F-04 | Monitoramento de 10 parâmetros fisiológicos | `PatientMonitor.tsx` |
+| F-05 | Sistema de badges e conquistas (17 badges) | `BadgeSystem.tsx` |
+| F-06 | Ranking semanal com reset automático | `WeeklyLeaderboard.tsx` |
+| F-07 | Feedback de sessão via IA | `generate-session-feedback` (Edge Function) |
+| F-08 | Modo Prática vs. Modo Avaliação | `SimulationModeSelector.tsx` |
+| F-09 | Exportação de relatórios (CSV/TXT) | `ReportPanel.tsx` |
+| F-10 | Histórico e replay de sessões | `SessionHistory.tsx`, `SessionReplay.tsx` |
 
-| Semana | Atividade | Responsável |
-|--------|-----------|-------------|
-| 01–05/07 | **GE:** Últimas sessões no VetBalance — revisão geral de todos os casos | Alunos GE |
-| 06–12/07 | **Avaliação intermediária 2** — prova teórico-prática sobre distúrbios respiratórios e mistos (GE + GC) | Docentes |
-| 13–19/07 | Aplicação de **questionário de satisfação** ao GE (usabilidade, engajamento, percepção de aprendizagem) | Pesquisador |
-| 20–26/07 | **Pós-teste final** — avaliação abrangente de equilíbrio ácido-base (GE + GC, ambas disciplinas) | Docentes |
-| 27–31/07 | Exportação completa dos dados do VetBalance (CSV/TXT) e tabulação do pós-teste | Pesquisador |
+### 2.3 Funcionalidades Fora do Escopo
 
-**Entregas do mês:**
-- ✅ Avaliação intermediária 2 aplicada
-- ✅ Pós-teste final aplicado
-- ✅ Questionário de satisfação coletado
-- ✅ Todos os dados exportados
-
----
-
-### 📅 MÊS 6 — AGOSTO/2026: Análise Estatística e Relatório Final
-
-| Semana | Atividade | Responsável |
-|--------|-----------|-------------|
-| 01–09/08 | Processamento estatístico no RStudio: teste t de Student (pré vs pós, GE vs GC) | Pesquisador |
-| 10–16/08 | Análise dos dados do software: sessões, win rate, tempo médio, badges, ranking | Pesquisador |
-| 17–23/08 | Cruzamento de dados: desempenho no software × notas nas avaliações | Pesquisador |
-| 24–28/08 | Redação da discussão dos resultados e conclusões | Pesquisador |
-| 29–31/08 | **Relatório final de validação** — compilação de todos os dados e análises | Pesquisador |
-
-**Entregas do mês:**
-- ✅ Análise estatística concluída
-- ✅ Relatório final de validação redigido
-- ✅ Dados prontos para inclusão na dissertação
+- Dashboard do professor e gerenciamento de turmas
+- Criação de casos personalizados via IA
+- Configurações administrativas do sistema
 
 ---
 
-## INSTRUMENTOS DE COLETA DE DADOS
+## 3. REFERÊNCIAS NORMATIVAS
 
-| Instrumento | Momento | Aplicação |
-|-------------|---------|-----------|
-| **Pré-teste diagnóstico** | Março/2026 | GE + GC — conhecimentos prévios |
-| **Avaliação intermediária 1** | Maio/2026 | GE + GC — distúrbios metabólicos |
-| **Avaliação intermediária 2** | Julho/2026 | GE + GC — distúrbios respiratórios e mistos |
-| **Pós-teste final** | Julho/2026 | GE + GC — avaliação abrangente |
-| **Questionário de satisfação** | Julho/2026 | Apenas GE — percepção de usabilidade |
-| **Dados do VetBalance** | Contínuo | Apenas GE — logs automáticos do sistema |
-
----
-
-## DADOS COLETADOS AUTOMATICAMENTE PELO VETBALANCE (Grupo Experimental)
-
-| Dado | Tabela no Banco | Descrição |
-|------|-----------------|-----------|
-| Sessões de simulação | `simulation_sessions` | Data, duração, caso, resultado (vitória/derrota) |
-| Histórico de parâmetros | `session_history` | Snapshots dos parâmetros fisiológicos por segundo |
-| Decisões clínicas | `session_decisions` | Tratamentos aplicados, HP antes/depois |
-| Tratamentos aplicados | `session_treatments` | Tratamento, timestamp, sessão |
-| Badges conquistados | `user_badges` | Conquistas gamificadas e data |
-| Ranking semanal | `weekly_ranking_history` | Posição, pontos, win rate por semana |
-| Notas de simulação | `simulation_notes` | Anotações clínicas do aluno |
+| Norma | Título | Aplicação |
+|-------|--------|-----------|
+| IEEE 829-2008 | Standard for Software and System Test Documentation | Estrutura do plano de testes |
+| ISO/IEC 25010:2011 | SQuaRE — System and software quality models | Modelo de qualidade de software |
+| ISO/IEC 25022:2016 | Measurement of quality in use | Métricas de usabilidade |
+| NBR ISO/IEC 12207:2009 | Processos de ciclo de vida de software | Processo de validação |
+| ISO 14155:2020 | Clinical investigation of medical devices | Referência para desenho experimental |
+| APA 7ª edição | Manual de publicação | Formatação do relatório final |
 
 ---
 
-## ANÁLISE ESTATÍSTICA PLANEJADA
+## 4. DEFINIÇÕES E TERMINOLOGIA
 
-| Análise | Ferramenta | Variáveis |
-|---------|------------|-----------|
-| Comparação GE vs GC (pré-teste) | Teste t de Student | Nota pré-teste |
-| Comparação GE vs GC (pós-teste) | Teste t de Student | Nota pós-teste |
-| Evolução intra-grupo | Teste t pareado | Pré vs pós (dentro de cada grupo) |
-| Tamanho do efeito | d de Cohen | Magnitude da diferença |
-| Correlação software × notas | Correlação de Pearson | Win rate × nota pós-teste |
-| Nível de significância | α = 0,05 | — |
-| Software estatístico | **RStudio** | — |
+| Termo | Definição |
+|-------|-----------|
+| **GE** | Grupo Experimental — participantes com acesso ao software |
+| **GC** | Grupo Controle — participantes sem acesso ao software |
+| **SUT** | System Under Test — VetBalance v1.0 |
+| **HP** | Health Points — métrica de saúde do paciente virtual (0–100) |
+| **Win Rate** | Taxa de vitória — percentual de sessões com HP ≥ 100 |
+| **Badge** | Conquista gamificada desbloqueada por critérios de desempenho |
+| **Tick** | Ciclo de simulação (intervalo de 1 segundo) |
+| **RLS** | Row Level Security — controle de acesso por linha no banco de dados |
+| **m-learning** | Mobile learning — aprendizagem por dispositivos móveis |
 
 ---
 
-## DIAGRAMA VISUAL DO CRONOGRAMA
+## 5. DESENHO EXPERIMENTAL
 
-```mermaid
-gantt
-    title Cronograma de Validação — VetBalance (Mar–Ago 2026)
-    dateFormat  YYYY-MM-DD
-    axisFormat  %b/%Y
+### 5.1 Tipo de Estudo
 
-    section Preparação
-    Aprovação ética e protocolo       :done, prep1, 2026-03-01, 2026-03-07
-    Apresentação aos docentes         :done, prep2, 2026-03-08, 2026-03-14
-    Cadastro e randomização           :active, prep3, 2026-03-15, 2026-03-21
-    Pré-teste diagnóstico             :crit, pre1, 2026-03-22, 2026-03-28
-    Tabulação pré-teste               :prep4, 2026-03-29, 2026-03-31
+Estudo **quase-experimental**, controlado, com pré e pós-teste, conforme modelo de Campbell & Stanley (1963).
 
-    section Intervenção — Fase 1
-    Aulas teóricas (GE + GC)          :aula1, 2026-04-01, 2026-04-18
-    Treinamento GE no VetBalance      :ge1, 2026-04-05, 2026-04-25
-    Monitoramento uso software        :mon1, 2026-04-26, 2026-04-30
+### 5.2 Variáveis
 
-    section Avaliação 1
-    Uso intensivo GE                  :ge2, 2026-05-01, 2026-05-17
-    Atividades tradicionais GC        :gc1, 2026-05-01, 2026-05-17
-    Avaliação intermediária 1         :crit, av1, 2026-05-18, 2026-05-24
-    Análise parcial RStudio           :ana1, 2026-05-25, 2026-05-31
+| Tipo | Variável | Operacionalização |
+|------|----------|--------------------|
+| **Independente** | Uso do VetBalance | Presença/ausência de acesso ao software |
+| **Dependente primária** | Desempenho acadêmico | Nota nas avaliações (escala 0–10) |
+| **Dependente secundária** | Engajamento | Sessões completadas, win rate, badges |
+| **Dependente terciária** | Satisfação | Escala Likert (questionário pós-intervenção) |
+| **Controle** | Conteúdo ministrado | Mesmo conteúdo teórico para GE e GC |
+| **Controle** | Docente | Mesmo professor para ambos os grupos |
 
-    section Intervenção — Fase 2
-    Casos avançados GE                :ge3, 2026-06-01, 2026-06-07
-    Aulas avançadas (GE + GC)         :aula2, 2026-06-08, 2026-06-21
-    Modo avaliação GE                 :ge4, 2026-06-22, 2026-06-28
-    Monitoramento progresso           :mon2, 2026-06-29, 2026-06-30
+### 5.3 Disciplinas e Participantes
 
-    section Avaliação 2 e Coleta Final
-    Revisão geral GE                  :ge5, 2026-07-01, 2026-07-05
-    Avaliação intermediária 2         :crit, av2, 2026-07-06, 2026-07-12
-    Questionário satisfação GE        :quest, 2026-07-13, 2026-07-19
-    Pós-teste final                   :crit, pos1, 2026-07-20, 2026-07-26
-    Exportação e tabulação dados      :exp1, 2026-07-27, 2026-07-31
+| Disciplina | Conteúdo Avaliado | Divisão |
+|------------|-------------------|---------|
+| Fisiologia Animal | Equilíbrio ácido-base: mecanismos fisiológicos, compensação respiratória e renal | 50% GE / 50% GC |
+| Farmacologia | Farmacoterapia dos distúrbios ácido-base: bicarbonato, fluidoterapia, oxigenoterapia | 50% GE / 50% GC |
 
-    section Análise e Relatório
-    Processamento estatístico RStudio :ana2, 2026-08-01, 2026-08-09
-    Análise dados do software         :ana3, 2026-08-10, 2026-08-16
-    Cruzamento dados                  :ana4, 2026-08-17, 2026-08-23
-    Redação discussão e conclusões    :red1, 2026-08-24, 2026-08-28
-    Relatório final de validação      :crit, rel1, 2026-08-29, 2026-08-31
+### 5.4 Randomização
+
+Método: **sorteio simples** estratificado por disciplina, garantindo distribuição equilibrada entre GE e GC em cada turma. A alocação será registrada em documento selado antes do início da intervenção.
+
+### 5.5 Diagrama do Desenho Experimental
+
+```
+O₁  X  O₂  O₃  O₄    ← Grupo Experimental (GE)
+O₁     O₂  O₃  O₄    ← Grupo Controle (GC)
+
+Onde:
+O₁ = Pré-teste diagnóstico (Março/2026)
+X  = Intervenção com VetBalance (Abril–Julho/2026)
+O₂ = Avaliação intermediária 1 (Maio/2026)
+O₃ = Avaliação intermediária 2 (Julho/2026)
+O₄ = Pós-teste final (Julho/2026)
 ```
 
 ---
 
-## CONSIDERAÇÕES ÉTICAS
+## 6. CRITÉRIOS DE ACEITAÇÃO
 
-- O estudo será submetido ao Comitê de Ética em Pesquisa (CEP) da instituição, se exigido
-- Todos os participantes assinarão Termo de Consentimento Livre e Esclarecido (TCLE)
-- Após o término da coleta, o Grupo Controle terá acesso ao VetBalance para garantir equidade
-- Nenhum dado pessoal será exposto — o sistema utiliza RLS (Row Level Security) em todas as tabelas
-- Os dados serão anonimizados na apresentação dos resultados
+### 6.1 Critérios de Eficácia Pedagógica
+
+| ID | Critério | Métrica | Valor Alvo |
+|----|----------|---------|------------|
+| CA-01 | Ganho de aprendizagem do GE | Δ(pós-teste − pré-teste) | > 0 com p < 0,05 |
+| CA-02 | Superioridade do GE sobre GC | Diferença de médias no pós-teste | p < 0,05 (teste t) |
+| CA-03 | Tamanho do efeito | d de Cohen | d ≥ 0,5 (efeito médio) |
+| CA-04 | Correlação software × desempenho | r de Pearson (win rate × nota) | r ≥ 0,3 com p < 0,05 |
+
+### 6.2 Critérios de Qualidade de Software (ISO/IEC 25010)
+
+| Característica | Subcaracterística | Critério de Aceitação | Método de Verificação |
+|----------------|--------------------|-----------------------|-----------------------|
+| **Adequação funcional** | Completude funcional | 100% das funcionalidades F-01 a F-10 operacionais | Teste funcional |
+| **Adequação funcional** | Correção funcional | Taxa de erro < 1% nas simulações | Logs do sistema |
+| **Eficiência de desempenho** | Comportamento temporal | Tempo de resposta < 2s para ações do usuário | Monitoramento |
+| **Usabilidade** | Facilidade de aprendizado | ≥ 80% dos usuários completam o tutorial sem assistência | Observação + logs |
+| **Usabilidade** | Satisfação do usuário | Média ≥ 4,0/5,0 no questionário de satisfação | Questionário Likert |
+| **Confiabilidade** | Disponibilidade | Uptime ≥ 99% durante o período de validação | Monitoramento |
+| **Confiabilidade** | Tolerância a falhas | Nenhuma perda de dados de sessão | Auditoria de banco |
+| **Segurança** | Confidencialidade | RLS ativo em 100% das tabelas com dados de usuário | Auditoria SQL |
+| **Portabilidade** | Adaptabilidade | Funcional em Chrome, Firefox, Safari, Edge (desktop e mobile) | Teste cross-browser |
+
+---
+
+## 7. AMBIENTE DE TESTE
+
+### 7.1 Infraestrutura
+
+| Componente | Especificação |
+|------------|---------------|
+| **Servidor** | Supabase Cloud (PostgreSQL 15, Edge Functions Deno) |
+| **CDN** | Lovable Cloud (deploy automático) |
+| **Domínio** | vetbalance.app.br (HTTPS/TLS 1.3) |
+| **Banco de dados** | 32 tabelas com RLS, backups automáticos |
+| **Autenticação** | E-mail + senha com verificação obrigatória |
+
+### 7.2 Dispositivos de Teste
+
+| Dispositivo | Navegador | Resolução |
+|-------------|-----------|-----------|
+| Desktop (Windows/macOS) | Chrome ≥ 90, Firefox ≥ 88 | 1366×768 a 1920×1080 |
+| Tablet (iPad/Android) | Safari ≥ 14, Chrome ≥ 90 | 768×1024 a 834×1194 |
+| Smartphone (iOS/Android) | Safari ≥ 14, Chrome ≥ 90 | 360×800 a 414×896 |
+
+---
+
+## 8. PROCEDIMENTOS DE TESTE
+
+### 8.1 Fase 1 — Preparação (Semanas 1–4)
+
+| Semana | Procedimento | Responsável | Entregável |
+|--------|-------------|-------------|------------|
+| 1 | Submissão do protocolo ao Comitê de Ética em Pesquisa (CEP) | Pesquisador | Protocolo aprovado |
+| 2 | Apresentação do projeto aos docentes das disciplinas | Pesquisador | Ata de reunião |
+| 3 | Cadastro dos participantes no SUT e randomização GE/GC | Pesquisador + Docentes | Lista de alocação selada |
+| 4 | Aplicação do **pré-teste diagnóstico** (O₁) — ambos os grupos | Docentes | Dados do pré-teste tabulados |
+
+### 8.2 Fase 2 — Intervenção Inicial (Semanas 5–9)
+
+| Semana | Procedimento | Responsável | Entregável |
+|--------|-------------|-------------|------------|
+| 5–6 | Aulas teóricas sobre equilíbrio ácido-base (GE + GC) | Docentes | Registro de frequência |
+| 6–7 | Treinamento do GE no SUT: tutorial guiado + primeiros casos | Pesquisador | Logs de conclusão do tutorial |
+| 8–9 | Uso supervisionado do SUT pelo GE — casos de acidose e alcalose metabólica | Alunos GE | Relatório de sessões |
+
+### 8.3 Fase 3 — Avaliação Intermediária 1 (Semanas 10–13)
+
+| Semana | Procedimento | Responsável | Entregável |
+|--------|-------------|-------------|------------|
+| 10–11 | Uso intensivo do SUT pelo GE; atividades tradicionais pelo GC | Alunos / Docentes | Logs do sistema |
+| 12 | **Avaliação intermediária 1** (O₂) — distúrbios metabólicos | Docentes | Notas tabuladas |
+| 13 | Análise parcial dos dados no RStudio | Pesquisador | Relatório parcial |
+
+### 8.4 Fase 4 — Intervenção Avançada (Semanas 14–18)
+
+| Semana | Procedimento | Responsável | Entregável |
+|--------|-------------|-------------|------------|
+| 14 | Casos avançados no SUT: cetoacidose diabética, hipercapnia, distúrbios mistos | Alunos GE | Dados de sessões avançadas |
+| 15–16 | Aulas avançadas sobre compensação e protocolos terapêuticos (GE + GC) | Docentes | Registro de frequência |
+| 17 | Modo Avaliação do SUT (sem dicas de IA) — simulação de cenário real | Alunos GE | Dados do modo avaliação |
+| 18 | Monitoramento do progresso e ranking semanal | Pesquisador | Relatório de monitoramento |
+
+### 8.5 Fase 5 — Avaliação Final e Coleta (Semanas 19–22)
+
+| Semana | Procedimento | Responsável | Entregável |
+|--------|-------------|-------------|------------|
+| 19 | Revisão geral no SUT — todos os casos | Alunos GE | Dados consolidados |
+| 20 | **Avaliação intermediária 2** (O₃) — distúrbios respiratórios e mistos | Docentes | Notas tabuladas |
+| 21 | Aplicação do **questionário de satisfação** (SUS adaptado) ao GE | Pesquisador | Respostas tabuladas |
+| 21–22 | **Pós-teste final** (O₄) — avaliação abrangente | Docentes | Notas tabuladas |
+| 22 | Exportação completa dos dados do SUT (CSV/TXT) | Pesquisador | Arquivos de dados |
+
+### 8.6 Fase 6 — Análise e Relatório (Semanas 23–26)
+
+| Semana | Procedimento | Responsável | Entregável |
+|--------|-------------|-------------|------------|
+| 23 | Processamento estatístico: testes t, d de Cohen, correlação de Pearson | Pesquisador | Tabelas estatísticas |
+| 24 | Análise dos dados do SUT: sessões, win rate, badges, ranking | Pesquisador | Relatório de uso |
+| 25 | Cruzamento: desempenho no software × notas nas avaliações | Pesquisador | Análise cruzada |
+| 26 | **Relatório final de validação** (IEEE 829 — Test Summary Report) | Pesquisador | Documento final |
+
+---
+
+## 9. CRONOGRAMA DE EXECUÇÃO
+
+```mermaid
+gantt
+    title Plano de Validação — VetBalance v1.0 (Mar–Ago 2026)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b/%Y
+
+    section Fase 1 — Preparação
+    Aprovação CEP                     :done, f1a, 2026-03-01, 2026-03-07
+    Apresentação aos docentes         :done, f1b, 2026-03-08, 2026-03-14
+    Cadastro e randomização           :active, f1c, 2026-03-15, 2026-03-21
+    Pré-teste diagnóstico (O₁)       :crit, f1d, 2026-03-22, 2026-03-28
+    Tabulação pré-teste               :f1e, 2026-03-29, 2026-03-31
+
+    section Fase 2 — Intervenção Inicial
+    Aulas teóricas (GE + GC)          :f2a, 2026-04-01, 2026-04-18
+    Treinamento GE no SUT             :f2b, 2026-04-05, 2026-04-25
+    Uso supervisionado GE             :f2c, 2026-04-26, 2026-04-30
+
+    section Fase 3 — Avaliação Intermediária 1
+    Uso intensivo GE + Atividades GC  :f3a, 2026-05-01, 2026-05-17
+    Avaliação intermediária 1 (O₂)   :crit, f3b, 2026-05-18, 2026-05-24
+    Análise parcial RStudio           :f3c, 2026-05-25, 2026-05-31
+
+    section Fase 4 — Intervenção Avançada
+    Casos avançados GE                :f4a, 2026-06-01, 2026-06-07
+    Aulas avançadas (GE + GC)         :f4b, 2026-06-08, 2026-06-21
+    Modo Avaliação GE (sem IA)        :f4c, 2026-06-22, 2026-06-28
+    Monitoramento progresso           :f4d, 2026-06-29, 2026-06-30
+
+    section Fase 5 — Avaliação Final
+    Revisão geral GE                  :f5a, 2026-07-01, 2026-07-05
+    Avaliação intermediária 2 (O₃)   :crit, f5b, 2026-07-06, 2026-07-12
+    Questionário satisfação (SUS)     :f5c, 2026-07-13, 2026-07-19
+    Pós-teste final (O₄)             :crit, f5d, 2026-07-20, 2026-07-26
+    Exportação e tabulação            :f5e, 2026-07-27, 2026-07-31
+
+    section Fase 6 — Análise e Relatório
+    Processamento estatístico         :f6a, 2026-08-01, 2026-08-09
+    Análise dados do SUT              :f6b, 2026-08-10, 2026-08-16
+    Cruzamento de dados               :f6c, 2026-08-17, 2026-08-23
+    Redação e conclusões              :f6d, 2026-08-24, 2026-08-28
+    Relatório final de validação      :crit, f6e, 2026-08-29, 2026-08-31
+```
+
+---
+
+## 10. INSTRUMENTOS DE COLETA DE DADOS
+
+### 10.1 Instrumentos Aplicados pelo Pesquisador
+
+| ID | Instrumento | Momento | Amostra | Formato |
+|----|-------------|---------|---------|---------|
+| I-01 | Pré-teste diagnóstico | Março/2026 (O₁) | GE + GC | Questões objetivas e discursivas (0–10) |
+| I-02 | Avaliação intermediária 1 | Maio/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) |
+| I-03 | Avaliação intermediária 2 | Julho/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) |
+| I-04 | Pós-teste final | Julho/2026 (O₄) | GE + GC | Questões objetivas e discursivas (0–10) |
+| I-05 | Questionário de satisfação | Julho/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) |
+
+### 10.2 Dados Coletados Automaticamente pelo SUT
+
+| ID | Dado | Tabela no Banco | Tipo | Granularidade |
+|----|------|-----------------|------|---------------|
+| D-01 | Sessões de simulação | `simulation_sessions` | Quantitativo | Por sessão |
+| D-02 | Snapshots de parâmetros | `session_history` | Quantitativo | Por tick (1s) |
+| D-03 | Decisões clínicas | `session_decisions` | Qualitativo/Quantitativo | Por evento |
+| D-04 | Tratamentos aplicados | `session_treatments` | Quantitativo | Por evento |
+| D-05 | Badges conquistados | `user_badges` | Quantitativo | Por conquista |
+| D-06 | Ranking semanal | `weekly_ranking_history` | Quantitativo | Semanal |
+| D-07 | Notas de simulação | `simulation_notes` | Qualitativo | Por anotação |
+
+---
+
+## 11. MÉTRICAS DE QUALIDADE DE SOFTWARE (ISO/IEC 25010)
+
+### 11.1 Métricas de Qualidade em Uso
+
+| Métrica | Fórmula | Fonte |
+|---------|---------|-------|
+| Eficácia | Tarefas concluídas com sucesso / Total de tarefas × 100 | Logs `simulation_sessions` (status = 'vitoria') |
+| Eficiência | Tempo médio para vitória (s) | `simulation_sessions.duracao_segundos` |
+| Satisfação | Média das respostas do questionário SUS | Questionário I-05 |
+| Cobertura de contexto | % de casos clínicos tentados pelo GE | `simulation_sessions.case_id` |
+
+### 11.2 Métricas de Qualidade do Produto
+
+| Métrica | Medição | Critério |
+|---------|---------|----------|
+| Taxa de erro funcional | Erros registrados / Total de sessões | < 1% |
+| Disponibilidade | Uptime monitorado durante 6 meses | ≥ 99% |
+| Tempo de resposta | P95 de latência para ações do usuário | < 2.000 ms |
+| Integridade de dados | Sessões sem perda de registros | 100% |
+
+---
+
+## 12. ANÁLISE ESTATÍSTICA
+
+### 12.1 Plano de Análise
+
+| Análise | Teste Estatístico | Variáveis | Software |
+|---------|-------------------|-----------|----------|
+| Homogeneidade dos grupos (pré-teste) | Teste t de Student (independente) | Nota pré-teste GE vs GC | RStudio |
+| Evolução intra-grupo | Teste t de Student (pareado) | Pré-teste vs pós-teste (dentro de cada grupo) | RStudio |
+| Comparação inter-grupos (pós-teste) | Teste t de Student (independente) | Nota pós-teste GE vs GC | RStudio |
+| Tamanho do efeito | d de Cohen | Magnitude da diferença GE vs GC | RStudio |
+| Correlação software × desempenho | Correlação de Pearson | Win rate × nota pós-teste | RStudio |
+| Normalidade dos dados | Teste de Shapiro-Wilk | Distribuição das notas | RStudio |
+
+### 12.2 Parâmetros Estatísticos
+
+| Parâmetro | Valor |
+|-----------|-------|
+| Nível de significância (α) | 0,05 |
+| Poder estatístico (1 − β) | 0,80 |
+| Tipo de teste | Bicaudal |
+| Software de processamento | RStudio (R ≥ 4.3) |
+| Pacotes R previstos | `t.test()`, `cohen.d()` (effsize), `cor.test()`, `shapiro.test()` |
+
+---
+
+## 13. RASTREABILIDADE DE DADOS
+
+### 13.1 Matriz de Rastreabilidade: Requisitos → Dados → Análise
+
+| Requisito de Validação | Dado Coletado | Instrumento | Análise |
+|------------------------|---------------|-------------|---------|
+| Eficácia pedagógica | Notas GE vs GC | I-01 a I-04 | Teste t, d de Cohen |
+| Engajamento | Sessões, win rate, badges | D-01, D-04, D-05 | Estatística descritiva |
+| Usabilidade | Respostas do questionário | I-05 | Média e DP (Likert) |
+| Correlação uso × desempenho | Win rate + notas | D-01 + I-04 | Pearson |
+| Integridade funcional | Logs de erro, sessões | D-01, D-02 | Taxa de erro |
+
+### 13.2 Cadeia de Custódia dos Dados
+
+1. **Coleta automática** → Banco PostgreSQL com RLS (acesso restrito por `user_id`)
+2. **Exportação** → Formato CSV/TXT via funcionalidade nativa do SUT
+3. **Processamento** → RStudio com scripts versionados
+4. **Armazenamento** → Repositório institucional com backup criptografado
+5. **Anonimização** → Substituição de identificadores por códigos antes da publicação
+
+---
+
+## 14. GESTÃO DE RISCOS
+
+| ID | Risco | Probabilidade | Impacto | Mitigação |
+|----|-------|---------------|---------|-----------|
+| R-01 | Indisponibilidade do servidor durante período de testes | Baixa | Alto | Monitoramento de uptime; plano de contingência com backup local |
+| R-02 | Amostra insuficiente por desistência de participantes | Média | Alto | Cadastro de participantes excedentes (10% a mais) |
+| R-03 | Contaminação entre grupos (GC acessando o software) | Baixa | Alto | Controle de acesso por autenticação; monitoramento de logs |
+| R-04 | Viés do pesquisador na aplicação dos testes | Média | Médio | Avaliações aplicadas por docentes independentes |
+| R-05 | Perda de dados por falha técnica | Baixa | Alto | Backups automáticos; replicação de banco |
+| R-06 | Incompatibilidade de dispositivos dos alunos | Baixa | Médio | Teste cross-browser prévio; suporte a PWA responsiva |
+
+---
+
+## 15. CONSIDERAÇÕES ÉTICAS
+
+| Item | Descrição |
+|------|-----------|
+| **Comitê de Ética** | Protocolo submetido ao CEP da instituição (se aplicável conforme resolução CNS 510/2016) |
+| **TCLE** | Termo de Consentimento Livre e Esclarecido assinado por todos os participantes |
+| **Equidade** | Após conclusão da coleta, o GC receberá acesso ao VetBalance |
+| **Privacidade** | RLS habilitado em 100% das tabelas; dados anonimizados na publicação |
+| **Armazenamento** | Dados mantidos por 5 anos conforme normas institucionais |
+| **Direito de desistência** | Participantes podem retirar-se a qualquer momento sem prejuízo acadêmico |
+
+---
+
+## 16. CRITÉRIOS DE ENCERRAMENTO
+
+A validação será considerada **concluída** quando:
+
+1. ✅ Todas as 4 avaliações (O₁ a O₄) forem aplicadas e tabuladas
+2. ✅ O questionário de satisfação (I-05) for coletado do GE
+3. ✅ Os dados do SUT forem exportados integralmente
+4. ✅ A análise estatística for processada no RStudio
+5. ✅ O relatório final de validação (IEEE 829 — Test Summary Report) for redigido
+
+A validação será considerada **malsucedida** se:
+
+- ❌ Menos de 70% dos participantes concluírem todas as avaliações
+- ❌ O SUT apresentar indisponibilidade superior a 5% do período de intervenção
+- ❌ Houver evidência de contaminação sistemática entre GE e GC
+
+---
+
+## 17. APROVAÇÕES
+
+| Papel | Nome | Assinatura | Data |
+|-------|------|------------|------|
+| Pesquisador responsável | | | |
+| Orientador | | | |
+| Docente — Fisiologia Animal | | | |
+| Docente — Farmacologia | | | |
 
 ---
 
 **Documento vinculado ao projeto:** [VetBalance](https://vetbalance.app.br)  
-**Repositório:** [GitHub](https://github.com/KyoFaBraL/vet-sim-buddy)
+**Repositório:** [GitHub](https://github.com/KyoFaBraL/vet-sim-buddy)  
+**Identificador:** VETBALANCE-PVS-001 v1.0
