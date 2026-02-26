@@ -830,25 +830,31 @@ Os diagramas completos do sistema estão disponíveis no arquivo **[DIAGRAMAS_ME
 
 ## 21. GLOSSÁRIO TÉCNICO
 
+> **Glossário unificado completo:** Consulte [`GLOSSARIO.md`](GLOSSARIO.md) para a lista padronizada de todos os 43 termos técnicos, clínicos, metodológicos e normativos utilizados nos artefatos do projeto.
+
+Abaixo, resumo dos termos mais frequentes neste documento:
+
 | Termo | Definição |
 |-------|-----------|
 | **RLS** | Row Level Security – políticas de segurança em nível de linha no banco de dados |
 | **Edge Function** | Função serverless executada na borda da rede (Deno runtime) |
 | **SPA** | Single Page Application – aplicação de página única |
 | **PWA** | Progressive Web App – aplicação web com capacidades nativas |
-| **HP** | Health Points – pontos de vida do paciente virtual |
+| **HP** | Health Points – pontos de vida do paciente virtual (0–100) |
 | **Tick** | Ciclo de atualização da simulação (1 segundo) |
 | **Badge** | Conquista/medalha desbloqueada por mérito |
 | **Batch Insert** | Inserção em lote para otimização de performance |
 | **Backoff Exponencial** | Estratégia de retry com intervalos crescentes |
 | **Gamificação** | Uso de mecânicas de jogos em contextos educacionais |
 | **m-learning** | Mobile Learning – aprendizagem via dispositivos móveis |
-| **Acidose** | Condição de pH sanguíneo abaixo de 7.35 |
-| **Alcalose** | Condição de pH sanguíneo acima de 7.45 |
+| **Acidose** | Condição de pH sanguíneo abaixo de 7,35 |
+| **Alcalose** | Condição de pH sanguíneo acima de 7,45 |
 | **Anion Gap** | Diferença entre cátions e ânions medidos no sangue |
 | **HCO₃** | Bicarbonato – principal tampão do sangue |
 | **PaCO₂** | Pressão parcial de dióxido de carbono arterial |
 | **PaO₂** | Pressão parcial de oxigênio arterial |
+
+> Para definições completas e termos adicionais (clínicos, metodológicos, normativos), consulte [`GLOSSARIO.md`](GLOSSARIO.md).
 
 ---
 
@@ -1272,6 +1278,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 | `RESUMO_EXECUTIVO.md` | — | Resumo executivo para banca/orientador | Seção 6 (Validação) ↔ Seção 22 deste documento; Seção 9 do PVS-001 |
 | `DIAGRAMAS_MERMAID.md` | — | 10 diagramas visuais da arquitetura | Arquitetura ↔ Seções 3–7 deste documento |
 | `PERMISSIONS_GUIDE.md` | — | Guia de permissões e políticas RLS | Segurança ↔ Seção 17 deste documento |
+| `GLOSSARIO.md` | — | Glossário unificado (43 termos, 5 categorias) | Seção 21 deste documento; Seção 4 do PVS-001 |
 | `cronograma-validacao-vetbalance.csv` | — | Dados tabulares do cronograma (importável) | Espelho das Seções 8–10 do PVS-001 |
 
 ### Matriz de Rastreabilidade entre Documentos

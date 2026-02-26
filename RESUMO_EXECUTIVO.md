@@ -153,6 +153,7 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 | `ARTIGO_RESUMO_EXPANDIDO.md` | Resumo expandido para publicação acadêmica | Material e Métodos ↔ Seção 6 deste documento |
 | `DIAGRAMAS_MERMAID.md` | 10 diagramas visuais (arquitetura, fluxos, ER) | Arquitetura ↔ Seção 3 deste documento |
 | `PERMISSIONS_GUIDE.md` | Guia de permissões e políticas RLS | Segurança ↔ Seção 5 deste documento |
+| `GLOSSARIO.md` | Glossário unificado (43 termos, 5 categorias) | Padronização terminológica de todos os artefatos |
 | `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável) | Espelho do PVS-001, Seções 8–10 |
 | Checklist pré-validação (20 itens) | `DOCUMENTACAO_SOFTWARE.md` Seção 22.7 + `CRONOGRAMA_VALIDACAO.md` Anexo A | Pré-requisito para início da Fase F1 (Seção 6) |
 

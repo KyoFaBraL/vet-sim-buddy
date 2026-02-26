@@ -664,6 +664,7 @@ flowchart TD
 | `CRONOGRAMA_VALIDACAO.md` | Seção 7 (Ambiente de Teste) complementada pelos Diagramas 1 e 10 (arquitetura e mobile); Anexo A referencia módulos dos Diagramas 3–4 |
 | `ARTIGO_RESUMO_EXPANDIDO.md` | Seção de Evidências Visuais referencia as interfaces ilustradas nos fluxos dos Diagramas 2, 3 e 6 |
 | `RESUMO_EXECUTIVO.md` | Seção 3 (Arquitetura e Tecnologia) sintetiza o conteúdo dos Diagramas 1, 5 e 9 |
+| `GLOSSARIO.md` | Glossário unificado — padroniza a terminologia técnica e clínica utilizada nas legendas e labels dos diagramas |
 
 ---
 
