@@ -78,80 +78,98 @@ const ConsentimentoTCLE = () => {
         <CardContent className="pt-6">
           <ScrollArea className="h-[400px] rounded-md border p-6 bg-muted/20">
             <div className="space-y-6 text-sm leading-relaxed">
-              <section>
-                <h3 className="font-bold text-base mb-2">Título da Pesquisa</h3>
-                <p>
-                  Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais:
-                  Desenvolvimento e Validação de Ferramenta de M-Learning
-                </p>
-              </section>
+              <div className="text-center space-y-1 mb-4">
+                <p className="font-bold text-xs uppercase tracking-wide text-muted-foreground">Ministério da Educação</p>
+                <p className="font-bold text-xs uppercase tracking-wide text-muted-foreground">Universidade Federal do Piauí</p>
+                <p className="font-bold text-xs uppercase tracking-wide text-muted-foreground">Comitê de Ética em Pesquisa Humana</p>
+              </div>
+
+              <Separator />
 
               <section>
-                <h3 className="font-bold text-base mb-2">Pesquisador Responsável</h3>
-                <p><em>(Nome completo do pesquisador)</em></p>
-                <p><strong>Orientador(a):</strong> <em>(Nome completo do orientador)</em></p>
-                <p><strong>Instituição:</strong> <em>(Nome da instituição)</em></p>
-                <p><strong>Contato:</strong> <em>(E-mail e telefone do pesquisador)</em></p>
+                <p>Prezado(a) Senhor(a),</p>
+                <p className="mt-2">
+                  Você está sendo convidado(a) a participar como voluntário(a) de uma pesquisa denominada{' '}
+                  <strong>"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais:
+                  Desenvolvimento e Validação de Ferramenta de M-Learning"</strong>. Esta pesquisa está sob a
+                  responsabilidade do pesquisador <em>(Nome do pesquisador responsável – Programa de Pós-Graduação
+                  em Ciência Animal – UFPI)</em> e tem como objetivos avaliar a eficácia do software educacional
+                  gamificado <strong>VetBalance</strong> como ferramenta complementar no ensino de equilíbrio
+                  ácido-base em medicina veterinária de pequenos animais.
+                </p>
+                <p className="mt-2">
+                  Esta pesquisa tem por finalidade contribuir para a melhoria do ensino de fisiologia e clínica
+                  veterinária, oferecendo uma ferramenta inovadora de aprendizado baseada em simulação clínica
+                  gamificada, com potencial benefício direto aos participantes através do desenvolvimento de
+                  competências em tomada de decisão clínica.
+                </p>
+                <p className="mt-2">
+                  Neste sentido, solicitamos sua colaboração. Este documento, chamado Termo de Consentimento Livre
+                  e Esclarecido (TCLE), visa assegurar seus direitos como participante. Após seu consentimento,
+                  o aceite digital será registrado com data/hora e identificação do navegador, tendo o mesmo valor
+                  jurídico de uma assinatura manuscrita.
+                </p>
+                <p className="mt-2">
+                  Por favor, leia com atenção e calma, aproveite para esclarecer todas as suas dúvidas. Se houver
+                  perguntas antes ou mesmo depois de indicar sua concordância, você poderá esclarecê-las com o
+                  pesquisador responsável pela pesquisa: <em>(Nome – Telefone – E-mail)</em>.
+                </p>
+                <p className="mt-2">
+                  Se mesmo assim as dúvidas persistirem, você pode entrar em contato com o{' '}
+                  <strong>Comitê de Ética em Pesquisa da UFPI</strong>, que acompanha e analisa as pesquisas
+                  científicas que envolvem seres humanos, no Campus Universitário Ministro Petrônio Portella,
+                  Bairro Ininga, Teresina–PI, telefone (86) 2222-4824, e-mail:{' '}
+                  <strong>cep.ufpi@ufpi.edu.br</strong>; no horário de atendimento ao público, segunda a sexta,
+                  manhã: 08h00 às 12h00 e tarde: 14h00 às 18h00.
+                </p>
+                <p className="mt-2">
+                  Esclarecemos que sua participação é <strong>voluntária</strong>. Caso decida não participar ou
+                  retirar seu consentimento a qualquer momento da pesquisa, não haverá nenhum tipo de penalização
+                  ou prejuízo, e o pesquisador estará à sua disposição para qualquer esclarecimento.
+                </p>
               </section>
 
               <Separator />
 
               <section>
-                <p>Prezado(a) participante,</p>
-                <p className="mt-2">
-                  Você está sendo convidado(a) a participar de uma pesquisa científica vinculada ao Programa
-                  de Pós-Graduação em Ciência Animal. Antes de decidir, leia atentamente as informações abaixo.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="font-bold text-base mb-2">1. Objetivo da Pesquisa</h3>
+                <h3 className="font-bold text-base mb-2">Justificativa e Procedimentos</h3>
                 <p>
-                  Esta pesquisa tem como objetivo avaliar a eficácia de um software educacional gamificado
-                  chamado <strong>VetBalance</strong> como ferramenta complementar no ensino de equilíbrio ácido-base
-                  em medicina veterinária de pequenos animais.
+                  A pesquisa justifica-se pela necessidade de ferramentas educacionais inovadoras que complementem
+                  o ensino tradicional de equilíbrio ácido-base, tema de alta complexidade na formação veterinária.
                 </p>
-              </section>
-
-              <section>
-                <h3 className="font-bold text-base mb-2">2. Procedimentos</h3>
-                <p>Caso aceite participar, você será alocado(a) por sorteio em um de dois grupos:</p>
+                <p className="mt-2">Para a coleta de dados serão utilizados os seguintes procedimentos:</p>
                 <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>
-                    <strong>Grupo Experimental (GE):</strong> Além das aulas regulares, você terá acesso ao
-                    software VetBalance para prática complementar de simulações clínicas em seu dispositivo pessoal.
-                  </li>
-                  <li>
-                    <strong>Grupo Controle (GC):</strong> Você participará normalmente das aulas regulares.
-                    Após o término da coleta de dados (junho/2026), você receberá acesso completo ao VetBalance.
-                  </li>
+                  <li>Aplicação de 4 avaliações ao longo do semestre (pré-teste, intermediárias e pós-teste)</li>
+                  <li>Uso do software VetBalance em dispositivo pessoal (Grupo Experimental)</li>
+                  <li>Registro automático de dados de uso do software (tempo de sessão, tratamentos aplicados, desempenho)</li>
+                  <li>Questionário de satisfação e usabilidade (SUS adaptado) ao final do estudo</li>
                 </ul>
                 <p className="mt-2">
-                  Independentemente do grupo, você realizará 4 avaliações ao longo do semestre. Se for alocado(a)
-                  no GE, também responderá a um questionário de satisfação sobre o software.
+                  Caso aceite participar, você será alocado(a) por sorteio em um de dois grupos:
                 </p>
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>
+                    <strong>Grupo Experimental (GE):</strong> Além das aulas regulares, terá acesso ao VetBalance
+                    para prática complementar de simulações clínicas.
+                  </li>
+                  <li>
+                    <strong>Grupo Controle (GC):</strong> Participará normalmente das aulas regulares. Após o
+                    término da coleta de dados (julho/2026), receberá acesso completo ao VetBalance.
+                  </li>
+                </ul>
               </section>
 
               <section>
-                <h3 className="font-bold text-base mb-2">3. Duração</h3>
+                <h3 className="font-bold text-base mb-2">Riscos e Benefícios</h3>
                 <p>
-                  A pesquisa terá duração de aproximadamente 20 semanas (março a julho de 2026). O uso do software
-                  pelo GE será voluntário e complementar às atividades regulares.
+                  Esta pesquisa apresenta <strong>risco mínimo</strong>. Você poderá sentir desconforto emocional
+                  ao perceber seu desempenho nas avaliações ou frustração ao utilizar o software. Porém, os mesmos
+                  serão contornados da seguinte forma: feedback individual e confidencial será oferecido pelo
+                  pesquisador, suporte técnico estará disponível para dificuldades com o software, e você poderá
+                  interromper o uso a qualquer momento sem prejuízo.
                 </p>
-              </section>
-
-              <section>
-                <h3 className="font-bold text-base mb-2">4. Riscos</h3>
-                <p>
-                  Esta pesquisa apresenta <strong>risco mínimo</strong>. Você poderá sentir desconforto emocional ao
-                  perceber seu desempenho nas avaliações ou frustração ao utilizar o software. Caso isso ocorra,
-                  feedback individual e confidencial será oferecido, e suporte técnico estará disponível.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="font-bold text-base mb-2">5. Benefícios</h3>
-                <ul className="list-disc pl-6 space-y-1">
+                <p className="mt-2">Benefícios diretos e indiretos:</p>
+                <ul className="list-disc pl-6 mt-2 space-y-1">
                   <li>Prática complementar de tomada de decisão clínica em ambiente seguro</li>
                   <li>Feedback personalizado sobre seu desempenho (GE)</li>
                   <li>Desenvolvimento de competências em equilíbrio ácido-base</li>
@@ -160,45 +178,41 @@ const ConsentimentoTCLE = () => {
               </section>
 
               <section>
-                <h3 className="font-bold text-base mb-2">6. Confidencialidade e Proteção de Dados</h3>
+                <h3 className="font-bold text-base mb-2">Sigilo e Confidencialidade</h3>
                 <p>
-                  Seus dados pessoais serão mantidos em sigilo absoluto. O software utiliza sistema de segurança
-                  com controle de acesso por linha (RLS), e seus dados serão anonimizados antes de qualquer publicação.
-                  Apenas o pesquisador responsável e o orientador terão acesso aos dados identificados. Os dados serão
-                  armazenados por 5 anos conforme normas institucionais e em conformidade com a LGPD (Lei 13.709/2018).
+                  Os resultados obtidos nesta pesquisa serão utilizados para fins acadêmico-científicos (divulgação
+                  em revistas e em eventos científicos) e os pesquisadores se comprometem a manter o sigilo e
+                  identidade anônima, como estabelecem as Resoluções do Conselho Nacional de Saúde nº 466/2012
+                  e 510/2016 e a Norma Operacional 01 de 2013 do Conselho Nacional de Saúde. Você terá livre
+                  acesso a todas as informações e esclarecimentos adicionais sobre o estudo, bem como lhe é
+                  garantido acesso a seus resultados.
+                </p>
+                <p className="mt-2">
+                  O software utiliza sistema de segurança com controle de acesso por linha (RLS), e seus dados
+                  serão anonimizados antes de qualquer publicação. Os dados serão armazenados por 5 anos conforme
+                  normas institucionais e em conformidade com a LGPD (Lei 13.709/2018).
                 </p>
               </section>
 
               <section>
-                <h3 className="font-bold text-base mb-2">7. Voluntariedade e Direito de Desistência</h3>
+                <h3 className="font-bold text-base mb-2">Custos e Indenização</h3>
                 <p>
-                  Sua participação é <strong>totalmente voluntária</strong>. Você pode recusar-se a participar ou
-                  retirar seu consentimento a qualquer momento, sem necessidade de justificativa e{' '}
-                  <strong>sem qualquer prejuízo à sua avaliação acadêmica</strong>. As avaliações realizadas fazem
-                  parte das atividades regulares das disciplinas e não serão afetadas pela sua participação ou não
-                  na pesquisa.
+                  Esclarecemos que você não terá nenhum custo com a pesquisa, e caso haja por qualquer motivo,
+                  asseguramos que você será devidamente ressarcido. Não haverá nenhum tipo de pagamento por sua
+                  participação, ela é voluntária. Caso ocorra algum dano comprovadamente decorrente de sua
+                  participação neste estudo, você poderá ser indenizado conforme determina a Resolução 466/12
+                  do Conselho Nacional de Saúde, bem como lhe será garantida a assistência integral.
                 </p>
-              </section>
-
-              <section>
-                <h3 className="font-bold text-base mb-2">8. Contatos</h3>
-                <p>Em caso de dúvidas sobre a pesquisa, entre em contato com:</p>
-                <ul className="list-disc pl-6 mt-1 space-y-1">
-                  <li><strong>Pesquisador Responsável:</strong> <em>(Nome – E-mail – Telefone)</em></li>
-                  <li><strong>Orientador(a):</strong> <em>(Nome – E-mail)</em></li>
-                  <li><strong>Comitê de Ética em Pesquisa (CEP):</strong> <em>(Nome do CEP, endereço, telefone e e-mail)</em></li>
-                </ul>
               </section>
 
               <Separator />
 
               <section>
-                <h3 className="font-bold text-base mb-2">9. Consentimento Digital</h3>
+                <h3 className="font-bold text-base mb-2">Consentimento Digital</h3>
                 <p>
-                  Ao clicar em <strong>"Aceito Participar"</strong> abaixo, declaro que li e compreendi as informações
-                  acima, tive a oportunidade de esclarecer minhas dúvidas e concordo em participar desta pesquisa de
-                  forma voluntária. Este aceite digital tem o mesmo valor jurídico de uma assinatura manuscrita,
-                  conforme previsto na legislação brasileira.
+                  Após os devidos esclarecimentos e estando ciente de acordo com o que me foi exposto, ao clicar
+                  em <strong>"Aceito Participar"</strong> abaixo, declaro que aceito participar desta pesquisa,
+                  dando pleno consentimento para uso das informações por mim prestadas.
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">
                   Registro digital: Seu aceite será armazenado com data/hora, versão do TCLE e identificação do
