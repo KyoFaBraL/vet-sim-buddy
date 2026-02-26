@@ -41,14 +41,14 @@
 | **Título da pesquisa** | Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta de M-Learning |
 | **Área temática** | Educação em Saúde / Tecnologia Educacional |
 | **Tipo de estudo** | Estudo quase-experimental, controlado, com pré e pós-teste |
-| **Pesquisador responsável** | *(Nome completo)* |
+| **Pesquisador responsável** | Caio Farias Cabral |
 | **CPF do pesquisador** | *(CPF)* |
-| **Titulação** | Mestrando(a) em Ciência Animal |
-| **Instituição proponente** | *(Nome da instituição)* |
+| **Titulação** | Mestrando em Ciência Animal |
+| **Instituição proponente** | Universidade Federal do Piauí (UFPI) |
 | **CNPJ da instituição** | *(CNPJ)* |
-| **Orientador(a)** | *(Nome completo do orientador)* |
-| **E-mail do pesquisador** | *(E-mail institucional)* |
-| **Telefone** | *(Telefone)* |
+| **Orientador(a)** | Prof. Dr. Napoleão Martins Argôlo Neto |
+| **E-mail do pesquisador** | caiofcabral@ufpi.edu.br |
+| **Telefone** | (86) 98142-5389 |
 | **Endereço** | *(Endereço institucional completo)* |
 
 > **Nota:** Preencher no formulário da Plataforma Brasil (https://plataformabrasil.saude.gov.br)
@@ -425,7 +425,7 @@ A pesquisa será encerrada antecipadamente se:
 
 | Item | Informação |
 |------|------------|
-| **Instituição** | *(Nome completo da instituição)* |
+| **Instituição** | Universidade Federal do Piauí (UFPI) |
 | **Unidade/Departamento** | Departamento de *(Medicina Veterinária / Ciência Animal)* |
 | **Disciplinas envolvidas** | Fisiologia Animal e Farmacologia |
 | **Endereço** | *(Endereço completo)* |
@@ -531,16 +531,16 @@ Após a conclusão da fase de coleta de dados (27/06/2026), todos os participant
 
 **Título da Pesquisa:** Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta de M-Learning
 
-**Pesquisador Responsável:** *(Nome completo)*  
-**Orientador(a):** *(Nome completo)*  
-**Instituição:** *(Nome da instituição)*  
-**Contato:** *(E-mail e telefone do pesquisador)*
+**Pesquisador Responsável:** Caio Farias Cabral  
+**Orientador(a):** Prof. Dr. Napoleão Martins Argôlo Neto  
+**Instituição:** Universidade Federal do Piauí (UFPI)  
+**Contato:** caiofcabral@ufpi.edu.br / (86) 98142-5389
 
 ---
 
 Prezado(a) participante,
 
-Você está sendo convidado(a) a participar de uma pesquisa científica vinculada ao Programa de Pós-Graduação em Ciência Animal da *(Instituição)*. Antes de decidir, leia atentamente as informações abaixo.
+Você está sendo convidado(a) a participar de uma pesquisa científica vinculada ao Programa de Pós-Graduação em Ciência Animal da Universidade Federal do Piauí (UFPI). Antes de decidir, leia atentamente as informações abaixo.
 
 **1. Objetivo da Pesquisa**
 
@@ -582,8 +582,8 @@ Sua participação é **totalmente voluntária**. Você pode recusar-se a partic
 
 Em caso de dúvidas sobre a pesquisa, entre em contato com:
 
-- **Pesquisador Responsável:** *(Nome)* – *(E-mail)* – *(Telefone)*
-- **Orientador(a):** *(Nome)* – *(E-mail)*
+- **Pesquisador Responsável:** Caio Farias Cabral – caiofcabral@ufpi.edu.br – (86) 98142-5389
+- **Orientador(a):** Prof. Dr. Napoleão Martins Argôlo Neto
 - **Comitê de Ética em Pesquisa (CEP):** *(Nome do CEP, endereço, telefone e e-mail)*
 
 **9. Consentimento**
@@ -605,7 +605,7 @@ Declaro que li e compreendi as informações acima, tive a oportunidade de escla
 
 ## 18. TERMO DE COMPROMISSO DO PESQUISADOR
 
-Eu, *(nome completo do pesquisador)*, pesquisador(a) responsável pelo projeto de pesquisa intitulado **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta de M-Learning"**, declaro que:
+Eu, **Caio Farias Cabral**, pesquisador responsável pelo projeto de pesquisa intitulado **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta de M-Learning"**, declaro que:
 
 1. **Comprometo-me** a conduzir a pesquisa de acordo com os princípios éticos estabelecidos nas Resoluções CNS nº 466/2012 e 510/2016.
 
