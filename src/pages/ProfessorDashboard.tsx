@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Users, BookOpen, BarChart3, Settings, Key } from "lucide-react";
+import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText } from "lucide-react";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ import { CaseShareManager } from "@/components/CaseShareManager";
 import { ProfessorAccessKeys } from "@/components/ProfessorAccessKeys";
 import { UserManagement } from "@/components/UserManagement";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { TcleConsentStatus } from "@/components/TcleConsentStatus";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function ProfessorDashboard() {
@@ -64,7 +65,7 @@ export default function ProfessorDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="students" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="students">
               <Users className="h-4 w-4 mr-2" />
               Alunos
@@ -84,6 +85,10 @@ export default function ProfessorDashboard() {
             <TabsTrigger value="keys">
               <Key className="h-4 w-4 mr-2" />
               Chaves
+            </TabsTrigger>
+            <TabsTrigger value="tcle">
+              <FileText className="h-4 w-4 mr-2" />
+              TCLE
             </TabsTrigger>
             <TabsTrigger value="users">
               <Users className="h-4 w-4 mr-2" />
@@ -163,6 +168,20 @@ export default function ProfessorDashboard() {
 
           <TabsContent value="keys" className="space-y-4">
             <ProfessorAccessKeys />
+          </TabsContent>
+
+          <TabsContent value="tcle" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Consentimentos TCLE</CardTitle>
+                <CardDescription>
+                  Acompanhe o status do Termo de Consentimento Livre e Esclarecido dos alunos vinculados
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <TcleConsentStatus />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="users" className="space-y-4">
