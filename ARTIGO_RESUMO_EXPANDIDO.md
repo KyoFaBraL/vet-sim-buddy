@@ -62,6 +62,7 @@ As capturas de tela das principais interfaces do VetBalance estão disponíveis 
 | `CRONOGRAMA_VALIDACAO.md` (PVS-001) | Plano de Validação IEEE 829 — Seções 5, 8–12 fundamentam o desenho experimental e análise estatística |
 | `RESUMO_EXECUTIVO.md` | Síntese executiva — Seção 6 resume fases e marcos do estudo |
 | `DIAGRAMAS_MERMAID.md` | Diagramas de arquitetura, fluxos e ER do sistema |
+| `GLOSSARIO.md` | Glossário unificado — padroniza os 43 termos técnicos, clínicos e metodológicos utilizados neste resumo |
 | `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável para planilhas) |
 
 ---

@@ -103,6 +103,10 @@ Verificar se o software atende aos requisitos de qualidade definidos pela ISO/IE
 
 ## 4. DEFINIÇÕES E TERMINOLOGIA
 
+> **Glossário unificado completo:** Consulte [`GLOSSARIO.md`](GLOSSARIO.md) para a lista padronizada de todos os 43 termos técnicos, clínicos, metodológicos e normativos do projeto.
+
+Abaixo, resumo dos termos mais frequentes neste documento:
+
 | Termo | Definição |
 |-------|-----------|
 | **GE** | Grupo Experimental — participantes com acesso ao software |
@@ -114,6 +118,8 @@ Verificar se o software atende aos requisitos de qualidade definidos pela ISO/IE
 | **Tick** | Ciclo de simulação (intervalo de 1 segundo) |
 | **RLS** | Row Level Security — controle de acesso por linha no banco de dados |
 | **m-learning** | Mobile learning — aprendizagem por dispositivos móveis |
+
+> Para definições completas e termos adicionais (clínicos, normativos), consulte [`GLOSSARIO.md`](GLOSSARIO.md).
 
 ---
 
@@ -533,6 +539,7 @@ A validação será considerada **malsucedida** se:
 | `ARTIGO_RESUMO_EXPANDIDO.md` | Material e Métodos fundamenta-se no desenho experimental (Seção 5) e análise estatística (Seção 12) deste documento |
 | `RESUMO_EXECUTIVO.md` | Seção 6 sintetiza as fases e marcos definidos nas Seções 8–9 deste documento |
 | `DIAGRAMAS_MERMAID.md` | Diagramas de arquitetura complementam o ambiente de teste (Seção 7) |
+| `GLOSSARIO.md` | Glossário unificado (43 termos, 5 categorias); Seção 4 deste documento referencia o glossário |
 | `cronograma-validacao-vetbalance.csv` | Espelho tabulado (importável) das Seções 8, 9 e 10 deste documento |
 
 ---
