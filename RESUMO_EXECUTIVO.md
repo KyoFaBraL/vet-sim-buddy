@@ -156,6 +156,7 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 | `GLOSSARIO.md` | Glossário unificado (43 termos, 5 categorias) | Padronização terminológica de todos os artefatos |
 | `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável) | Espelho do PVS-001, Seções 8–10 |
 | Checklist pré-validação (20 itens) | `DOCUMENTACAO_SOFTWARE.md` Seção 22.7 + `CRONOGRAMA_VALIDACAO.md` Anexo A | Pré-requisito para início da Fase F1 (Seção 6) |
+| `PROTOCOLO_CEP.md` (CEP-001) | Protocolo completo para submissão ao CEP (21 seções + TCLE) | Seções 7, 14, 16 ↔ Seções 5–6 deste documento |
 
 ---
 

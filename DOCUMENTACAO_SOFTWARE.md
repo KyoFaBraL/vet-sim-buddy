@@ -1280,6 +1280,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 | `PERMISSIONS_GUIDE.md` | — | Guia de permissões e políticas RLS | Segurança ↔ Seção 17 deste documento |
 | `GLOSSARIO.md` | — | Glossário unificado (43 termos, 5 categorias) | Seção 21 deste documento; Seção 4 do PVS-001 |
 | `cronograma-validacao-vetbalance.csv` | — | Dados tabulares do cronograma (importável) | Espelho das Seções 8–10 do PVS-001 |
+| `PROTOCOLO_CEP.md` | VETBALANCE-CEP-001 | Protocolo para submissão ao CEP (21 seções + TCLE + termos) | Seção 22 deste documento; Seções 5, 8–12 do PVS-001 |
 
 ### Matriz de Rastreabilidade entre Documentos
 
@@ -1294,6 +1295,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 | Análise estatística | Seção 22.5 | Seção 12 | Material e Métodos (§3) | Seção 6 (último §) |
 | Evidências visuais | Seção 21 | — | Evidências Visuais | Seção 8 |
 | Checklist pré-validação (20 itens) | Seção 22.7 | Anexo A (A.1–A.4) | — | — |
+| Protocolo CEP | — | Seções 5, 15 | — | — |
 
 ---
 
