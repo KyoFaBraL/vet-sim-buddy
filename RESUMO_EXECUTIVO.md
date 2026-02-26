@@ -144,15 +144,16 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 
 ---
 
-## 9. DOCUMENTAÇÃO COMPLEMENTAR
+## 9. DOCUMENTAÇÃO COMPLEMENTAR E REFERÊNCIAS CRUZADAS
 
-| Documento | Conteúdo |
-|-----------|----------|
-| `DOCUMENTACAO_SOFTWARE.md` | Documentação técnica completa (21 seções, ~1.200 linhas) |
-| `DIAGRAMAS_MERMAID.md` | 10 diagramas visuais (arquitetura, fluxos, ER, sequência, segurança) |
-| `PERMISSIONS_GUIDE.md` | Guia de permissões e políticas RLS |
-| `ARTIGO_RESUMO_EXPANDIDO.md` | Resumo expandido para publicação |
-| `CRONOGRAMA_VALIDACAO.md` | Cronograma de validação (Mar–Jul 2026) com desenho experimental |
+| Documento | Conteúdo | Seções Relacionadas |
+|-----------|----------|---------------------|
+| `DOCUMENTACAO_SOFTWARE.md` | Documentação técnica completa (22 seções) | Seção 22 (Validação) ↔ Seção 6 deste documento |
+| `CRONOGRAMA_VALIDACAO.md` (PVS-001) | Plano de Validação IEEE 829 (17 seções) | Seções 8–9 (Procedimentos/Cronograma) ↔ Seção 6 deste documento |
+| `ARTIGO_RESUMO_EXPANDIDO.md` | Resumo expandido para publicação acadêmica | Material e Métodos ↔ Seção 6 deste documento |
+| `DIAGRAMAS_MERMAID.md` | 10 diagramas visuais (arquitetura, fluxos, ER) | Arquitetura ↔ Seção 3 deste documento |
+| `PERMISSIONS_GUIDE.md` | Guia de permissões e políticas RLS | Segurança ↔ Seção 5 deste documento |
+| `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável) | Espelho do PVS-001, Seções 8–10 |
 
 ---
 

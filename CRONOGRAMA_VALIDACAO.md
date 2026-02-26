@@ -523,6 +523,20 @@ A validação será considerada **malsucedida** se:
 
 ---
 
+---
+
+## REFERÊNCIAS CRUZADAS
+
+| Documento | Relação com este PVS-001 |
+|-----------|--------------------------|
+| `DOCUMENTACAO_SOFTWARE.md` | Seção 22 replica fases, marcos e instrumentos deste plano; Seção 22.4 detalha funcionalidades F-01 a F-10 (= Seção 2.2 deste documento) |
+| `ARTIGO_RESUMO_EXPANDIDO.md` | Material e Métodos fundamenta-se no desenho experimental (Seção 5) e análise estatística (Seção 12) deste documento |
+| `RESUMO_EXECUTIVO.md` | Seção 6 sintetiza as fases e marcos definidos nas Seções 8–9 deste documento |
+| `DIAGRAMAS_MERMAID.md` | Diagramas de arquitetura complementam o ambiente de teste (Seção 7) |
+| `cronograma-validacao-vetbalance.csv` | Espelho tabulado (importável) das Seções 8, 9 e 10 deste documento |
+
+---
+
 **Documento vinculado ao projeto:** [VetBalance](https://vetbalance.app.br)  
 **Repositório:** [GitHub](https://github.com/KyoFaBraL/vet-sim-buddy)  
 **Identificador:** VETBALANCE-PVS-001 v1.0

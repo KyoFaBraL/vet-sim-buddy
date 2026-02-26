@@ -54,4 +54,16 @@ As capturas de tela das principais interfaces do VetBalance estão disponíveis 
 
 ---
 
+## REFERÊNCIAS CRUZADAS
+
+| Documento | Relação com este Resumo Expandido |
+|-----------|-----------------------------------|
+| `DOCUMENTACAO_SOFTWARE.md` | Documentação técnica completa — Seção 22 detalha cronograma, instrumentos e critérios de aceitação |
+| `CRONOGRAMA_VALIDACAO.md` (PVS-001) | Plano de Validação IEEE 829 — Seções 5, 8–12 fundamentam o desenho experimental e análise estatística |
+| `RESUMO_EXECUTIVO.md` | Síntese executiva — Seção 6 resume fases e marcos do estudo |
+| `DIAGRAMAS_MERMAID.md` | Diagramas de arquitetura, fluxos e ER do sistema |
+| `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável para planilhas) |
+
+---
+
 **Palavras-chave:** Gamificação. Ensino veterinário. M-learning. Equilíbrio ácido-base. Simulação clínica.

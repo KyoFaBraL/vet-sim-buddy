@@ -1209,6 +1209,35 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 
 ---
 
+---
+
+## REFERÊNCIAS CRUZADAS — DOCUMENTAÇÃO DO PROJETO
+
+| Documento | Identificador | Conteúdo | Seções Relacionadas |
+|-----------|---------------|----------|---------------------|
+| `DOCUMENTACAO_SOFTWARE.md` | — (este documento) | Documentação técnica completa (22 seções) | Seção 22 → Validação |
+| `CRONOGRAMA_VALIDACAO.md` | VETBALANCE-PVS-001 v1.0 | Plano de Validação de Software (IEEE 829) | Seções 8–9 (Procedimentos e Cronograma) ↔ Seção 22 deste documento |
+| `ARTIGO_RESUMO_EXPANDIDO.md` | — | Resumo expandido para publicação acadêmica | Material e Métodos ↔ Seção 22 deste documento; Seções 5, 10, 12 do PVS-001 |
+| `RESUMO_EXECUTIVO.md` | — | Resumo executivo para banca/orientador | Seção 6 (Validação) ↔ Seção 22 deste documento; Seção 9 do PVS-001 |
+| `DIAGRAMAS_MERMAID.md` | — | 10 diagramas visuais da arquitetura | Arquitetura ↔ Seções 3–7 deste documento |
+| `PERMISSIONS_GUIDE.md` | — | Guia de permissões e políticas RLS | Segurança ↔ Seção 17 deste documento |
+| `cronograma-validacao-vetbalance.csv` | — | Dados tabulares do cronograma (importável) | Espelho das Seções 8–10 do PVS-001 |
+
+### Matriz de Rastreabilidade entre Documentos
+
+| Elemento | DOCUMENTACAO_SOFTWARE.md | CRONOGRAMA_VALIDACAO.md | ARTIGO_RESUMO_EXPANDIDO.md | RESUMO_EXECUTIVO.md |
+|----------|--------------------------|-------------------------|----------------------------|---------------------|
+| Fases F1–F6 | Seção 22.2 | Seções 8.1–8.6, 9.1–9.2 | Material e Métodos (§3) | Seção 6 (tabela) |
+| Marcos O₁–O₄ | Seção 22.3 | Seção 9.3 | Material e Métodos (§3) | Seção 6 (Marcos Críticos) |
+| Instrumentos I-01 a I-05 | Seção 22.6.1 | Seção 10.1 | — | — |
+| Dados automáticos D-01 a D-07 | Seção 22.6.2 | Seção 10.2 | Material e Métodos (§3) | — |
+| Funcionalidades F-01 a F-10 | Seção 22.4 | Seção 2.2 | — | Seção 2 |
+| Critérios de aceitação | Seção 22.5 | Seção 6 | Material e Métodos (§3) | Seção 6 (Análise) |
+| Análise estatística | Seção 22.5 | Seção 12 | Material e Métodos (§3) | Seção 6 (último §) |
+| Evidências visuais | Seção 21 | — | Evidências Visuais | Seção 8 |
+
+---
+
 **Documento gerado em:** Fevereiro de 2026  
 **Versão do documento:** 1.0  
 **Total de componentes:** 60+ componentes React  
