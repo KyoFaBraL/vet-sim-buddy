@@ -80,11 +80,33 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 ## 6. VALIDAÇÃO PROPOSTA
 
-A validação seguirá metodologia comparativa com **20 estudantes** randomizados em dois grupos (n=10 cada):
-- **Grupo experimental:** Com acesso ao VetBalance durante 3 semanas
-- **Grupo controle:** Sem acesso ao software
+A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, com **20 estudantes** randomizados em dois grupos (n=10 cada):
+- **Grupo experimental (GE):** Com acesso ao VetBalance durante todo o período de intervenção
+- **Grupo controle (GC):** Atividades tradicionais, sem acesso ao software
 
-**Análise estatística:** Teste t de Student (α=0,05) comparando médias de desempenho em avaliações convencionais sobre equilíbrio ácido-base, com processamento estatístico realizado no **RStudio**.
+### Fases do Estudo
+
+| Fase | Período | Atividade Principal |
+|------|---------|---------------------|
+| F1 — Preparação | 10/03 – 28/03/2026 | Aprovação CEP, randomização, pré-teste diagnóstico (O₁) |
+| F2 — Intervenção Inicial | 31/03 – 25/04/2026 | Aulas teóricas (GE + GC), treinamento GE no SUT |
+| F3 — Avaliação Intermediária 1 | 28/04 – 16/05/2026 | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
+| F4 — Intervenção Avançada | 19/05 – 06/06/2026 | Casos avançados, modo avaliação (sem IA) |
+| F5 — Avaliação Final | 09/06 – 27/06/2026 | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
+| F6 — Análise e Relatório | 30/06 – 31/07/2026 | Análise estatística, relatório final IEEE 829 |
+
+### Marcos Críticos
+
+| Marco | Data | Descrição |
+|-------|------|-----------|
+| 🔴 O₁ | 24–28/03/2026 | Pré-teste diagnóstico |
+| 🔴 O₂ | 11–14/05/2026 | Avaliação intermediária 1 |
+| 🔴 O₃ | 14–16/06/2026 | Avaliação intermediária 2 |
+| 🔴 O₄ | 20–23/06/2026 | Pós-teste final |
+| ✅ | 31/07/2026 | Entrega do relatório final |
+| 🎓 | Agosto/2026 | Defesa do mestrado |
+
+**Análise estatística:** Teste t de Student (α=0,05), d de Cohen (≥ 0,5), correlação de Pearson (r ≥ 0,3), questionário SUS adaptado (média ≥ 4,0/5,0), com processamento no **RStudio**.
 
 **Resultados esperados:** O grupo experimental deverá apresentar desempenho significativamente superior, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base em medicina veterinária.
 
@@ -94,7 +116,7 @@ A validação seguirá metodologia comparativa com **20 estudantes** randomizado
 
 Apesar da conclusão técnica do simulador, a etapa de **validação clínica com a turma de veterinária é um requisito indispensável** para a conclusão da dissertação.
 
-**Justificativa:** A execução dos testes depende do calendário acadêmico e da disponibilidade das turmas de graduação para a coleta de dados de campo.
+**Justificativa:** A execução dos testes depende do calendário acadêmico e da disponibilidade das turmas de graduação para a coleta de dados de campo. O cronograma de 20 semanas (março–julho 2026) foi comprimido para liberar agosto para a defesa.
 
 **Solicitação:** Diante da necessidade de concluir este ciclo de testes práticos, realizar o processamento estatístico no RStudio e redigir a discussão final dos dados, solicita-se a **prorrogação do prazo de defesa do mestrado**.
 
@@ -130,7 +152,7 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 | `DIAGRAMAS_MERMAID.md` | 10 diagramas visuais (arquitetura, fluxos, ER, sequência, segurança) |
 | `PERMISSIONS_GUIDE.md` | Guia de permissões e políticas RLS |
 | `ARTIGO_RESUMO_EXPANDIDO.md` | Resumo expandido para publicação |
-| `CRONOGRAMA_VALIDACAO.md` | Cronograma de validação (Mar–Ago 2026) com desenho experimental |
+| `CRONOGRAMA_VALIDACAO.md` | Cronograma de validação (Mar–Jul 2026) com desenho experimental |
 
 ---
 

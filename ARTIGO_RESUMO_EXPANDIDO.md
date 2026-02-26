@@ -20,7 +20,7 @@ Os estudantes aplicam tratamentos selecionando medicações e procedimentos, rec
 
 Professores podem criar casos personalizados, acompanhar desempenho individual dos alunos através de relatórios detalhados, compartilhar casos via códigos de acesso e realizar análises comparativas entre sessões. O sistema incorpora inteligência artificial (Gemini/GPT) para geração de diagnósticos diferenciais, dicas contextualizadas e feedback personalizado.
 
-A validação seguirá metodologia comparativa com 20 estudantes randomizados em dois grupos (n=10 cada): experimental (com acesso ao software) e controle (sem acesso), durante três semanas. Análise estatística utilizará teste t de Student (α=0,05) comparando médias de desempenho em avaliações convencionais sobre a temática, com processamento estatístico realizado no RStudio.
+A validação seguirá metodologia quase-experimental com 20 estudantes randomizados em dois grupos (n=10 cada): experimental (com acesso ao software) e controle (sem acesso), durante 20 semanas (10 de março a 31 de julho de 2026) nas disciplinas de Fisiologia Animal e Farmacologia. O estudo contempla quatro pontos de medição: pré-teste diagnóstico (O₁, março), avaliação intermediária 1 sobre distúrbios metabólicos (O₂, maio), avaliação intermediária 2 sobre distúrbios respiratórios e mistos (O₃, junho) e pós-teste final abrangente (O₄, junho). A análise estatística utilizará teste t de Student (α=0,05), d de Cohen (≥ 0,5), correlação de Pearson e questionário SUS adaptado, com processamento realizado no RStudio. Agosto de 2026 será reservado para redação da dissertação e defesa do mestrado.
 
 ## RESULTADOS ESPERADOS
 
