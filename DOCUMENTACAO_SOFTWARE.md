@@ -1118,16 +1118,28 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 ### 22.2 Fases do Cronograma
 
-| Fase | Período | Atividades Principais |
-|------|---------|----------------------|
-| **Fase 1 — Preparação** | 10/03 – 28/03/2026 | Aprovação CEP, cadastro de participantes, randomização GE/GC, pré-teste diagnóstico (O₁) |
-| **Fase 2 — Intervenção Inicial** | 31/03 – 25/04/2026 | Aulas teóricas (GE + GC), treinamento e uso supervisionado do SUT pelo GE |
-| **Fase 3 — Avaliação Intermediária 1** | 28/04 – 16/05/2026 | Uso intensivo do SUT, avaliação intermediária 1 (O₂), análise parcial |
-| **Fase 4 — Intervenção Avançada** | 19/05 – 06/06/2026 | Casos avançados, aulas avançadas, modo avaliação (sem IA) |
-| **Fase 5 — Avaliação Final** | 09/06 – 27/06/2026 | Avaliação intermediária 2 (O₃), questionário SUS, pós-teste final (O₄), exportação de dados |
-| **Fase 6 — Análise e Relatório** | 30/06 – 31/07/2026 | Processamento estatístico (RStudio), cruzamento de dados, relatório final IEEE 829 |
+| Fase | Semanas | Período | Duração | Atividades Principais |
+|------|---------|---------|---------|----------------------|
+| **F1 — Preparação** | 1–3 | 10/03 – 28/03/2026 | 19 dias | Submissão CEP, apresentação aos docentes, cadastro e randomização GE/GC, pré-teste diagnóstico (O₁) |
+| **F2 — Intervenção Inicial** | 4–7 | 31/03 – 25/04/2026 | 26 dias | Aulas teóricas partes 1 e 2 (GE + GC), treinamento no SUT (tutorial guiado), uso supervisionado GE (acidose/alcalose metabólica) |
+| **F3 — Avaliação Intermediária 1** | 8–10 | 28/04 – 16/05/2026 | 19 dias | Uso intensivo do SUT pelo GE, atividades tradicionais GC, avaliação intermediária 1 (O₂ — distúrbios metabólicos), análise parcial em RStudio |
+| **F4 — Intervenção Avançada** | 11–13 | 19/05 – 06/06/2026 | 19 dias | Casos avançados (cetoacidose diabética, hipercapnia, mistos), aulas sobre compensação e protocolos terapêuticos, modo avaliação do SUT (sem dicas de IA) |
+| **F5 — Avaliação Final e Coleta** | 14–16 | 09/06 – 27/06/2026 | 19 dias | Revisão geral no SUT, avaliação intermediária 2 (O₃ — distúrbios respiratórios e mistos), questionário SUS adaptado, pós-teste final (O₄), exportação completa dos dados (CSV/TXT) |
+| **F6 — Análise e Relatório** | 17–20 | 30/06 – 31/07/2026 | 32 dias | Processamento estatístico (testes t de Student, Shapiro-Wilk), análise de dados do SUT (sessões, win rate, badges, d de Cohen), cruzamento software × notas (correlação de Pearson), redação e entrega do relatório final IEEE 829 |
 
-### 22.3 Funcionalidades Sob Validação
+### 22.3 Marcos Críticos (Milestones)
+
+| Marco | Data | Descrição |
+|-------|------|-----------|
+| 🔴 O₁ | 24/03 – 28/03/2026 | Pré-teste diagnóstico (GE + GC) |
+| 🔴 O₂ | 11/05 – 14/05/2026 | Avaliação intermediária 1 — distúrbios metabólicos |
+| 🔴 O₃ | 14/06 – 16/06/2026 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
+| 🔴 O₄ | 20/06 – 23/06/2026 | Pós-teste final — avaliação abrangente |
+| ✅ Coleta | 27/06/2026 | Encerramento da coleta de dados |
+| ✅ Relatório | 31/07/2026 | Entrega do relatório final de validação (IEEE 829) |
+| 🎓 Defesa | Agosto/2026 | Redação da dissertação e defesa do mestrado |
+
+### 22.4 Funcionalidades Sob Validação
 
 | ID | Funcionalidade | Módulo de Referência |
 |----|---------------|----------------------|
@@ -1142,7 +1154,7 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 | F-09 | Exportação de relatórios (CSV/TXT) | `ReportPanel.tsx` |
 | F-10 | Histórico e replay de sessões | `SessionHistory.tsx`, `SessionReplay.tsx` |
 
-### 22.4 Critérios de Aceitação Resumidos
+### 22.5 Critérios de Aceitação Resumidos
 
 | Critério | Métrica | Valor Alvo |
 |----------|---------|------------|
