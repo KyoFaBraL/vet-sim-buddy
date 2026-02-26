@@ -1167,6 +1167,30 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 > **Documento completo:** Consultar `CRONOGRAMA_VALIDACAO.md` (VETBALANCE-PVS-001 v1.0)
 
+### 22.6 Instrumentos de Coleta de Dados
+
+#### 22.6.1 Instrumentos Aplicados pelo Pesquisador
+
+| ID | Instrumento | Momento | Amostra | Formato |
+|----|-------------|---------|---------|---------|
+| I-01 | Pré-teste diagnóstico | 24/03 – 28/03/2026 (O₁) | GE + GC | Questões objetivas e discursivas (0–10) |
+| I-02 | Avaliação intermediária 1 | 11/05 – 14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) |
+| I-03 | Avaliação intermediária 2 | 14/06 – 16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) |
+| I-04 | Pós-teste final | 20/06 – 23/06/2026 (O₄) | GE + GC | Questões objetivas e discursivas (0–10) |
+| I-05 | Questionário de satisfação | 17/06 – 19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) |
+
+#### 22.6.2 Dados Coletados Automaticamente pelo SUT
+
+| ID | Dado | Tabela no Banco | Tipo | Granularidade |
+|----|------|-----------------|------|---------------|
+| D-01 | Sessões de simulação | `simulation_sessions` | Quantitativo | Por sessão |
+| D-02 | Snapshots de parâmetros | `session_history` | Quantitativo | Por tick (1s) |
+| D-03 | Decisões clínicas | `session_decisions` | Qualitativo/Quantitativo | Por evento |
+| D-04 | Tratamentos aplicados | `session_treatments` | Quantitativo | Por evento |
+| D-05 | Badges conquistados | `user_badges` | Quantitativo | Por conquista |
+| D-06 | Ranking semanal | `weekly_ranking_history` | Quantitativo | Semanal |
+| D-07 | Notas de simulação | `simulation_notes` | Qualitativo | Por anotação |
+
 ---
 
 ## CONSIDERAÇÕES FINAIS
