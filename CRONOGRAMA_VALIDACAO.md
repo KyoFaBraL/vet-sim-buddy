@@ -537,6 +537,61 @@ A validação será considerada **malsucedida** se:
 
 ---
 
-**Documento vinculado ao projeto:** [VetBalance](https://vetbalance.app.br)  
+## ANEXO A — CHECKLIST DE PRÉ-VALIDAÇÃO
+
+> **Referência:** `DOCUMENTACAO_SOFTWARE.md`, Seção 22.7
+
+Este checklist deve ser executado **integralmente** antes do início da Fase F1 (10/03/2026) para garantir que todas as funcionalidades sob teste estejam operacionais em ambiente de produção.
+
+### A.1 Funcionalidades do Simulador (F-01 a F-10)
+
+| # | ID | Funcionalidade | Módulo | Critério de Aceite | Status |
+|---|-----|---------------|--------|-------------------|--------|
+| 1 | F-01 | Simulação de casos clínicos em tempo real | `useSimulation.ts` | Iniciar, pausar e reiniciar simulação nos 7 casos pré-definidos; tick de 1s registrado em `session_history` | ☐ |
+| 2 | F-02 | Sistema de HP e deterioração temporal | `HPDisplay.tsx` | HP inicia em 50, decai -1/5s; vitória em HP ≥ 100; derrota em HP ≤ 0 ou tempo > 5min | ☐ |
+| 3 | F-03 | Aplicação e validação de tratamentos | `TreatmentPanel.tsx` | 8 tratamentos disponíveis; validação contra gabarito; HP +10~+25 (adequado) ou -15 (inadequado) | ☐ |
+| 4 | F-04 | Monitoramento de 10 parâmetros fisiológicos | `PatientMonitor.tsx` | pH, PaO₂, PaCO₂, FC, FR, Temp, HCO₃, Lactato, PA, Hb exibidos em tempo real | ☐ |
+| 5 | F-05 | Sistema de badges e conquistas | `BadgeSystem.tsx` | 17 badges em 5 categorias desbloqueáveis e persistidos em `user_badges` | ☐ |
+| 6 | F-06 | Ranking semanal com reset automático | `WeeklyLeaderboard.tsx` | Ranking exibido; reset às segundas-feiras; histórico em `weekly_ranking_history` | ☐ |
+| 7 | F-07 | Feedback de sessão via IA | `generate-session-feedback` | Edge Function responde com feedback personalizado ao final de cada sessão | ☐ |
+| 8 | F-08 | Modo Prática vs. Modo Avaliação | `SimulationModeSelector.tsx` | Prática: dicas habilitadas; Avaliação: dicas desabilitadas | ☐ |
+| 9 | F-09 | Exportação de relatórios (CSV/TXT) | `ReportPanel.tsx` | Download funcional em desktop e mobile com dados válidos | ☐ |
+| 10 | F-10 | Histórico e replay de sessões | `SessionHistory.tsx`, `SessionReplay.tsx` | Sessões listadas; replay reproduz snapshots em ordem cronológica | ☐ |
+
+### A.2 Infraestrutura e Backend
+
+| # | Item | Critério de Aceite | Status |
+|---|------|-------------------|--------|
+| 11 | Banco de dados em produção | 32 tabelas com RLS; dados de seed presentes (7 casos, 9 condições, 10 parâmetros, 8 tratamentos, 17 badges) | ☐ |
+| 12 | 5 Edge Functions operacionais | Todas retornam HTTP 200 com JWT válido | ☐ |
+| 13 | Autenticação e papéis | Registro de aluno e professor funcional; `has_role()` correto | ☐ |
+| 14 | Chaves de acesso de professor | `validate_professor_access_key()` funcional; chaves expiradas rejeitadas | ☐ |
+| 15 | Persistência de sessões | Tabelas `simulation_sessions`, `session_history`, `session_decisions`, `session_treatments` recebem dados | ☐ |
+
+### A.3 Interface e Usabilidade
+
+| # | Item | Critério de Aceite | Status |
+|---|------|-------------------|--------|
+| 16 | Responsividade mobile | Funcional em Chrome/Safari mobile (≥ 360px) | ☐ |
+| 17 | Tema claro/escuro | Alternância funcional sem quebra visual | ☐ |
+| 18 | Tempo de resposta | Ações do usuário respondem em < 2s | ☐ |
+| 19 | Dashboard do professor | Turmas, relatórios, casos personalizados e compartilhamento operacionais | ☐ |
+| 20 | Coleta automática (D-01 a D-07) | 7 categorias de dados registradas durante sessão de teste completa | ☐ |
+
+### A.4 Procedimento de Execução
+
+| Item | Detalhe |
+|------|---------|
+| **Responsável** | Pesquisador principal |
+| **Prazo** | Concluir até **07/03/2026** (3 dias antes de F1) |
+| **Ambiente** | Produção (https://vetbalance.app.br) |
+| **Método** | Executar com conta de aluno-teste e professor-teste |
+| **Registro** | ✅ Aprovado / ❌ Falha + evidências (screenshots/logs) |
+| **Critério** | 100% aprovado (20/20) |
+| **Contingência** | Itens reprovados corrigidos e retestados antes de 10/03/2026 |
+
+---
+
+**Documento vinculado ao projeto:** [VetBalance](https://vetbalance.app.br)
 **Repositório:** [GitHub](https://github.com/KyoFaBraL/vet-sim-buddy)  
 **Identificador:** VETBALANCE-PVS-001 v1.0
