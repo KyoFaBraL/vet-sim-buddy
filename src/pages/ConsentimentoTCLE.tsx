@@ -92,8 +92,8 @@ const ConsentimentoTCLE = () => {
                   Você está sendo convidado(a) a participar como voluntário(a) de uma pesquisa denominada{' '}
                   <strong>"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais:
                   Desenvolvimento e Validação de Ferramenta de M-Learning"</strong>. Esta pesquisa está sob a
-                  responsabilidade do pesquisador <em>(Nome do pesquisador responsável – Programa de Pós-Graduação
-                  em Ciência Animal – UFPI)</em> e tem como objetivos avaliar a eficácia do software educacional
+                  responsabilidade do pesquisador <strong>Caio Farias Cabral</strong> (Programa de Pós-Graduação
+                  em Ciência Animal – UFPI), sob orientação do <strong>Prof. Dr. Napoleão Martins Argôlo Neto</strong>, e tem como objetivos avaliar a eficácia do software educacional
                   gamificado <strong>VetBalance</strong> como ferramenta complementar no ensino de equilíbrio
                   ácido-base em medicina veterinária de pequenos animais.
                 </p>
@@ -112,7 +112,7 @@ const ConsentimentoTCLE = () => {
                 <p className="mt-2">
                   Por favor, leia com atenção e calma, aproveite para esclarecer todas as suas dúvidas. Se houver
                   perguntas antes ou mesmo depois de indicar sua concordância, você poderá esclarecê-las com o
-                  pesquisador responsável pela pesquisa: <em>(Nome – Telefone – E-mail)</em>.
+                  pesquisador responsável pela pesquisa: <strong>Caio Farias Cabral</strong> – (86) 98142-5389 – caiofcabral@ufpi.edu.br.
                 </p>
                 <p className="mt-2">
                   Se mesmo assim as dúvidas persistirem, você pode entrar em contato com o{' '}
