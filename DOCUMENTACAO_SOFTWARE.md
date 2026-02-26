@@ -1193,6 +1193,57 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 ---
 
+### 22.7 Checklist de Pré-Validação (antes de 10/03/2026)
+
+Este checklist deve ser executado **integralmente** antes do início da Fase F1 (10/03/2026) para garantir que todas as funcionalidades sob teste estejam operacionais em ambiente de produção.
+
+#### 22.7.1 Funcionalidades do Simulador (F-01 a F-10)
+
+| # | ID | Funcionalidade | Módulo | Critério de Aceite | Status |
+|---|-----|---------------|--------|-------------------|--------|
+| 1 | F-01 | Simulação de casos clínicos em tempo real | `useSimulation.ts` | Iniciar, pausar e reiniciar simulação nos 7 casos pré-definidos; tick de 1s registrado em `session_history` | ☐ |
+| 2 | F-02 | Sistema de HP e deterioração temporal | `HPDisplay.tsx` | HP inicia em 50, decai -1/5s; vitória em HP ≥ 100; derrota em HP ≤ 0 ou tempo > 5min | ☐ |
+| 3 | F-03 | Aplicação e validação de tratamentos | `TreatmentPanel.tsx` | 8 tratamentos disponíveis; validação contra gabarito (`tratamentos_adequados`/`tratamentos_caso`); HP +10~+25 (adequado) ou -15 (inadequado) | ☐ |
+| 4 | F-04 | Monitoramento de 10 parâmetros fisiológicos | `PatientMonitor.tsx` | pH, PaO₂, PaCO₂, FC, FR, Temp, HCO₃, Lactato, PA, Hb exibidos em tempo real com atualização a cada tick | ☐ |
+| 5 | F-05 | Sistema de badges e conquistas | `BadgeSystem.tsx` | 17 badges em 5 categorias (Bronze, Prata, Ouro, Streaks, Milestones) desbloqueáveis e persistidos em `user_badges` | ☐ |
+| 6 | F-06 | Ranking semanal com reset automático | `WeeklyLeaderboard.tsx` | Ranking exibido; reset às segundas-feiras; histórico persistido em `weekly_ranking_history` | ☐ |
+| 7 | F-07 | Feedback de sessão via IA | `generate-session-feedback` | Edge Function responde com feedback personalizado ao final de cada sessão (modo Prática) | ☐ |
+| 8 | F-08 | Modo Prática vs. Modo Avaliação | `SimulationModeSelector.tsx` | Modo Prática: dicas de IA habilitadas; Modo Avaliação: dicas desabilitadas, sem feedback intermediário | ☐ |
+| 9 | F-09 | Exportação de relatórios (CSV/TXT) | `ReportPanel.tsx` | Exportação gera arquivo válido com dados de sessão, tratamentos e parâmetros; download funcional em desktop e mobile | ☐ |
+| 10 | F-10 | Histórico e replay de sessões | `SessionHistory.tsx`, `SessionReplay.tsx` | Sessões anteriores listadas; replay reproduz snapshots de parâmetros em ordem cronológica | ☐ |
+
+#### 22.7.2 Infraestrutura e Backend
+
+| # | Item | Critério de Aceite | Status |
+|---|------|-------------------|--------|
+| 11 | Banco de dados em produção | 32 tabelas com RLS habilitado; dados de seed (7 casos, 9 condições, 10 parâmetros, 8 tratamentos, 17 badges) presentes | ☐ |
+| 12 | 5 Edge Functions operacionais | `analyze-custom-case`, `treatment-hints`, `populate-case-data`, `generate-differential-diagnosis`, `generate-session-feedback` — todas retornam HTTP 200 com JWT válido | ☐ |
+| 13 | Autenticação e papéis | Registro de aluno (sem chave) e professor (com chave institucional) funcional; `has_role()` retorna papel correto | ☐ |
+| 14 | Chaves de acesso de professor | Validação via `validate_professor_access_key()` funcional; chaves expiradas/usadas rejeitadas | ☐ |
+| 15 | Persistência de sessões | `simulation_sessions`, `session_history`, `session_decisions`, `session_treatments` recebem dados corretamente durante simulação | ☐ |
+
+#### 22.7.3 Interface e Usabilidade
+
+| # | Item | Critério de Aceite | Status |
+|---|------|-------------------|--------|
+| 16 | Responsividade mobile | Interface funcional em Chrome/Safari mobile (≥ 360px de largura) | ☐ |
+| 17 | Tema claro/escuro | Alternância funcional sem quebra visual | ☐ |
+| 18 | Tempo de resposta | Ações do usuário (aplicar tratamento, navegar entre abas) respondem em < 2s | ☐ |
+| 19 | Dashboard do professor | Gerenciamento de turmas, relatórios por aluno, criação de casos personalizados e compartilhamento via código de acesso operacionais | ☐ |
+| 20 | Coleta automática de dados (D-01 a D-07) | Todas as 7 categorias de dados registradas corretamente no banco durante uma sessão de teste completa | ☐ |
+
+#### 22.7.4 Procedimento de Execução
+
+1. **Responsável:** Pesquisador principal
+2. **Prazo:** Concluir até **07/03/2026** (3 dias antes do início de F1)
+3. **Ambiente:** Produção (https://vetbalance.app.br)
+4. **Método:** Executar cada item com conta de aluno-teste e conta de professor-teste
+5. **Registro:** Marcar status (✅ Aprovado / ❌ Falha) e documentar evidências (screenshots ou logs)
+6. **Critério de aprovação:** 100% dos itens aprovados (20/20)
+7. **Contingência:** Itens reprovados devem ser corrigidos e retestados antes de 10/03/2026
+
+---
+
 ## CONSIDERAÇÕES FINAIS
 
 O VetBalance representa uma solução tecnológica completa para o ensino de equilíbrio ácido-base em medicina veterinária, integrando:
