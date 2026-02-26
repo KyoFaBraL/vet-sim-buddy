@@ -656,6 +656,17 @@ flowchart TD
 
 ---
 
+## REFERÊNCIAS CRUZADAS
+
+| Documento | Relação com este arquivo |
+|-----------|--------------------------|
+| `DOCUMENTACAO_SOFTWARE.md` | Seções 3–7 detalham a arquitetura, componentes e fluxos ilustrados nestes diagramas; Seção 22.7 (Checklist pré-validação) referencia módulos mapeados nos Diagramas 1, 3 e 5 |
+| `CRONOGRAMA_VALIDACAO.md` | Seção 7 (Ambiente de Teste) complementada pelos Diagramas 1 e 10 (arquitetura e mobile); Anexo A referencia módulos dos Diagramas 3–4 |
+| `ARTIGO_RESUMO_EXPANDIDO.md` | Seção de Evidências Visuais referencia as interfaces ilustradas nos fluxos dos Diagramas 2, 3 e 6 |
+| `RESUMO_EXECUTIVO.md` | Seção 3 (Arquitetura e Tecnologia) sintetiza o conteúdo dos Diagramas 1, 5 e 9 |
+
+---
+
 ## Como Renderizar os Diagramas
 
 - **GitHub:** Visualize este arquivo diretamente no GitHub — os diagramas Mermaid são renderizados automaticamente.
