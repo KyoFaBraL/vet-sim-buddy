@@ -762,6 +762,39 @@ export type Database = {
           },
         ]
       }
+      tcle_consents: {
+        Row: {
+          aceito: boolean
+          aceito_em: string
+          criado_em: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+          user_id: string
+          versao: string
+        }
+        Insert: {
+          aceito?: boolean
+          aceito_em?: string
+          criado_em?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id: string
+          versao?: string
+        }
+        Update: {
+          aceito?: boolean
+          aceito_em?: string
+          criado_em?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string
+          versao?: string
+        }
+        Relationships: []
+      }
       tratamentos: {
         Row: {
           descricao: string | null
