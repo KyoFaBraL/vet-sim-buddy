@@ -11,9 +11,11 @@ import AuthAluno from "./pages/AuthAluno";
 import ResetPassword from "./pages/ResetPassword";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import PreValidation from "./pages/PreValidation";
+import ConsentimentoTCLE from "./pages/ConsentimentoTCLE";
 import { RoleSelection } from "./components/RoleSelection";
 import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
+import { useTcleConsent } from "./hooks/useTcleConsent";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +49,31 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const StudentRouteWithConsent = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading } = useUserRole(user);
+  const { hasConsent, loading: consentLoading } = useTcleConsent(user);
+
+  if (authLoading || roleLoading || consentLoading) {
+    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Professors/admins bypass TCLE
+  if (role === 'admin') return <Navigate to="/professor" replace />;
+  if (role === 'professor') return <Navigate to="/professor" replace />;
+
+  // Students must accept TCLE before accessing the simulator
+  if (role === 'aluno' && hasConsent === false) {
+    return <Navigate to="/consentimento" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading: authLoading } = useAuth();
   const { role, loading: roleLoading } = useUserRole(user);
@@ -56,9 +83,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   if (user && role) {
-    // Admin vai para o painel de professor (invisível)
     if (role === 'admin') return <Navigate to="/professor" replace />;
-    // Redirecionar para o painel correto baseado na role
     return <Navigate to={role === 'professor' ? '/professor' : '/app'} replace />;
   }
   
@@ -89,10 +114,15 @@ const App = () => (
               </PublicRoute>
             } />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/app" element={
+            <Route path="/consentimento" element={
               <ProtectedRoute>
-                <Index />
+                <ConsentimentoTCLE />
               </ProtectedRoute>
+            } />
+            <Route path="/app" element={
+              <StudentRouteWithConsent>
+                <Index />
+              </StudentRouteWithConsent>
             } />
             <Route path="/professor" element={
               <ProtectedRoute>
