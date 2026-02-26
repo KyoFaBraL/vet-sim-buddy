@@ -1286,6 +1286,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 | Critérios de aceitação | Seção 22.5 | Seção 6 | Material e Métodos (§3) | Seção 6 (Análise) |
 | Análise estatística | Seção 22.5 | Seção 12 | Material e Métodos (§3) | Seção 6 (último §) |
 | Evidências visuais | Seção 21 | — | Evidências Visuais | Seção 8 |
+| Checklist pré-validação (20 itens) | Seção 22.7 | Anexo A (A.1–A.4) | — | — |
 
 ---
 
