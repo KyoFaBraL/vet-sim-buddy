@@ -10,6 +10,7 @@ import AuthProfessor from "./pages/AuthProfessor";
 import AuthAluno from "./pages/AuthAluno";
 import ResetPassword from "./pages/ResetPassword";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
+import PreValidation from "./pages/PreValidation";
 import { RoleSelection } from "./components/RoleSelection";
 import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
@@ -96,6 +97,11 @@ const App = () => (
             <Route path="/professor" element={
               <ProtectedRoute>
                 <ProfessorDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/pre-validation" element={
+              <ProtectedRoute>
+                <PreValidation />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
