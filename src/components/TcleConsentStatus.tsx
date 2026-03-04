@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CheckCircle2, XCircle, Clock, RefreshCw } from 'lucide-react';
+import { CheckCircle2, XCircle, Clock, RefreshCw, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -101,6 +101,27 @@ export function TcleConsentStatus() {
   const declined = students.filter((s) => s.aceito === false).length;
   const pending = students.filter((s) => s.aceito === null).length;
 
+  const exportCsv = () => {
+    const header = 'Aluno,Status,Data,Versão';
+    const rows = students.map((s) => {
+      const status = s.aceito === true ? 'Aceito' : s.aceito === false ? 'Recusado' : 'Pendente';
+      const data = s.aceito_em
+        ? format(new Date(s.aceito_em), "dd/MM/yyyy HH:mm", { locale: ptBR })
+        : '';
+      const versao = s.versao ? `v${s.versao}` : '';
+      const nome = (s.nome_completo ?? 'Sem nome').replace(/,/g, ' ');
+      return `${nome},${status},${data},${versao}`;
+    });
+    const csv = [header, ...rows].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `consentimentos-tcle-${format(new Date(), 'yyyy-MM-dd')}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   if (loading) {
     return (
       <div className="space-y-3">
@@ -139,10 +160,16 @@ export function TcleConsentStatus() {
             {pending} pendente{pending !== 1 ? 's' : ''}
           </Badge>
         )}
-        <Button variant="ghost" size="sm" onClick={loadData} className="ml-auto h-6">
-          <RefreshCw className="h-3 w-3 mr-1" />
-          Atualizar
-        </Button>
+        <div className="flex items-center gap-1 ml-auto">
+          <Button variant="ghost" size="sm" onClick={exportCsv} className="h-6">
+            <Download className="h-3 w-3 mr-1" />
+            CSV
+          </Button>
+          <Button variant="ghost" size="sm" onClick={loadData} className="h-6">
+            <RefreshCw className="h-3 w-3 mr-1" />
+            Atualizar
+          </Button>
+        </div>
       </div>
 
       {/* Table */}
