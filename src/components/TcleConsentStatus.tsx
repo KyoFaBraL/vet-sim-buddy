@@ -12,6 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
@@ -22,50 +29,53 @@ interface StudentConsent {
   aceito: boolean | null;
   aceito_em: string | null;
   versao: string | null;
+  turma_id: string | null;
+}
+
+interface Turma {
+  id: string;
+  nome: string;
 }
 
 export function TcleConsentStatus() {
-  const [students, setStudents] = useState<StudentConsent[]>([]);
+  const [allStudents, setAllStudents] = useState<StudentConsent[]>([]);
+  const [turmas, setTurmas] = useState<Turma[]>([]);
+  const [selectedTurma, setSelectedTurma] = useState<string>('all');
   const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
     setLoading(true);
     try {
-      // Get linked students
-      const { data: linked, error: linkError } = await supabase
-        .rpc('get_linked_students_for_professor');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
-      if (linkError || !linked) {
-        setStudents([]);
+      // Load turmas and linked students in parallel
+      const [turmasRes, linkedRes] = await Promise.all([
+        supabase.from('turmas').select('id, nome').eq('professor_id', user.id).eq('ativo', true).order('nome'),
+        supabase.rpc('get_linked_students_for_professor'),
+      ]);
+
+      setTurmas(turmasRes.data ?? []);
+
+      const linked = linkedRes.data;
+      if (linkedRes.error || !linked || linked.length === 0) {
+        setAllStudents([]);
         setLoading(false);
         return;
       }
 
       const studentIds = linked.map((s: any) => s.student_id);
-      
-      if (studentIds.length === 0) {
-        setStudents([]);
-        setLoading(false);
-        return;
-      }
 
-      // Get TCLE consents for these students
       const { data: consents } = await supabase
         .from('tcle_consents')
         .select('user_id, aceito, aceito_em, versao')
         .in('user_id', studentIds)
         .order('aceito_em', { ascending: false });
 
-      // Build merged list
       const consentMap = new Map<string, { aceito: boolean; aceito_em: string; versao: string }>();
       consents?.forEach((c) => {
-        // Keep only the latest consent per student
         if (!consentMap.has(c.user_id)) {
-          consentMap.set(c.user_id, {
-            aceito: c.aceito,
-            aceito_em: c.aceito_em,
-            versao: c.versao,
-          });
+          consentMap.set(c.user_id, { aceito: c.aceito, aceito_em: c.aceito_em, versao: c.versao });
         }
       });
 
@@ -77,19 +87,19 @@ export function TcleConsentStatus() {
           aceito: consent?.aceito ?? null,
           aceito_em: consent?.aceito_em ?? null,
           versao: consent?.versao ?? null,
+          turma_id: s.turma_id ?? null,
         };
       });
 
-      // Sort: pending first, then by name
       result.sort((a, b) => {
         if (a.aceito === null && b.aceito !== null) return -1;
         if (a.aceito !== null && b.aceito === null) return 1;
         return (a.nome_completo ?? '').localeCompare(b.nome_completo ?? '');
       });
 
-      setStudents(result);
+      setAllStudents(result);
     } catch {
-      setStudents([]);
+      setAllStudents([]);
     }
     setLoading(false);
   };
@@ -97,6 +107,12 @@ export function TcleConsentStatus() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const students = selectedTurma === 'all'
+    ? allStudents
+    : selectedTurma === 'none'
+      ? allStudents.filter((s) => !s.turma_id)
+      : allStudents.filter((s) => s.turma_id === selectedTurma);
 
   const accepted = students.filter((s) => s.aceito === true).length;
   const declined = students.filter((s) => s.aceito === false).length;
@@ -133,7 +149,7 @@ export function TcleConsentStatus() {
     );
   }
 
-  if (students.length === 0) {
+  if (allStudents.length === 0) {
     return (
       <p className="text-sm text-muted-foreground text-center py-6">
         Nenhum aluno vinculado. Adicione alunos na aba "Alunos" para visualizar o status do TCLE.
@@ -143,8 +159,23 @@ export function TcleConsentStatus() {
 
   return (
     <div className="space-y-4">
-      {/* Summary badges */}
-      <div className="flex flex-wrap gap-2">
+      {/* Filter + actions row */}
+      <div className="flex flex-wrap items-center gap-2">
+        {turmas.length > 0 && (
+          <Select value={selectedTurma} onValueChange={setSelectedTurma}>
+            <SelectTrigger className="w-[200px] h-8 text-sm">
+              <SelectValue placeholder="Filtrar por turma" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas as turmas</SelectItem>
+              <SelectItem value="none">Sem turma</SelectItem>
+              {turmas.map((t) => (
+                <SelectItem key={t.id} value={t.id}>{t.nome}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
         <Badge variant="default" className="flex items-center gap-1">
           <CheckCircle2 className="h-3 w-3" />
           {accepted} aceito{accepted !== 1 ? 's' : ''}
@@ -204,56 +235,61 @@ export function TcleConsentStatus() {
         </div>
       )}
 
-      {/* Table */}
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Aluno</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Data</TableHead>
-              <TableHead>Versão</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {students.map((s) => (
-              <TableRow key={s.student_id}>
-                <TableCell className="font-medium">
-                  {s.nome_completo ?? 'Sem nome'}
-                </TableCell>
-                <TableCell>
-                  {s.aceito === true && (
-                    <Badge variant="default" className="flex items-center gap-1 w-fit">
-                      <CheckCircle2 className="h-3 w-3" />
-                      Aceito
-                    </Badge>
-                  )}
-                  {s.aceito === false && (
-                    <Badge variant="destructive" className="flex items-center gap-1 w-fit">
-                      <XCircle className="h-3 w-3" />
-                      Recusado
-                    </Badge>
-                  )}
-                  {s.aceito === null && (
-                    <Badge variant="secondary" className="flex items-center gap-1 w-fit">
-                      <Clock className="h-3 w-3" />
-                      Pendente
-                    </Badge>
-                  )}
-                </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
-                  {s.aceito_em
-                    ? format(new Date(s.aceito_em), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })
-                    : '—'}
-                </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
-                  {s.versao ? `v${s.versao}` : '—'}
-                </TableCell>
+      {students.length === 0 ? (
+        <p className="text-sm text-muted-foreground text-center py-4">
+          Nenhum aluno encontrado para o filtro selecionado.
+        </p>
+      ) : (
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Aluno</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Data</TableHead>
+                <TableHead>Versão</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {students.map((s) => (
+                <TableRow key={s.student_id}>
+                  <TableCell className="font-medium">
+                    {s.nome_completo ?? 'Sem nome'}
+                  </TableCell>
+                  <TableCell>
+                    {s.aceito === true && (
+                      <Badge variant="default" className="flex items-center gap-1 w-fit">
+                        <CheckCircle2 className="h-3 w-3" />
+                        Aceito
+                      </Badge>
+                    )}
+                    {s.aceito === false && (
+                      <Badge variant="destructive" className="flex items-center gap-1 w-fit">
+                        <XCircle className="h-3 w-3" />
+                        Recusado
+                      </Badge>
+                    )}
+                    {s.aceito === null && (
+                      <Badge variant="secondary" className="flex items-center gap-1 w-fit">
+                        <Clock className="h-3 w-3" />
+                        Pendente
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {s.aceito_em
+                      ? format(new Date(s.aceito_em), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })
+                      : '—'}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {s.versao ? `v${s.versao}` : '—'}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 }
