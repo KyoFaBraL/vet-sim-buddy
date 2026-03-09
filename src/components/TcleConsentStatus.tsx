@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface StudentConsent {
   student_id: string;
@@ -171,6 +172,37 @@ export function TcleConsentStatus() {
           </Button>
         </div>
       </div>
+
+      {/* Pie Chart */}
+      {students.length > 0 && (
+        <div className="flex justify-center py-2">
+          <div className="w-48 h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={[
+                    ...(accepted > 0 ? [{ name: 'Aceitos', value: accepted }] : []),
+                    ...(declined > 0 ? [{ name: 'Recusados', value: declined }] : []),
+                    ...(pending > 0 ? [{ name: 'Pendentes', value: pending }] : []),
+                  ]}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={35}
+                  outerRadius={65}
+                  paddingAngle={3}
+                  dataKey="value"
+                  label={({ name, value }) => `${name}: ${value}`}
+                >
+                  {accepted > 0 && <Cell fill="hsl(var(--primary))" />}
+                  {declined > 0 && <Cell fill="hsl(var(--destructive))" />}
+                  {pending > 0 && <Cell fill="hsl(var(--muted-foreground))" />}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
 
       {/* Table */}
       <div className="rounded-md border">
