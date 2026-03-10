@@ -263,6 +263,9 @@ export function TcleConsentStatus() {
                   <TableCell className="font-medium">
                     {s.nome_completo ?? 'Sem nome'}
                   </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {s.turma_nome ?? 'Sem turma'}
+                  </TableCell>
                   <TableCell>
                     {s.aceito === true && (
                       <Badge variant="default" className="flex items-center gap-1 w-fit">
