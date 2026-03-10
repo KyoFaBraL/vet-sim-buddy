@@ -30,6 +30,7 @@ interface StudentConsent {
   aceito_em: string | null;
   versao: string | null;
   turma_id: string | null;
+  turma_nome: string | null;
 }
 
 interface Turma {
