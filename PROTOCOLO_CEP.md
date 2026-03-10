@@ -694,27 +694,31 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 - Indicação de tratamentos (fluidoterapia, bicarbonato, oxigenoterapia)
 - Análise de casos clínicos com dados fisiológicos
 
-### Apêndice B — Modelo de Questionário de Satisfação (SUS Adaptado)
+### Apêndice B — Questionário de Satisfação (SUS Adaptado)
 
-Escala: 1 (Discordo totalmente) a 5 (Concordo totalmente)
+**Instruções:** Para cada afirmação, marque com um **X** a coluna que melhor representa sua opinião.
 
-| # | Afirmação |
-|---|-----------|
-| 1 | Eu acharia fácil utilizar o VetBalance frequentemente durante o semestre. |
-| 2 | Eu considerei o software desnecessariamente complexo. |
-| 3 | Eu achei o software fácil de usar. |
-| 4 | Eu precisaria de ajuda de uma pessoa técnica para usar o software. |
-| 5 | Eu achei que as simulações clínicas do software eram realistas e relevantes. |
-| 6 | Eu considerei que havia muita inconsistência no software. |
-| 7 | Eu imagino que a maioria dos estudantes aprenderia a usar o software rapidamente. |
-| 8 | Eu achei o software muito difícil de navegar. |
-| 9 | Eu me senti confiante usando o software. |
-| 10 | Eu precisei aprender muitas coisas antes de poder usar o software. |
-| 11 | O sistema de gamificação (HP, badges, ranking) me motivou a praticar mais. |
-| 12 | O feedback da IA ao final das sessões me ajudou a entender meus erros. |
-| 13 | O software contribuiu para minha compreensão de equilíbrio ácido-base. |
-| 14 | Eu recomendaria o VetBalance para outros estudantes de veterinária. |
-| 15 | O software funcionou bem no meu dispositivo (celular/computador). |
+**Escala:** 1 = Discordo totalmente | 2 = Discordo | 3 = Neutro | 4 = Concordo | 5 = Concordo totalmente
+
+| # | Afirmação | 1 | 2 | 3 | 4 | 5 |
+|---|-----------|:-:|:-:|:-:|:-:|:-:|
+| 1 | Eu acharia fácil utilizar o VetBalance frequentemente durante o semestre. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 2 | Eu considerei o software desnecessariamente complexo. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 3 | Eu achei o software fácil de usar. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 4 | Eu precisaria de ajuda de uma pessoa técnica para usar o software. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 5 | Eu achei que as simulações clínicas do software eram realistas e relevantes. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 6 | Eu considerei que havia muita inconsistência no software. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 7 | Eu imagino que a maioria dos estudantes aprenderia a usar o software rapidamente. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 8 | Eu achei o software muito difícil de navegar. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 9 | Eu me senti confiante usando o software. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 10 | Eu precisei aprender muitas coisas antes de poder usar o software. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 11 | O sistema de gamificação (HP, badges, ranking) me motivou a praticar mais. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 12 | O feedback da IA ao final das sessões me ajudou a entender meus erros. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 13 | O software contribuiu para minha compreensão de equilíbrio ácido-base. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 14 | Eu recomendaria o VetBalance para outros estudantes de veterinária. | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 15 | O software funcionou bem no meu dispositivo (celular/computador). | ☐ | ☐ | ☐ | ☐ | ☐ |
+
+**Participante:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ **Data:** \_\_\_/\_\_\_/\_\_\_\_\_\_
 
 ### Apêndice C — Checklist de Documentos para Submissão na Plataforma Brasil
 
