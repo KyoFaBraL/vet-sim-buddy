@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -36,6 +36,26 @@ interface StudentConsent {
 interface Turma {
   id: string;
   nome: string;
+}
+
+function CountUp({ target, duration = 800 }: { target: number; duration?: number }) {
+  const [value, setValue] = useState(0);
+  const rafRef = useRef<number>();
+
+  useEffect(() => {
+    if (target === 0) { setValue(0); return; }
+    const start = performance.now();
+    const animate = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      setValue(Math.round(eased * target));
+      if (progress < 1) rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [target, duration]);
+
+  return <span className="text-2xl font-bold text-foreground">{value}</span>;
 }
 
 export function TcleConsentStatus() {
@@ -216,7 +236,7 @@ export function TcleConsentStatus() {
           <div className="w-44 h-44 relative">
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
               <div className="text-center">
-                <span className="text-2xl font-bold text-foreground">{students.length}</span>
+                <CountUp target={students.length} duration={800} />
                 <span className="block text-[10px] text-muted-foreground leading-tight">aluno{students.length !== 1 ? 's' : ''}</span>
               </div>
             </div>
