@@ -360,7 +360,7 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 | Parâmetro | Valor | Justificativa |
 |-----------|-------|---------------|
-| Tamanho da amostra | n = 20 (10 por grupo) | Limitação pela disponibilidade de alunos nas disciplinas |
+| Tamanho da amostra | n = 40 (20 por grupo) | Limitação pela disponibilidade de alunos nas disciplinas |
 | Nível de significância (α) | 0,05 | Padrão em pesquisa educacional |
 | Poder estatístico (1 − β) | 0,80 | Padrão recomendado (Cohen, 1988) |
 | Tamanho do efeito esperado | d ≥ 0,5 (médio) | Baseado em estudos prévios com gamificação em saúde |
