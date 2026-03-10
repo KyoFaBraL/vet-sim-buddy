@@ -366,7 +366,7 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 | Tamanho do efeito esperado | d ≥ 0,5 (médio) | Baseado em estudos prévios com gamificação em saúde |
 | Tipo de teste | Bicaudal | Sem direção pré-definida |
 
-**Nota:** Reconhece-se que o tamanho amostral (n=20) constitui uma limitação do estudo, inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências.
+**Nota:** Reconhece-se que o tamanho amostral (n=40) constitui uma limitação do estudo, inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências., inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências.
 
 ### 11.2 Plano de Análise Estatística
 
