@@ -200,9 +200,9 @@ A pesquisa será realizada no(a) *(Nome da Instituição)*, nas disciplinas de *
 | Item | Descrição |
 |------|-----------|
 | **População** | Estudantes regularmente matriculados no curso de Medicina Veterinária da *(Instituição)* |
-| **Amostra** | 20 estudantes (conveniência) |
-| **Grupo Experimental (GE)** | n = 10 (com acesso ao VetBalance) |
-| **Grupo Controle (GC)** | n = 10 (sem acesso ao VetBalance durante a intervenção) |
+| **Amostra** | 40 estudantes (conveniência) |
+| **Grupo Experimental (GE)** | n = 20 (com acesso ao VetBalance) |
+| **Grupo Controle (GC)** | n = 20 (sem acesso ao VetBalance durante a intervenção) |
 
 ### 7.4 Randomização
 
