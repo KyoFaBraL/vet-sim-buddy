@@ -251,6 +251,7 @@ export function TcleConsentStatus() {
             <TableHeader>
               <TableRow>
                 <TableHead>Aluno</TableHead>
+                <TableHead>Turma</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Data</TableHead>
                 <TableHead>Versão</TableHead>
