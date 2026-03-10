@@ -212,7 +212,7 @@ export function TcleConsentStatus() {
 
       {/* Pie Chart */}
       {students.length > 0 && (
-        <div className="flex items-center justify-center gap-6 py-3">
+        <div className="flex items-center justify-center gap-6 py-3 animate-fade-in">
           <div className="w-44 h-44">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -230,6 +230,9 @@ export function TcleConsentStatus() {
                   dataKey="value"
                   strokeWidth={2}
                   stroke="hsl(var(--background))"
+                  animationBegin={0}
+                  animationDuration={800}
+                  animationEasing="ease-out"
                 >
                   {accepted > 0 && <Cell fill="hsl(142 71% 45%)" />}
                   {declined > 0 && <Cell fill="hsl(var(--destructive))" />}
@@ -248,7 +251,7 @@ export function TcleConsentStatus() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex flex-col gap-2 text-sm">
+          <div className="flex flex-col gap-2 text-sm animate-fade-in" style={{ animationDelay: '300ms', animationFillMode: 'backwards' }}>
             {accepted > 0 && (
               <div className="flex items-center gap-2">
                 <span className="inline-block h-3 w-3 rounded-full" style={{ background: 'hsl(142 71% 45%)' }} />
