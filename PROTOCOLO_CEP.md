@@ -87,7 +87,7 @@ Validar a eficácia pedagógica do software educacional gamificado **VetBalance*
 
 ### 3.3 Metodologia
 
-Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 20 estudantes de medicina veterinária, randomizados em grupo experimental (GE, n=10, com acesso ao software) e grupo controle (GC, n=10, sem acesso), durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia.
+Estudo quase-experimental, controlado, com pré e pós-teste, Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estudantes de medicina veterinária, randomizados em grupo experimental (GE, n=20, com acesso ao software) e grupo controle (GC, n=20, sem acesso), durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia., durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia.
 
 ### 3.4 Resultados Esperados
 
@@ -200,9 +200,9 @@ A pesquisa será realizada no(a) *(Nome da Instituição)*, nas disciplinas de *
 | Item | Descrição |
 |------|-----------|
 | **População** | Estudantes regularmente matriculados no curso de Medicina Veterinária da *(Instituição)* |
-| **Amostra** | 20 estudantes (conveniência) |
-| **Grupo Experimental (GE)** | n = 10 (com acesso ao VetBalance) |
-| **Grupo Controle (GC)** | n = 10 (sem acesso ao VetBalance durante a intervenção) |
+| **Amostra** | 40 estudantes (conveniência) |
+| **Grupo Experimental (GE)** | n = 20 (com acesso ao VetBalance) |
+| **Grupo Controle (GC)** | n = 20 (sem acesso ao VetBalance durante a intervenção) |
 
 ### 7.4 Randomização
 
@@ -360,13 +360,13 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 | Parâmetro | Valor | Justificativa |
 |-----------|-------|---------------|
-| Tamanho da amostra | n = 20 (10 por grupo) | Limitação pela disponibilidade de alunos nas disciplinas |
+| Tamanho da amostra | n = 40 (20 por grupo) | Limitação pela disponibilidade de alunos nas disciplinas |
 | Nível de significância (α) | 0,05 | Padrão em pesquisa educacional |
 | Poder estatístico (1 − β) | 0,80 | Padrão recomendado (Cohen, 1988) |
 | Tamanho do efeito esperado | d ≥ 0,5 (médio) | Baseado em estudos prévios com gamificação em saúde |
 | Tipo de teste | Bicaudal | Sem direção pré-definida |
 
-**Nota:** Reconhece-se que o tamanho amostral (n=20) constitui uma limitação do estudo, inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências.
+**Nota:** Reconhece-se que o tamanho amostral (n=40) constitui uma limitação do estudo, inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências., inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências.
 
 ### 11.2 Plano de Análise Estatística
 
