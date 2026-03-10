@@ -216,7 +216,7 @@ export function TcleConsentStatus() {
           <div className="w-44 h-44 relative">
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
               <div className="text-center">
-                <span className="text-2xl font-bold text-foreground">{students.length}</span>
+                <CountUp target={students.length} duration={800} />
                 <span className="block text-[10px] text-muted-foreground leading-tight">aluno{students.length !== 1 ? 's' : ''}</span>
               </div>
             </div>
