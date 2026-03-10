@@ -360,13 +360,34 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 | Parâmetro | Valor | Justificativa |
 |-----------|-------|---------------|
-| Tamanho da amostra | n = 40 (20 por grupo) | Limitação pela disponibilidade de alunos nas disciplinas |
+| Tamanho da amostra | n = 40 (20 por grupo) | Disponibilidade de alunos nas disciplinas |
 | Nível de significância (α) | 0,05 | Padrão em pesquisa educacional |
 | Poder estatístico (1 − β) | 0,80 | Padrão recomendado (Cohen, 1988) |
-| Tamanho do efeito esperado | d ≥ 0,5 (médio) | Baseado em estudos prévios com gamificação em saúde |
+| Tamanho do efeito mínimo detectável | d ≈ 0,91 (grande) | Calculado via fórmula: d = (z_{α/2} + z_{β}) × √(2/n_{grupo}) |
+| Tamanho do efeito esperado | d ≥ 0,8 (grande) | Baseado em estudos prévios com gamificação em saúde |
 | Tipo de teste | Bicaudal | Sem direção pré-definida |
 
-**Nota:** Reconhece-se que o tamanho amostral (n=40) constitui uma limitação do estudo, inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências., inerente à disponibilidade de participantes nas disciplinas específicas. Participantes excedentes (10% a mais) serão cadastrados como reserva para eventuais desistências.
+#### Detalhamento do Cálculo
+
+Com n = 20 por grupo, α = 0,05 (bicaudal) e poder (1 − β) = 0,80:
+
+| Fórmula | Cálculo |
+|---------|---------|
+| z_{α/2} (α = 0,05, bicaudal) | 1,960 |
+| z_{β} (β = 0,20) | 0,842 |
+| d_mín = (z_{α/2} + z_{β}) × √(2/n) | (1,960 + 0,842) × √(2/20) = 2,802 × 0,3162 ≈ **0,91** |
+
+#### Poder Estatístico por Tamanho de Efeito (n = 20/grupo)
+
+| Tamanho de efeito (d) | Classificação (Cohen) | Poder estimado (1 − β) |
+|------------------------|-----------------------|------------------------|
+| 0,5 | Médio | ≈ 0,34 |
+| 0,8 | Grande | ≈ 0,72 |
+| 0,91 | Grande | ≈ 0,80 |
+| 1,0 | Grande | ≈ 0,87 |
+| 1,2 | Muito grande | ≈ 0,95 |
+
+**Nota:** Com n = 40 (20 por grupo), o estudo possui poder de 80% para detectar efeitos grandes (d ≈ 0,91). Para efeitos médios (d = 0,5), o poder é limitado (≈ 34%), o que constitui uma limitação reconhecida. Participantes excedentes (10% a mais, ou seja, ≈ 44 cadastrados) serão incluídos como reserva para eventuais desistências. Caso o efeito observado seja inferior a d = 0,91, os resultados serão interpretados com cautela e reportados como indicativos, não conclusivos.
 
 ### 11.2 Plano de Análise Estatística
 
