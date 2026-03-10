@@ -293,8 +293,8 @@ export function UserManagement() {
                     </div>
                   ) : (
                     <div className="flex items-center gap-1">
-                      {userData.email}
-                      {isAdmin && (
+                      {isAdmin ? userData.email : (userData.email || "—")}
+                      {isAdmin && userData.email && (
                         <Button
                           variant="ghost"
                           size="sm"
