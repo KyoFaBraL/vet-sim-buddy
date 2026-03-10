@@ -80,7 +80,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 ## 6. VALIDAÇÃO PROPOSTA
 
-A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, com **20 estudantes** randomizados em dois grupos (n=10 cada):
+A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, com **40 estudantes** randomizados em dois grupos (n=20 cada):
 - **Grupo experimental (GE):** Com acesso ao VetBalance durante todo o período de intervenção
 - **Grupo controle (GC):** Atividades tradicionais, sem acesso ao software
 
