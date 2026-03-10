@@ -124,7 +124,7 @@ export function TcleConsentStatus() {
   const pending = students.filter((s) => s.aceito === null).length;
 
   const exportCsv = () => {
-    const header = 'Aluno,Status,Data,Versão';
+    const header = 'Aluno,Turma,Status,Data,Versão';
     const rows = students.map((s) => {
       const status = s.aceito === true ? 'Aceito' : s.aceito === false ? 'Recusado' : 'Pendente';
       const data = s.aceito_em
@@ -132,7 +132,8 @@ export function TcleConsentStatus() {
         : '';
       const versao = s.versao ? `v${s.versao}` : '';
       const nome = (s.nome_completo ?? 'Sem nome').replace(/,/g, ' ');
-      return `${nome},${status},${data},${versao}`;
+      const turma = (s.turma_nome ?? 'Sem turma').replace(/,/g, ' ');
+      return `${nome},${turma},${status},${data},${versao}`;
     });
     const csv = [header, ...rows].join('\n');
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
