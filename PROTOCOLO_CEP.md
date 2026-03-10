@@ -87,7 +87,7 @@ Validar a eficácia pedagógica do software educacional gamificado **VetBalance*
 
 ### 3.3 Metodologia
 
-Estudo quase-experimental, controlado, com pré e pós-teste, Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estudantes de medicina veterinária, randomizados em grupo experimental (GE, n=20, com acesso ao software) e grupo controle (GC, n=20, sem acesso), durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia., durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia.
+Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estudantes de medicina veterinária, randomizados em grupo experimental (GE, n=20, com acesso ao software) e grupo controle (GC, n=20, sem acesso), durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia.
 
 ### 3.4 Resultados Esperados
 
