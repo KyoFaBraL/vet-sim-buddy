@@ -64,7 +64,7 @@
 | Termo | Sigla | Definição |
 |-------|-------|-----------|
 | Comitê de Ética em Pesquisa | CEP | Órgão institucional responsável pela aprovação de protocolos de pesquisa envolvendo seres humanos |
-| d de Cohen | d | Medida de tamanho do efeito; valores ≥ 0,5 indicam efeito médio; meta do estudo: d ≥ 0,5 |
+| d de Cohen | d | Medida de tamanho do efeito; valores ≥ 0,8 indicam efeito grande; meta do estudo: d ≥ 0,8 |
 | Grupo Controle | GC | Participantes sem acesso ao software durante o período de intervenção; recebem ensino tradicional |
 | Grupo Experimental | GE | Participantes com acesso ao VetBalance durante o período de intervenção |
 | Mobile Learning | m-learning | Modalidade de aprendizagem mediada por dispositivos móveis (smartphones, tablets) |

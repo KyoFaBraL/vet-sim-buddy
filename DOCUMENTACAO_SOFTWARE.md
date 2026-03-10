@@ -1166,7 +1166,7 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 |----------|---------|------------|
 | Ganho de aprendizagem GE | Δ(pós − pré-teste) | > 0 com p < 0,05 |
 | Superioridade GE sobre GC | Diferença de médias | p < 0,05 (teste t) |
-| Tamanho do efeito | d de Cohen | d ≥ 0,5 |
+| Tamanho do efeito | d de Cohen | d ≥ 0,8 |
 | Correlação software × desempenho | r de Pearson | r ≥ 0,3 com p < 0,05 |
 | Satisfação do usuário | Questionário SUS | Média ≥ 4,0/5,0 |
 | Disponibilidade do SUT | Uptime | ≥ 99% |

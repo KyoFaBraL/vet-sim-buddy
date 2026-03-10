@@ -340,7 +340,7 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 **Diferença no desempenho acadêmico** entre GE e GC no pós-teste final (O₄), medida pela nota na avaliação abrangente de equilíbrio ácido-base (escala 0–10).
 
-- **Critério de sucesso:** Diferença estatisticamente significativa (p < 0,05) com tamanho de efeito d de Cohen ≥ 0,5 (efeito médio).
+- **Critério de sucesso:** Diferença estatisticamente significativa (p < 0,05) com tamanho de efeito d de Cohen ≥ 0,8 (efeito grande).
 
 ### 10.2 Desfechos Secundários
 
