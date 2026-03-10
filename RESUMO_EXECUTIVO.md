@@ -106,7 +106,7 @@ A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a
 | ✅ | 31/07/2026 | Entrega do relatório final |
 | 🎓 | Agosto/2026 | Defesa do mestrado |
 
-**Análise estatística:** Teste t de Student (α=0,05), d de Cohen (≥ 0,5), correlação de Pearson (r ≥ 0,3), questionário SUS adaptado (média ≥ 4,0/5,0), com processamento no **RStudio**.
+**Análise estatística:** Teste t de Student (α=0,05), d de Cohen (≥ 0,8), correlação de Pearson (r ≥ 0,3), questionário SUS adaptado (média ≥ 4,0/5,0), com processamento no **RStudio**.
 
 **Resultados esperados:** O grupo experimental deverá apresentar desempenho significativamente superior, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base em medicina veterinária.
 
