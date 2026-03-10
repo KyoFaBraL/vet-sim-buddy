@@ -30,6 +30,7 @@ interface StudentConsent {
   aceito_em: string | null;
   versao: string | null;
   turma_id: string | null;
+  turma_nome: string | null;
 }
 
 interface Turma {
@@ -79,6 +80,9 @@ export function TcleConsentStatus() {
         }
       });
 
+      const turmaMap = new Map<string, string>();
+      (turmasRes.data ?? []).forEach((t) => turmaMap.set(t.id, t.nome));
+
       const result: StudentConsent[] = linked.map((s: any) => {
         const consent = consentMap.get(s.student_id);
         return {
@@ -88,6 +92,7 @@ export function TcleConsentStatus() {
           aceito_em: consent?.aceito_em ?? null,
           versao: consent?.versao ?? null,
           turma_id: s.turma_id ?? null,
+          turma_nome: s.turma_id ? (turmaMap.get(s.turma_id) ?? null) : null,
         };
       });
 
@@ -119,7 +124,7 @@ export function TcleConsentStatus() {
   const pending = students.filter((s) => s.aceito === null).length;
 
   const exportCsv = () => {
-    const header = 'Aluno,Status,Data,Versão';
+    const header = 'Aluno,Turma,Status,Data,Versão';
     const rows = students.map((s) => {
       const status = s.aceito === true ? 'Aceito' : s.aceito === false ? 'Recusado' : 'Pendente';
       const data = s.aceito_em
@@ -127,7 +132,8 @@ export function TcleConsentStatus() {
         : '';
       const versao = s.versao ? `v${s.versao}` : '';
       const nome = (s.nome_completo ?? 'Sem nome').replace(/,/g, ' ');
-      return `${nome},${status},${data},${versao}`;
+      const turma = (s.turma_nome ?? 'Sem turma').replace(/,/g, ' ');
+      return `${nome},${turma},${status},${data},${versao}`;
     });
     const csv = [header, ...rows].join('\n');
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
@@ -245,6 +251,7 @@ export function TcleConsentStatus() {
             <TableHeader>
               <TableRow>
                 <TableHead>Aluno</TableHead>
+                <TableHead>Turma</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Data</TableHead>
                 <TableHead>Versão</TableHead>
@@ -255,6 +262,9 @@ export function TcleConsentStatus() {
                 <TableRow key={s.student_id}>
                   <TableCell className="font-medium">
                     {s.nome_completo ?? 'Sem nome'}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {s.turma_nome ?? 'Sem turma'}
                   </TableCell>
                   <TableCell>
                     {s.aceito === true && (
