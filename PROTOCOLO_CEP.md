@@ -91,7 +91,7 @@ Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estu
 
 ### 3.4 Resultados Esperados
 
-Espera-se que o grupo experimental apresente desempenho significativamente superior (p < 0,05; d de Cohen ≥ 0,5) nas avaliações, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base.
+Espera-se que o grupo experimental apresente desempenho significativamente superior (p < 0,05; d de Cohen ≥ 0,8) nas avaliações, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base., demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base.
 
 ### 3.5 Palavras-chave
 
