@@ -79,6 +79,9 @@ export function TcleConsentStatus() {
         }
       });
 
+      const turmaMap = new Map<string, string>();
+      (turmasRes.data ?? []).forEach((t) => turmaMap.set(t.id, t.nome));
+
       const result: StudentConsent[] = linked.map((s: any) => {
         const consent = consentMap.get(s.student_id);
         return {
@@ -88,6 +91,7 @@ export function TcleConsentStatus() {
           aceito_em: consent?.aceito_em ?? null,
           versao: consent?.versao ?? null,
           turma_id: s.turma_id ?? null,
+          turma_nome: s.turma_id ? (turmaMap.get(s.turma_id) ?? null) : null,
         };
       });
 
