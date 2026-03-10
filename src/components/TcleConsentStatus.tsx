@@ -38,6 +38,26 @@ interface Turma {
   nome: string;
 }
 
+function CountUp({ target, duration = 800 }: { target: number; duration?: number }) {
+  const [value, setValue] = useState(0);
+  const rafRef = useRef<number>();
+
+  useEffect(() => {
+    if (target === 0) { setValue(0); return; }
+    const start = performance.now();
+    const animate = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      setValue(Math.round(eased * target));
+      if (progress < 1) rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [target, duration]);
+
+  return <span className="text-2xl font-bold text-foreground">{value}</span>;
+}
+
 export function TcleConsentStatus() {
   const [allStudents, setAllStudents] = useState<StudentConsent[]>([]);
   const [turmas, setTurmas] = useState<Turma[]>([]);
