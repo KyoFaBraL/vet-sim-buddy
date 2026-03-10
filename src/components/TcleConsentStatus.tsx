@@ -212,8 +212,8 @@ export function TcleConsentStatus() {
 
       {/* Pie Chart */}
       {students.length > 0 && (
-        <div className="flex justify-center py-2">
-          <div className="w-48 h-48">
+        <div className="flex items-center justify-center gap-6 py-3">
+          <div className="w-44 h-44">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -224,19 +224,58 @@ export function TcleConsentStatus() {
                   ]}
                   cx="50%"
                   cy="50%"
-                  innerRadius={35}
-                  outerRadius={65}
-                  paddingAngle={3}
+                  innerRadius={40}
+                  outerRadius={68}
+                  paddingAngle={4}
                   dataKey="value"
-                  label={({ name, value }) => `${name}: ${value}`}
+                  strokeWidth={2}
+                  stroke="hsl(var(--background))"
                 >
-                  {accepted > 0 && <Cell fill="hsl(var(--primary))" />}
+                  {accepted > 0 && <Cell fill="hsl(142 71% 45%)" />}
                   {declined > 0 && <Cell fill="hsl(var(--destructive))" />}
-                  {pending > 0 && <Cell fill="hsl(var(--muted-foreground))" />}
+                  {pending > 0 && <Cell fill="hsl(var(--muted-foreground) / 0.4)" />}
                 </Pie>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value: number, name: string) => [`${value} aluno${value !== 1 ? 's' : ''}`, name]}
+                  contentStyle={{
+                    borderRadius: '8px',
+                    border: '1px solid hsl(var(--border))',
+                    background: 'hsl(var(--popover))',
+                    color: 'hsl(var(--popover-foreground))',
+                    fontSize: '12px',
+                  }}
+                />
               </PieChart>
             </ResponsiveContainer>
+          </div>
+          <div className="flex flex-col gap-2 text-sm">
+            {accepted > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="inline-block h-3 w-3 rounded-full" style={{ background: 'hsl(142 71% 45%)' }} />
+                <span className="text-muted-foreground">Aceitos</span>
+                <span className="font-semibold">{accepted}</span>
+                <span className="text-xs text-muted-foreground">({Math.round((accepted / students.length) * 100)}%)</span>
+              </div>
+            )}
+            {declined > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="inline-block h-3 w-3 rounded-full bg-destructive" />
+                <span className="text-muted-foreground">Recusados</span>
+                <span className="font-semibold">{declined}</span>
+                <span className="text-xs text-muted-foreground">({Math.round((declined / students.length) * 100)}%)</span>
+              </div>
+            )}
+            {pending > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="inline-block h-3 w-3 rounded-full bg-muted-foreground/40" />
+                <span className="text-muted-foreground">Pendentes</span>
+                <span className="font-semibold">{pending}</span>
+                <span className="text-xs text-muted-foreground">({Math.round((pending / students.length) * 100)}%)</span>
+              </div>
+            )}
+            <div className="mt-1 pt-1 border-t text-xs text-muted-foreground">
+              Total: <span className="font-medium text-foreground">{students.length}</span> aluno{students.length !== 1 ? 's' : ''}
+            </div>
           </div>
         </div>
       )}
