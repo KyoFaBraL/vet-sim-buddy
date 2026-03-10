@@ -175,7 +175,7 @@ O₄ = Pós-teste final (Junho/2026)
 |----|----------|---------|------------|
 | CA-01 | Ganho de aprendizagem do GE | Δ(pós-teste − pré-teste) | > 0 com p < 0,05 |
 | CA-02 | Superioridade do GE sobre GC | Diferença de médias no pós-teste | p < 0,05 (teste t) |
-| CA-03 | Tamanho do efeito | d de Cohen | d ≥ 0,5 (efeito médio) |
+| CA-03 | Tamanho do efeito | d de Cohen | d ≥ 0,8 (efeito grande) |
 | CA-04 | Correlação software × desempenho | r de Pearson (win rate × nota) | r ≥ 0,3 com p < 0,05 |
 
 ### 6.2 Critérios de Qualidade de Software (ISO/IEC 25010)

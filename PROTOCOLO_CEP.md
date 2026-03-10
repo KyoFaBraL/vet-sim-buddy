@@ -87,11 +87,11 @@ Validar a eficácia pedagógica do software educacional gamificado **VetBalance*
 
 ### 3.3 Metodologia
 
-Estudo quase-experimental, controlado, com pré e pós-teste, Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estudantes de medicina veterinária, randomizados em grupo experimental (GE, n=20, com acesso ao software) e grupo controle (GC, n=20, sem acesso), durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia., durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia.
+Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estudantes de medicina veterinária, randomizados em grupo experimental (GE, n=20, com acesso ao software) e grupo controle (GC, n=20, sem acesso), durante 20 semanas, nas disciplinas de Fisiologia Animal e Farmacologia.
 
 ### 3.4 Resultados Esperados
 
-Espera-se que o grupo experimental apresente desempenho significativamente superior (p < 0,05; d de Cohen ≥ 0,5) nas avaliações, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base.
+Espera-se que o grupo experimental apresente desempenho significativamente superior (p < 0,05; d de Cohen ≥ 0,8) nas avaliações, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base., demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base.
 
 ### 3.5 Palavras-chave
 
@@ -340,7 +340,7 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 **Diferença no desempenho acadêmico** entre GE e GC no pós-teste final (O₄), medida pela nota na avaliação abrangente de equilíbrio ácido-base (escala 0–10).
 
-- **Critério de sucesso:** Diferença estatisticamente significativa (p < 0,05) com tamanho de efeito d de Cohen ≥ 0,5 (efeito médio).
+- **Critério de sucesso:** Diferença estatisticamente significativa (p < 0,05) com tamanho de efeito d de Cohen ≥ 0,8 (efeito grande).
 
 ### 10.2 Desfechos Secundários
 
