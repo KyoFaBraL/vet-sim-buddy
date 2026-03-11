@@ -193,7 +193,7 @@ O₄ = Pós-teste final abrangente (Junho/2026)
 
 ### 7.2 Local da Pesquisa
 
-A pesquisa será realizada no(a) *(Nome da Instituição)*, nas disciplinas de **Fisiologia Animal** e **Farmacologia** do curso de graduação em Medicina Veterinária.
+A pesquisa será realizada na **Universidade Federal do Piauí (UFPI)**, nas disciplinas de **Fisiologia Animal** e **Farmacologia** do curso de graduação em Medicina Veterinária.
 
 ### 7.3 População e Amostra
 
