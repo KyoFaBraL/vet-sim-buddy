@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle, Wrench } from "lucide-react";
+import { CaseDetailsPanel } from "@/components/CaseDetailsPanel";
 
 interface CaseManagerProps {
   onCaseCreated: () => void;
@@ -46,6 +47,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
   const [validatingCase, setValidatingCase] = useState<number | null>(null);
   const [fixingCase, setFixingCase] = useState<number | null>(null);
   const [validationResults, setValidationResults] = useState<Record<number, CaseValidation>>({});
+  const [detailsRefreshKey, setDetailsRefreshKey] = useState<Record<number, number>>({});
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -186,12 +188,13 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
         description: `${data.resumoCorrecoes} (${data.primaryUpdated} parâmetros, ${data.treatmentsUpdated} tratamentos)`,
       });
 
-      // Clear old validation and re-validate
+      // Clear old validation, bump details refresh key, and re-validate
       setValidationResults(prev => {
         const next = { ...prev };
         delete next[caseId];
         return next;
       });
+      setDetailsRefreshKey(prev => ({ ...prev, [caseId]: (prev[caseId] || 0) + 1 }));
 
       await loadCustomCases();
       onCaseCreated();
@@ -440,6 +443,12 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                       </Button>
                     </div>
                   </div>
+
+                  {/* Case details: parameters & treatments */}
+                  <CaseDetailsPanel
+                    caseId={caso.id}
+                    refreshKey={detailsRefreshKey[caso.id] || 0}
+                  />
 
                   {/* Validation result */}
                   {validation && (
