@@ -609,7 +609,7 @@ Em caso de dúvidas sobre a pesquisa, entre em contato com:
 
 - **Pesquisador Responsável:** Caio Farias Cabral – caiofcabral@ufpi.edu.br – (86) 98142-5389
 - **Orientador(a):** Prof. Dr. Napoleão Martins Argôlo Neto
-- **Comitê de Ética em Pesquisa (CEP):** *(Nome do CEP, endereço, telefone e e-mail)*
+- **Comitê de Ética em Pesquisa (CEP/UFPI):** Campus Universitário Ministro Petrônio Portella, Bairro Ininga, CEP 64.049-550, Teresina – PI. Telefone: (86) 2222-4824. E-mail: cep.ufpi@ufpi.edu.br. Horário de atendimento: segunda a sexta, das 08h às 12h e das 14h às 18h.
 
 **9. Consentimento**
 
