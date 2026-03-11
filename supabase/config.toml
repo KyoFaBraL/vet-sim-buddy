@@ -38,3 +38,6 @@ verify_jwt = true
 [functions.validate-case-acidbase]
 verify_jwt = true
 
+[functions.autofix-case]
+verify_jwt = true
+
