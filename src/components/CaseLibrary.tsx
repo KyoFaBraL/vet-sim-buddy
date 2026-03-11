@@ -60,12 +60,14 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
   const applyFilters = () => {
     let filtered = [...cases];
 
-    // Filtro por espécie
     if (especieFilter !== "todos") {
       filtered = filtered.filter(c => c.especie?.toLowerCase() === especieFilter);
     }
 
-    // Filtro por busca
+    if (condicaoFilter !== "todos") {
+      filtered = filtered.filter(c => c.condicoes?.nome === condicaoFilter);
+    }
+
     if (searchTerm) {
       filtered = filtered.filter(c => 
         c.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -75,6 +77,10 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
 
     setFilteredCases(filtered);
   };
+
+  const uniqueCondicoes = Array.from(
+    new Set(cases.map(c => c.condicoes?.nome).filter(Boolean))
+  ).sort() as string[];
 
   const getDifficulty = (caseItem: Case) => {
     // Lógica simplificada de dificuldade baseada no nome da condição
