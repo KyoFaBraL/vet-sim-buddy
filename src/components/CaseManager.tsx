@@ -47,6 +47,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
   const [validatingCase, setValidatingCase] = useState<number | null>(null);
   const [fixingCase, setFixingCase] = useState<number | null>(null);
   const [validationResults, setValidationResults] = useState<Record<number, CaseValidation>>({});
+  const [detailsRefreshKey, setDetailsRefreshKey] = useState<Record<number, number>>({});
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
