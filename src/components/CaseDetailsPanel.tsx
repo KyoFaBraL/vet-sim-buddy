@@ -217,6 +217,11 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
         <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => setExpanded(!expanded)}>
           {expanded ? <><ChevronUp className="h-3 w-3 mr-1" /> Ocultar</> : <><ChevronDown className="h-3 w-3 mr-1" /> Detalhes</>}
         </Button>
+        {total > 0 && (
+          <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={handleExportCSV}>
+            <Download className="h-3 w-3 mr-1" /> CSV
+          </Button>
+        )}
       </div>
 
       {expanded && (
