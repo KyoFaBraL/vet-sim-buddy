@@ -227,41 +227,42 @@ O₄ = Pós-teste final (Junho/2026)
 | 2 | 17/03 – 23/03 | Cadastro dos participantes no SUT e randomização GE/GC | Pesquisador + Docentes | Lista de alocação selada |
 | 3 | 24/03 – 28/03 | Aplicação do **pré-teste diagnóstico** (O₁) — ambos os grupos | Docentes | Dados do pré-teste tabulados |
 
-### 8.2 Fase 2 — Intervenção Inicial (31/03 – 25/04/2026)
+### 8.2 Fase 2 — Intervenção Inicial (30/03 – 18/04/2026)
 
 | Semana | Período | Procedimento | Responsável | Entregável |
 |--------|---------|-------------|-------------|------------|
-| 4 | 31/03 – 04/04 | Aulas teóricas sobre equilíbrio ácido-base — parte 1 (GE + GC) | Docentes | Registro de frequência |
+| 4 | 30/03 – 04/04 | Aulas teóricas sobre equilíbrio ácido-base — parte 1 (GE + GC) | Docentes | Registro de frequência |
 | 5 | 07/04 – 11/04 | Aulas teóricas sobre equilíbrio ácido-base — parte 2 (GE + GC); início do treinamento GE no SUT | Docentes / Pesquisador | Registro de frequência; logs do tutorial |
-| 6 | 14/04 – 18/04 | Treinamento do GE no SUT: tutorial guiado + primeiros casos clínicos | Pesquisador | Logs de conclusão do tutorial |
-| 7 | 21/04 – 25/04 | Uso supervisionado do SUT pelo GE — casos de acidose e alcalose metabólica | Alunos GE | Relatório de sessões |
+| 6 | 14/04 – 18/04 | Treinamento do GE no SUT: tutorial guiado + primeiros casos clínicos; uso supervisionado (acidose e alcalose metabólica) | Pesquisador / Alunos GE | Logs de conclusão do tutorial; relatório de sessões |
 
-### 8.3 Fase 3 — Avaliação Intermediária 1 (28/04 – 16/05/2026)
+> **Nota:** A semana de 20/04 a 25/04/2026 constitui intervalo entre as fases F2 e F3, sem atividades programadas.
 
-| Semana | Período | Procedimento | Responsável | Entregável |
-|--------|---------|-------------|-------------|------------|
-| 8 | 28/04 – 02/05 | Uso intensivo do SUT pelo GE; atividades tradicionais pelo GC | Alunos / Docentes | Logs do sistema |
-| 9 | 05/05 – 09/05 | Continuação do uso intensivo GE; preparação da avaliação | Alunos / Docentes | Logs do sistema |
-| 9–10 | 11/05 – 14/05 | **Avaliação intermediária 1** (O₂) — distúrbios metabólicos | Docentes | Notas tabuladas |
-| 10 | 15/05 – 16/05 | Análise parcial dos dados no RStudio | Pesquisador | Relatório parcial |
-
-### 8.4 Fase 4 — Intervenção Avançada (19/05 – 06/06/2026)
+### 8.3 Fase 3 — Avaliação Intermediária 1 (27/04 – 16/05/2026)
 
 | Semana | Período | Procedimento | Responsável | Entregável |
 |--------|---------|-------------|-------------|------------|
-| 11 | 19/05 – 23/05 | Casos avançados no SUT: cetoacidose diabética, hipercapnia, distúrbios mistos | Alunos GE | Dados de sessões avançadas |
-| 12 | 25/05 – 01/06 | Aulas avançadas sobre compensação e protocolos terapêuticos (GE + GC) | Docentes | Registro de frequência |
-| 13 | 02/06 – 06/06 | Modo Avaliação do SUT (sem dicas de IA) — simulação de cenário real | Alunos GE | Dados do modo avaliação |
+| 7 | 27/04 – 02/05 | Uso intensivo do SUT pelo GE; atividades tradicionais pelo GC | Alunos / Docentes | Logs do sistema |
+| 8 | 04/05 – 09/05 | Continuação do uso intensivo GE; preparação da avaliação | Alunos / Docentes | Logs do sistema |
+| 8–9 | 11/05 – 14/05 | **Avaliação intermediária 1** (O₂) — distúrbios metabólicos | Docentes | Notas tabuladas |
+| 9 | 15/05 – 16/05 | Análise parcial dos dados no RStudio | Pesquisador | Relatório parcial |
 
-### 8.5 Fase 5 — Avaliação Final e Coleta (09/06 – 27/06/2026)
+### 8.4 Fase 4 — Intervenção Avançada (18/05 – 06/06/2026)
 
 | Semana | Período | Procedimento | Responsável | Entregável |
 |--------|---------|-------------|-------------|------------|
-| 14 | 09/06 – 13/06 | Revisão geral no SUT — todos os casos disponíveis | Alunos GE | Dados consolidados |
-| 14–15 | 14/06 – 16/06 | **Avaliação intermediária 2** (O₃) — distúrbios respiratórios e mistos | Docentes | Notas tabuladas |
-| 15 | 17/06 – 19/06 | Aplicação do **questionário de satisfação** (SUS adaptado) ao GE | Pesquisador | Respostas tabuladas |
-| 15–16 | 20/06 – 23/06 | **Pós-teste final** (O₄) — avaliação abrangente (GE + GC) | Docentes | Notas tabuladas |
-| 16 | 24/06 – 27/06 | Exportação completa dos dados do SUT (CSV/TXT) | Pesquisador | Arquivos de dados |
+| 10 | 18/05 – 23/05 | Casos avançados no SUT: cetoacidose diabética, hipercapnia, distúrbios mistos | Alunos GE | Dados de sessões avançadas |
+| 11 | 25/05 – 01/06 | Aulas avançadas sobre compensação e protocolos terapêuticos (GE + GC) | Docentes | Registro de frequência |
+| 12 | 01/06 – 06/06 | Modo Avaliação do SUT (sem dicas de IA) — simulação de cenário real | Alunos GE | Dados do modo avaliação |
+
+### 8.5 Fase 5 — Avaliação Final e Coleta (08/06 – 27/06/2026)
+
+| Semana | Período | Procedimento | Responsável | Entregável |
+|--------|---------|-------------|-------------|------------|
+| 13 | 08/06 – 13/06 | Revisão geral no SUT — todos os casos disponíveis | Alunos GE | Dados consolidados |
+| 13–14 | 14/06 – 16/06 | **Avaliação intermediária 2** (O₃) — distúrbios respiratórios e mistos | Docentes | Notas tabuladas |
+| 14 | 17/06 – 19/06 | Aplicação do **questionário de satisfação** (SUS adaptado) ao GE | Pesquisador | Respostas tabuladas |
+| 14–15 | 20/06 – 23/06 | **Pós-teste final** (O₄) — avaliação abrangente (GE + GC) | Docentes | Notas tabuladas |
+| 15 | 24/06 – 27/06 | Exportação completa dos dados do SUT (CSV/TXT) | Pesquisador | Arquivos de dados |
 
 ### 8.6 Fase 6 — Análise e Relatório (30/06 – 31/07/2026)
 
