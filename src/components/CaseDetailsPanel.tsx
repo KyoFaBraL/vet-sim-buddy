@@ -92,21 +92,9 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     invokeUpdate({ caseId, action: "update_secondary_param", paramId, valor: editValue });
   };
 
-  const handleSaveTreatment = (treatmentId: number | string) => {
-    invokeUpdate({
-      caseId, action: "update_treatment", treatmentId,
-      prioridade: editValue, justificativa: editJustificativa,
-    });
-  };
-
-  const handleDelete = (type: "primary" | "secondary" | "treatment", id: number | string) => {
-    const actionMap = {
-      primary: "delete_primary_param",
-      secondary: "delete_secondary_param",
-      treatment: "delete_treatment",
-    };
-    const idKey = type === "treatment" ? "treatmentId" : "paramId";
-    invokeUpdate({ caseId, action: actionMap[type], [idKey]: id });
+  const handleDelete = (type: "primary" | "secondary", id: number | string) => {
+    const actionMap = { primary: "delete_primary_param", secondary: "delete_secondary_param" };
+    invokeUpdate({ caseId, action: actionMap[type], paramId: id });
   };
 
   const startEditParam = (key: string, valor: number) => {
@@ -114,27 +102,7 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     setEditValue(String(valor));
   };
 
-  const startEditTreatment = (key: string, t: CaseTreatment) => {
-    setEditing(key);
-    setEditValue(String(t.prioridade));
-    setEditJustificativa(t.justificativa || "");
-  };
-
-  const handleDrop = async (fromIdx: number, toIdx: number) => {
-    if (fromIdx === toIdx) return;
-    const reordered = [...tratamentos];
-    const [moved] = reordered.splice(fromIdx, 1);
-    reordered.splice(toIdx, 0, moved);
-    // Optimistic update
-    setTratamentos(reordered);
-    setDragIndex(null);
-    setDragOverIndex(null);
-    // Save new order
-    const order = reordered.map((t, i) => ({ id: t.id, prioridade: i + 1 }));
-    await invokeUpdate({ caseId, action: "reorder_treatments", order });
-  };
-
-  const total = primarios.length + secundarios.length + tratamentos.length;
+  const total = primarios.length + secundarios.length;
 
   if (loading) {
     return (
