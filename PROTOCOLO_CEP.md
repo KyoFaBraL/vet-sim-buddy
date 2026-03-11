@@ -42,14 +42,14 @@
 | **Área temática** | Educação em Saúde / Tecnologia Educacional |
 | **Tipo de estudo** | Estudo quase-experimental, controlado, com pré e pós-teste |
 | **Pesquisador responsável** | Caio Farias Cabral |
-| **CPF do pesquisador** | *(CPF)* |
+| **CPF do pesquisador** | 656.268.853-15 |
 | **Titulação** | Mestrando em Ciência Animal |
 | **Instituição proponente** | Universidade Federal do Piauí (UFPI) |
-| **CNPJ da instituição** | *(CNPJ)* |
+| **CNPJ da instituição** | 06.517.387/0001-34 |
 | **Orientador(a)** | Prof. Dr. Napoleão Martins Argôlo Neto |
 | **E-mail do pesquisador** | caiofcabral@ufpi.edu.br |
 | **Telefone** | (86) 98142-5389 |
-| **Endereço** | *(Endereço institucional completo)* |
+| **Endereço** | Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI |
 
 > **Nota:** Preencher no formulário da Plataforma Brasil (https://plataformabrasil.saude.gov.br)
 
