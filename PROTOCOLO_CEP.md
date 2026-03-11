@@ -722,21 +722,21 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 **Questão 1.** Qual é a faixa de pH sanguíneo considerada **normal** para cães e gatos?
 
 - a) 7,20 – 7,30
-- b) 7,35 – 7,45 ✔
+- b) 7,35 – 7,45
 - c) 7,45 – 7,55
 - d) 7,25 – 7,40
 
 **Questão 2.** A equação de Henderson-Hasselbalch relaciona o pH com a razão entre:
 
 - a) PaCO₂ e PaO₂
-- b) HCO₃⁻ e PaCO₂ ✔
+- b) HCO₃⁻ e PaCO₂
 - c) Na⁺ e Cl⁻
 - d) Albumina e lactato
 
 **Questão 3.** A principal função do sistema tampão bicarbonato (HCO₃⁻/H₂CO₃) é:
 
 - a) Transportar oxigênio para os tecidos
-- b) Minimizar variações bruscas do pH sanguíneo ✔
+- b) Minimizar variações bruscas do pH sanguíneo
 - c) Regular a pressão arterial sistêmica
 - d) Aumentar a excreção renal de potássio
 
@@ -744,7 +744,7 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 
 - a) Rim
 - b) Fígado
-- c) Pulmão ✔
+- c) Pulmão
 - d) Baço
 
 **Questão 5.** A compensação **renal** de um distúrbio ácido-base ocorre tipicamente em qual intervalo de tempo?
@@ -752,7 +752,7 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 - a) Segundos a minutos
 - b) Minutos a 1 hora
 - c) 6 a 12 horas
-- d) 24 a 72 horas ✔
+- d) 24 a 72 horas
 
 ---
 
@@ -762,27 +762,27 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 
 - a) Alcalose respiratória
 - b) Acidose respiratória
-- c) Acidose metabólica com compensação respiratória ✔
+- c) Acidose metabólica com compensação respiratória
 - d) Alcalose metabólica com compensação respiratória
 
 **Questão 7.** Um gato apresenta: pH = 7,52; PaCO₂ = 50 mmHg; HCO₃⁻ = 38 mEq/L. Qual é a interpretação correta?
 
 - a) Acidose respiratória descompensada
-- b) Alcalose metabólica com compensação respiratória ✔
+- b) Alcalose metabólica com compensação respiratória
 - c) Alcalose respiratória primária
 - d) Distúrbio misto com predomínio respiratório
 
 **Questão 8.** Um cão sedado apresenta: pH = 7,22; PaCO₂ = 65 mmHg; HCO₃⁻ = 25 mEq/L. Qual é o diagnóstico?
 
 - a) Acidose metabólica
-- b) Acidose respiratória aguda ✔
+- b) Acidose respiratória aguda
 - c) Alcalose metabólica
 - d) Distúrbio misto
 
 **Questão 9.** Em um paciente com acidose metabólica, qual resposta compensatória é esperada?
 
 - a) Aumento da PaCO₂ por hipoventilação
-- b) Diminuição da PaCO₂ por hiperventilação ✔
+- b) Diminuição da PaCO₂ por hiperventilação
 - c) Aumento do HCO₃⁻ por reabsorção renal
 - d) Diminuição do HCO₃⁻ por excreção renal
 
@@ -791,7 +791,7 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 - a) pH
 - b) PaCO₂
 - c) HCO₃⁻
-- d) PaO₂ ✔
+- d) PaO₂
 
 ---
 
@@ -800,35 +800,35 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 **Questão 11.** Um cão com vômitos intensos (perda de HCl gástrico) provavelmente desenvolverá:
 
 - a) Acidose metabólica
-- b) Alcalose metabólica ✔
+- b) Alcalose metabólica
 - c) Acidose respiratória
 - d) Alcalose respiratória
 
 **Questão 12.** Um gato com obstrução uretral completa e oligúria provavelmente apresentará:
 
 - a) Alcalose metabólica hipoclorêmica
-- b) Acidose metabólica com hipercalemia ✔
+- b) Acidose metabólica com hipercalemia
 - c) Alcalose respiratória
 - d) Acidose respiratória crônica
 
 **Questão 13.** A cetoacidose diabética em cães causa acidose metabólica principalmente por:
 
 - a) Perda renal excessiva de bicarbonato
-- b) Acúmulo de corpos cetônicos (ácidos orgânicos) ✔
+- b) Acúmulo de corpos cetônicos (ácidos orgânicos)
 - c) Hipoventilação central
 - d) Hipercloremia por excesso de NaCl 0,9%
 
 **Questão 14.** Em um paciente com acidose respiratória **crônica**, espera-se encontrar:
 
 - a) HCO₃⁻ normal e pH muito baixo
-- b) HCO₃⁻ elevado e pH próximo ao normal ✔
+- b) HCO₃⁻ elevado e pH próximo ao normal
 - c) PaCO₂ baixo e pH alto
 - d) HCO₃⁻ baixo e PaCO₂ normal
 
 **Questão 15.** O ânion gap (AG) é útil para:
 
 - a) Avaliar a função hepática
-- b) Classificar o tipo de acidose metabólica ✔
+- b) Classificar o tipo de acidose metabólica
 - c) Determinar o grau de compensação respiratória
 - d) Mensurar a pressão oncótica plasmática
 
@@ -839,13 +839,13 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 **Questão 16.** Qual é a conduta terapêutica prioritária em um cão com acidose metabólica grave (pH = 7,10; HCO₃⁻ = 8 mEq/L) por diarreia profusa?
 
 - a) Oxigenoterapia isolada
-- b) Fluidoterapia com Ringer Lactato e monitoração ✔
+- b) Fluidoterapia com Ringer Lactato e monitoração
 - c) Administração de furosemida IV
 - d) Ventilação mecânica imediata
 
 **Questão 17.** A administração de bicarbonato de sódio intravenoso é indicada com maior segurança quando:
 
-- a) O pH está abaixo de 7,10 e não responde à fluidoterapia ✔
+- a) O pH está abaixo de 7,10 e não responde à fluidoterapia
 - b) A PaCO₂ está acima de 40 mmHg
 - c) O paciente apresenta vômitos
 - d) O HCO₃⁻ está entre 18 e 22 mEq/L
@@ -853,14 +853,14 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 **Questão 18.** Um gato com acidose respiratória aguda por efusão pleural bilateral. Qual intervenção inicial é mais apropriada?
 
 - a) Fluidoterapia agressiva com NaCl 0,9%
-- b) Toracocentese de alívio ✔
+- b) Toracocentese de alívio
 - c) Administração de bicarbonato de sódio IV
 - d) Oxigenoterapia nasal isolada
 
 **Questão 19.** Durante a correção de uma acidose metabólica com bicarbonato de sódio, qual risco principal deve ser monitorado?
 
 - a) Hipoglicemia
-- b) Alcalose metabólica iatrogênica e hipocalemia ✔
+- b) Alcalose metabólica iatrogênica e hipocalemia
 - c) Bradicardia sinusal
 - d) Hipertermia maligna
 
@@ -868,7 +868,7 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 
 - a) Bicarbonato de sódio IV em bolus
 - b) Ventilação mecânica
-- c) Manejo conservador com fluidoterapia e suplementação oral de bicarbonato ✔
+- c) Manejo conservador com fluidoterapia e suplementação oral de bicarbonato
 - d) Diálise peritoneal de urgência
 
 ---
