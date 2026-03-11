@@ -444,6 +444,12 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                     </div>
                   </div>
 
+                  {/* Case details: parameters & treatments */}
+                  <CaseDetailsPanel
+                    caseId={caso.id}
+                    refreshKey={detailsRefreshKey[caso.id] || 0}
+                  />
+
                   {/* Validation result */}
                   {validation && (
                     <div className="border-t pt-2 mt-2 space-y-2">
