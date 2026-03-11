@@ -26,6 +26,7 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
   const [cases, setCases] = useState<Case[]>([]);
   const [filteredCases, setFilteredCases] = useState<Case[]>([]);
   const [especieFilter, setEspecieFilter] = useState<string>("todos");
+  const [condicaoFilter, setCondicaoFilter] = useState<string>("todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
