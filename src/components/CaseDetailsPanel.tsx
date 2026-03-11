@@ -149,11 +149,23 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     );
   }
 
-  if (total === 0) {
+  if (total === 0 && !expanded) {
     return (
-      <p className="text-xs text-muted-foreground italic py-1">
-        Nenhum parâmetro ou tratamento configurado.
-      </p>
+      <div className="space-y-1">
+        <p className="text-xs text-muted-foreground italic py-1">
+          Nenhum parâmetro ou tratamento configurado.
+        </p>
+        <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => setExpanded(true)}>
+          <ChevronDown className="h-3 w-3 mr-1" /> Adicionar dados
+        </Button>
+        {expanded && (
+          <div className="space-y-3 bg-muted/30 rounded-md p-3 text-xs">
+            <AddCaseDataForm caseId={caseId} type="primary" onAdded={loadDetails} />
+            <AddCaseDataForm caseId={caseId} type="secondary" onAdded={loadDetails} />
+            <AddCaseDataForm caseId={caseId} type="treatment" onAdded={loadDetails} />
+          </div>
+        )}
+      </div>
     );
   }
 
