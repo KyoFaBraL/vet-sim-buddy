@@ -66,25 +66,22 @@ serve(async (req) => {
 
     let result: any = { success: true };
 
+    const jsonRes = (data: any, status = 200) =>
+      new Response(JSON.stringify(data), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+
+    const requireNum = (val: unknown, name: string) => {
+      const n = Number(val);
+      if (val === undefined || val === null || isNaN(n)) throw new Error(`${name} must be a number`);
+      return n;
+    };
+
     switch (action) {
+      // ── UPDATE ──
       case 'update_primary_param': {
         const { paramId, valor } = body;
-        if (!paramId || valor === undefined || valor === null) {
-          return new Response(JSON.stringify({ error: 'paramId and valor are required' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const numVal = Number(valor);
-        if (isNaN(numVal)) {
-          return new Response(JSON.stringify({ error: 'valor must be a number' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const { error } = await supabase
-          .from('valores_iniciais_caso')
-          .update({ valor: numVal })
-          .eq('id', paramId)
-          .eq('id_caso', caseId);
+        if (!paramId) return jsonRes({ error: 'paramId is required' }, 400);
+        const numVal = requireNum(valor, 'valor');
+        const { error } = await supabase.from('valores_iniciais_caso').update({ valor: numVal }).eq('id', paramId).eq('id_caso', caseId);
         if (error) throw error;
         result.message = 'Parâmetro primário atualizado';
         break;
@@ -92,22 +89,9 @@ serve(async (req) => {
 
       case 'update_secondary_param': {
         const { paramId, valor } = body;
-        if (!paramId || valor === undefined || valor === null) {
-          return new Response(JSON.stringify({ error: 'paramId and valor are required' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const numVal = Number(valor);
-        if (isNaN(numVal)) {
-          return new Response(JSON.stringify({ error: 'valor must be a number' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const { error } = await supabase
-          .from('parametros_secundarios_caso')
-          .update({ valor: numVal })
-          .eq('id', paramId)
-          .eq('case_id', caseId);
+        if (!paramId) return jsonRes({ error: 'paramId is required' }, 400);
+        const numVal = requireNum(valor, 'valor');
+        const { error } = await supabase.from('parametros_secundarios_caso').update({ valor: numVal }).eq('id', paramId).eq('case_id', caseId);
         if (error) throw error;
         result.message = 'Parâmetro secundário atualizado';
         break;
@@ -115,56 +99,29 @@ serve(async (req) => {
 
       case 'update_treatment': {
         const { treatmentId, prioridade, justificativa } = body;
-        if (!treatmentId) {
-          return new Response(JSON.stringify({ error: 'treatmentId is required' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
+        if (!treatmentId) return jsonRes({ error: 'treatmentId is required' }, 400);
         const updates: Record<string, unknown> = {};
         if (prioridade !== undefined) {
-          const numPri = Number(prioridade);
-          if (isNaN(numPri) || numPri < 1 || numPri > 10) {
-            return new Response(JSON.stringify({ error: 'prioridade must be 1-10' }), {
-              status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-            });
-          }
+          const numPri = requireNum(prioridade, 'prioridade');
+          if (numPri < 1 || numPri > 10) return jsonRes({ error: 'prioridade must be 1-10' }, 400);
           updates.prioridade = numPri;
         }
         if (justificativa !== undefined) {
-          if (typeof justificativa !== 'string' || justificativa.length > 500) {
-            return new Response(JSON.stringify({ error: 'justificativa must be a string (max 500 chars)' }), {
-              status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-            });
-          }
+          if (typeof justificativa !== 'string' || justificativa.length > 500) return jsonRes({ error: 'justificativa max 500 chars' }, 400);
           updates.justificativa = justificativa.trim();
         }
-        if (Object.keys(updates).length === 0) {
-          return new Response(JSON.stringify({ error: 'No fields to update' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const { error } = await supabase
-          .from('tratamentos_caso')
-          .update(updates)
-          .eq('id', treatmentId)
-          .eq('case_id', caseId);
+        if (Object.keys(updates).length === 0) return jsonRes({ error: 'No fields to update' }, 400);
+        const { error } = await supabase.from('tratamentos_caso').update(updates).eq('id', treatmentId).eq('case_id', caseId);
         if (error) throw error;
         result.message = 'Tratamento atualizado';
         break;
       }
 
+      // ── DELETE ──
       case 'delete_primary_param': {
         const { paramId } = body;
-        if (!paramId) {
-          return new Response(JSON.stringify({ error: 'paramId is required' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const { error } = await supabase
-          .from('valores_iniciais_caso')
-          .delete()
-          .eq('id', paramId)
-          .eq('id_caso', caseId);
+        if (!paramId) return jsonRes({ error: 'paramId is required' }, 400);
+        const { error } = await supabase.from('valores_iniciais_caso').delete().eq('id', paramId).eq('id_caso', caseId);
         if (error) throw error;
         result.message = 'Parâmetro primário removido';
         break;
@@ -172,16 +129,8 @@ serve(async (req) => {
 
       case 'delete_secondary_param': {
         const { paramId } = body;
-        if (!paramId) {
-          return new Response(JSON.stringify({ error: 'paramId is required' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const { error } = await supabase
-          .from('parametros_secundarios_caso')
-          .delete()
-          .eq('id', paramId)
-          .eq('case_id', caseId);
+        if (!paramId) return jsonRes({ error: 'paramId is required' }, 400);
+        const { error } = await supabase.from('parametros_secundarios_caso').delete().eq('id', paramId).eq('case_id', caseId);
         if (error) throw error;
         result.message = 'Parâmetro secundário removido';
         break;
@@ -189,30 +138,61 @@ serve(async (req) => {
 
       case 'delete_treatment': {
         const { treatmentId } = body;
-        if (!treatmentId) {
-          return new Response(JSON.stringify({ error: 'treatmentId is required' }), {
-            status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-        const { error } = await supabase
-          .from('tratamentos_caso')
-          .delete()
-          .eq('id', treatmentId)
-          .eq('case_id', caseId);
+        if (!treatmentId) return jsonRes({ error: 'treatmentId is required' }, 400);
+        const { error } = await supabase.from('tratamentos_caso').delete().eq('id', treatmentId).eq('case_id', caseId);
         if (error) throw error;
         result.message = 'Tratamento removido';
         break;
       }
 
+      // ── ADD ──
+      case 'add_primary_param': {
+        const { parametroId, valor } = body;
+        if (!parametroId) return jsonRes({ error: 'parametroId is required' }, 400);
+        const numVal = requireNum(valor, 'valor');
+        // Check duplicate
+        const { data: exists } = await supabase.from('valores_iniciais_caso').select('id').eq('id_caso', caseId).eq('id_parametro', parametroId).maybeSingle();
+        if (exists) return jsonRes({ error: 'Este parâmetro já existe neste caso' }, 400);
+        const { error } = await supabase.from('valores_iniciais_caso').insert({ id_caso: caseId, id_parametro: parametroId, valor: numVal });
+        if (error) throw error;
+        result.message = 'Parâmetro primário adicionado';
+        break;
+      }
+
+      case 'add_secondary_param': {
+        const { parametroId, valor } = body;
+        if (!parametroId) return jsonRes({ error: 'parametroId is required' }, 400);
+        const numVal = requireNum(valor, 'valor');
+        const { data: exists } = await supabase.from('parametros_secundarios_caso').select('id').eq('case_id', caseId).eq('parametro_id', parametroId).maybeSingle();
+        if (exists) return jsonRes({ error: 'Este parâmetro secundário já existe neste caso' }, 400);
+        const { error } = await supabase.from('parametros_secundarios_caso').insert({ case_id: caseId, parametro_id: parametroId, valor: numVal });
+        if (error) throw error;
+        result.message = 'Parâmetro secundário adicionado';
+        break;
+      }
+
+      case 'add_treatment': {
+        const { tratamentoId, prioridade, justificativa } = body;
+        if (!tratamentoId) return jsonRes({ error: 'tratamentoId is required' }, 400);
+        const numPri = requireNum(prioridade, 'prioridade');
+        if (numPri < 1 || numPri > 10) return jsonRes({ error: 'prioridade must be 1-10' }, 400);
+        const { data: exists } = await supabase.from('tratamentos_caso').select('id').eq('case_id', caseId).eq('tratamento_id', tratamentoId).maybeSingle();
+        if (exists) return jsonRes({ error: 'Este tratamento já existe neste caso' }, 400);
+        const insertData: Record<string, unknown> = { case_id: caseId, tratamento_id: tratamentoId, prioridade: numPri };
+        if (justificativa && typeof justificativa === 'string' && justificativa.trim().length <= 500) {
+          insertData.justificativa = justificativa.trim();
+        }
+        const { error } = await supabase.from('tratamentos_caso').insert(insertData);
+        if (error) throw error;
+        result.message = 'Tratamento adicionado';
+        break;
+      }
+
       default:
-        return new Response(JSON.stringify({ error: `Unknown action: ${action}` }), {
-          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return jsonRes({ error: `Unknown action: ${action}` }, 400);
     }
 
-    return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return jsonRes(result);
 
   } catch (error) {
     console.error('Erro:', error);
