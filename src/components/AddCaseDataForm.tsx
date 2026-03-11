@@ -29,9 +29,13 @@ export const AddCaseDataForm = ({ caseId, type, onAdded }: AddCaseDataFormProps)
     if (!open) return;
     const loadOptions = async () => {
       setLoading(true);
-      const table = type === "treatment" ? "tratamentos" : "parametros";
-      const { data } = await supabase.from(table).select("id, nome, unidade").order("nome");
-      setOptions((data as Option[]) || []);
+      if (type === "treatment") {
+        const { data } = await supabase.from("tratamentos").select("id, nome").order("nome");
+        setOptions((data || []).map((d) => ({ id: d.id, nome: d.nome })));
+      } else {
+        const { data } = await supabase.from("parametros").select("id, nome, unidade").order("nome");
+        setOptions((data || []).map((d) => ({ id: d.id, nome: d.nome, unidade: d.unidade })));
+      }
       setLoading(false);
     };
     loadOptions();
