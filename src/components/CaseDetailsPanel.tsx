@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AddCaseDataForm } from "@/components/AddCaseDataForm";
 import {
   Loader2, Beaker, ChevronDown, ChevronUp,
-  Pencil, Check, X, Trash2, BarChart3, List,
+  Pencil, Check, X, Trash2, BarChart3, List, Download,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
