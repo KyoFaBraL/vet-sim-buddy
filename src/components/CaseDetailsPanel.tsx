@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AddCaseDataForm } from "@/components/AddCaseDataForm";
 import {
   Loader2, Beaker, ChevronDown, ChevronUp,
-  Pencil, Check, X, Trash2, BarChart3, List,
+  Pencil, Check, X, Trash2, BarChart3, List, Download,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -109,6 +109,25 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
 
   const total = primarios.length + secundarios.length;
 
+  const handleExportCSV = () => {
+    const sep = ";";
+    const header = `sep=${sep}\n`;
+    const columns = ["Tipo", "Parâmetro", "Valor", "Unidade"].join(sep);
+    const rows = [
+      ...primarios.map((p) => ["Primário", p.nome, String(p.valor).replace(".", ","), p.unidade || ""].join(sep)),
+      ...secundarios.map((p) => ["Secundário", p.nome, String(p.valor).replace(".", ","), p.unidade || ""].join(sep)),
+    ];
+    const csv = header + columns + "\n" + rows.join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `caso-${caseId}-parametros.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "📥 CSV exportado", description: "Arquivo baixado com sucesso." });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center gap-2 text-xs text-muted-foreground py-2">
@@ -198,6 +217,11 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
         <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => setExpanded(!expanded)}>
           {expanded ? <><ChevronUp className="h-3 w-3 mr-1" /> Ocultar</> : <><ChevronDown className="h-3 w-3 mr-1" /> Detalhes</>}
         </Button>
+        {total > 0 && (
+          <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={handleExportCSV}>
+            <Download className="h-3 w-3 mr-1" /> CSV
+          </Button>
+        )}
       </div>
 
       {expanded && (
