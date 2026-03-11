@@ -499,7 +499,11 @@ A pesquisa será encerrada antecipadamente se:
 
 ### 15.2 Financiamento
 
-A pesquisa é autofinanciada pelo pesquisador, sem financiamento externo. Não há conflito de interesses financeiros.
+A pesquisa é autofinanciada pelo pesquisador, sem financiamento externo direto para o projeto. Os custos operacionais da ferramenta VetBalance são custeados integralmente com recursos próprios do pesquisador.
+
+A título de transparência, registra-se que o pesquisador responsável foi bolsista de mestrado pelo Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI), com fomento da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES), no período de abril de 2025 a fevereiro de 2026 (auxílio mensal de R$ 2.100,00). Tal fomento destinou-se exclusivamente ao apoio da formação acadêmica do pós-graduando, não havendo relação direta com o financiamento desta pesquisa.
+
+Não há conflito de interesses financeiros.
 
 ---
 
