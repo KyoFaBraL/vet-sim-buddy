@@ -44,6 +44,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
   const [loading, setLoading] = useState(false);
   const [generatingRandom, setGeneratingRandom] = useState(false);
   const [validatingCase, setValidatingCase] = useState<number | null>(null);
+  const [fixingCase, setFixingCase] = useState<number | null>(null);
   const [validationResults, setValidationResults] = useState<Record<number, CaseValidation>>({});
   const { toast } = useToast();
 
