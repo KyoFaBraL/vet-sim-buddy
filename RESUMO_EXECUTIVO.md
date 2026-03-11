@@ -80,7 +80,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 ## 6. VALIDAÇÃO PROPOSTA
 
-A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, com **40 estudantes** randomizados em dois grupos (n=20 cada):
+A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, com **40 estudantes** randomizados em dois grupos (n=20 cada):
 - **Grupo experimental (GE):** Com acesso ao VetBalance durante todo o período de intervenção
 - **Grupo controle (GC):** Atividades tradicionais, sem acesso ao software
 
@@ -89,10 +89,10 @@ A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a
 | Fase | Período | Atividade Principal |
 |------|---------|---------------------|
 | F1 — Preparação | 10/03 – 28/03/2026 | Aprovação CEP, randomização, pré-teste diagnóstico (O₁) |
-| F2 — Intervenção Inicial | 31/03 – 25/04/2026 | Aulas teóricas (GE + GC), treinamento GE no SUT |
-| F3 — Avaliação Intermediária 1 | 28/04 – 16/05/2026 | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
-| F4 — Intervenção Avançada | 19/05 – 06/06/2026 | Casos avançados, modo avaliação (sem IA) |
-| F5 — Avaliação Final | 09/06 – 27/06/2026 | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
+| F2 — Intervenção Inicial | 30/03 – 18/04/2026 | Aulas teóricas (GE + GC), treinamento GE no SUT |
+| F3 — Avaliação Intermediária 1 | 27/04 – 16/05/2026 | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
+| F4 — Intervenção Avançada | 18/05 – 06/06/2026 | Casos avançados, modo avaliação (sem IA) |
+| F5 — Avaliação Final | 08/06 – 27/06/2026 | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
 | F6 — Análise e Relatório | 30/06 – 31/07/2026 | Análise estatística, relatório final IEEE 829 |
 
 ### Marcos Críticos

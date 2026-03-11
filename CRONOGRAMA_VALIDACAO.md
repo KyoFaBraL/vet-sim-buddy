@@ -310,11 +310,11 @@ O₄ = Pós-teste final (Junho/2026)
 | Fase | Início | Término | Duração | Semanas |
 |------|--------|---------|---------|---------|
 | F1 — Preparação | 10/03/2026 | 28/03/2026 | 19 dias | 1–3 |
-| F2 — Intervenção Inicial | 31/03/2026 | 25/04/2026 | 26 dias | 4–7 |
-| F3 — Avaliação Intermediária 1 | 28/04/2026 | 16/05/2026 | 19 dias | 8–10 |
-| F4 — Intervenção Avançada | 19/05/2026 | 06/06/2026 | 19 dias | 11–13 |
-| F5 — Avaliação Final e Coleta | 09/06/2026 | 27/06/2026 | 19 dias | 14–16 |
-| F6 — Análise e Relatório | 30/06/2026 | 31/07/2026 | 32 dias | 17–20 |
+| F2 — Intervenção Inicial | 30/03/2026 | 18/04/2026 | 20 dias | 4–6 |
+| F3 — Avaliação Intermediária 1 | 27/04/2026 | 16/05/2026 | 20 dias | 7–9 |
+| F4 — Intervenção Avançada | 18/05/2026 | 06/06/2026 | 20 dias | 10–12 |
+| F5 — Avaliação Final e Coleta | 08/06/2026 | 27/06/2026 | 20 dias | 13–15 |
+| F6 — Análise e Relatório | 30/06/2026 | 31/07/2026 | 32 dias | 16–20 |
 | **Total da validação** | **10/03/2026** | **31/07/2026** | **144 dias** | **20 semanas** |
 | Mestrado (redação + defesa) | 01/08/2026 | 31/08/2026 | 31 dias | — |
 
