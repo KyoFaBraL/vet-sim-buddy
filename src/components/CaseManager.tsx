@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle, Wrench } from "lucide-react";
 
 interface CaseManagerProps {
   onCaseCreated: () => void;
@@ -44,6 +44,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
   const [loading, setLoading] = useState(false);
   const [generatingRandom, setGeneratingRandom] = useState(false);
   const [validatingCase, setValidatingCase] = useState<number | null>(null);
+  const [fixingCase, setFixingCase] = useState<number | null>(null);
   const [validationResults, setValidationResults] = useState<Record<number, CaseValidation>>({});
   const { toast } = useToast();
 
@@ -118,6 +119,48 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
       toast({ title: "Erro na validação", description: error.message, variant: "destructive" });
     } finally {
       setValidatingCase(null);
+    }
+  };
+
+  const handleAutoFix = async (caseId: number) => {
+    const validation = validationResults[caseId];
+    if (!validation) return;
+
+    setFixingCase(caseId);
+    try {
+      const { data, error } = await supabase.functions.invoke('autofix-case', {
+        body: {
+          caseId,
+          problemas: validation.problemas,
+          sugestoes: validation.sugestoes,
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        toast({
+          title: "🔧 Caso corrigido!",
+          description: `${data.resumoCorrecoes} (${data.primaryUpdated} parâmetros, ${data.treatmentsUpdated} tratamentos)`,
+        });
+
+        // Clear old validation and re-validate
+        setValidationResults(prev => {
+          const next = { ...prev };
+          delete next[caseId];
+          return next;
+        });
+
+        await loadCustomCases();
+        onCaseCreated();
+
+        // Re-validate after fix
+        await validateCase(caseId);
+      }
+    } catch (error: any) {
+      toast({ title: "Erro na auto-correção", description: error.message, variant: "destructive" });
+    } finally {
+      setFixingCase(null);
     }
   };
 
@@ -328,6 +371,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
             {customCases.map((caso) => {
               const validation = validationResults[caso.id];
               const isValidating = validatingCase === caso.id;
+              const isFixing = fixingCase === caso.id;
 
               return (
                 <div key={caso.id} className="border rounded-lg p-3 space-y-2">
@@ -397,6 +441,29 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                             {validation.sugestoes.map((s, i) => <li key={i}>{s}</li>)}
                           </ul>
                         </div>
+                      )}
+
+                      {/* Auto-fix button for invalid cases */}
+                      {!validation.valido && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full mt-2 border-primary/30"
+                          onClick={() => handleAutoFix(caso.id)}
+                          disabled={isFixing}
+                        >
+                          {isFixing ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Corrigindo com IA...
+                            </>
+                          ) : (
+                            <>
+                              <Wrench className="mr-2 h-4 w-4" />
+                              Corrigir Automaticamente com IA
+                            </>
+                          )}
+                        </Button>
                       )}
                     </div>
                   )}
