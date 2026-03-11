@@ -202,32 +202,61 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
 
       {expanded && (
         <div className="space-y-3 bg-muted/30 rounded-md p-3 text-xs animate-in fade-in slide-in-from-top-2 duration-200">
-          {/* Parâmetros Primários */}
-          <div>
-            <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
-              <Beaker className="h-3 w-3 text-primary" /> Parâmetros Primários
-            </p>
-            {primarios.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                {primarios.map((p) => renderParamRow(p, "prim", handleSavePrimary, "primary"))}
+          {/* Toggle list/chart */}
+          {total > 0 && (
+            <div className="flex justify-end">
+              <div className="flex border border-border rounded-md overflow-hidden">
+                <button
+                  onClick={() => setViewMode("list")}
+                  className={`px-2 py-1 text-xs flex items-center gap-1 transition-colors ${
+                    viewMode === "list" ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <List className="h-3 w-3" /> Lista
+                </button>
+                <button
+                  onClick={() => setViewMode("chart")}
+                  className={`px-2 py-1 text-xs flex items-center gap-1 transition-colors ${
+                    viewMode === "chart" ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <BarChart3 className="h-3 w-3" /> Gráfico
+                </button>
               </div>
-            )}
-            <AddCaseDataForm caseId={caseId} type="primary" onAdded={loadDetails} />
-          </div>
+            </div>
+          )}
 
-          {/* Parâmetros Secundários */}
-          <div>
-            <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
-              <Beaker className="h-3 w-3 text-secondary-foreground" /> Parâmetros Secundários
-            </p>
-            {secundarios.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                {secundarios.map((p) => renderParamRow(p, "sec", handleSaveSecondary, "secondary"))}
+          {viewMode === "chart" && total > 0 ? (
+            <CaseParamsChart primarios={primarios} secundarios={secundarios} />
+          ) : (
+            <>
+              {/* Parâmetros Primários */}
+              <div>
+                <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
+                  <Beaker className="h-3 w-3 text-primary" /> Parâmetros Primários
+                </p>
+                {primarios.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    {primarios.map((p) => renderParamRow(p, "prim", handleSavePrimary, "primary"))}
+                  </div>
+                )}
+                <AddCaseDataForm caseId={caseId} type="primary" onAdded={loadDetails} />
               </div>
-            )}
-            <AddCaseDataForm caseId={caseId} type="secondary" onAdded={loadDetails} />
-          </div>
 
+              {/* Parâmetros Secundários */}
+              <div>
+                <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
+                  <Beaker className="h-3 w-3 text-secondary-foreground" /> Parâmetros Secundários
+                </p>
+                {secundarios.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    {secundarios.map((p) => renderParamRow(p, "sec", handleSaveSecondary, "secondary"))}
+                  </div>
+                )}
+                <AddCaseDataForm caseId={caseId} type="secondary" onAdded={loadDetails} />
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
