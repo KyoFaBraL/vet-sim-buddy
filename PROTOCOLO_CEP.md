@@ -709,15 +709,183 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 
 ## 21. APÊNDICES
 
-### Apêndice A — Modelo de Instrumento de Avaliação (Pré-teste/Pós-teste)
+### Apêndice A — Instrumento de Avaliação de Conhecimentos em Equilíbrio Ácido-Base (Pré-teste/Pós-teste)
 
-*(A ser elaborado com os docentes das disciplinas. Deve conter questões objetivas e discursivas cobrindo:)*
+**Instruções ao participante:** Este questionário avalia seus conhecimentos sobre equilíbrio ácido-base (EAB) em pequenos animais (cães e gatos). Leia atentamente cada questão e assinale **uma única alternativa**. Não há consulta permitida. Tempo estimado: 30 minutos.
 
-- Interpretação de gasometria arterial (pH, PaCO₂, HCO₃⁻, PaO₂)
-- Classificação de distúrbios ácido-base (acidose/alcalose metabólica e respiratória)
-- Mecanismos de compensação renal e respiratória
-- Indicação de tratamentos (fluidoterapia, bicarbonato, oxigenoterapia)
-- Análise de casos clínicos com dados fisiológicos
+**Participante (código):** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ **Grupo:** ☐ GE ☐ GC **Data:** \_\_\_/\_\_\_/\_\_\_\_\_\_ **Aplicação:** ☐ Pré-teste ☐ Pós-teste
+
+---
+
+#### Bloco 1 — Conceitos Fundamentais de EAB (Questões 1–5)
+
+**Questão 1.** Qual é a faixa de pH sanguíneo considerada **normal** para cães e gatos?
+
+- a) 7,20 – 7,30
+- b) 7,35 – 7,45 ✔
+- c) 7,45 – 7,55
+- d) 7,25 – 7,40
+
+**Questão 2.** A equação de Henderson-Hasselbalch relaciona o pH com a razão entre:
+
+- a) PaCO₂ e PaO₂
+- b) HCO₃⁻ e PaCO₂ ✔
+- c) Na⁺ e Cl⁻
+- d) Albumina e lactato
+
+**Questão 3.** A principal função do sistema tampão bicarbonato (HCO₃⁻/H₂CO₃) é:
+
+- a) Transportar oxigênio para os tecidos
+- b) Minimizar variações bruscas do pH sanguíneo ✔
+- c) Regular a pressão arterial sistêmica
+- d) Aumentar a excreção renal de potássio
+
+**Questão 4.** Qual órgão é o principal responsável pela compensação **rápida** (minutos) dos distúrbios ácido-base?
+
+- a) Rim
+- b) Fígado
+- c) Pulmão ✔
+- d) Baço
+
+**Questão 5.** A compensação **renal** de um distúrbio ácido-base ocorre tipicamente em qual intervalo de tempo?
+
+- a) Segundos a minutos
+- b) Minutos a 1 hora
+- c) 6 a 12 horas
+- d) 24 a 72 horas ✔
+
+---
+
+#### Bloco 2 — Interpretação de Gasometria Arterial (Questões 6–10)
+
+**Questão 6.** Um cão apresenta os seguintes valores: pH = 7,28; PaCO₂ = 30 mmHg; HCO₃⁻ = 14 mEq/L. Qual é o distúrbio primário?
+
+- a) Alcalose respiratória
+- b) Acidose respiratória
+- c) Acidose metabólica com compensação respiratória ✔
+- d) Alcalose metabólica com compensação respiratória
+
+**Questão 7.** Um gato apresenta: pH = 7,52; PaCO₂ = 50 mmHg; HCO₃⁻ = 38 mEq/L. Qual é a interpretação correta?
+
+- a) Acidose respiratória descompensada
+- b) Alcalose metabólica com compensação respiratória ✔
+- c) Alcalose respiratória primária
+- d) Distúrbio misto com predomínio respiratório
+
+**Questão 8.** Um cão sedado apresenta: pH = 7,22; PaCO₂ = 65 mmHg; HCO₃⁻ = 25 mEq/L. Qual é o diagnóstico?
+
+- a) Acidose metabólica
+- b) Acidose respiratória aguda ✔
+- c) Alcalose metabólica
+- d) Distúrbio misto
+
+**Questão 9.** Em um paciente com acidose metabólica, qual resposta compensatória é esperada?
+
+- a) Aumento da PaCO₂ por hipoventilação
+- b) Diminuição da PaCO₂ por hiperventilação ✔
+- c) Aumento do HCO₃⁻ por reabsorção renal
+- d) Diminuição do HCO₃⁻ por excreção renal
+
+**Questão 10.** Qual parâmetro da gasometria avalia diretamente a **oxigenação** do paciente?
+
+- a) pH
+- b) PaCO₂
+- c) HCO₃⁻
+- d) PaO₂ ✔
+
+---
+
+#### Bloco 3 — Fisiopatologia e Mecanismos de Compensação (Questões 11–15)
+
+**Questão 11.** Um cão com vômitos intensos (perda de HCl gástrico) provavelmente desenvolverá:
+
+- a) Acidose metabólica
+- b) Alcalose metabólica ✔
+- c) Acidose respiratória
+- d) Alcalose respiratória
+
+**Questão 12.** Um gato com obstrução uretral completa e oligúria provavelmente apresentará:
+
+- a) Alcalose metabólica hipoclorêmica
+- b) Acidose metabólica com hipercalemia ✔
+- c) Alcalose respiratória
+- d) Acidose respiratória crônica
+
+**Questão 13.** A cetoacidose diabética em cães causa acidose metabólica principalmente por:
+
+- a) Perda renal excessiva de bicarbonato
+- b) Acúmulo de corpos cetônicos (ácidos orgânicos) ✔
+- c) Hipoventilação central
+- d) Hipercloremia por excesso de NaCl 0,9%
+
+**Questão 14.** Em um paciente com acidose respiratória **crônica**, espera-se encontrar:
+
+- a) HCO₃⁻ normal e pH muito baixo
+- b) HCO₃⁻ elevado e pH próximo ao normal ✔
+- c) PaCO₂ baixo e pH alto
+- d) HCO₃⁻ baixo e PaCO₂ normal
+
+**Questão 15.** O ânion gap (AG) é útil para:
+
+- a) Avaliar a função hepática
+- b) Classificar o tipo de acidose metabólica ✔
+- c) Determinar o grau de compensação respiratória
+- d) Mensurar a pressão oncótica plasmática
+
+---
+
+#### Bloco 4 — Tomada de Decisão Terapêutica (Questões 16–20)
+
+**Questão 16.** Qual é a conduta terapêutica prioritária em um cão com acidose metabólica grave (pH = 7,10; HCO₃⁻ = 8 mEq/L) por diarreia profusa?
+
+- a) Oxigenoterapia isolada
+- b) Fluidoterapia com Ringer Lactato e monitoração ✔
+- c) Administração de furosemida IV
+- d) Ventilação mecânica imediata
+
+**Questão 17.** A administração de bicarbonato de sódio intravenoso é indicada com maior segurança quando:
+
+- a) O pH está abaixo de 7,10 e não responde à fluidoterapia ✔
+- b) A PaCO₂ está acima de 40 mmHg
+- c) O paciente apresenta vômitos
+- d) O HCO₃⁻ está entre 18 e 22 mEq/L
+
+**Questão 18.** Um gato com acidose respiratória aguda por efusão pleural bilateral. Qual intervenção inicial é mais apropriada?
+
+- a) Fluidoterapia agressiva com NaCl 0,9%
+- b) Toracocentese de alívio ✔
+- c) Administração de bicarbonato de sódio IV
+- d) Oxigenoterapia nasal isolada
+
+**Questão 19.** Durante a correção de uma acidose metabólica com bicarbonato de sódio, qual risco principal deve ser monitorado?
+
+- a) Hipoglicemia
+- b) Alcalose metabólica iatrogênica e hipocalemia ✔
+- c) Bradicardia sinusal
+- d) Hipertermia maligna
+
+**Questão 20.** Um cão com insuficiência renal crônica estável apresenta: pH = 7,30; HCO₃⁻ = 16 mEq/L; PaCO₂ = 32 mmHg. A conduta mais adequada é:
+
+- a) Bicarbonato de sódio IV em bolus
+- b) Ventilação mecânica
+- c) Manejo conservador com fluidoterapia e suplementação oral de bicarbonato ✔
+- d) Diálise peritoneal de urgência
+
+---
+
+#### Gabarito (uso exclusivo do pesquisador)
+
+| Q | Resp. | Q | Resp. | Q | Resp. | Q | Resp. |
+|---|-------|---|-------|---|-------|---|-------|
+| 1 | B | 6 | C | 11 | B | 16 | B |
+| 2 | B | 7 | B | 12 | B | 17 | A |
+| 3 | B | 8 | B | 13 | B | 18 | B |
+| 4 | C | 9 | B | 14 | B | 19 | B |
+| 5 | D | 10 | D | 15 | B | 20 | C |
+
+**Critério de correção:** Cada questão vale 0,5 ponto. Nota final = soma dos acertos × 0,5 (escala 0–10).
+
+> **Nota:** Este instrumento é um rascunho para validação com os docentes das disciplinas de Fisiologia Animal e Farmacologia. As questões poderão ser revisadas quanto ao nível de dificuldade, adequação ao conteúdo programático e clareza textual antes da aplicação definitiva.
 
 ### Apêndice B — Questionário de Satisfação (SUS Adaptado)
 
