@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AddCaseDataForm } from "@/components/AddCaseDataForm";
 import {
   Loader2, Beaker, Pill, ChevronDown, ChevronUp,
-  Pencil, Check, X, Trash2,
+  Pencil, Check, X, Trash2, GripVertical,
 } from "lucide-react";
 
 interface CaseParam {
