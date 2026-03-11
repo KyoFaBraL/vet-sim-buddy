@@ -371,6 +371,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
             {customCases.map((caso) => {
               const validation = validationResults[caso.id];
               const isValidating = validatingCase === caso.id;
+              const isFixing = fixingCase === caso.id;
 
               return (
                 <div key={caso.id} className="border rounded-lg p-3 space-y-2">
