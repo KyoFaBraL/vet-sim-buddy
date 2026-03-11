@@ -91,7 +91,7 @@ Estudo quase-experimental, controlado, com pré e pós-teste, envolvendo 40 estu
 
 ### 3.4 Resultados Esperados
 
-Espera-se que o grupo experimental apresente desempenho significativamente superior (p < 0,05; d de Cohen ≥ 0,8) nas avaliações, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base., demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base.
+Espera-se que o grupo experimental apresente desempenho significativamente superior (p < 0,05; d de Cohen ≥ 0,8) nas avaliações, demonstrando a eficácia da metodologia m-learning gamificada no ensino de conceitos complexos de equilíbrio ácido-base.
 
 ### 3.5 Palavras-chave
 
@@ -193,13 +193,13 @@ O₄ = Pós-teste final abrangente (Junho/2026)
 
 ### 7.2 Local da Pesquisa
 
-A pesquisa será realizada no(a) *(Nome da Instituição)*, nas disciplinas de **Fisiologia Animal** e **Farmacologia** do curso de graduação em Medicina Veterinária.
+A pesquisa será realizada na **Universidade Federal do Piauí (UFPI)**, nas disciplinas de **Fisiologia Animal** e **Farmacologia** do curso de graduação em Medicina Veterinária.
 
 ### 7.3 População e Amostra
 
 | Item | Descrição |
 |------|-----------|
-| **População** | Estudantes regularmente matriculados no curso de Medicina Veterinária da *(Instituição)* |
+| **População** | Estudantes regularmente matriculados no curso de Medicina Veterinária da Universidade Federal do Piauí (UFPI) |
 | **Amostra** | 40 estudantes (conveniência) |
 | **Grupo Experimental (GE)** | n = 20 (com acesso ao VetBalance) |
 | **Grupo Controle (GC)** | n = 20 (sem acesso ao VetBalance durante a intervenção) |
@@ -282,7 +282,7 @@ Os participantes do GC receberão o ensino tradicional (aulas teóricas presenci
 
 ### 8.1 Critérios de Inclusão
 
-1. Estar regularmente matriculado(a) no curso de graduação em Medicina Veterinária da *(Instituição)*.
+1. Estar regularmente matriculado(a) no curso de graduação em Medicina Veterinária da Universidade Federal do Piauí (UFPI).
 2. Estar cursando as disciplinas de Fisiologia Animal e/ou Farmacologia no semestre letivo 2026.1.
 3. Ter idade igual ou superior a 18 anos.
 4. Possuir acesso a dispositivo com navegador web moderno (smartphone, tablet ou computador).
@@ -479,7 +479,7 @@ A pesquisa será encerrada antecipadamente se:
 | 🔴 O₃ | 14–16/06/2026 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
 | 🔴 O₄ | 20–23/06/2026 | Pós-teste final abrangente |
 | ✅ | 27/06/2026 | Encerramento da coleta de dados |
-| ✅ | 31/07/2026 | Entrega do relatório final |
+| ✅ | 25/07/2026 | Entrega do relatório final |
 | 🎓 | Agosto/2026 | Defesa do mestrado |
 
 ---
