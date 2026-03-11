@@ -188,6 +188,29 @@ serve(async (req) => {
         break;
       }
 
+      case 'reorder_treatments': {
+        const { order } = body;
+        if (!Array.isArray(order) || order.length === 0) return jsonRes({ error: 'order array is required' }, 400);
+        if (order.length > 50) return jsonRes({ error: 'Too many items' }, 400);
+        // Validate all items have id
+        for (const item of order) {
+          if (!item.id || typeof item.prioridade !== 'number' || item.prioridade < 1 || item.prioridade > 50) {
+            return jsonRes({ error: 'Each item needs id and prioridade (1-50)' }, 400);
+          }
+        }
+        // Update each treatment's priority
+        for (const item of order) {
+          const { error } = await supabase
+            .from('tratamentos_caso')
+            .update({ prioridade: item.prioridade })
+            .eq('id', item.id)
+            .eq('case_id', caseId);
+          if (error) throw error;
+        }
+        result.message = `Prioridades atualizadas (${order.length} tratamentos)`;
+        break;
+      }
+
       default:
         return jsonRes({ error: `Unknown action: ${action}` }, 400);
     }

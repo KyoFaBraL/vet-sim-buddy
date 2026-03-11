@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AddCaseDataForm } from "@/components/AddCaseDataForm";
 import {
   Loader2, Beaker, Pill, ChevronDown, ChevronUp,
-  Pencil, Check, X, Trash2,
+  Pencil, Check, X, Trash2, GripVertical,
 } from "lucide-react";
 
 interface CaseParam {
@@ -39,6 +39,8 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
   const [editValue, setEditValue] = useState("");
   const [editJustificativa, setEditJustificativa] = useState("");
   const [saving, setSaving] = useState(false);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const { toast } = useToast();
 
   const loadDetails = useCallback(async () => {
@@ -137,6 +139,20 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     setEditing(key);
     setEditValue(String(t.prioridade));
     setEditJustificativa(t.justificativa || "");
+  };
+
+  const handleDrop = async (fromIdx: number, toIdx: number) => {
+    if (fromIdx === toIdx) return;
+    const reordered = [...tratamentos];
+    const [moved] = reordered.splice(fromIdx, 1);
+    reordered.splice(toIdx, 0, moved);
+    // Optimistic update
+    setTratamentos(reordered);
+    setDragIndex(null);
+    setDragOverIndex(null);
+    // Save new order
+    const order = reordered.map((t, i) => ({ id: t.id, prioridade: i + 1 }));
+    await invokeUpdate({ caseId, action: "reorder_treatments", order });
   };
 
   const total = primarios.length + secundarios.length + tratamentos.length;
@@ -272,12 +288,27 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
             </p>
             {tratamentos.length > 0 && (
               <div className="space-y-1">
-                {tratamentos.map((t) => {
+                {tratamentos.map((t, idx) => {
                   const editKey = `trat-${t.id}`;
                   const isEditing = editing === editKey;
+                  const isDragging = dragIndex === idx;
+                  const isDragOver = dragOverIndex === idx;
 
                   return (
-                    <div key={t.id} className="bg-background rounded px-2 py-1.5 border border-border/50 group">
+                    <div
+                      key={t.id}
+                      draggable={!isEditing}
+                      onDragStart={() => setDragIndex(idx)}
+                      onDragOver={(e) => { e.preventDefault(); setDragOverIndex(idx); }}
+                      onDragLeave={() => setDragOverIndex(null)}
+                      onDrop={(e) => { e.preventDefault(); if (dragIndex !== null) handleDrop(dragIndex, idx); }}
+                      onDragEnd={() => { setDragIndex(null); setDragOverIndex(null); }}
+                      className={`bg-background rounded px-2 py-1.5 border group transition-all ${
+                        isDragging ? "opacity-40 border-primary/50" :
+                        isDragOver ? "border-primary border-dashed bg-primary/5" :
+                        "border-border/50"
+                      }`}
+                    >
                       {isEditing ? (
                         <div className="space-y-1.5">
                           <div className="flex items-center gap-2">
@@ -313,9 +344,10 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
                           </div>
                         </div>
                       ) : (
-                        <div className="flex items-start gap-2">
+                        <div className="flex items-start gap-1.5">
+                          <GripVertical className="h-4 w-4 text-muted-foreground/50 shrink-0 cursor-grab active:cursor-grabbing mt-0.5" />
                           <Badge variant="outline" className="text-[10px] shrink-0 h-5 w-5 flex items-center justify-center p-0 rounded-full">
-                            {t.prioridade}
+                            {idx + 1}
                           </Badge>
                           <div className="min-w-0 flex-1">
                             <span className="font-medium text-foreground">{t.nome}</span>
