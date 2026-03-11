@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { AddCaseDataForm } from "@/components/AddCaseDataForm";
 import {
-  Loader2, Beaker, Pill, ChevronDown, ChevronUp,
-  Pencil, Check, X, Trash2, GripVertical,
+  Loader2, Beaker, ChevronDown, ChevronUp,
+  Pencil, Check, X, Trash2,
 } from "lucide-react";
 
 interface CaseParam {
@@ -17,12 +17,6 @@ interface CaseParam {
   unidade?: string;
 }
 
-interface CaseTreatment {
-  id: number | string;
-  nome: string;
-  prioridade: number;
-  justificativa?: string;
-}
 
 interface CaseDetailsPanelProps {
   caseId: number;
@@ -32,21 +26,17 @@ interface CaseDetailsPanelProps {
 export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelProps) => {
   const [primarios, setPrimarios] = useState<CaseParam[]>([]);
   const [secundarios, setSecundarios] = useState<CaseParam[]>([]);
-  const [tratamentos, setTratamentos] = useState<CaseTreatment[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
-  const [editing, setEditing] = useState<string | null>(null); // "prim-{id}" | "sec-{id}" | "trat-{id}"
+  const [editing, setEditing] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
-  const [editJustificativa, setEditJustificativa] = useState("");
   const [saving, setSaving] = useState(false);
-  const [dragIndex, setDragIndex] = useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const { toast } = useToast();
 
   const loadDetails = useCallback(async () => {
     setLoading(true);
     try {
-      const [primRes, secRes, tratRes] = await Promise.all([
+      const [primRes, secRes] = await Promise.all([
         supabase
           .from("valores_iniciais_caso")
           .select("id, valor, parametros:id_parametro(nome, unidade)")
@@ -55,11 +45,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
           .from("parametros_secundarios_caso")
           .select("id, valor, parametros:parametro_id(nome, unidade)")
           .eq("case_id", caseId),
-        supabase
-          .from("tratamentos_caso")
-          .select("id, prioridade, justificativa, tratamentos:tratamento_id(nome)")
-          .eq("case_id", caseId)
-          .order("prioridade"),
       ]);
 
       setPrimarios(
@@ -72,12 +57,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
         (secRes.data || []).map((v: any) => ({
           id: v.id, nome: v.parametros?.nome || "?",
           valor: v.valor, unidade: v.parametros?.unidade || "",
-        }))
-      );
-      setTratamentos(
-        (tratRes.data || []).map((t: any) => ({
-          id: t.id, nome: t.tratamentos?.nome || "?",
-          prioridade: t.prioridade, justificativa: t.justificativa,
         }))
       );
     } catch (e) {
@@ -113,21 +92,9 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     invokeUpdate({ caseId, action: "update_secondary_param", paramId, valor: editValue });
   };
 
-  const handleSaveTreatment = (treatmentId: number | string) => {
-    invokeUpdate({
-      caseId, action: "update_treatment", treatmentId,
-      prioridade: editValue, justificativa: editJustificativa,
-    });
-  };
-
-  const handleDelete = (type: "primary" | "secondary" | "treatment", id: number | string) => {
-    const actionMap = {
-      primary: "delete_primary_param",
-      secondary: "delete_secondary_param",
-      treatment: "delete_treatment",
-    };
-    const idKey = type === "treatment" ? "treatmentId" : "paramId";
-    invokeUpdate({ caseId, action: actionMap[type], [idKey]: id });
+  const handleDelete = (type: "primary" | "secondary", id: number | string) => {
+    const actionMap = { primary: "delete_primary_param", secondary: "delete_secondary_param" };
+    invokeUpdate({ caseId, action: actionMap[type], paramId: id });
   };
 
   const startEditParam = (key: string, valor: number) => {
@@ -135,27 +102,7 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     setEditValue(String(valor));
   };
 
-  const startEditTreatment = (key: string, t: CaseTreatment) => {
-    setEditing(key);
-    setEditValue(String(t.prioridade));
-    setEditJustificativa(t.justificativa || "");
-  };
-
-  const handleDrop = async (fromIdx: number, toIdx: number) => {
-    if (fromIdx === toIdx) return;
-    const reordered = [...tratamentos];
-    const [moved] = reordered.splice(fromIdx, 1);
-    reordered.splice(toIdx, 0, moved);
-    // Optimistic update
-    setTratamentos(reordered);
-    setDragIndex(null);
-    setDragOverIndex(null);
-    // Save new order
-    const order = reordered.map((t, i) => ({ id: t.id, prioridade: i + 1 }));
-    await invokeUpdate({ caseId, action: "reorder_treatments", order });
-  };
-
-  const total = primarios.length + secundarios.length + tratamentos.length;
+  const total = primarios.length + secundarios.length;
 
   if (loading) {
     return (
@@ -243,11 +190,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
             <Beaker className="h-3 w-3" /> {secundarios.length} secundários
           </Badge>
         )}
-        {tratamentos.length > 0 && (
-          <Badge variant="secondary" className="text-xs gap-1">
-            <Pill className="h-3 w-3" /> {tratamentos.length} tratamentos
-          </Badge>
-        )}
         <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => setExpanded(!expanded)}>
           {expanded ? <><ChevronUp className="h-3 w-3 mr-1" /> Ocultar</> : <><ChevronDown className="h-3 w-3 mr-1" /> Detalhes</>}
         </Button>
@@ -281,97 +223,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
             <AddCaseDataForm caseId={caseId} type="secondary" onAdded={loadDetails} />
           </div>
 
-          {/* Tratamentos */}
-          <div>
-            <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
-              <Pill className="h-3 w-3 text-primary" /> Tratamentos
-            </p>
-            {tratamentos.length > 0 && (
-              <div className="space-y-1">
-                {tratamentos.map((t, idx) => {
-                  const editKey = `trat-${t.id}`;
-                  const isEditing = editing === editKey;
-                  const isDragging = dragIndex === idx;
-                  const isDragOver = dragOverIndex === idx;
-
-                  return (
-                    <div
-                      key={t.id}
-                      draggable={!isEditing}
-                      onDragStart={() => setDragIndex(idx)}
-                      onDragOver={(e) => { e.preventDefault(); setDragOverIndex(idx); }}
-                      onDragLeave={() => setDragOverIndex(null)}
-                      onDrop={(e) => { e.preventDefault(); if (dragIndex !== null) handleDrop(dragIndex, idx); }}
-                      onDragEnd={() => { setDragIndex(null); setDragOverIndex(null); }}
-                      className={`bg-background rounded px-2 py-1.5 border group transition-all ${
-                        isDragging ? "opacity-40 border-primary/50" :
-                        isDragOver ? "border-primary border-dashed bg-primary/5" :
-                        "border-border/50"
-                      }`}
-                    >
-                      {isEditing ? (
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium text-foreground">{t.nome}</span>
-                            <label className="text-muted-foreground">Prioridade:</label>
-                            <Input
-                              type="number"
-                              min={1} max={10}
-                              value={editValue}
-                              onChange={(e) => setEditValue(e.target.value)}
-                              className="h-6 text-xs w-14 px-1"
-                              autoFocus
-                            />
-                          </div>
-                          <Input
-                            placeholder="Justificativa clínica..."
-                            value={editJustificativa}
-                            onChange={(e) => setEditJustificativa(e.target.value)}
-                            className="h-6 text-xs"
-                            maxLength={500}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") handleSaveTreatment(t.id);
-                              if (e.key === "Escape") setEditing(null);
-                            }}
-                          />
-                          <div className="flex gap-1">
-                            <Button variant="outline" size="sm" className="h-6 text-xs" onClick={() => handleSaveTreatment(t.id)} disabled={saving}>
-                              {saving ? <Loader2 className="h-3 w-3 animate-spin mr-1" /> : <Check className="h-3 w-3 mr-1" />} Salvar
-                            </Button>
-                            <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={() => setEditing(null)}>
-                              Cancelar
-                            </Button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex items-start gap-1.5">
-                          <GripVertical className="h-4 w-4 text-muted-foreground/50 shrink-0 cursor-grab active:cursor-grabbing mt-0.5" />
-                          <Badge variant="outline" className="text-[10px] shrink-0 h-5 w-5 flex items-center justify-center p-0 rounded-full">
-                            {idx + 1}
-                          </Badge>
-                          <div className="min-w-0 flex-1">
-                            <span className="font-medium text-foreground">{t.nome}</span>
-                            {t.justificativa && (
-                              <p className="text-muted-foreground mt-0.5 leading-snug">{t.justificativa}</p>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                            <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => startEditTreatment(editKey, t)}>
-                              <Pencil className="h-3 w-3 text-muted-foreground" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => handleDelete("treatment", t.id)}>
-                              <Trash2 className="h-3 w-3 text-destructive" />
-                            </Button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            <AddCaseDataForm caseId={caseId} type="treatment" onAdded={loadDetails} />
-          </div>
         </div>
       )}
     </div>
