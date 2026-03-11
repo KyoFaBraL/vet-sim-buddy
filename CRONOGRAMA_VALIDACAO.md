@@ -346,23 +346,25 @@ gantt
     Pré-teste diagnóstico (O₁)       :crit, f1c, 2026-03-24, 2026-03-28
 
     section Fase 2 — Intervenção Inicial
-    Aulas teóricas pt.1 (GE + GC)    :f2a, 2026-03-31, 2026-04-04
+    Aulas teóricas pt.1 (GE + GC)    :f2a, 2026-03-30, 2026-04-04
     Aulas teóricas pt.2 + Trein. GE  :f2b, 2026-04-07, 2026-04-11
-    Treinamento GE no SUT            :f2c, 2026-04-14, 2026-04-18
-    Uso supervisionado GE            :f2d, 2026-04-21, 2026-04-25
+    Treinamento + Uso superv. GE     :f2c, 2026-04-14, 2026-04-18
+
+    section Intervalo
+    Buffer entre F2 e F3             :done, buf, 2026-04-20, 2026-04-25
 
     section Fase 3 — Avaliação Intermediária 1
-    Uso intensivo GE + Atividades GC :f3a, 2026-04-28, 2026-05-09
+    Uso intensivo GE + Atividades GC :f3a, 2026-04-27, 2026-05-09
     Avaliação intermediária 1 (O₂)  :crit, f3b, 2026-05-11, 2026-05-14
     Análise parcial RStudio          :f3c, 2026-05-15, 2026-05-16
 
     section Fase 4 — Intervenção Avançada
-    Casos avançados GE               :f4a, 2026-05-19, 2026-05-23
+    Casos avançados GE               :f4a, 2026-05-18, 2026-05-23
     Aulas avançadas (GE + GC)        :f4b, 2026-05-25, 2026-06-01
-    Modo Avaliação GE (sem IA)       :f4c, 2026-06-02, 2026-06-06
+    Modo Avaliação GE (sem IA)       :f4c, 2026-06-01, 2026-06-06
 
     section Fase 5 — Avaliação Final
-    Revisão geral GE                 :f5a, 2026-06-09, 2026-06-13
+    Revisão geral GE                 :f5a, 2026-06-08, 2026-06-13
     Avaliação intermediária 2 (O₃)  :crit, f5b, 2026-06-14, 2026-06-16
     Questionário SUS (GE)            :f5c, 2026-06-17, 2026-06-19
     Pós-teste final (O₄)            :crit, f5d, 2026-06-20, 2026-06-23
