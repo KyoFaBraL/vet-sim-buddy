@@ -188,12 +188,13 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
         description: `${data.resumoCorrecoes} (${data.primaryUpdated} parâmetros, ${data.treatmentsUpdated} tratamentos)`,
       });
 
-      // Clear old validation and re-validate
+      // Clear old validation, bump details refresh key, and re-validate
       setValidationResults(prev => {
         const next = { ...prev };
         delete next[caseId];
         return next;
       });
+      setDetailsRefreshKey(prev => ({ ...prev, [caseId]: (prev[caseId] || 0) + 1 }));
 
       await loadCustomCases();
       onCaseCreated();
