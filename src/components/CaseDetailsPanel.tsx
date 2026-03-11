@@ -243,11 +243,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
             <Beaker className="h-3 w-3" /> {secundarios.length} secundários
           </Badge>
         )}
-        {tratamentos.length > 0 && (
-          <Badge variant="secondary" className="text-xs gap-1">
-            <Pill className="h-3 w-3" /> {tratamentos.length} tratamentos
-          </Badge>
-        )}
         <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => setExpanded(!expanded)}>
           {expanded ? <><ChevronUp className="h-3 w-3 mr-1" /> Ocultar</> : <><ChevronDown className="h-3 w-3 mr-1" /> Detalhes</>}
         </Button>
