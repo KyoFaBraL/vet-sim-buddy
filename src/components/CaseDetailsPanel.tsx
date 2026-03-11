@@ -141,6 +141,20 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
     setEditJustificativa(t.justificativa || "");
   };
 
+  const handleDrop = async (fromIdx: number, toIdx: number) => {
+    if (fromIdx === toIdx) return;
+    const reordered = [...tratamentos];
+    const [moved] = reordered.splice(fromIdx, 1);
+    reordered.splice(toIdx, 0, moved);
+    // Optimistic update
+    setTratamentos(reordered);
+    setDragIndex(null);
+    setDragOverIndex(null);
+    // Save new order
+    const order = reordered.map((t, i) => ({ id: t.id, prioridade: i + 1 }));
+    await invokeUpdate({ caseId, action: "reorder_treatments", order });
+  };
+
   const total = primarios.length + secundarios.length + tratamentos.length;
 
   if (loading) {
