@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle, Wrench } from "lucide-react";
+import { CaseDetailsPanel } from "@/components/CaseDetailsPanel";
 
 interface CaseManagerProps {
   onCaseCreated: () => void;
