@@ -883,7 +883,109 @@ INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. **IEEE 829-2008** — Standar
 | 4 | C | 9 | B | 14 | B | 19 | B |
 | 5 | D | 10 | D | 15 | B | 20 | C |
 
-**Critério de correção:** Cada questão vale 0,5 ponto. Nota final = soma dos acertos × 0,5 (escala 0–10).
+**Critério de correção (questões objetivas):** Cada questão vale 0,5 ponto. Subtotal objetivas = soma dos acertos × 0,5 (máximo 10,0 pontos).
+
+---
+
+#### Bloco 5 — Questões Discursivas — Casos Clínicos Integrados (Questões 21–23)
+
+**Instruções:** Leia atentamente cada caso clínico e responda de forma completa e fundamentada. Utilize os dados laboratoriais fornecidos para embasar sua análise.
+
+---
+
+**Questão 21.** (3,0 pontos)
+
+Um cão da raça Labrador, macho, 5 anos, 30 kg, é atendido em emergência com histórico de diarreia aquosa profusa há 3 dias, apatia progressiva e anorexia. Ao exame físico: mucosas pálidas, TPC = 3 s, FC = 160 bpm, FR = 36 mpm, temperatura = 37,8 °C. A gasometria arterial revela:
+
+| Parâmetro | Valor | Referência |
+|-----------|-------|------------|
+| pH | 7,18 | 7,35 – 7,45 |
+| PaCO₂ | 24 mmHg | 35 – 45 mmHg |
+| HCO₃⁻ | 9 mEq/L | 18 – 24 mEq/L |
+| PaO₂ | 92 mmHg | 80 – 100 mmHg |
+| Na⁺ | 138 mEq/L | 140 – 155 mEq/L |
+| K⁺ | 3,0 mEq/L | 3,5 – 5,5 mEq/L |
+| Cl⁻ | 112 mEq/L | 105 – 115 mEq/L |
+
+**a)** Identifique e classifique o distúrbio ácido-base primário. Existe compensação? Justifique com base nos valores da gasometria. (1,0 ponto)
+
+**b)** Calcule o ânion gap (AG = Na⁺ − [Cl⁻ + HCO₃⁻]) e interprete o resultado. Qual é a provável etiologia da acidose neste caso? (1,0 ponto)
+
+**c)** Proponha um plano terapêutico inicial, incluindo tipo de fluido, via de administração e monitoramento dos parâmetros. Justifique suas escolhas. (1,0 ponto)
+
+---
+
+**Questão 22.** (3,0 pontos)
+
+Uma gata, SRD, 8 anos, 4 kg, com diagnóstico prévio de diabetes mellitus descompensada, é trazida à clínica com vômitos, polidipsia, poliúria, respiração de Kussmaul e odor cetótico. A gasometria arterial mostra:
+
+| Parâmetro | Valor | Referência |
+|-----------|-------|------------|
+| pH | 7,12 | 7,35 – 7,45 |
+| PaCO₂ | 18 mmHg | 35 – 45 mmHg |
+| HCO₃⁻ | 6 mEq/L | 18 – 24 mEq/L |
+| PaO₂ | 98 mmHg | 80 – 100 mmHg |
+| Glicose | 480 mg/dL | 70 – 120 mg/dL |
+| K⁺ | 5,8 mEq/L | 3,5 – 5,5 mEq/L |
+
+**a)** Identifique o distúrbio ácido-base e explique a relação entre a cetoacidose diabética e a queda do pH e do HCO₃⁻. (1,0 ponto)
+
+**b)** A PaCO₂ está em 18 mmHg. Essa alteração é esperada? Explique o mecanismo fisiológico envolvido. (1,0 ponto)
+
+**c)** Descreva a abordagem terapêutica prioritária para este paciente, considerando fluidoterapia, insulinoterapia e correção eletrolítica. Indique em que momento o bicarbonato de sódio IV poderia ser considerado. (1,0 ponto)
+
+---
+
+**Questão 23.** (4,0 pontos)
+
+Um cão Bulldog Francês, macho, 3 anos, 12 kg, é atendido após episódio de dispneia aguda durante exercício em dia quente. Apresenta cianose de mucosas, estridor inspiratório intenso, FR = 8 mpm (bradipneia por obstrução), FC = 180 bpm e temperatura = 41,2 °C. A gasometria arterial inicial revela:
+
+| Parâmetro | Valor | Referência |
+|-----------|-------|------------|
+| pH | 7,15 | 7,35 – 7,45 |
+| PaCO₂ | 72 mmHg | 35 – 45 mmHg |
+| HCO₃⁻ | 24 mEq/L | 18 – 24 mEq/L |
+| PaO₂ | 52 mmHg | 80 – 100 mmHg |
+| Lactato | 8,5 mmol/L | < 2,5 mmol/L |
+
+Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria mostra:
+
+| Parâmetro | Valor |
+|-----------|-------|
+| pH | 7,22 |
+| PaCO₂ | 55 mmHg |
+| HCO₃⁻ | 18 mEq/L |
+| PaO₂ | 75 mmHg |
+| Lactato | 5,2 mmol/L |
+
+**a)** Classifique o distúrbio ácido-base na gasometria **inicial**. O HCO₃⁻ normal indica compensação renal? Justifique. (1,0 ponto)
+
+**b)** Analise a **segunda gasometria**: o distúrbio está melhorando ou se complicando? Justifique comparando os dois momentos, incluindo a evolução do lactato e da PaO₂. (1,5 pontos)
+
+**c)** Proponha o manejo terapêutico para as próximas horas, considerando que a PaCO₂ permanece elevada. Discuta se há indicação de intervenção nas vias aéreas e quais parâmetros devem ser monitorados prioritariamente. (1,5 pontos)
+
+---
+
+#### Gabarito Discursivo — Pontos-Chave Esperados (uso exclusivo do pesquisador)
+
+**Questão 21:**
+- **a)** Acidose metabólica (pH ↓, HCO₃⁻ ↓). Compensação respiratória presente (PaCO₂ ↓ = hiperventilação). Compensação parcial pois pH ainda < 7,35.
+- **b)** AG = 138 − (112 + 9) = 17 mEq/L → AG normal (hiperclorêmica). Etiologia: perda de HCO₃⁻ por diarreia com reposição de Cl⁻.
+- **c)** Ringer Lactato IV (30 mL/kg/h nas primeiras 1–2h), suplementação de K⁺ (KCl), monitorar pH, HCO₃⁻, K⁺ e estado de hidratação. Bicarbonato IV se pH não responder à fluidoterapia.
+
+**Questão 22:**
+- **a)** Acidose metabólica grave por acúmulo de corpos cetônicos (β-hidroxibutirato, acetoacetato). Cetoácidos consomem HCO₃⁻ como tampão → pH ↓.
+- **b)** Sim, esperada. Compensação respiratória: quimiorreceptores centrais detectam acidemia → hiperventilação (respiração de Kussmaul) → ↓ PaCO₂.
+- **c)** 1) NaCl 0,9% IV (10–20 mL/kg/h); 2) Insulina regular (0,05–0,1 UI/kg/h IV após reposição volêmica); 3) Monitorar K⁺ — hipocalemia pode ocorrer com insulinoterapia; 4) Bicarbonato IV somente se pH < 7,0 e sem resposta à fluidoterapia + insulina.
+
+**Questão 23:**
+- **a)** Acidose respiratória aguda (PaCO₂ ↑↑, pH ↓). HCO₃⁻ normal NÃO indica compensação renal — compensação renal leva 24–72h; trata-se de distúrbio agudo. Lactato elevado sugere componente metabólico associado (hipóxia tecidual).
+- **b)** Melhora parcial: PaCO₂ ↓ (72→55), PaO₂ ↑ (52→75), lactato ↓ (8,5→5,2). Porém pH ainda baixo (7,22) e HCO₃⁻ caiu (24→18), indicando acidose metabólica sobreposta (acidose láctica em resolução parcial). Distúrbio misto em evolução.
+- **c)** PaCO₂ persistentemente elevada → avaliar desobstrução de vias aéreas (considerar intubação ou traqueostomia temporária se síndrome braquicefálica grave). Manter oxigenoterapia. Monitorar: PaCO₂, PaO₂, lactato, pH, temperatura, FR e SpO₂. Resfriamento ativo até T < 39,5 °C. Fluidoterapia de manutenção.
+
+**Critério de correção (questões discursivas):** Total = 10,0 pontos (Q21: 3,0 + Q22: 3,0 + Q23: 4,0). Avaliação por rubrica: resposta completa e fundamentada = pontuação integral; parcialmente correta = 50%; incorreta ou ausente = 0.
+
+**Nota final do instrumento:** Média ponderada = (Subtotal Objetivas × 0,5) + (Subtotal Discursivas × 0,5), resultando em escala 0–10.
 
 > **Nota:** Este instrumento é um rascunho para validação com os docentes das disciplinas de Fisiologia Animal e Farmacologia. As questões poderão ser revisadas quanto ao nível de dificuldade, adequação ao conteúdo programático e clareza textual antes da aplicação definitiva.
 
