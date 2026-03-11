@@ -282,7 +282,7 @@ Os participantes do GC receberão o ensino tradicional (aulas teóricas presenci
 
 ### 8.1 Critérios de Inclusão
 
-1. Estar regularmente matriculado(a) no curso de graduação em Medicina Veterinária da *(Instituição)*.
+1. Estar regularmente matriculado(a) no curso de graduação em Medicina Veterinária da Universidade Federal do Piauí (UFPI).
 2. Estar cursando as disciplinas de Fisiologia Animal e/ou Farmacologia no semestre letivo 2026.1.
 3. Ter idade igual ou superior a 18 anos.
 4. Possuir acesso a dispositivo com navegador web moderno (smartphone, tablet ou computador).
