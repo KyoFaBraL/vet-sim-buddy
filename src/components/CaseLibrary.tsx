@@ -36,7 +36,7 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
 
   useEffect(() => {
     applyFilters();
-  }, [cases, especieFilter, searchTerm]);
+  }, [cases, especieFilter, condicaoFilter, searchTerm]);
 
   const loadCases = async () => {
     setLoading(true);
