@@ -145,8 +145,8 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
 
       toast({ title: "Caso criado!", description: "Gerando parâmetros com IA e validando..." });
 
-      // Populate data and validate in parallel
-      const [populateResult, _] = await Promise.allSettled([
+      // Populate data
+      const [populateResult] = await Promise.allSettled([
         supabase.functions.invoke('populate-case-data', { body: { caseId: newCase.id } }),
       ]);
 
