@@ -26,15 +26,11 @@ interface CaseDetailsPanelProps {
 export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelProps) => {
   const [primarios, setPrimarios] = useState<CaseParam[]>([]);
   const [secundarios, setSecundarios] = useState<CaseParam[]>([]);
-  const [tratamentos, setTratamentos] = useState<CaseTreatment[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
-  const [editing, setEditing] = useState<string | null>(null); // "prim-{id}" | "sec-{id}" | "trat-{id}"
+  const [editing, setEditing] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
-  const [editJustificativa, setEditJustificativa] = useState("");
   const [saving, setSaving] = useState(false);
-  const [dragIndex, setDragIndex] = useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const { toast } = useToast();
 
   const loadDetails = useCallback(async () => {
