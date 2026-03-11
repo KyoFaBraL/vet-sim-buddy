@@ -26,6 +26,7 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
   const [cases, setCases] = useState<Case[]>([]);
   const [filteredCases, setFilteredCases] = useState<Case[]>([]);
   const [especieFilter, setEspecieFilter] = useState<string>("todos");
+  const [condicaoFilter, setCondicaoFilter] = useState<string>("todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +36,7 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
 
   useEffect(() => {
     applyFilters();
-  }, [cases, especieFilter, searchTerm]);
+  }, [cases, especieFilter, condicaoFilter, searchTerm]);
 
   const loadCases = async () => {
     setLoading(true);
@@ -59,12 +60,14 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
   const applyFilters = () => {
     let filtered = [...cases];
 
-    // Filtro por espécie
     if (especieFilter !== "todos") {
       filtered = filtered.filter(c => c.especie?.toLowerCase() === especieFilter);
     }
 
-    // Filtro por busca
+    if (condicaoFilter !== "todos") {
+      filtered = filtered.filter(c => c.condicoes?.nome === condicaoFilter);
+    }
+
     if (searchTerm) {
       filtered = filtered.filter(c => 
         c.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -74,6 +77,10 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
 
     setFilteredCases(filtered);
   };
+
+  const uniqueCondicoes = Array.from(
+    new Set(cases.map(c => c.condicoes?.nome).filter(Boolean))
+  ).sort() as string[];
 
   const getDifficulty = (caseItem: Case) => {
     // Lógica simplificada de dificuldade baseada no nome da condição
@@ -111,7 +118,7 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
       
       <CardContent className="space-y-4">
         {/* Filtros */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">Buscar</label>
             <Input
@@ -141,6 +148,21 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
                     Felino
                   </div>
                 </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Condição</label>
+            <Select value={condicaoFilter} onValueChange={setCondicaoFilter}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todas</SelectItem>
+                {uniqueCondicoes.map((c) => (
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
