@@ -447,10 +447,10 @@ A pesquisa será encerrada antecipadamente se:
 | Item | Informação |
 |------|------------|
 | **Instituição** | Universidade Federal do Piauí (UFPI) |
-| **Unidade/Departamento** | Departamento de *(Medicina Veterinária / Ciência Animal)* |
+| **Unidade/Departamento** | Departamento de Centro de Ciências Agrárias (CCA) |
 | **Disciplinas envolvidas** | Fisiologia Animal e Farmacologia |
-| **Endereço** | *(Endereço completo)* |
-| **Responsável pela unidade** | *(Nome do coordenador ou chefe de departamento)* |
+| **Endereço** | Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI |
+| **Responsável pela unidade** | Profa. Mônica Arrivabene |
 | **Infraestrutura disponível** | Salas de aula com projetor, acesso Wi-Fi institucional, laboratório de informática |
 | **Ambiente digital** | Software VetBalance (https://vetbalance.app.br) acessível via internet |
 
