@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Trash2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 
 interface CaseManagerProps {
   onCaseCreated: () => void;
@@ -27,11 +28,23 @@ interface CustomCase {
   id_condicao_primaria: number;
 }
 
+interface CaseValidation {
+  valido: boolean;
+  pontuacao: number;
+  tipo_disturbio: string;
+  problemas: string[];
+  sugestoes: string[];
+  resumo: string;
+}
+
 export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
   const [open, setOpen] = useState(false);
   const [conditions, setConditions] = useState<Condition[]>([]);
   const [customCases, setCustomCases] = useState<CustomCase[]>([]);
   const [loading, setLoading] = useState(false);
+  const [generatingRandom, setGeneratingRandom] = useState(false);
+  const [validatingCase, setValidatingCase] = useState<number | null>(null);
+  const [validationResults, setValidationResults] = useState<Record<number, CaseValidation>>({});
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -53,14 +66,9 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
       .order("nome");
 
     if (error) {
-      toast({
-        title: "Erro ao carregar condições",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: "Erro ao carregar condições", description: error.message, variant: "destructive" });
       return;
     }
-
     setConditions(data || []);
   };
 
@@ -75,15 +83,42 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
       .order("criado_em", { ascending: false });
 
     if (error) {
-      toast({
-        title: "Erro ao carregar casos",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: "Erro ao carregar casos", description: error.message, variant: "destructive" });
       return;
     }
-
     setCustomCases(data || []);
+  };
+
+  const validateCase = async (caseId: number) => {
+    setValidatingCase(caseId);
+    try {
+      const { data, error } = await supabase.functions.invoke('validate-case-acidbase', {
+        body: { caseId }
+      });
+
+      if (error) throw error;
+
+      if (data?.validation) {
+        setValidationResults(prev => ({ ...prev, [caseId]: data.validation }));
+        
+        if (data.validation.valido) {
+          toast({
+            title: "✅ Caso válido!",
+            description: `Pontuação: ${data.validation.pontuacao}/100 — ${data.validation.tipo_disturbio}`,
+          });
+        } else {
+          toast({
+            title: "⚠️ Caso com problemas",
+            description: data.validation.resumo,
+            variant: "destructive",
+          });
+        }
+      }
+    } catch (error: any) {
+      toast({ title: "Erro na validação", description: error.message, variant: "destructive" });
+    } finally {
+      setValidatingCase(null);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -99,7 +134,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
         .insert({
           nome: formData.nome,
           descricao: formData.descricao,
-          especie: formData.especie.toLowerCase(), // Normalizar para minúsculo
+          especie: formData.especie.toLowerCase(),
           id_condicao_primaria: parseInt(formData.id_condicao_primaria),
           user_id: user.id,
         })
@@ -108,79 +143,107 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
 
       if (error) throw error;
 
-      console.log('Caso criado com espécie:', newCase.especie);
+      toast({ title: "Caso criado!", description: "Gerando parâmetros com IA e validando..." });
 
-      toast({
-        title: "Caso criado!",
-        description: "Gerando parâmetros e tratamentos com IA...",
-      });
+      // Populate data
+      const [populateResult] = await Promise.allSettled([
+        supabase.functions.invoke('populate-case-data', { body: { caseId: newCase.id } }),
+      ]);
 
-      // Acionar IA para popular dados do caso
-      const { error: populateError } = await supabase.functions.invoke('populate-case-data', {
-        body: { caseId: newCase.id }
-      });
-
-      if (populateError) {
-        console.error('Erro ao popular dados do caso:', populateError);
-        toast({
-          title: "Caso criado com avisos",
-          description: "O caso foi criado mas houve erro ao gerar dados automáticos.",
-          variant: "destructive",
-        });
+      if (populateResult.status === 'fulfilled' && !populateResult.value.error) {
+        toast({ title: "Dados gerados!", description: "Parâmetros e tratamentos criados. Validando caso..." });
       } else {
-        toast({
-          title: "Caso completo!",
-          description: "Parâmetros e tratamentos foram gerados automaticamente pela IA.",
-        });
+        toast({ title: "Aviso", description: "Caso criado mas houve erro ao gerar dados automáticos.", variant: "destructive" });
       }
 
-      setFormData({
-        nome: "",
-        descricao: "",
-        especie: "canino",
-        id_condicao_primaria: "",
-      });
+      // After populate, validate the case
+      setFormData({ nome: "", descricao: "", especie: "canino", id_condicao_primaria: "" });
       setOpen(false);
-      loadCustomCases();
+      await loadCustomCases();
       onCaseCreated();
+
+      // Auto-validate after creation
+      await validateCase(newCase.id);
+
     } catch (error: any) {
-      toast({
-        title: "Erro ao criar caso",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: "Erro ao criar caso", description: error.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (caseId: number) => {
+  const handleGenerateRandom = async () => {
+    setGeneratingRandom(true);
     try {
-      const { error } = await supabase
-        .from("casos_clinicos")
-        .delete()
-        .eq("id", caseId);
+      const { data, error } = await supabase.functions.invoke('generate-random-case');
 
       if (error) throw error;
 
-      toast({
-        title: "Caso excluído",
-        description: "O caso foi removido com sucesso.",
-      });
+      if (data?.success) {
+        toast({
+          title: "🎲 Caso aleatório criado!",
+          description: `"${data.nome}" (${data.especie}) — ${data.parametrosPrimarios} parâmetros, ${data.tratamentos} tratamentos`,
+        });
+        await loadCustomCases();
+        onCaseCreated();
 
+        // Auto-validate
+        await validateCase(data.caseId);
+      }
+    } catch (error: any) {
+      toast({ title: "Erro ao gerar caso", description: error.message, variant: "destructive" });
+    } finally {
+      setGeneratingRandom(false);
+    }
+  };
+
+  const handleDelete = async (caseId: number) => {
+    try {
+      const { error } = await supabase.from("casos_clinicos").delete().eq("id", caseId);
+      if (error) throw error;
+
+      toast({ title: "Caso excluído", description: "O caso foi removido com sucesso." });
+      setValidationResults(prev => {
+        const next = { ...prev };
+        delete next[caseId];
+        return next;
+      });
       loadCustomCases();
       onCaseCreated();
     } catch (error: any) {
-      toast({
-        title: "Erro ao excluir caso",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: "Erro ao excluir caso", description: error.message, variant: "destructive" });
     }
+  };
+
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return "text-green-600 dark:text-green-400";
+    if (score >= 50) return "text-yellow-600 dark:text-yellow-400";
+    return "text-red-600 dark:text-red-400";
   };
 
   return (
     <div className="space-y-4">
+      {/* Generate random case button */}
+      <Button
+        onClick={handleGenerateRandom}
+        disabled={generatingRandom}
+        variant="outline"
+        className="w-full border-primary/30 hover:bg-primary/5"
+      >
+        {generatingRandom ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Gerando caso aleatório com IA...
+          </>
+        ) : (
+          <>
+            <Sparkles className="mr-2 h-4 w-4" />
+            Gerar Caso Aleatório com IA
+          </>
+        )}
+      </Button>
+
+      {/* Manual case creation dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button className="w-full">
@@ -192,7 +255,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
           <DialogHeader>
             <DialogTitle>Novo Caso Clínico</DialogTitle>
             <DialogDescription>
-              Crie um caso personalizado com suas próprias especificações
+              Crie um caso personalizado. Após a criação, a IA validará automaticamente se o caso atende aos requisitos de desequilíbrio ácido-básico.
             </DialogDescription>
           </DialogHeader>
 
@@ -210,13 +273,8 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
 
             <div className="space-y-2">
               <Label htmlFor="especie">Espécie</Label>
-              <Select
-                value={formData.especie}
-                onValueChange={(value) => setFormData({ ...formData, especie: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
+              <Select value={formData.especie} onValueChange={(value) => setFormData({ ...formData, especie: value })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="canino">Canino (Cão)</SelectItem>
                   <SelectItem value="felino">Felino (Gato)</SelectItem>
@@ -231,9 +289,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                 onValueChange={(value) => setFormData({ ...formData, id_condicao_primaria: value })}
                 required
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione a condição" />
-                </SelectTrigger>
+                <SelectTrigger><SelectValue placeholder="Selecione a condição" /></SelectTrigger>
                 <SelectContent>
                   {conditions.map((condition) => (
                     <SelectItem key={condition.id} value={condition.id.toString()}>
@@ -256,7 +312,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Salvando..." : "Salvar Caso"}
+              {loading ? "Criando e validando..." : "Salvar Caso"}
             </Button>
           </form>
         </DialogContent>
@@ -268,25 +324,85 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
             <CardTitle>Meus Casos Personalizados</CardTitle>
             <CardDescription>Gerencie seus casos salvos</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
-            {customCases.map((caso) => (
-              <div
-                key={caso.id}
-                className="flex items-center justify-between p-3 border rounded-lg"
-              >
-                <div>
-                  <p className="font-medium">{caso.nome}</p>
-                  <p className="text-sm text-muted-foreground">{caso.especie}</p>
+          <CardContent className="space-y-3">
+            {customCases.map((caso) => {
+              const validation = validationResults[caso.id];
+              const isValidating = validatingCase === caso.id;
+
+              return (
+                <div key={caso.id} className="border rounded-lg p-3 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <p className="font-medium">{caso.nome}</p>
+                      <p className="text-sm text-muted-foreground">{caso.especie}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => validateCase(caso.id)}
+                        disabled={isValidating}
+                      >
+                        {isValidating ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <ShieldCheck className="h-4 w-4" />
+                        )}
+                      </Button>
+                      <Button variant="destructive" size="icon" onClick={() => handleDelete(caso.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Validation result */}
+                  {validation && (
+                    <div className="border-t pt-2 mt-2 space-y-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {validation.valido ? (
+                          <Badge variant="default">
+                            <CheckCircle2 className="h-3 w-3 mr-1" /> Válido
+                          </Badge>
+                        ) : (
+                          <Badge variant="destructive">
+                            <XCircle className="h-3 w-3 mr-1" /> Inválido
+                          </Badge>
+                        )}
+                        <span className={`text-sm font-bold ${getScoreColor(validation.pontuacao)}`}>
+                          {validation.pontuacao}/100
+                        </span>
+                        <Badge variant="outline" className="text-xs">
+                          {validation.tipo_disturbio}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{validation.resumo}</p>
+
+                      {validation.problemas.length > 0 && (
+                        <div className="space-y-1">
+                          <p className="text-xs font-semibold text-destructive flex items-center gap-1">
+                            <AlertTriangle className="h-3 w-3" /> Problemas:
+                          </p>
+                          <ul className="text-xs text-muted-foreground list-disc pl-4">
+                            {validation.problemas.map((p, i) => <li key={i}>{p}</li>)}
+                          </ul>
+                        </div>
+                      )}
+
+                      {validation.sugestoes.length > 0 && (
+                        <div className="space-y-1">
+                          <p className="text-xs font-semibold text-primary flex items-center gap-1">
+                            <Sparkles className="h-3 w-3" /> Sugestões:
+                          </p>
+                          <ul className="text-xs text-muted-foreground list-disc pl-4">
+                            {validation.sugestoes.map((s, i) => <li key={i}>{s}</li>)}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => handleDelete(caso.id)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
+              );
+            })}
           </CardContent>
         </Card>
       )}
