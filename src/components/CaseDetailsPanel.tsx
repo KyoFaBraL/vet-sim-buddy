@@ -17,12 +17,6 @@ interface CaseParam {
   unidade?: string;
 }
 
-interface CaseTreatment {
-  id: number | string;
-  nome: string;
-  prioridade: number;
-  justificativa?: string;
-}
 
 interface CaseDetailsPanelProps {
   caseId: number;
