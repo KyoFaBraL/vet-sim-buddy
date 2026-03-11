@@ -35,6 +35,7 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
   const [editing, setEditing] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
   const [saving, setSaving] = useState(false);
+  const [viewMode, setViewMode] = useState<"list" | "chart">("list");
   const { toast } = useToast();
 
   const loadDetails = useCallback(async () => {
