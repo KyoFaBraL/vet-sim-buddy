@@ -122,6 +122,48 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
     }
   };
 
+  const handleAutoFix = async (caseId: number) => {
+    const validation = validationResults[caseId];
+    if (!validation) return;
+
+    setFixingCase(caseId);
+    try {
+      const { data, error } = await supabase.functions.invoke('autofix-case', {
+        body: {
+          caseId,
+          problemas: validation.problemas,
+          sugestoes: validation.sugestoes,
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        toast({
+          title: "🔧 Caso corrigido!",
+          description: `${data.resumoCorrecoes} (${data.primaryUpdated} parâmetros, ${data.treatmentsUpdated} tratamentos)`,
+        });
+
+        // Clear old validation and re-validate
+        setValidationResults(prev => {
+          const next = { ...prev };
+          delete next[caseId];
+          return next;
+        });
+
+        await loadCustomCases();
+        onCaseCreated();
+
+        // Re-validate after fix
+        await validateCase(caseId);
+      }
+    } catch (error: any) {
+      toast({ title: "Erro na auto-correção", description: error.message, variant: "destructive" });
+    } finally {
+      setFixingCase(null);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
