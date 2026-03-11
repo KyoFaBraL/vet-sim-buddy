@@ -660,7 +660,7 @@ Eu, **Caio Farias Cabral**, pesquisador responsável pelo projeto de pesquisa in
 
 > **Modelo a ser adaptado e assinado pela chefia da unidade**
 
-Declaro que a *(Nome da Instituição)*, por meio do Departamento de *(nome do departamento)*, dispõe de infraestrutura adequada para a realização da pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais"**, incluindo:
+Declaro que a **Universidade Federal do Piauí (UFPI)**, por meio do **Centro de Ciências Agrárias (CCA)**, dispõe de infraestrutura adequada para a realização da pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais"**, incluindo:
 
 - Salas de aula para aplicação das avaliações
 - Rede Wi-Fi institucional com cobertura nas áreas utilizadas
@@ -671,8 +671,8 @@ Autorizo a realização da pesquisa nas dependências desta instituição, confo
 
 | Campo | Preenchimento |
 |-------|---------------|
-| Nome da autoridade institucional | __________________________________ |
-| Cargo | __________________________________ |
+| Nome da autoridade institucional | Profa. Mônica Arrivabene |
+| Cargo | Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI (Biênio 2025/2027) |
 | Assinatura | __________________________________ |
 | Data | ____/____/2026 |
 | Carimbo institucional | |
