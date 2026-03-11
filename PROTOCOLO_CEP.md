@@ -490,12 +490,12 @@ A pesquisa será encerrada antecipadamente se:
 
 | Item | Custo Estimado (R$) | Fonte |
 |------|---------------------|-------|
-| Hospedagem do software (servidores em nuvem) | R$ 0,00 | Plano gratuito (Lovable Cloud) |
+| Hospedagem do software e infraestrutura em nuvem | R$ 100,00/mês | Recursos do pesquisador |
+| Plataforma de desenvolvimento e deploy (plano profissional) | R$ 100,00/mês | Recursos do pesquisador |
 | Domínio web (vetbalance.app.br) | R$ 40,00/ano | Recursos do pesquisador |
 | Impressão de TCLEs e instrumentos de coleta | R$ 50,00 | Recursos do pesquisador |
-| Acesso a APIs de inteligência artificial (feedback) | R$ 0,00 | Integrado à plataforma |
 | Licença RStudio | R$ 0,00 | Software livre |
-| **Total** | **R$ 90,00** | — |
+| **Total estimado (20 semanas)** | **R$ 1.090,00** | — |
 
 ### 15.2 Financiamento
 
