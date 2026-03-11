@@ -246,33 +246,38 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
 
       {expanded && (
         <div className="space-y-3 bg-muted/30 rounded-md p-3 text-xs animate-in fade-in slide-in-from-top-2 duration-200">
-          {primarios.length > 0 && (
-            <div>
-              <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
-                <Beaker className="h-3 w-3 text-primary" /> Parâmetros Primários
-              </p>
+          {/* Parâmetros Primários */}
+          <div>
+            <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
+              <Beaker className="h-3 w-3 text-primary" /> Parâmetros Primários
+            </p>
+            {primarios.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                 {primarios.map((p) => renderParamRow(p, "prim", handleSavePrimary, "primary"))}
               </div>
-            </div>
-          )}
+            )}
+            <AddCaseDataForm caseId={caseId} type="primary" onAdded={loadDetails} />
+          </div>
 
-          {secundarios.length > 0 && (
-            <div>
-              <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
-                <Beaker className="h-3 w-3 text-secondary-foreground" /> Parâmetros Secundários
-              </p>
+          {/* Parâmetros Secundários */}
+          <div>
+            <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
+              <Beaker className="h-3 w-3 text-secondary-foreground" /> Parâmetros Secundários
+            </p>
+            {secundarios.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                 {secundarios.map((p) => renderParamRow(p, "sec", handleSaveSecondary, "secondary"))}
               </div>
-            </div>
-          )}
+            )}
+            <AddCaseDataForm caseId={caseId} type="secondary" onAdded={loadDetails} />
+          </div>
 
-          {tratamentos.length > 0 && (
-            <div>
-              <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
-                <Pill className="h-3 w-3 text-primary" /> Tratamentos
-              </p>
+          {/* Tratamentos */}
+          <div>
+            <p className="font-semibold text-foreground mb-1 flex items-center gap-1">
+              <Pill className="h-3 w-3 text-primary" /> Tratamentos
+            </p>
+            {tratamentos.length > 0 && (
               <div className="space-y-1">
                 {tratamentos.map((t) => {
                   const editKey = `trat-${t.id}`;
@@ -339,8 +344,9 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
                   );
                 })}
               </div>
-            </div>
-          )}
+            )}
+            <AddCaseDataForm caseId={caseId} type="treatment" onAdded={loadDetails} />
+          </div>
         </div>
       )}
     </div>
