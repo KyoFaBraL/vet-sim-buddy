@@ -90,6 +90,23 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
     setCustomCases(data || []);
   };
 
+  const getInvokeErrorMessage = async (error: unknown) => {
+    if (error && typeof error === "object" && "context" in error) {
+      const context = (error as { context?: unknown }).context;
+      if (context instanceof Response) {
+        try {
+          const payload = await context.clone().json();
+          if (payload?.error && typeof payload.error === "string") return payload.error;
+        } catch {
+          // ignore parse error
+        }
+      }
+    }
+
+    if (error instanceof Error) return error.message;
+    return "Erro desconhecido na função";
+  };
+
   const validateCase = async (caseId: number) => {
     setValidatingCase(caseId);
     try {
@@ -115,50 +132,75 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
           });
         }
       }
-    } catch (error: any) {
-      toast({ title: "Erro na validação", description: error.message, variant: "destructive" });
+    } catch (error: unknown) {
+      const message = await getInvokeErrorMessage(error);
+      toast({ title: "Erro na validação", description: message, variant: "destructive" });
     } finally {
       setValidatingCase(null);
     }
   };
 
   const handleAutoFix = async (caseId: number) => {
-    const validation = validationResults[caseId];
-    if (!validation) return;
-
     setFixingCase(caseId);
     try {
+      // Sempre busca uma validação fresca para evitar estado local desatualizado
+      const { data: latestValidationData, error: latestValidationError } = await supabase.functions.invoke('validate-case-acidbase', {
+        body: { caseId }
+      });
+
+      if (latestValidationError) throw latestValidationError;
+
+      const latestValidation = latestValidationData?.validation;
+      const fallbackValidation = validationResults[caseId];
+
+      if (latestValidation) {
+        setValidationResults(prev => ({ ...prev, [caseId]: latestValidation }));
+      }
+
+      if (latestValidation?.valido) {
+        toast({
+          title: "Caso já está válido",
+          description: "Não foi necessário aplicar auto-correção.",
+        });
+        return;
+      }
+
+      const problemas = latestValidation?.problemas ?? fallbackValidation?.problemas ?? [];
+      const sugestoes = latestValidation?.sugestoes ?? fallbackValidation?.sugestoes ?? [];
+
       const { data, error } = await supabase.functions.invoke('autofix-case', {
         body: {
           caseId,
-          problemas: validation.problemas,
-          sugestoes: validation.sugestoes,
+          problemas,
+          sugestoes,
         }
       });
 
       if (error) throw error;
-
-      if (data?.success) {
-        toast({
-          title: "🔧 Caso corrigido!",
-          description: `${data.resumoCorrecoes} (${data.primaryUpdated} parâmetros, ${data.treatmentsUpdated} tratamentos)`,
-        });
-
-        // Clear old validation and re-validate
-        setValidationResults(prev => {
-          const next = { ...prev };
-          delete next[caseId];
-          return next;
-        });
-
-        await loadCustomCases();
-        onCaseCreated();
-
-        // Re-validate after fix
-        await validateCase(caseId);
+      if (!data?.success) {
+        throw new Error(data?.error || "A auto-correção não retornou sucesso.");
       }
-    } catch (error: any) {
-      toast({ title: "Erro na auto-correção", description: error.message, variant: "destructive" });
+
+      toast({
+        title: "🔧 Caso corrigido!",
+        description: `${data.resumoCorrecoes} (${data.primaryUpdated} parâmetros, ${data.treatmentsUpdated} tratamentos)`,
+      });
+
+      // Clear old validation and re-validate
+      setValidationResults(prev => {
+        const next = { ...prev };
+        delete next[caseId];
+        return next;
+      });
+
+      await loadCustomCases();
+      onCaseCreated();
+
+      // Re-validate after fix
+      await validateCase(caseId);
+    } catch (error: unknown) {
+      const message = await getInvokeErrorMessage(error);
+      toast({ title: "Erro na auto-correção", description: message, variant: "destructive" });
     } finally {
       setFixingCase(null);
     }
