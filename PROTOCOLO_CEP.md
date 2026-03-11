@@ -463,12 +463,12 @@ A pesquisa será encerrada antecipadamente se:
 | Fase | Período | Duração | Atividade Principal |
 |------|---------|---------|---------------------|
 | F1 — Preparação | 10/03–28/03/2026 | 3 semanas | Aprovação CEP, randomização, pré-teste diagnóstico (O₁) |
-| F2 — Intervenção Inicial | 31/03–25/04/2026 | 4 semanas | Aulas teóricas (GE + GC), treinamento GE no software |
-| F3 — Avaliação Intermediária 1 | 28/04–16/05/2026 | 3 semanas | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
-| F4 — Intervenção Avançada | 19/05–06/06/2026 | 3 semanas | Casos avançados, modo avaliação (sem IA) |
-| F5 — Avaliação Final | 09/06–27/06/2026 | 3 semanas | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
-| F6 — Análise e Relatório | 30/06–31/07/2026 | 4 semanas | Análise estatística, redação do relatório final |
-| **Total** | **10/03–31/07/2026** | **20 semanas** | — |
+| F2 — Intervenção Inicial | 30/03–18/04/2026 | 3 semanas | Aulas teóricas (GE + GC), treinamento GE no software |
+| F3 — Avaliação Intermediária 1 | 27/04–16/05/2026 | 3 semanas | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
+| F4 — Intervenção Avançada | 18/05–06/06/2026 | 3 semanas | Casos avançados, modo avaliação (sem IA) |
+| F5 — Avaliação Final | 08/06–27/06/2026 | 3 semanas | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
+| F6 — Análise e Relatório | 29/06–25/07/2026 | 4 semanas | Análise estatística, redação do relatório final |
+| **Total** | **10/03–25/07/2026** | **20 semanas** | — |
 
 ### 14.2 Marcos Críticos
 
