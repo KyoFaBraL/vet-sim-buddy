@@ -287,23 +287,24 @@ O₄ = Pós-teste final (Junho/2026)
 | 1 | 10/03/2026 | 14/03/2026 | F1 — Preparação | Submissão do protocolo ao CEP | |
 | 2 | 17/03/2026 | 23/03/2026 | F1 — Preparação | Apresentação aos docentes; cadastro e randomização GE/GC | |
 | 3 | 24/03/2026 | 28/03/2026 | F1 — Preparação | **Pré-teste diagnóstico (O₁)** | 🔴 O₁ |
-| 4 | 31/03/2026 | 04/04/2026 | F2 — Interv. Inicial | Aulas teóricas — parte 1 (GE + GC) | |
+| 4 | 30/03/2026 | 04/04/2026 | F2 — Interv. Inicial | Aulas teóricas — parte 1 (GE + GC) | |
 | 5 | 07/04/2026 | 11/04/2026 | F2 — Interv. Inicial | Aulas teóricas — parte 2; início treinamento GE | |
-| 6 | 14/04/2026 | 18/04/2026 | F2 — Interv. Inicial | Treinamento GE no SUT (tutorial + primeiros casos) | |
-| 7 | 21/04/2026 | 25/04/2026 | F2 — Interv. Inicial | Uso supervisionado GE (acidose/alcalose metabólica) | |
-| 8 | 28/04/2026 | 02/05/2026 | F3 — Aval. Interm. 1 | Uso intensivo GE; atividades tradicionais GC | |
-| 9 | 05/05/2026 | 09/05/2026 | F3 — Aval. Interm. 1 | Continuação uso intensivo GE | |
-| 10 | 11/05/2026 | 16/05/2026 | F3 — Aval. Interm. 1 | **Avaliação intermediária 1 (O₂)**; análise parcial RStudio | 🔴 O₂ |
-| 11 | 19/05/2026 | 23/05/2026 | F4 — Interv. Avançada | Casos avançados GE (cetoacidose, hipercapnia, mistos) | |
-| 12 | 25/05/2026 | 01/06/2026 | F4 — Interv. Avançada | Aulas avançadas (compensação e protocolos) — GE + GC | |
-| 13 | 02/06/2026 | 06/06/2026 | F4 — Interv. Avançada | Modo Avaliação do SUT (sem IA) | |
-| 14 | 09/06/2026 | 16/06/2026 | F5 — Aval. Final | Revisão geral GE; **Avaliação intermediária 2 (O₃)** | 🔴 O₃ |
-| 15 | 17/06/2026 | 23/06/2026 | F5 — Aval. Final | Questionário SUS (GE); **Pós-teste final (O₄)** | 🔴 O₄ |
-| 16 | 24/06/2026 | 27/06/2026 | F5 — Aval. Final | Exportação completa dos dados do SUT (CSV/TXT) | ✅ Coleta encerrada |
-| 17 | 30/06/2026 | 04/07/2026 | F6 — Análise | Processamento estatístico (testes t, Shapiro-Wilk) | |
-| 18 | 07/07/2026 | 11/07/2026 | F6 — Análise | Análise dados SUT (sessões, win rate, badges); d de Cohen | |
-| 19 | 14/07/2026 | 18/07/2026 | F6 — Análise | Cruzamento de dados (software × notas); Pearson | |
-| 20 | 21/07/2026 | 31/07/2026 | F6 — Relatório | Redação e entrega do relatório final IEEE 829 | ✅ Relatório final |
+| 6 | 14/04/2026 | 18/04/2026 | F2 — Interv. Inicial | Treinamento GE no SUT + uso supervisionado (acidose/alcalose metabólica) | |
+| — | 20/04/2026 | 25/04/2026 | — | *Intervalo entre fases F2 e F3* | |
+| 7 | 27/04/2026 | 02/05/2026 | F3 — Aval. Interm. 1 | Uso intensivo GE; atividades tradicionais GC | |
+| 8 | 04/05/2026 | 09/05/2026 | F3 — Aval. Interm. 1 | Continuação uso intensivo GE; preparação da avaliação | |
+| 9 | 11/05/2026 | 16/05/2026 | F3 — Aval. Interm. 1 | **Avaliação intermediária 1 (O₂)**; análise parcial RStudio | 🔴 O₂ |
+| 10 | 18/05/2026 | 23/05/2026 | F4 — Interv. Avançada | Casos avançados GE (cetoacidose, hipercapnia, mistos) | |
+| 11 | 25/05/2026 | 01/06/2026 | F4 — Interv. Avançada | Aulas avançadas (compensação e protocolos) — GE + GC | |
+| 12 | 01/06/2026 | 06/06/2026 | F4 — Interv. Avançada | Modo Avaliação do SUT (sem IA) | |
+| 13 | 08/06/2026 | 13/06/2026 | F5 — Aval. Final | Revisão geral GE; **Avaliação intermediária 2 (O₃)** | 🔴 O₃ |
+| 14 | 15/06/2026 | 23/06/2026 | F5 — Aval. Final | Questionário SUS (GE); **Pós-teste final (O₄)** | 🔴 O₄ |
+| 15 | 24/06/2026 | 27/06/2026 | F5 — Aval. Final | Exportação completa dos dados do SUT (CSV/TXT) | ✅ Coleta encerrada |
+| 16 | 30/06/2026 | 04/07/2026 | F6 — Análise | Processamento estatístico (testes t, Shapiro-Wilk) | |
+| 17 | 07/07/2026 | 11/07/2026 | F6 — Análise | Análise dados SUT (sessões, win rate, badges); d de Cohen | |
+| 18 | 14/07/2026 | 18/07/2026 | F6 — Análise | Cruzamento de dados (software × notas); Pearson | |
+| 19 | 21/07/2026 | 28/07/2026 | F6 — Relatório | Redação do relatório final de validação | |
+| 20 | 29/07/2026 | 31/07/2026 | F6 — Relatório | **Entrega do relatório final** (IEEE 829) | ✅ Relatório final |
 | — | 01/08/2026 | 31/08/2026 | **MESTRADO** | **Redação da dissertação e defesa** | 🎓 Defesa |
 
 ### 9.2 Resumo por Fase
