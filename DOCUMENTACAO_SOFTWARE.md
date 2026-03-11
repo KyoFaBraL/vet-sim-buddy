@@ -1179,10 +1179,10 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 | ID | Instrumento | Momento | Amostra | Formato | Referência |
 |----|-------------|---------|---------|---------|------------|
-| I-01 | Pré-teste diagnóstico | 24/03 – 28/03/2026 (O₁) | GE + GC | 20 questões objetivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
+| I-01 | Pré-teste diagnóstico | 24/03 – 28/03/2026 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
 | I-02 | Avaliação intermediária 1 | 11/05 – 14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
 | I-03 | Avaliação intermediária 2 | 14/06 – 16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-04 | Pós-teste final | 20/06 – 23/06/2026 (O₄) | GE + GC | 20 questões objetivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
+| I-04 | Pós-teste final | 20/06 – 23/06/2026 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
 | I-05 | Questionário de satisfação | 17/06 – 19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | PROTOCOLO_CEP.md, Apêndice B |
 
 #### 22.6.2 Dados Coletados Automaticamente pelo SUT
