@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { AddCaseDataForm } from "@/components/AddCaseDataForm";
 import {
   Loader2, Beaker, Pill, ChevronDown, ChevronUp,
   Pencil, Check, X, Trash2,
