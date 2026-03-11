@@ -36,7 +36,7 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
   const loadDetails = useCallback(async () => {
     setLoading(true);
     try {
-      const [primRes, secRes, tratRes] = await Promise.all([
+      const [primRes, secRes] = await Promise.all([
         supabase
           .from("valores_iniciais_caso")
           .select("id, valor, parametros:id_parametro(nome, unidade)")
@@ -45,11 +45,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
           .from("parametros_secundarios_caso")
           .select("id, valor, parametros:parametro_id(nome, unidade)")
           .eq("case_id", caseId),
-        supabase
-          .from("tratamentos_caso")
-          .select("id, prioridade, justificativa, tratamentos:tratamento_id(nome)")
-          .eq("case_id", caseId)
-          .order("prioridade"),
       ]);
 
       setPrimarios(
@@ -62,12 +57,6 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
         (secRes.data || []).map((v: any) => ({
           id: v.id, nome: v.parametros?.nome || "?",
           valor: v.valor, unidade: v.parametros?.unidade || "",
-        }))
-      );
-      setTratamentos(
-        (tratRes.data || []).map((t: any) => ({
-          id: t.id, nome: t.tratamentos?.nome || "?",
-          prioridade: t.prioridade, justificativa: t.justificativa,
         }))
       );
     } catch (e) {
