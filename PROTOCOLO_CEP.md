@@ -199,7 +199,7 @@ A pesquisa será realizada na **Universidade Federal do Piauí (UFPI)**, nas dis
 
 | Item | Descrição |
 |------|-----------|
-| **População** | Estudantes regularmente matriculados no curso de Medicina Veterinária da *(Instituição)* |
+| **População** | Estudantes regularmente matriculados no curso de Medicina Veterinária da Universidade Federal do Piauí (UFPI) |
 | **Amostra** | 40 estudantes (conveniência) |
 | **Grupo Experimental (GE)** | n = 20 (com acesso ao VetBalance) |
 | **Grupo Controle (GC)** | n = 20 (sem acesso ao VetBalance durante a intervenção) |
