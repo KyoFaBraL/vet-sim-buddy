@@ -479,7 +479,7 @@ A pesquisa será encerrada antecipadamente se:
 | 🔴 O₃ | 14–16/06/2026 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
 | 🔴 O₄ | 20–23/06/2026 | Pós-teste final abrangente |
 | ✅ | 27/06/2026 | Encerramento da coleta de dados |
-| ✅ | 31/07/2026 | Entrega do relatório final |
+| ✅ | 25/07/2026 | Entrega do relatório final |
 | 🎓 | Agosto/2026 | Defesa do mestrado |
 
 ---
