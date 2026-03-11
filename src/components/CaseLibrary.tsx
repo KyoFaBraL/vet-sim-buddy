@@ -118,7 +118,7 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
       
       <CardContent className="space-y-4">
         {/* Filtros */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">Buscar</label>
             <Input
@@ -148,6 +148,21 @@ export const CaseLibrary = ({ selectedCaseId, onCaseSelect }: CaseLibraryProps) 
                     Felino
                   </div>
                 </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Condição</label>
+            <Select value={condicaoFilter} onValueChange={setCondicaoFilter}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todas</SelectItem>
+                {uniqueCondicoes.map((c) => (
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
