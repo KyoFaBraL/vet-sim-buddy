@@ -360,7 +360,7 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                     <div className="border-t pt-2 mt-2 space-y-2">
                       <div className="flex items-center gap-2 flex-wrap">
                         {validation.valido ? (
-                          <Badge variant="default" className="bg-green-600">
+                          <Badge variant="default">
                             <CheckCircle2 className="h-3 w-3 mr-1" /> Válido
                           </Badge>
                         ) : (
