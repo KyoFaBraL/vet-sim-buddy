@@ -39,6 +39,8 @@ export const CaseDetailsPanel = ({ caseId, refreshKey = 0 }: CaseDetailsPanelPro
   const [editValue, setEditValue] = useState("");
   const [editJustificativa, setEditJustificativa] = useState("");
   const [saving, setSaving] = useState(false);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const { toast } = useToast();
 
   const loadDetails = useCallback(async () => {
