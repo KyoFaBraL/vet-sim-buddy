@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { Plus, Trash2, Sparkles, Loader2, ShieldCheck, AlertTriangle, CheckCircle2, XCircle, Wrench } from "lucide-react";
 
 interface CaseManagerProps {
   onCaseCreated: () => void;
