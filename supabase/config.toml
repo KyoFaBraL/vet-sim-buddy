@@ -32,3 +32,9 @@ verify_jwt = true
 [functions.generate-session-feedback]
 verify_jwt = true
 
+[functions.generate-random-case]
+verify_jwt = true
+
+[functions.validate-case-acidbase]
+verify_jwt = true
+
