@@ -442,6 +442,29 @@ export const CaseManager = ({ onCaseCreated }: CaseManagerProps) => {
                           </ul>
                         </div>
                       )}
+
+                      {/* Auto-fix button for invalid cases */}
+                      {!validation.valido && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full mt-2 border-primary/30"
+                          onClick={() => handleAutoFix(caso.id)}
+                          disabled={isFixing}
+                        >
+                          {isFixing ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Corrigindo com IA...
+                            </>
+                          ) : (
+                            <>
+                              <Wrench className="mr-2 h-4 w-4" />
+                              Corrigir Automaticamente com IA
+                            </>
+                          )}
+                        </Button>
+                      )}
                     </div>
                   )}
                 </div>
