@@ -1109,7 +1109,7 @@ END IF;
 - Resultado uniforme para "não encontrado" e "não é aluno" (previne enumeração de e-mails)
 - Chaves de acesso de professor: uso único, com expiração opcional, 16 caracteres de alta entropia (28^16 combinações)
 
-### 16.6 Privacidade de Dados Pessoais
+### 17.6 Privacidade de Dados Pessoais
 
 | Dado sensível | Proteção |
 |---------------|----------|
