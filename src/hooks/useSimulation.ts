@@ -773,6 +773,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
             dados: { penalidade_hp: delta },
             hp_antes: hp,
             hp_depois: Math.max(0, Math.min(100, hp + delta))
+          })
+          .then(({ error }) => {
+            if (error) console.error('Erro ao registrar uso de dica:', error);
           });
       }
     }
