@@ -1089,7 +1089,7 @@ comportamento. Responda APENAS em formato JSON válido."
 - Campos validados contra schema esperado
 - Fallback para valores padrão em caso de resposta inválida
 
-### 16.5 Rate Limiting e Prevenção de Abuso
+### 17.5 Rate Limiting e Prevenção de Abuso
 
 **Busca de alunos por e-mail (proteção contra enumeração):**
 ```sql
