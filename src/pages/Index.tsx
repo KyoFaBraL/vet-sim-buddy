@@ -89,7 +89,7 @@ const Index = () => {
     getParameterStatus,
     getParameterTrend,
     changeHp,
-  } = useSimulation(selectedCaseId);
+  } = useSimulation(selectedCaseId, simulationMode);
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
