@@ -54,7 +54,7 @@ interface HistoryPoint {
   values: SimulationState;
 }
 
-export const useSimulation = (caseId: number = 1) => {
+export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | 'evaluation' = 'practice') => {
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [currentState, setCurrentState] = useState<SimulationState>({});
   const [previousState, setPreviousState] = useState<SimulationState>({});
