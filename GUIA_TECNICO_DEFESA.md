@@ -966,7 +966,7 @@ Total session_history: ~600 registros por sessão
 
 ---
 
-## 16. GLOSSÁRIO TÉCNICO RÁPIDO
+## 17. GLOSSÁRIO TÉCNICO RÁPIDO
 
 | Termo | Definição |
 |-------|-----------|
