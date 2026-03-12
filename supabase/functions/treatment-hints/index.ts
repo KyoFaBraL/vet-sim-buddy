@@ -187,7 +187,7 @@ Formato da resposta (JSON):
       }
       if (response.status === 402) {
         return new Response(
-          JSON.stringify({ error: "Créditos insuficientes. Adicione créditos ao seu workspace Lovable." }),
+          JSON.stringify({ error: "Créditos de IA insuficientes. Entre em contato com o administrador." }),
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
