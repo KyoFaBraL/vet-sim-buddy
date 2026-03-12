@@ -955,7 +955,7 @@ Total session_history: ~600 registros por sessão
 5. **Edge Functions stateless**: cada invocação é isolada, escala horizontalmente
 6. **RLS automático**: filtros de segurança no banco, sem middleware adicional
 
-### 15.5 Monitoramento e Observabilidade
+### 16.5 Monitoramento e Observabilidade
 
 | Camada | Ferramenta | Dados coletados |
 |--------|-----------|-----------------|
