@@ -1123,7 +1123,7 @@ END IF;
 
 **Frase-chave para usar na defesa:**
 
-> *"O VetBalance implementa segurança em profundidade com cinco camadas: validação client-side com Zod, autenticação JWT via Supabase Auth, controle de acesso por papéis (RBAC) com enum PostgreSQL, Row Level Security em todas as 27 tabelas do banco, e sanitização de prompts contra injeção em todas as Edge Functions que interagem com IA. Papéis são armazenados em tabela separada para prevenir escalonamento de privilégios, e-mails de alunos são protegidos por RPCs SECURITY DEFINER, e buscas são limitadas a 10 por hora para prevenir enumeração."*
+> *"O VetBalance implementa segurança em profundidade com cinco camadas: validação client-side com Zod, autenticação JWT via Supabase Auth, controle de acesso por papéis (RBAC) com enum PostgreSQL, Row Level Security em todas as 32 tabelas do banco, e sanitização de prompts contra injeção em todas as Edge Functions que interagem com IA. Papéis são armazenados em tabela separada para prevenir escalonamento de privilégios, e-mails de alunos são protegidos por RPCs SECURITY DEFINER, e buscas são limitadas a 10 por hora para prevenir enumeração."*
 
 **Se a banca perguntar:** *"Como vocês garantem que um aluno não acesse dados de outro?"*
 
