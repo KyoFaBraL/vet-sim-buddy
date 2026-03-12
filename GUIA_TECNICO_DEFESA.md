@@ -242,7 +242,7 @@ const { data, error } = await supabase
 │  ┌─────────────────┐  ┌──────────────────┐  │
 │  │  PostgreSQL 15   │  │  Edge Functions  │  │
 │  │  32 tabelas      │  │  (Deno Runtime)  │  │
-│  │  RLS em todas    │  │  7 funções       │  │
+│  │  RLS em todas    │  │  9 funções       │  │
 │  │  16+ funções SQL │  │  OpenAI-compat.  │  │
 │  └─────────────────┘  └──────────────────┘  │
 │                                              │
