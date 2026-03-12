@@ -1058,7 +1058,7 @@ IF has_role(target_user_id, 'admin') THEN
   RETURN 'Não é possível modificar este usuário';
 ```
 
-### 16.4 Sanitização de Prompts contra Injeção
+### 17.4 Sanitização de Prompts contra Injeção
 
 **O que é Prompt Injection:** Ataque onde o usuário insere instruções maliciosas em campos de texto (ex.: nome do caso clínico) tentando manipular o comportamento do modelo de IA.
 
