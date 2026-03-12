@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VetBalance — Diagramas de Arquitetura</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #fff; color: #1a1a2e; padding: 40px; }
+    h1 { text-align: center; margin-bottom: 40px; font-size: 28px; }
+    .diagram-section { 
+      margin-bottom: 60px; 
+      page-break-inside: avoid;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 30px;
+      background: #fafafa;
+    }
+    .diagram-section h2 { 
+      margin-bottom: 20px; 
+      font-size: 20px; 
+      color: #1a1a2e;
+      border-bottom: 2px solid #3b82f6;
+      padding-bottom: 8px;
+    }
+    .mermaid { 
+      display: flex; 
+      justify-content: center; 
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .download-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .download-btn:hover { background: #2563eb; }
+    .instructions {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 16px;
+      background: #eff6ff;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e40af;
+    }
+    @media print {
+      .download-btn, .instructions { display: none; }
+      .diagram-section { border: none; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>VetBalance — Diagramas de Arquitetura do Sistema</h1>
+
+<div class="instructions">
+  <strong>Como salvar:</strong> Clique no botão "Salvar como PNG" abaixo de cada diagrama, ou use Ctrl+P para imprimir todos como PDF.
+</div>
+
+<!-- Diagrama 1 -->
+<div class="diagram-section">
+  <h2>1. Arquitetura Geral do Sistema</h2>
+  <div class="mermaid" id="diagram1">
+graph TB
+    subgraph Frontend["Frontend - SPA React"]
+        UI["React 18 + TypeScript"]
+        TW["Tailwind CSS + shadcn/ui"]
+        RQ["React Query - Cache"]
+        RR["React Router v6"]
+        FM["Framer Motion"]
+        RC["Recharts"]
+    end
+    subgraph Auth["Autenticacao"]
+        JWT["JWT Token - 1h expiry"]
+        RBAC["RBAC - professor / aluno / admin"]
+        RLS["Row Level Security"]
+    end
+    subgraph Backend["Backend - Supabase"]
+        PG["PostgreSQL 15 - 32 tabelas"]
+        PR["PostgREST - API REST automatica"]
+        GT["GoTrue - Auth Service"]
+        EF["Edge Functions - Deno Runtime"]
+    end
+    subgraph AI["Gateway de IA"]
+        GF["Google Gemini 2.5 Flash"]
+        GPT["OpenAI GPT-5"]
+    end
+    subgraph Mobile["Mobile"]
+        CAP["Capacitor 8 - Android"]
+        PWA["PWA Responsiva"]
+    end
+    UI --> RQ
+    RQ -->|HTTPS + JWT| PR
+    PR -->|RLS Filter| PG
+    UI -->|Auth| GT
+    GT --> JWT
+    JWT --> RBAC
+    RBAC --> RLS
+    RLS --> PG
+    UI -->|Invoke| EF
+    EF -->|OpenAI-compatible API| GF
+    EF -->|OpenAI-compatible API| GPT
+    EF -->|Service Role| PG
+    UI --> CAP
+    UI --> PWA
+  </div>
+  <button class="download-btn" onclick="saveDiagram('diagram1', 'arquitetura-geral')">Salvar como PNG</button>
+</div>
+
+<!-- Diagrama 2 -->
+<div class="diagram-section">
+  <h2>2. Fluxo de Autenticacao e Controle de Acesso</h2>
+  <div class="mermaid" id="diagram2">
+flowchart TD
+    A["Usuario acessa /"] --> B{"Seleciona perfil"}
+    B -->|Professor| C["Login com email + senha + chave de acesso"]
+    B -->|Aluno| D["Login com email + senha"]
+    C --> E["supabase.auth.signUp / signIn"]
+    D --> E
+    E --> F["GoTrue gera JWT"]
+    F --> G["Trigger handle_new_user"]
+    G --> H["Cria profile + user_role"]
+    H --> I{"Qual role?"}
+    I -->|professor| J["Dashboard Professor /professor"]
+    I -->|aluno| K{"TCLE aceito?"}
+    I -->|admin| J
+    K -->|Nao| L["Tela de Consentimento /consentimento"]
+    K -->|Sim| M["Simulador /app"]
+    L -->|Aceita| M
+    J --> N["Gestao de casos, turmas, relatorios"]
+    M --> O["Selecao de caso e simulacao"]
+  </div>
+  <button class="download-btn" onclick="saveDiagram('diagram2', 'fluxo-autenticacao')">Salvar como PNG</button>
+</div>
+
+<!-- Diagrama 3 -->
+<div class="diagram-section">
+  <h2>3. Algoritmo de Simulacao — Game Loop</h2>
+  <div class="mermaid" id="diagram3">
+flowchart TD
+    START["Aluno seleciona caso"] --> LOAD["Carrega valores iniciais + efeitos + tratamentos"]
+    LOAD --> SESSION["Cria simulation_session - status: em_andamento"]
+    SESSION --> TICK["TICK - 1 segundo"]
+    TICK --> CALC["Calcula novos valores dos 10 parametros"]
+    CALC --> DECAY{"A cada 5s sem intervencao?"}
+    DECAY -->|Sim| HP_DOWN["HP -= 1"]
+    DECAY -->|Nao| CHECK
+    HP_DOWN --> CHECK
+    CHECK{"Verifica condicoes de fim"}
+    CHECK -->|"HP >= 100"| WIN["VITORIA - confetti + badges"]
+    CHECK -->|"HP <= 0"| LOSE["DERROTA"]
+    CHECK -->|"Tempo > 300s e modo avaliacao"| LOSE
+    CHECK -->|Continua| SAVE
+    SAVE{"A cada 5s"} -->|Batch insert| DB["session_history"]
+    SAVE --> TICK
+    WIN --> POST["Pos-sessao"]
+    LOSE --> POST
+    POST --> BADGE["checkAndAwardBadges - 17 badges"]
+    POST --> FEEDBACK["Edge Function: generate-session-feedback"]
+    POST --> RANK["Atualiza weekly_ranking_history"]
+  </div>
+  <button class="download-btn" onclick="saveDiagram('diagram3', 'game-loop')">Salvar como PNG</button>
+</div>
+
+<!-- Diagrama 4 -->
+<div class="diagram-section">
+  <h2>4. Modelo de Dados — Entidade-Relacionamento</h2>
+  <div class="mermaid" id="diagram4">
+erDiagram
+    profiles ||--|| user_roles : "1:1"
+    profiles ||--o{ simulation_sessions : "1:N"
+    profiles ||--o{ user_badges : "1:N"
+    profiles ||--o{ tcle_consents : "1:N"
+    profiles ||--o{ professor_students : "professor 1:N"
+    profiles ||--o{ weekly_ranking_history : "1:N"
+    simulation_sessions ||--o{ session_history : "1:N"
+    simulation_sessions ||--o{ session_treatments : "1:N"
+    simulation_sessions ||--o{ session_decisions : "1:N"
+    simulation_sessions }o--|| casos_clinicos : "N:1"
+    casos_clinicos }o--|| condicoes : "N:1"
+    casos_clinicos ||--o{ valores_iniciais_caso : "1:N"
+    casos_clinicos ||--o{ metas_aprendizado : "1:N"
+    casos_clinicos ||--o{ tratamentos_caso : "1:N"
+    casos_clinicos ||--o{ shared_cases : "1:N"
+    condicoes ||--o{ efeitos_condicao : "1:N"
+    condicoes ||--o{ tratamentos_adequados : "1:N"
+    parametros ||--o{ efeitos_condicao : "1:N"
+    parametros ||--o{ efeitos_tratamento : "1:N"
+    parametros ||--o{ valores_iniciais_caso : "1:N"
+    tratamentos ||--o{ efeitos_tratamento : "1:N"
+    tratamentos ||--o{ tratamentos_adequados : "1:N"
+    tratamentos ||--o{ session_treatments : "1:N"
+    badges ||--o{ user_badges : "1:N"
+    professor_students }o--o| turmas : "N:1"
+    shared_cases ||--o{ shared_case_access : "1:N"
+    profiles {
+        uuid id PK
+        text email
+        text nome_completo
+    }
+    user_roles {
+        uuid id PK
+        uuid user_id FK
+        app_role role
+    }
+    simulation_sessions {
+        uuid id PK
+        uuid user_id FK
+        int case_id FK
+        text status
+        int duracao_segundos
+    }
+    casos_clinicos {
+        int id PK
+        text nome
+        text especie
+        int id_condicao_primaria FK
+    }
+    parametros {
+        int id PK
+        text nome
+        text unidade
+    }
+    tratamentos {
+        int id PK
+        text nome
+        text tipo
+    }
+    badges {
+        uuid id PK
+        text nome
+        text tipo
+        json criterio
+    }
+  </div>
+  <button class="download-btn" onclick="saveDiagram('diagram4', 'modelo-dados-er')">Salvar como PNG</button>
+</div>
+
+<!-- Diagrama 5 -->
+<div class="diagram-section">
+  <h2>5. Edge Functions — Fluxo de Processamento</h2>
+  <div class="mermaid" id="diagram5">
+flowchart LR
+    subgraph Cliente["Frontend React"]
+        REQ["supabase.functions.invoke"]
+    end
+    subgraph Edge["Edge Function - Deno"]
+        CORS["CORS Preflight"]
+        AUTH["Validar JWT"]
+        SANITIZE["Sanitizar Input"]
+        PROMPT["Montar Prompt"]
+        CALL["Chamar API de IA"]
+        PARSE["Parse JSON Response"]
+        PERSIST["Persistir no Banco"]
+    end
+    subgraph IA["API de IA"]
+        MODEL["Gemini 2.5 Flash"]
+    end
+    subgraph DB["PostgreSQL"]
+        TABLE["Tabelas com RLS"]
+    end
+    REQ -->|HTTPS + JWT| CORS
+    CORS --> AUTH
+    AUTH -->|Token invalido| ERR401["401 Unauthorized"]
+    AUTH -->|Token valido| SANITIZE
+    SANITIZE --> PROMPT
+    PROMPT --> CALL
+    CALL -->|OpenAI-compatible| MODEL
+    MODEL -->|JSON Response| PARSE
+    PARSE -->|Service Role Key| PERSIST
+    PERSIST --> TABLE
+    PARSE -->|Result| REQ
+  </div>
+  <button class="download-btn" onclick="saveDiagram('diagram5', 'edge-functions-fluxo')">Salvar como PNG</button>
+</div>
+
+<!-- Diagrama 6 -->
+<div class="diagram-section">
+  <h2>6. Camadas de Seguranca</h2>
+  <div class="mermaid" id="diagram6">
+flowchart TB
+    subgraph L1["Camada 1 - Transporte"]
+        TLS["HTTPS / TLS 1.3"]
+    end
+    subgraph L2["Camada 2 - Autenticacao"]
+        JWT2["JWT com expiracao 1h + auto-refresh"]
+    end
+    subgraph L3["Camada 3 - Autorizacao"]
+        RLS2["RLS em 32 tabelas"]
+        RBAC2["RBAC via has_role SECURITY DEFINER"]
+    end
+    subgraph L4["Camada 4 - Dados"]
+        ROLES["Roles em tabela separada - anti privilege escalation"]
+        SOFT["Soft delete - professor_students.ativo"]
+    end
+    subgraph L5["Camada 5 - API"]
+        VERIFY["verify_jwt = true em todas Edge Functions"]
+        RATE["Rate limiting - 10 lookups por hora"]
+    end
+    subgraph L6["Camada 6 - IA"]
+        SANITIZE2["Sanitizacao anti prompt injection"]
+        ENUM["Anti-enumeracao de emails"]
+    end
+    subgraph L7["Camada 7 - Etica"]
+        TCLE2["TCLE obrigatorio com registro de IP e timestamp"]
+    end
+    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
+  </div>
+  <button class="download-btn" onclick="saveDiagram('diagram6', 'camadas-seguranca')">Salvar como PNG</button>
+</div>
+
+<script>
+  mermaid.initialize({ 
+    startOnLoad: true, 
+    theme: 'default',
+    themeVariables: {
+      fontSize: '14px'
+    },
+    flowchart: { 
+      useMaxWidth: false,
+      htmlLabels: true,
+      curve: 'basis'
+    },
+    er: {
+      useMaxWidth: false
+    }
+  });
+
+  async function saveDiagram(containerId, filename) {
+    const container = document.getElementById(containerId);
+    const svg = container.querySelector('svg');
+    if (!svg) { alert('Diagrama ainda carregando...'); return; }
+
+    // Clone SVG and set explicit dimensions
+    const clone = svg.cloneNode(true);
+    const bbox = svg.getBBox();
+    const width = Math.ceil(bbox.width + 40);
+    const height = Math.ceil(bbox.height + 40);
+    
+    clone.setAttribute('width', width * 2);
+    clone.setAttribute('height', height * 2);
+    clone.setAttribute('viewBox', `${bbox.x - 20} ${bbox.y - 20} ${width} ${height}`);
+    
+    // Add white background
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bg.setAttribute('x', bbox.x - 20);
+    bg.setAttribute('y', bbox.y - 20);
+    bg.setAttribute('width', width);
+    bg.setAttribute('height', height);
+    bg.setAttribute('fill', '#ffffff');
+    clone.insertBefore(bg, clone.firstChild);
+
+    // Inline all styles
+    const styleSheets = document.styleSheets;
+    let cssText = '';
+    for (const sheet of styleSheets) {
+      try {
+        for (const rule of sheet.cssRules) {
+          cssText += rule.cssText + '\n';
+        }
+      } catch(e) {}
+    }
+    const styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    styleEl.textContent = cssText;
+    clone.insertBefore(styleEl, clone.firstChild);
+
+    const svgData = new XMLSerializer().serializeToString(clone);
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = width * 2;
+      canvas.height = height * 2;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      
+      canvas.toBlob((blob) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `vetbalance-${filename}.png`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }, 'image/png');
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+  }
+</script>
+
+</body>
+</html>
