@@ -992,7 +992,7 @@ O VetBalance implementa segurança em **cinco camadas complementares**, seguindo
 
 **Implementação no VetBalance:**
 
-Todas as 27 tabelas possuem RLS ativado. As políticas seguem padrões específicos por tipo de dado:
+Todas as 32 tabelas possuem RLS ativado. As políticas seguem padrões específicos por tipo de dado:
 
 | Padrão | Tabelas | Regra |
 |--------|---------|-------|
