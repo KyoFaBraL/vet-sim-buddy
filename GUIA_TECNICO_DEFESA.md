@@ -938,7 +938,7 @@ Cada batch = 1 INSERT com 10 registros (um por parâmetro)
 Total session_history: ~600 registros por sessão
 ```
 
-### 15.4 Escalabilidade — Múltiplos Usuários Simultâneos
+### 16.4 Escalabilidade — Múltiplos Usuários Simultâneos
 
 | Métrica | 10 usuários | 50 usuários | 200 usuários |
 |---------|-------------|-------------|--------------|
