@@ -290,9 +290,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     return () => clearInterval(hpDecayInterval);
   }, [isRunning, gameStatus, toast, currentSessionId, startTime, usedHints, caseId]);
 
-  // Verificar limite de tempo (5 minutos = 300 segundos)
+  // Verificar limite de tempo (5 minutos = 300 segundos) - APENAS no modo avaliação
   useEffect(() => {
-    if (elapsedTime >= 300 && gameStatus === 'playing') {
+    if (simulationMode === 'evaluation' && elapsedTime >= 300 && gameStatus === 'playing') {
       setGameStatus('lost');
       setIsRunning(false);
       
