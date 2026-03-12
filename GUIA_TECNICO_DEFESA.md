@@ -860,7 +860,7 @@ input
 
 ## 16. MÉTRICAS DE PERFORMANCE
 
-### 15.1 Tamanho do Bundle (Frontend)
+### 16.1 Tamanho do Bundle (Frontend)
 
 | Métrica | Valor Estimado | Observação |
 |---------|---------------|------------|
