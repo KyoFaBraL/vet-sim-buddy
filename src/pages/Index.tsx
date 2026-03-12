@@ -67,10 +67,24 @@ const Index = () => {
   const [selectedCaseId, setSelectedCaseId] = useState(1);
   const [availableCases, setAvailableCases] = useState<any[]>([]);
   const [showTutorial, setShowTutorial] = useState(true);
+  const [simulationMode, setSimulationMode] = useState<SimulationMode>('practice');
+  const [treatments, setTreatments] = useState<Treatment[]>([]);
+  const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
+  const [goalPoints, setGoalPoints] = useState(0);
+  const [addTreatmentLogFn, setAddTreatmentLogFn] = useState<((treatmentName: string) => Promise<void>) | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackData, setFeedbackData] = useState<{
+    treatmentName: string;
+    effects: Array<{nome: string; valorAntes: number; valorDepois: number; unidade: string}>;
+  } | null>(null);
+  const [completedSessionId, setCompletedSessionId] = useState<string | null>(null);
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [diagnosticPoints, setDiagnosticPoints] = useState(0);
+
   const { toast } = useToast();
   const { checkAndAwardBadges } = useRankingBadges();
   const { celebrateAchievement } = useAchievementAnimation();
-  useWeeklyResetNotification(); // Enable weekly reset notifications
+  useWeeklyResetNotification();
   
   const {
     parameters,
@@ -90,20 +104,6 @@ const Index = () => {
     getParameterTrend,
     changeHp,
   } = useSimulation(selectedCaseId, simulationMode);
-
-  const [treatments, setTreatments] = useState<Treatment[]>([]);
-  const [appliedTreatments, setAppliedTreatments] = useState<string[]>([]);
-  const [goalPoints, setGoalPoints] = useState(0);
-  const [addTreatmentLogFn, setAddTreatmentLogFn] = useState<((treatmentName: string) => Promise<void>) | null>(null);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [feedbackData, setFeedbackData] = useState<{
-    treatmentName: string;
-    effects: Array<{nome: string; valorAntes: number; valorDepois: number; unidade: string}>;
-  } | null>(null);
-  const [simulationMode, setSimulationMode] = useState<SimulationMode>('practice');
-  const [completedSessionId, setCompletedSessionId] = useState<string | null>(null);
-  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
-  const [diagnosticPoints, setDiagnosticPoints] = useState(0);
 
   useEffect(() => {
     if (user) {
