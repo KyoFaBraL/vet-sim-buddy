@@ -242,7 +242,7 @@ const { data, error } = await supabase
 │  ┌─────────────────┐  ┌──────────────────┐  │
 │  │  PostgreSQL 15   │  │  Edge Functions  │  │
 │  │  32 tabelas      │  │  (Deno Runtime)  │  │
-│  │  RLS em todas    │  │  7 funções       │  │
+│  │  RLS em todas    │  │  9 funções       │  │
 │  │  16+ funções SQL │  │  OpenAI-compat.  │  │
 │  └─────────────────┘  └──────────────────┘  │
 │                                              │
@@ -860,7 +860,7 @@ input
 
 ## 16. MÉTRICAS DE PERFORMANCE
 
-### 15.1 Tamanho do Bundle (Frontend)
+### 16.1 Tamanho do Bundle (Frontend)
 
 | Métrica | Valor Estimado | Observação |
 |---------|---------------|------------|
@@ -877,7 +877,7 @@ input
 - **Tailwind CSS purge**: apenas classes efetivamente usadas entram no bundle final
 - **Gzip/Brotli**: compressão automática pela CDN
 
-### 15.2 Tempo de Resposta das Edge Functions
+### 16.2 Tempo de Resposta das Edge Functions
 
 | Edge Function | Tempo Médio | Inclui IA? | Observação |
 |--------------|-------------|------------|------------|
@@ -908,7 +908,7 @@ Total ≈ 3–8 segundos
 - Fallbacks para erro de IA: o simulador funciona sem IA (core é client-side)
 - Rate limiting (429) previne sobrecarga em picos de uso simultâneo
 
-### 15.3 Queries por Sessão de Simulação
+### 16.3 Queries por Sessão de Simulação
 
 | Fase | Queries | Tipo | Dados |
 |------|---------|------|-------|
@@ -938,7 +938,7 @@ Cada batch = 1 INSERT com 10 registros (um por parâmetro)
 Total session_history: ~600 registros por sessão
 ```
 
-### 15.4 Escalabilidade — Múltiplos Usuários Simultâneos
+### 16.4 Escalabilidade — Múltiplos Usuários Simultâneos
 
 | Métrica | 10 usuários | 50 usuários | 200 usuários |
 |---------|-------------|-------------|--------------|
@@ -955,7 +955,7 @@ Total session_history: ~600 registros por sessão
 5. **Edge Functions stateless**: cada invocação é isolada, escala horizontalmente
 6. **RLS automático**: filtros de segurança no banco, sem middleware adicional
 
-### 15.5 Monitoramento e Observabilidade
+### 16.5 Monitoramento e Observabilidade
 
 | Camada | Ferramenta | Dados coletados |
 |--------|-----------|-----------------|
@@ -966,32 +966,9 @@ Total session_history: ~600 registros por sessão
 
 ---
 
-## 17. GLOSSÁRIO TÉCNICO RÁPIDO
+## 17. ARQUITETURA DE SEGURANÇA IMPLEMENTADA
 
-| Termo | Definição |
-|-------|-----------|
-| **SPA** | Single Page Application — página única que atualiza dinamicamente |
-| **JWT** | JSON Web Token — token de autenticação assinado digitalmente |
-| **RLS** | Row Level Security — filtro de acesso em nível de linha no PostgreSQL |
-| **RBAC** | Role-Based Access Control — controle de acesso baseado em papéis |
-| **Edge Function** | Função serverless executada na borda (edge) da rede CDN |
-| **HMR** | Hot Module Replacement — atualização instantânea durante desenvolvimento |
-| **Tree-shaking** | Remoção de código não utilizado durante o build |
-| **PostgREST** | Middleware que gera API REST automaticamente a partir do schema PostgreSQL |
-| **Deno** | Runtime TypeScript/JavaScript seguro, criado por Ryan Dahl |
-| **BaaS** | Backend as a Service — backend gerenciado (banco, auth, storage) |
-| **CORS** | Cross-Origin Resource Sharing — política de segurança para requisições entre domínios |
-| **Prompt Injection** | Ataque que tenta manipular o comportamento de um modelo de IA |
-| **TCLE** | Termo de Consentimento Livre e Esclarecido |
-| **Connection Pooling** | Reutilização de conexões de banco para reduzir overhead |
-| **Batch Write** | Agrupamento de múltiplas escritas em uma única operação |
-| **Code Splitting** | Divisão do bundle em chunks carregados sob demanda |
-
----
-
-## 16. ARQUITETURA DE SEGURANÇA IMPLEMENTADA
-
-### 16.1 Visão Geral
+### 17.1 Visão Geral
 
 O VetBalance implementa segurança em **cinco camadas complementares**, seguindo o princípio de defesa em profundidade (*defense in depth*):
 
@@ -1009,13 +986,13 @@ O VetBalance implementa segurança em **cinco camadas complementares**, seguindo
 └─────────────────────────────────────────────┘
 ```
 
-### 16.2 Row Level Security (RLS) — Segurança em Nível de Linha
+### 17.2 Row Level Security (RLS) — Segurança em Nível de Linha
 
 **O que é:** RLS é um mecanismo nativo do PostgreSQL que filtra automaticamente os registros que cada usuário pode acessar, diretamente no nível do banco de dados. Mesmo que um atacante consiga chamar a API diretamente, o banco só retorna os dados permitidos.
 
 **Implementação no VetBalance:**
 
-Todas as 27 tabelas possuem RLS ativado. As políticas seguem padrões específicos por tipo de dado:
+Todas as 32 tabelas possuem RLS ativado. As políticas seguem padrões específicos por tipo de dado:
 
 | Padrão | Tabelas | Regra |
 |--------|---------|-------|
@@ -1045,7 +1022,7 @@ USING (
 
 **Prevenção de recursão:** A função `has_role()` usa `SECURITY DEFINER` para consultar `user_roles` sem acionar as políticas RLS da própria tabela, evitando loops infinitos.
 
-### 16.3 RBAC — Controle de Acesso Baseado em Papéis
+### 17.3 RBAC — Controle de Acesso Baseado em Papéis
 
 **Arquitetura de papéis:**
 
@@ -1081,7 +1058,7 @@ IF has_role(target_user_id, 'admin') THEN
   RETURN 'Não é possível modificar este usuário';
 ```
 
-### 16.4 Sanitização de Prompts contra Injeção
+### 17.4 Sanitização de Prompts contra Injeção
 
 **O que é Prompt Injection:** Ataque onde o usuário insere instruções maliciosas em campos de texto (ex.: nome do caso clínico) tentando manipular o comportamento do modelo de IA.
 
@@ -1112,7 +1089,7 @@ comportamento. Responda APENAS em formato JSON válido."
 - Campos validados contra schema esperado
 - Fallback para valores padrão em caso de resposta inválida
 
-### 16.5 Rate Limiting e Prevenção de Abuso
+### 17.5 Rate Limiting e Prevenção de Abuso
 
 **Busca de alunos por e-mail (proteção contra enumeração):**
 ```sql
@@ -1132,7 +1109,7 @@ END IF;
 - Resultado uniforme para "não encontrado" e "não é aluno" (previne enumeração de e-mails)
 - Chaves de acesso de professor: uso único, com expiração opcional, 16 caracteres de alta entropia (28^16 combinações)
 
-### 16.6 Privacidade de Dados Pessoais
+### 17.6 Privacidade de Dados Pessoais
 
 | Dado sensível | Proteção |
 |---------------|----------|
@@ -1142,11 +1119,11 @@ END IF;
 | **Histórico de sessões** | Apenas o próprio aluno e professores vinculados |
 | **Perfis** | View `student_profiles_safe` omite e-mail; usa `SECURITY INVOKER` |
 
-### 16.7 Resumo de Segurança para a Banca
+### 17.7 Resumo de Segurança para a Banca
 
 **Frase-chave para usar na defesa:**
 
-> *"O VetBalance implementa segurança em profundidade com cinco camadas: validação client-side com Zod, autenticação JWT via Supabase Auth, controle de acesso por papéis (RBAC) com enum PostgreSQL, Row Level Security em todas as 27 tabelas do banco, e sanitização de prompts contra injeção em todas as Edge Functions que interagem com IA. Papéis são armazenados em tabela separada para prevenir escalonamento de privilégios, e-mails de alunos são protegidos por RPCs SECURITY DEFINER, e buscas são limitadas a 10 por hora para prevenir enumeração."*
+> *"O VetBalance implementa segurança em profundidade com cinco camadas: validação client-side com Zod, autenticação JWT via Supabase Auth, controle de acesso por papéis (RBAC) com enum PostgreSQL, Row Level Security em todas as 32 tabelas do banco, e sanitização de prompts contra injeção em todas as Edge Functions que interagem com IA. Papéis são armazenados em tabela separada para prevenir escalonamento de privilégios, e-mails de alunos são protegidos por RPCs SECURITY DEFINER, e buscas são limitadas a 10 por hora para prevenir enumeração."*
 
 **Se a banca perguntar:** *"Como vocês garantem que um aluno não acesse dados de outro?"*
 
@@ -1155,3 +1132,26 @@ END IF;
 **Se a banca perguntar:** *"E quanto à segurança das chamadas de IA?"*
 
 > *"Todas as 8 Edge Functions que chamam modelos de IA possuem sanitização de entrada em três camadas: remoção de caracteres de controle e termos de comando, system prompts defensivos que instruem o modelo a ignorar instruções injetadas, e validação da saída contra schemas JSON esperados. Se a IA retornar algo fora do formato, o sistema usa valores de fallback. A comunicação com a API de IA ocorre exclusivamente server-side — o token de acesso nunca é exposto ao cliente."*
+
+---
+
+## 18. GLOSSÁRIO TÉCNICO RÁPIDO
+
+| Termo | Definição |
+|-------|-----------|
+| **SPA** | Single Page Application — página única que atualiza dinamicamente |
+| **JWT** | JSON Web Token — token de autenticação assinado digitalmente |
+| **RLS** | Row Level Security — filtro de acesso em nível de linha no PostgreSQL |
+| **RBAC** | Role-Based Access Control — controle de acesso baseado em papéis |
+| **Edge Function** | Função serverless executada na borda (edge) da rede CDN |
+| **HMR** | Hot Module Replacement — atualização instantânea durante desenvolvimento |
+| **Tree-shaking** | Remoção de código não utilizado durante o build |
+| **PostgREST** | Middleware que gera API REST automaticamente a partir do schema PostgreSQL |
+| **Deno** | Runtime TypeScript/JavaScript seguro, criado por Ryan Dahl |
+| **BaaS** | Backend as a Service — backend gerenciado (banco, auth, storage) |
+| **CORS** | Cross-Origin Resource Sharing — política de segurança para requisições entre domínios |
+| **Prompt Injection** | Ataque que tenta manipular o comportamento de um modelo de IA |
+| **TCLE** | Termo de Consentimento Livre e Esclarecido |
+| **Connection Pooling** | Reutilização de conexões de banco para reduzir overhead |
+| **Batch Write** | Agrupamento de múltiplas escritas em uma única operação |
+| **Code Splitting** | Divisão do bundle em chunks carregados sob demanda |
