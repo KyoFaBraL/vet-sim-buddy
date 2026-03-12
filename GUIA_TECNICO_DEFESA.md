@@ -1119,7 +1119,7 @@ END IF;
 | **Histórico de sessões** | Apenas o próprio aluno e professores vinculados |
 | **Perfis** | View `student_profiles_safe` omite e-mail; usa `SECURITY INVOKER` |
 
-### 16.7 Resumo de Segurança para a Banca
+### 17.7 Resumo de Segurança para a Banca
 
 **Frase-chave para usar na defesa:**
 
@@ -1132,3 +1132,26 @@ END IF;
 **Se a banca perguntar:** *"E quanto à segurança das chamadas de IA?"*
 
 > *"Todas as 8 Edge Functions que chamam modelos de IA possuem sanitização de entrada em três camadas: remoção de caracteres de controle e termos de comando, system prompts defensivos que instruem o modelo a ignorar instruções injetadas, e validação da saída contra schemas JSON esperados. Se a IA retornar algo fora do formato, o sistema usa valores de fallback. A comunicação com a API de IA ocorre exclusivamente server-side — o token de acesso nunca é exposto ao cliente."*
+
+---
+
+## 18. GLOSSÁRIO TÉCNICO RÁPIDO
+
+| Termo | Definição |
+|-------|-----------|
+| **SPA** | Single Page Application — página única que atualiza dinamicamente |
+| **JWT** | JSON Web Token — token de autenticação assinado digitalmente |
+| **RLS** | Row Level Security — filtro de acesso em nível de linha no PostgreSQL |
+| **RBAC** | Role-Based Access Control — controle de acesso baseado em papéis |
+| **Edge Function** | Função serverless executada na borda (edge) da rede CDN |
+| **HMR** | Hot Module Replacement — atualização instantânea durante desenvolvimento |
+| **Tree-shaking** | Remoção de código não utilizado durante o build |
+| **PostgREST** | Middleware que gera API REST automaticamente a partir do schema PostgreSQL |
+| **Deno** | Runtime TypeScript/JavaScript seguro, criado por Ryan Dahl |
+| **BaaS** | Backend as a Service — backend gerenciado (banco, auth, storage) |
+| **CORS** | Cross-Origin Resource Sharing — política de segurança para requisições entre domínios |
+| **Prompt Injection** | Ataque que tenta manipular o comportamento de um modelo de IA |
+| **TCLE** | Termo de Consentimento Livre e Esclarecido |
+| **Connection Pooling** | Reutilização de conexões de banco para reduzir overhead |
+| **Batch Write** | Agrupamento de múltiplas escritas em uma única operação |
+| **Code Splitting** | Divisão do bundle em chunks carregados sob demanda |
