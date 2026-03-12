@@ -1022,7 +1022,7 @@ USING (
 
 **Prevenção de recursão:** A função `has_role()` usa `SECURITY DEFINER` para consultar `user_roles` sem acionar as políticas RLS da própria tabela, evitando loops infinitos.
 
-### 16.3 RBAC — Controle de Acesso Baseado em Papéis
+### 17.3 RBAC — Controle de Acesso Baseado em Papéis
 
 **Arquitetura de papéis:**
 
