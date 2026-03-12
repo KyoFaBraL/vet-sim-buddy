@@ -224,6 +224,35 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     };
   }, [isRunning, currentSessionId]);
 
+  // Cleanup: finalizar sessão ao desmontar o componente (evita sessões órfãs)
+  const currentSessionIdRef = useRef<string | null>(null);
+  const startTimeRef = useRef<number>(Date.now());
+  const gameStatusRef = useRef<'playing' | 'won' | 'lost'>('playing');
+  
+  useEffect(() => { currentSessionIdRef.current = currentSessionId; }, [currentSessionId]);
+  useEffect(() => { startTimeRef.current = startTime; }, [startTime]);
+  useEffect(() => { gameStatusRef.current = gameStatus; }, [gameStatus]);
+  
+  useEffect(() => {
+    return () => {
+      const sessionId = currentSessionIdRef.current;
+      if (sessionId && gameStatusRef.current === 'playing') {
+        const duracao = Math.floor((Date.now() - startTimeRef.current) / 1000);
+        supabase
+          .from('simulation_sessions')
+          .update({
+            data_fim: new Date().toISOString(),
+            duracao_segundos: duracao,
+            status: 'abandonada'
+          })
+          .eq('id', sessionId)
+          .then(({ error }) => {
+            if (error) console.error('Erro ao finalizar sessão ao desmontar:', error);
+          });
+      }
+    };
+  }, []);
+
   // HP decay - perde 1 HP a cada 5 segundos
   useEffect(() => {
     if (!isRunning || gameStatus !== 'playing') return;
