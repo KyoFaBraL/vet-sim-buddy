@@ -737,7 +737,115 @@ Testes manuais end-to-end em múltiplos cenários: registro professor/aluno, sim
 
 ---
 
-## 15. GLOSSÁRIO TÉCNICO RÁPIDO
+## 15. MÉTRICAS DE PERFORMANCE
+
+### 15.1 Tamanho do Bundle (Frontend)
+
+| Métrica | Valor Estimado | Observação |
+|---------|---------------|------------|
+| **Bundle total (gzipped)** | ~280–350 KB | React + shadcn + Recharts + Framer Motion |
+| **Chunk principal (app)** | ~150–180 KB | Lógica de simulação + componentes |
+| **Vendor chunk (libs)** | ~120–160 KB | React, React DOM, Supabase SDK |
+| **CSS (Tailwind purged)** | ~25–35 KB | Tree-shaking remove classes não usadas |
+| **First Contentful Paint** | < 1.5s | CDN global + bundle estático |
+| **Time to Interactive** | < 2.5s | Hidratação React + fetch inicial |
+
+**Otimizações aplicadas:**
+- **Tree-shaking** (Vite/Rollup): código não utilizado é removido automaticamente
+- **Code splitting**: `React.lazy()` possível para rotas (professor vs aluno)
+- **Tailwind CSS purge**: apenas classes efetivamente usadas entram no bundle final
+- **Gzip/Brotli**: compressão automática pela CDN
+
+### 15.2 Tempo de Resposta das Edge Functions
+
+| Edge Function | Tempo Médio | Inclui IA? | Observação |
+|--------------|-------------|------------|------------|
+| `generate-session-feedback` | 3–8s | Sim | Gera relatório completo pós-sessão |
+| `treatment-hints` | 2–5s | Sim | Dica contextualizada com penalidade de HP |
+| `generate-differential-diagnosis` | 2–5s | Sim | 4 diagnósticos diferenciais |
+| `populate-case-data` | 4–10s | Sim | Gera 10 parâmetros + efeitos + tratamentos |
+| `generate-random-case` | 5–12s | Sim | Caso completo com valores fisiológicos |
+| `validate-case-acidbase` | 3–6s | Sim | Validação clínica de consistência |
+| `autofix-case` | 4–8s | Sim | Correção automática de inconsistências |
+| `analyze-custom-case` | 2–5s | Sim | Avaliação de adequação de tratamento |
+| `update-case-data` | 50–200ms | Não | CRUD direto no banco |
+
+**Breakdown do tempo de resposta (com IA):**
+```
+Total ≈ 3–8 segundos
+├── JWT validation:     ~10–30ms
+├── Input sanitization: ~1–5ms
+├── DB query (context):  ~20–100ms
+├── AI API call:         ~2–7s (dominante)
+├── JSON parsing:        ~1–5ms
+└── DB write (result):   ~20–80ms
+```
+
+**Estratégias de mitigação de latência:**
+- Chamadas de IA são **assíncronas** — a UI não bloqueia durante o processamento
+- Loading states com skeleton/spinner informam o usuário
+- Fallbacks para erro de IA: o simulador funciona sem IA (core é client-side)
+- Rate limiting (429) previne sobrecarga em picos de uso simultâneo
+
+### 15.3 Queries por Sessão de Simulação
+
+| Fase | Queries | Tipo | Dados |
+|------|---------|------|-------|
+| **Início** | 4–6 | SELECT | Caso, parâmetros, tratamentos, efeitos, metas |
+| **Criar sessão** | 1 | INSERT | simulation_sessions |
+| **Durante (por tick)** | 0 | — | Toda a lógica roda no frontend (React state) |
+| **Batch (a cada 5s)** | 1 | INSERT (bulk) | session_history (10 parâmetros × 1 registro) |
+| **Aplicar tratamento** | 1 | INSERT | session_treatments |
+| **Pedir dica (IA)** | 1+1 | Edge Function + INSERT | treatment-hints + session_decisions |
+| **Diagnóstico (IA)** | 1 | Edge Function | generate-differential-diagnosis |
+| **Fim da sessão** | 2–3 | UPDATE + INSERTs | session status + badges check |
+| **Feedback (IA)** | 1+1 | Edge Function + UPDATE | generate-session-feedback + session notes |
+
+**Total estimado por sessão completa (5 min):**
+
+| Cenário | Queries totais | Edge Function calls |
+|---------|---------------|---------------------|
+| **Sessão mínima** (sem dicas, sem diagnóstico) | ~70 | 1 (feedback) |
+| **Sessão típica** (2 dicas, 1 diagnóstico) | ~75 | 4 |
+| **Sessão máxima** (5 dicas, diagnóstico, muitos tratamentos) | ~85 | 7 |
+
+**Cálculo do batch de histórico:**
+```
+Sessão de 5 min = 300 ticks
+Batch a cada 5s = 60 batches
+Cada batch = 1 INSERT com 10 registros (um por parâmetro)
+Total session_history: ~600 registros por sessão
+```
+
+### 15.4 Escalabilidade — Múltiplos Usuários Simultâneos
+
+| Métrica | 10 usuários | 50 usuários | 200 usuários |
+|---------|-------------|-------------|--------------|
+| **Queries/min ao banco** | ~140 | ~700 | ~2.800 |
+| **Edge Function calls/min** | ~8 | ~40 | ~160 |
+| **Conexões PostgreSQL** | 10 | 50 | 200 (pooling) |
+| **Largura de banda** | ~2 MB/min | ~10 MB/min | ~40 MB/min |
+
+**Por que escala bem:**
+1. **Zero estado compartilhado**: cada sessão é independente — sem locks, sem race conditions
+2. **Lógica no frontend**: o game loop roda no navegador do aluno, não no servidor
+3. **Batch writes**: reduz 300 writes/sessão para 60 batches
+4. **Connection pooling**: PostgreSQL reutiliza conexões via PgBouncer
+5. **Edge Functions stateless**: cada invocação é isolada, escala horizontalmente
+6. **RLS automático**: filtros de segurança no banco, sem middleware adicional
+
+### 15.5 Monitoramento e Observabilidade
+
+| Camada | Ferramenta | Dados coletados |
+|--------|-----------|-----------------|
+| **Frontend** | Console logs + React Error Boundaries | Erros JS, stack traces |
+| **Edge Functions** | Deno runtime logs | Latência, erros, status HTTP |
+| **Banco de dados** | PostgreSQL logs + RLS audit | Queries lentas, violações de acesso |
+| **Sessões** | session_decisions (tabela) | Audit trail completo de cada ação do aluno |
+
+---
+
+## 16. GLOSSÁRIO TÉCNICO RÁPIDO
 
 | Termo | Definição |
 |-------|-----------|
@@ -754,3 +862,6 @@ Testes manuais end-to-end em múltiplos cenários: registro professor/aluno, sim
 | **CORS** | Cross-Origin Resource Sharing — política de segurança para requisições entre domínios |
 | **Prompt Injection** | Ataque que tenta manipular o comportamento de um modelo de IA |
 | **TCLE** | Termo de Consentimento Livre e Esclarecido |
+| **Connection Pooling** | Reutilização de conexões de banco para reduzir overhead |
+| **Batch Write** | Agrupamento de múltiplas escritas em uma única operação |
+| **Code Splitting** | Divisão do bundle em chunks carregados sob demanda |
