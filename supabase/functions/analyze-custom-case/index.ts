@@ -85,7 +85,7 @@ Avalie se o tratamento é adequado para este caso. Responda em formato JSON:
         });
       }
       if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Fundos insuficientes na conta Lovable AI." }), {
+        return new Response(JSON.stringify({ error: "Créditos de IA insuficientes. Entre em contato com o administrador." }), {
           status: 402,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
