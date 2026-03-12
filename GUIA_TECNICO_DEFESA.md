@@ -877,7 +877,7 @@ input
 - **Tailwind CSS purge**: apenas classes efetivamente usadas entram no bundle final
 - **Gzip/Brotli**: compressão automática pela CDN
 
-### 15.2 Tempo de Resposta das Edge Functions
+### 16.2 Tempo de Resposta das Edge Functions
 
 | Edge Function | Tempo Médio | Inclui IA? | Observação |
 |--------------|-------------|------------|------------|
