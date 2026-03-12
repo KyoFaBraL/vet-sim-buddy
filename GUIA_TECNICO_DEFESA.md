@@ -966,30 +966,7 @@ Total session_history: ~600 registros por sessão
 
 ---
 
-## 17. GLOSSÁRIO TÉCNICO RÁPIDO
-
-| Termo | Definição |
-|-------|-----------|
-| **SPA** | Single Page Application — página única que atualiza dinamicamente |
-| **JWT** | JSON Web Token — token de autenticação assinado digitalmente |
-| **RLS** | Row Level Security — filtro de acesso em nível de linha no PostgreSQL |
-| **RBAC** | Role-Based Access Control — controle de acesso baseado em papéis |
-| **Edge Function** | Função serverless executada na borda (edge) da rede CDN |
-| **HMR** | Hot Module Replacement — atualização instantânea durante desenvolvimento |
-| **Tree-shaking** | Remoção de código não utilizado durante o build |
-| **PostgREST** | Middleware que gera API REST automaticamente a partir do schema PostgreSQL |
-| **Deno** | Runtime TypeScript/JavaScript seguro, criado por Ryan Dahl |
-| **BaaS** | Backend as a Service — backend gerenciado (banco, auth, storage) |
-| **CORS** | Cross-Origin Resource Sharing — política de segurança para requisições entre domínios |
-| **Prompt Injection** | Ataque que tenta manipular o comportamento de um modelo de IA |
-| **TCLE** | Termo de Consentimento Livre e Esclarecido |
-| **Connection Pooling** | Reutilização de conexões de banco para reduzir overhead |
-| **Batch Write** | Agrupamento de múltiplas escritas em uma única operação |
-| **Code Splitting** | Divisão do bundle em chunks carregados sob demanda |
-
----
-
-## 16. ARQUITETURA DE SEGURANÇA IMPLEMENTADA
+## 17. ARQUITETURA DE SEGURANÇA IMPLEMENTADA
 
 ### 16.1 Visão Geral
 
