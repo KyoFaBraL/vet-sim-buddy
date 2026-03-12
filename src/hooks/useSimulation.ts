@@ -341,7 +341,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         variant: "destructive",
       });
     }
-  }, [elapsedTime, gameStatus, toast, currentSessionId, startTime, usedHints, minHpDuringSession]);
+  }, [elapsedTime, gameStatus, toast, currentSessionId, startTime, usedHints, minHpDuringSession, simulationMode]);
 
   const toggleSimulation = async () => {
     if (!isRunning) {
