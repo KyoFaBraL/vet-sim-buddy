@@ -908,7 +908,7 @@ Total ≈ 3–8 segundos
 - Fallbacks para erro de IA: o simulador funciona sem IA (core é client-side)
 - Rate limiting (429) previne sobrecarga em picos de uso simultâneo
 
-### 15.3 Queries por Sessão de Simulação
+### 16.3 Queries por Sessão de Simulação
 
 | Fase | Queries | Tipo | Dados |
 |------|---------|------|-------|
