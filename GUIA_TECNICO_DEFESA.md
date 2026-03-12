@@ -986,7 +986,7 @@ O VetBalance implementa segurança em **cinco camadas complementares**, seguindo
 └─────────────────────────────────────────────┘
 ```
 
-### 16.2 Row Level Security (RLS) — Segurança em Nível de Linha
+### 17.2 Row Level Security (RLS) — Segurança em Nível de Linha
 
 **O que é:** RLS é um mecanismo nativo do PostgreSQL que filtra automaticamente os registros que cada usuário pode acessar, diretamente no nível do banco de dados. Mesmo que um atacante consiga chamar a API diretamente, o banco só retorna os dados permitidos.
 
