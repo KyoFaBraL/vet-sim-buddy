@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">VetBalance</string>
     <string name="title_activity_main">VetBalance</string>
-    <string name="package_name">app.lovable.c2000202419f4c818714b9b661f20061</string>
-    <string name="custom_url_scheme">app.lovable.c2000202419f4c818714b9b661f20061</string>
+    <string name="package_name">br.app.vetbalance</string>
+    <string name="custom_url_scheme">br.app.vetbalance</string>
 </resources>
