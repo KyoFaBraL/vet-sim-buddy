@@ -1,0 +1,756 @@
+# GUIA TÉCNICO PARA DEFESA DE MESTRADO — VETBALANCE
+
+## Documento de Referência para Arguição da Banca Examinadora
+
+---
+
+## 1. LINGUAGENS DE PROGRAMAÇÃO E TECNOLOGIAS UTILIZADAS
+
+### 1.1 TypeScript (Linguagem principal — Frontend e Backend)
+
+**O que é:** TypeScript é um superset de JavaScript desenvolvido pela Microsoft que adiciona tipagem estática ao JavaScript. Todo código TypeScript é transpilado para JavaScript puro antes da execução.
+
+**Onde é usado no VetBalance:**
+- Todo o código do frontend (componentes, hooks, páginas)
+- Todas as Edge Functions do backend (Deno runtime)
+- Definição de tipos e interfaces do banco de dados
+
+**Exemplo real do projeto (hook de autenticação):**
+```typescript
+// src/hooks/useAuth.ts
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { User, Session } from "@supabase/supabase-js";
+
+export const useAuth = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Listener de mudança de estado de autenticação
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    );
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return { user, session, loading, signOut };
+};
+```
+
+**Conceitos-chave para a banca:**
+- **Generics**: `useState<User | null>(null)` — tipo paramétrico
+- **Union Types**: `User | null` — o valor pode ser User ou null
+- **Type Inference**: TypeScript infere tipos automaticamente quando possível
+- **Interfaces vs Types**: Interfaces definem contratos de objetos; Types são mais flexíveis
+
+---
+
+### 1.2 TSX / JSX (Sintaxe de template)
+
+**O que é:** TSX é a extensão TypeScript de JSX (JavaScript XML). Permite escrever HTML declarativo dentro de código TypeScript, que o React compila para chamadas `React.createElement()`.
+
+**Exemplo real:**
+```tsx
+// Componente funcional React com TSX
+const MonitorDisplay = ({ value, label, unit }: MonitorProps) => (
+  <div className="flex flex-col items-center p-4 rounded-lg bg-card">
+    <span className="text-2xl font-bold text-primary">{value}</span>
+    <span className="text-sm text-muted-foreground">{label} ({unit})</span>
+  </div>
+);
+```
+
+---
+
+### 1.3 SQL (Banco de Dados)
+
+**Onde é usado:** PostgreSQL 15 via Supabase — todas as migrações, funções, triggers e políticas RLS.
+
+**Exemplo real (função de verificação de papel):**
+```sql
+CREATE OR REPLACE FUNCTION public.has_role(_user_id uuid, _role app_role)
+ RETURNS boolean
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.user_roles
+    WHERE user_id = _user_id AND role = _role
+  )
+$$;
+```
+
+**Conceitos-chave:**
+- `SECURITY DEFINER`: a função executa com privilégios do criador, não do chamador — evita recursão em RLS
+- `STABLE`: indica que a função não modifica dados (otimização do query planner)
+- `app_role` é um ENUM PostgreSQL: `('professor', 'aluno', 'admin')`
+
+---
+
+### 1.4 CSS (Tailwind CSS)
+
+**O que é:** Framework CSS utility-first que usa classes atômicas diretamente no HTML/TSX em vez de escrever CSS customizado.
+
+**Exemplo:** `className="flex items-center gap-2 p-4 rounded-lg bg-card text-foreground"`
+
+**Design Tokens personalizados (index.css):**
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --card: 0 0% 100%;
+  --muted: 240 4.8% 95.9%;
+}
+```
+
+Todas as cores usam HSL (Hue, Saturation, Lightness) para facilitar temas claro/escuro.
+
+---
+
+### 1.5 HTML5
+
+**Uso:** Arquivo `index.html` como ponto de entrada da SPA (Single Page Application). O React monta toda a interface dentro do `<div id="root">`.
+
+---
+
+## 2. FRAMEWORKS E BIBLIOTECAS
+
+### 2.1 React 18 (Framework de UI)
+
+**O que é:** Biblioteca JavaScript criada pelo Facebook para construção de interfaces de usuário baseadas em componentes.
+
+**Padrões usados no VetBalance:**
+- **Functional Components**: Todos os componentes são funções (não classes)
+- **Hooks**: `useState`, `useEffect`, `useCallback`, `useRef`, `useMemo`
+- **Custom Hooks**: `useAuth`, `useUserRole`, `useSimulation`, `useTcleConsent`
+- **Context API**: Para gerenciamento de estado global (tema, autenticação)
+
+**Ciclo de vida de um componente no simulador:**
+```
+Mount → useEffect (fetch dados do caso) → Render → 
+  → setInterval (tick de 1s) → Atualização de parâmetros → Re-render →
+    → Unmount → Cleanup (salvar sessão, limpar intervals)
+```
+
+### 2.2 Vite 5 (Build Tool)
+
+**O que é:** Ferramenta de build moderna que usa ESBuild para development e Rollup para production.
+
+**Por que Vite e não Webpack?**
+- **Dev Server**: Hot Module Replacement (HMR) instantâneo via ES Modules nativos
+- **Build**: Tree-shaking agressivo, code splitting automático
+- **Performance**: ~10x mais rápido que Webpack para projetos React
+
+**Configuração real:**
+```typescript
+// vite.config.ts
+export default defineConfig({
+  server: { host: "::", port: 8080 },
+  plugins: [react()],
+  resolve: {
+    alias: { "@": path.resolve(__dirname, "./src") }
+  }
+});
+```
+
+O alias `@/` permite imports absolutos: `import { supabase } from "@/integrations/supabase/client"`
+
+### 2.3 Tailwind CSS 3.4 + shadcn/ui
+
+**shadcn/ui** não é uma biblioteca instalada via npm — é uma coleção de componentes copiados para o projeto em `src/components/ui/`. Isso permite customização total sem dependência externa.
+
+**Componentes usados:** Button, Card, Dialog, Tabs, Select, Table, Toast, Badge, Progress, etc.
+
+### 2.4 Supabase JS SDK
+
+**O que faz:** Cliente JavaScript que abstrai as APIs REST e Realtime do Supabase.
+
+```typescript
+import { supabase } from "@/integrations/supabase/client";
+
+// Query tipada automaticamente pelo types.ts gerado
+const { data, error } = await supabase
+  .from("simulation_sessions")
+  .select("*")
+  .eq("user_id", user.id)
+  .order("criado_em", { ascending: false });
+```
+
+### 2.5 React Query (TanStack Query)
+
+**O que é:** Biblioteca de gerenciamento de estado assíncrono — cache, refetch, invalidation.
+
+**Uso no projeto:** Gerenciamento de dados do servidor com cache inteligente, evitando requisições duplicadas quando múltiplos componentes precisam dos mesmos dados.
+
+### 2.6 Recharts
+
+**O que faz:** Biblioteca de gráficos React baseada em D3.js. Usada para:
+- Gráfico de evolução temporal dos parâmetros fisiológicos
+- Gráficos de desempenho no dashboard do professor
+
+### 2.7 Framer Motion
+
+**O que faz:** Biblioteca de animações para React. Usada para:
+- Transições de página
+- Animações de badges/conquistas
+- Feedback visual de tratamentos
+
+### 2.8 React Router DOM v6
+
+**O que faz:** Roteamento client-side (SPA). Rotas protegidas por papel:
+
+```
+/ → RoleSelection (público)
+/auth/professor → Login professor (público)
+/auth/aluno → Login aluno (público)
+/app → Simulador (aluno autenticado + TCLE aceito)
+/professor → Dashboard professor (professor/admin autenticado)
+/consentimento → Termo TCLE (aluno sem consentimento)
+```
+
+### 2.9 Capacitor 8
+
+**O que faz:** Framework que empacota a aplicação web como app Android nativo.
+
+---
+
+## 3. ARQUITETURA DO SISTEMA
+
+### 3.1 Visão Geral
+
+```
+┌──────────────────────────────────────────────┐
+│                FRONTEND (SPA)                │
+│  React 18 + TypeScript + Tailwind + shadcn   │
+│  Build: Vite 5 → Bundle estático (HTML/JS)   │
+└──────────────────┬───────────────────────────┘
+                   │ HTTPS (REST API + Realtime WebSocket)
+                   │ JWT Bearer Token em cada request
+                   ▼
+┌──────────────────────────────────────────────┐
+│              BACKEND (Supabase)              │
+│                                              │
+│  ┌─────────────────┐  ┌──────────────────┐  │
+│  │  PostgreSQL 15   │  │  Edge Functions  │  │
+│  │  32 tabelas      │  │  (Deno Runtime)  │  │
+│  │  RLS em todas    │  │  7 funções       │  │
+│  │  16+ funções SQL │  │  OpenAI-compat.  │  │
+│  └─────────────────┘  └──────────────────┘  │
+│                                              │
+│  ┌─────────────────┐  ┌──────────────────┐  │
+│  │  Auth (GoTrue)   │  │  PostgREST       │  │
+│  │  JWT + RBAC      │  │  REST automático │  │
+│  └─────────────────┘  └──────────────────┘  │
+└──────────────────────────────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────────────┐
+│           AI GATEWAY (Proxy)                 │
+│  Google Gemini 2.5 Flash / Pro               │
+│  OpenAI GPT-5                                │
+│  API OpenAI-compatible (chat/completions)    │
+└──────────────────────────────────────────────┘
+```
+
+### 3.2 Padrão Arquitetural
+
+**Jamstack + BaaS (Backend as a Service)**
+
+- **Frontend**: SPA estática servida via CDN (sem servidor próprio)
+- **Backend**: Supabase fornece banco de dados, autenticação e funções serverless
+- **Sem servidor web tradicional**: Não há Express, Django, ou Rails
+- **API automática**: PostgREST gera endpoints REST automaticamente a partir do schema PostgreSQL
+
+---
+
+## 4. BANCO DE DADOS — POSTGRESQL 15
+
+### 4.1 Estrutura (32 tabelas)
+
+**Tabelas principais e seus relacionamentos:**
+
+```
+profiles (1:1 com auth.users)
+  └── user_roles (1:1 — RBAC)
+  └── simulation_sessions (1:N)
+       └── session_history (1:N — snapshots de parâmetros)
+       └── session_treatments (1:N — tratamentos aplicados)
+       └── session_decisions (1:N — decisões do aluno)
+  └── user_badges (1:N)
+  └── weekly_ranking_history (1:N)
+  └── professor_students (N:N — vínculo professor-aluno)
+       └── turmas (1:N)
+  └── tcle_consents (1:N)
+
+casos_clinicos (tabela central de casos)
+  └── condicoes (N:1 — condição primária)
+  └── valores_iniciais_caso (1:N — parâmetros iniciais)
+  └── parametros_secundarios_caso (1:N)
+  └── metas_aprendizado (1:N)
+  └── tratamentos_caso (1:N — tratamentos adequados)
+  └── tutorial_steps (1:N)
+  └── shared_cases (1:N — compartilhamento)
+
+parametros (10 parâmetros fisiológicos)
+  └── efeitos_condicao (1:N)
+  └── efeitos_tratamento (1:N)
+
+tratamentos (8 tratamentos disponíveis)
+  └── efeitos_tratamento (1:N)
+  └── tratamentos_adequados (N:N com condicoes)
+
+badges (17 conquistas)
+  └── user_badges (1:N)
+```
+
+### 4.2 Row Level Security (RLS)
+
+**Conceito:** RLS é uma funcionalidade nativa do PostgreSQL que aplica filtros automáticos em queries baseados no usuário autenticado. Cada tabela tem políticas que definem quem pode SELECT, INSERT, UPDATE e DELETE.
+
+**Exemplo de política:**
+```sql
+-- Alunos só veem suas próprias sessões
+CREATE POLICY "Users can view own sessions"
+ON simulation_sessions FOR SELECT
+TO authenticated
+USING (user_id = auth.uid());
+
+-- Professores podem ver sessões de seus alunos vinculados
+CREATE POLICY "Professors can view student sessions"
+ON simulation_sessions FOR SELECT
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 FROM professor_students ps
+    WHERE ps.professor_id = auth.uid()
+      AND ps.student_id = simulation_sessions.user_id
+      AND ps.ativo = true
+  )
+);
+```
+
+**Por que RLS e não verificação no código?**
+- Segurança em nível de banco de dados — mesmo que o código frontend tenha bugs, os dados estão protegidos
+- Impossível bypass via chamadas diretas à API
+- Funciona automaticamente para todas as queries, inclusive via PostgREST
+
+### 4.3 Funções SECURITY DEFINER
+
+**Problema:** Funções RPC que verificam `user_roles` dentro de políticas RLS causam **recursão infinita** (a política chama a função, que consulta a tabela, que ativa a política...).
+
+**Solução:** `SECURITY DEFINER` faz a função executar com os privilégios do criador (superuser), ignorando RLS:
+
+```sql
+CREATE FUNCTION has_role(_user_id uuid, _role app_role)
+RETURNS boolean
+LANGUAGE sql STABLE SECURITY DEFINER
+SET search_path TO 'public'
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM user_roles WHERE user_id = _user_id AND role = _role
+  )
+$$;
+```
+
+### 4.4 Trigger de Criação de Usuário
+
+```sql
+CREATE FUNCTION handle_new_user() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
+BEGIN
+  -- Cria perfil automaticamente
+  INSERT INTO profiles (id, email, nome_completo)
+  VALUES (new.id, new.email, new.raw_user_meta_data->>'nome_completo');
+  
+  -- Atribui role padrão de aluno
+  INSERT INTO user_roles (user_id, role)
+  VALUES (new.id, 'aluno');
+  
+  RETURN new;
+END;
+$$;
+-- Este trigger é acionado automaticamente quando um novo usuário se registra
+```
+
+---
+
+## 5. AUTENTICAÇÃO E AUTORIZAÇÃO
+
+### 5.1 Fluxo de Autenticação
+
+```
+1. Usuário acessa / → Seleciona "Sou Professor" ou "Sou Aluno"
+2. Preenche email + senha → supabase.auth.signUp() ou supabase.auth.signInWithPassword()
+3. Supabase Auth (GoTrue) gera JWT com user_id
+4. Frontend armazena JWT em localStorage (persistSession: true)
+5. Todas as requisições incluem JWT no header Authorization: Bearer <token>
+6. Auto-refresh do token antes da expiração (3600s = 1h)
+```
+
+### 5.2 RBAC (Role-Based Access Control)
+
+```
+┌──────────────┐
+│   auth.users  │ ← Tabela gerenciada pelo Supabase Auth
+└──────┬───────┘
+       │ 1:1
+       ▼
+┌──────────────┐
+│  user_roles   │ ← Tabela separada (nunca no profiles!)
+│  user_id      │
+│  role (ENUM)  │ ← 'professor' | 'aluno' | 'admin'
+└──────────────┘
+```
+
+**Por que roles em tabela separada?**
+- Evita privilege escalation: usuário não pode alterar seu próprio role via update do profile
+- RLS na tabela user_roles impede INSERT/UPDATE direto
+- Apenas funções SECURITY DEFINER podem modificar roles
+
+### 5.3 Proteção de Rotas no Frontend
+
+```typescript
+const ProtectedRoute = ({ children }) => {
+  const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading } = useUserRole(user);
+  
+  if (authLoading || roleLoading) return <Loading />;
+  if (!user) return <Navigate to="/" />;
+  if (role === 'professor') return <Navigate to="/professor" />;
+  
+  return children;
+};
+```
+
+---
+
+## 6. ALGORITMO DE SIMULAÇÃO
+
+### 6.1 Game Loop (useSimulation hook)
+
+```
+┌──────────────────────────────────────────┐
+│            TICK (1 segundo)              │
+│                                          │
+│  1. Calcular novos valores de parâmetros │
+│     valor += efeito_condicao * magnitude │
+│     valor += efeito_tratamento (se ativo)│
+│     valor = clamp(min, max)              │
+│                                          │
+│  2. A cada 5s sem intervenção:           │
+│     HP -= 1 (decaimento natural)         │
+│                                          │
+│  3. Verificar condições de fim:          │
+│     HP >= 100 → VITÓRIA                  │
+│     HP <= 0 → DERROTA                    │
+│     Tempo > 300s (avaliação) → DERROTA   │
+│                                          │
+│  4. Salvar snapshot em session_history   │
+│     (batch a cada 5 segundos)            │
+└──────────────────────────────────────────┘
+```
+
+### 6.2 Sistema de HP
+
+```
+HP Inicial: 50
+Vitória: HP ≥ 100
+Derrota: HP ≤ 0
+
+Tratamento adequado: +10 a +25 HP
+Tratamento inadequado: -15 HP
+Dica de IA: -10 HP (penalidade)
+Inatividade: -1 HP / 5 segundos
+```
+
+### 6.3 Concorrência e Multi-Usuário
+
+**Como o simulador lida com múltiplos usuários simultâneos?**
+
+- **Isolamento por sessão**: Cada aluno cria uma `simulation_session` com seu `user_id`. O estado do simulador é local (React state) e só é persistido no banco ao final.
+- **RLS garante isolamento**: Um aluno nunca vê sessões de outro aluno
+- **Sem estado compartilhado**: O servidor não mantém estado da simulação — toda a lógica de tick roda no frontend
+- **Batch writes**: Snapshots de parâmetros são enviados ao banco a cada 5 segundos (não a cada tick), reduzindo carga no banco
+- **Prevenção de clique duplo**: `useRef` com flag previne aplicação duplicada de tratamentos
+
+---
+
+## 7. EDGE FUNCTIONS (BACKEND SERVERLESS)
+
+### 7.1 O que são?
+
+Funções serverless escritas em TypeScript que rodam no **Deno** (runtime JavaScript/TypeScript criado pelo mesmo criador do Node.js). São executadas sob demanda e escalam automaticamente.
+
+### 7.2 Funções implementadas
+
+| Função | Propósito | Modelo de IA |
+|--------|-----------|--------------|
+| `generate-session-feedback` | Gerar relatório personalizado pós-sessão | Gemini 2.5 Flash |
+| `treatment-hints` | Dicas de tratamento no modo prática | Gemini 2.5 Flash |
+| `generate-differential-diagnosis` | Desafio de diagnóstico diferencial | Gemini 2.5 Flash |
+| `populate-case-data` | Gerar parâmetros para novos casos | Gemini 2.5 Flash |
+| `generate-random-case` | Criação de casos aleatórios | Gemini 2.5 Flash |
+| `validate-case-acidbase` | Validação clínica de valores | Gemini 2.5 Flash |
+| `autofix-case` | Correção automática de inconsistências | Gemini 2.5 Flash |
+| `analyze-custom-case` | Avaliar adequação de tratamentos | Gemini 2.5 Flash |
+| `update-case-data` | Atualizar dados de caso existente | — (CRUD) |
+
+### 7.3 Anatomia de uma Edge Function
+
+```typescript
+// supabase/functions/generate-session-feedback/index.ts
+
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+serve(async (req) => {
+  // 1. CORS preflight
+  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+  
+  // 2. Validar JWT do usuário
+  const authHeader = req.headers.get('Authorization');
+  const supabase = createClient(url, key, {
+    global: { headers: { Authorization: authHeader } }
+  });
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  // 3. Lógica de negócio (chamar IA, processar dados)
+  const aiResponse = await fetch('https://ai-gateway-url/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${apiKey}` },
+    body: JSON.stringify({
+      model: 'google/gemini-2.5-flash',
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  
+  // 4. Retornar resultado
+  return new Response(JSON.stringify(result), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+  });
+});
+```
+
+### 7.4 Segurança das Edge Functions
+
+- **JWT obrigatório**: `verify_jwt = true` no config.toml
+- **Sanitização de input**: Função `sanitizeInput()` remove caracteres de controle e tentativas de prompt injection
+- **Rate limiting**: Respostas 429 para excesso de requisições
+- **CORS configurado**: Headers explícitos para requisições cross-origin
+
+---
+
+## 8. INTEGRAÇÃO COM INTELIGÊNCIA ARTIFICIAL
+
+### 8.1 Modelos Utilizados
+
+- **Google Gemini 2.5 Flash**: Modelo principal — rápido e custo-efetivo para tarefas de geração de texto médico
+- **OpenAI GPT-5**: Disponível como alternativa para raciocínio mais complexo
+
+### 8.2 API OpenAI-Compatible
+
+Todas as chamadas seguem o padrão da OpenAI Chat Completions API:
+
+```json
+{
+  "model": "google/gemini-2.5-flash",
+  "messages": [
+    {"role": "system", "content": "Você é um veterinário especialista..."},
+    {"role": "user", "content": "Analise este caso clínico..."}
+  ],
+  "temperature": 0.7
+}
+```
+
+### 8.3 Prompt Engineering
+
+**Técnicas usadas:**
+- **System prompt**: Define o papel e restrições do modelo
+- **Few-shot examples**: Formato JSON esperado na saída
+- **Output parsing**: Regex para extrair JSON da resposta (`/\{[\s\S]*\}/`)
+- **Anti-injection**: Filtro de tentativas de manipulação de prompt
+
+---
+
+## 9. PADRÕES DE CÓDIGO E DESIGN PATTERNS
+
+### 9.1 Padrões React
+
+| Padrão | Uso no VetBalance |
+|--------|-------------------|
+| **Custom Hooks** | `useAuth`, `useSimulation`, `useUserRole` — encapsulam lógica reutilizável |
+| **Compound Components** | Tabs + TabsList + TabsTrigger + TabsContent (shadcn) |
+| **Controlled Components** | Formulários com React Hook Form + Zod validation |
+| **Render Props** | Componentes de proteção de rota |
+| **Observer Pattern** | `onAuthStateChange` — listener de eventos de autenticação |
+
+### 9.2 Padrões de Banco de Dados
+
+| Padrão | Implementação |
+|--------|--------------|
+| **RBAC** | user_roles com ENUM + has_role() SECURITY DEFINER |
+| **Audit Trail** | session_decisions registra cada ação com timestamp |
+| **Soft Delete** | professor_students.ativo em vez de DELETE |
+| **Event Sourcing** | session_history registra cada estado dos parâmetros |
+| **Code/Token Pattern** | shared_cases.access_code para compartilhamento |
+
+---
+
+## 10. GAMIFICAÇÃO — IMPLEMENTAÇÃO TÉCNICA
+
+### 10.1 Sistema de Badges
+
+```typescript
+// src/utils/badgeChecker.ts
+// Verificação pós-sessão de 17 badges em 5 categorias
+
+switch (criterio.tipo) {
+  case 'primeira_vitoria':    // Bronze — primeira vitória
+  case 'sem_dicas':           // Ouro — vencer sem usar dicas
+  case 'tempo_recorde':       // Prata — vencer em < X segundos
+  case 'todas_metas':         // Ouro — atingir todas as metas de aprendizado
+  case 'total_sessoes':       // Milestone — completar N sessões
+  case 'serie_vitorias':      // Streak — N vitórias consecutivas
+  case 'economia_tratamentos':// Ouro — vencer com ≤ X tratamentos
+}
+```
+
+### 10.2 Ranking Semanal
+
+- Reset automático às segundas-feiras (00:00 UTC)
+- Critérios: vitórias > win rate > total de sessões
+- Histórico preservado em `weekly_ranking_history`
+
+---
+
+## 11. FLUXO COMPLETO DE UMA SESSÃO DE SIMULAÇÃO
+
+```
+1. Aluno seleciona caso clínico da biblioteca
+2. Escolhe modo: Prática ou Avaliação
+3. Sistema carrega:
+   - valores_iniciais_caso (parâmetros com valores anormais)
+   - efeitos_condicao (como a doença altera os parâmetros)
+   - tratamentos disponíveis + efeitos_tratamento
+   - metas_aprendizado do caso
+4. Cria simulation_session no banco (status: 'em_andamento')
+5. Inicia game loop (setInterval 1s):
+   a. Aplica efeitos da condição nos parâmetros
+   b. Aplica efeitos dos tratamentos ativos
+   c. Verifica HP (decaimento + tratamentos)
+   d. A cada 5s: batch insert em session_history
+6. Aluno interage:
+   - Aplica tratamentos → session_treatments
+   - Pede dicas (modo prática) → Edge Function treatment-hints → -10 HP
+   - Tenta diagnóstico → Edge Function generate-differential-diagnosis
+7. Fim da simulação:
+   - HP ≥ 100: status = 'won', confetti animation
+   - HP ≤ 0: status = 'lost'
+   - Tempo (avaliação): status = 'lost'
+   - Abandono: status = 'abandonada' (cleanup automático)
+8. Pós-sessão:
+   - checkAndAwardBadges() verifica 17 conquistas
+   - Edge Function generate-session-feedback gera relatório via IA
+   - Atualiza weekly_ranking_history
+```
+
+---
+
+## 12. SEGURANÇA
+
+### 12.1 Camadas de Segurança
+
+| Camada | Mecanismo |
+|--------|-----------|
+| **Transporte** | HTTPS/TLS 1.3 — criptografia em trânsito |
+| **Autenticação** | JWT com expiração de 1h + auto-refresh |
+| **Autorização** | RLS em TODAS as 32 tabelas |
+| **Dados** | RBAC com roles em tabela separada |
+| **API** | Edge Functions com JWT obrigatório |
+| **Input** | Sanitização contra prompt injection |
+| **Rate Limiting** | 10 buscas/hora para lookups de email |
+| **Anti-Enumeração** | Mesma resposta para "não encontrado" e "não é aluno" |
+
+### 12.2 TCLE (Consentimento Ético)
+
+- Alunos devem aceitar TCLE antes de acessar o simulador
+- Registro em `tcle_consents` com timestamp, versão, IP e user agent
+- Verificação em cada acesso via `useTcleConsent` hook
+
+---
+
+## 13. DEPLOY E INFRAESTRUTURA
+
+```
+Código fonte → Git push → CI/CD automático →
+  → Vite build (bundle estático) → CDN global
+  → Edge Functions deploy automático → Deno runtime
+  → Migrações SQL → PostgreSQL 15
+```
+
+- **Zero-downtime deploy**: CDN serve bundle estático
+- **Escalabilidade horizontal**: Edge Functions são stateless e escalam automaticamente
+- **Banco gerenciado**: Backups automáticos, connection pooling
+
+---
+
+## 14. PERGUNTAS FREQUENTES DA BANCA
+
+### "Por que React e não Angular/Vue?"
+React oferece maior flexibilidade com seu modelo de componentes funcionais e hooks, ecossistema mais amplo de bibliotecas (Recharts, Framer Motion), e a comunidade mais ativa para resolução de problemas. Além disso, o padrão de hooks custom permite encapsular lógica complexa (como o algoritmo de simulação) de forma testável e reutilizável.
+
+### "Por que TypeScript e não JavaScript?"
+TypeScript reduz erros em tempo de desenvolvimento através de tipagem estática. Em um simulador clínico, onde parâmetros fisiológicos têm ranges específicos e tipos de dados importam (pH é number, não string), a tipagem previne bugs críticos.
+
+### "Por que Supabase e não Firebase/backend próprio?"
+Supabase oferece PostgreSQL (relacional) com RLS nativo, enquanto Firebase usa NoSQL sem controle de acesso granular em nível de linha. Para dados relacionais complexos (casos → parâmetros → tratamentos → efeitos), SQL é mais adequado. Além disso, RLS garante segurança em nível de banco de dados, eliminando a necessidade de um middleware de autorização.
+
+### "Como garante que um aluno não acessa dados de outro?"
+Três camadas: (1) JWT identifica o usuário; (2) RLS no PostgreSQL filtra automaticamente por `user_id = auth.uid()`; (3) Frontend tem rotas protegidas. Mesmo que um atacante bypass o frontend, o banco de dados recusa dados não autorizados.
+
+### "Qual a complexidade algorítmica do simulador?"
+O game loop é O(P × T) por tick, onde P = número de parâmetros (10) e T = número de tratamentos ativos. Com valores constantes pequenos, é efetivamente O(1) por tick — sem impacto de performance mesmo com centenas de sessões simultâneas.
+
+### "Como funciona a IA no simulador?"
+As Edge Functions (backend serverless) fazem chamadas via API REST para modelos de IA (Gemini/GPT) usando o padrão OpenAI Chat Completions. A IA recebe o contexto clínico como prompt e retorna JSON estruturado. O backend faz parsing e validação antes de retornar ao frontend. A IA nunca tem acesso direto ao banco de dados.
+
+### "O que acontece se a IA retornar uma resposta inválida?"
+Regex parsing (`/\{[\s\S]*\}/`) extrai o JSON da resposta. Se o parse falhar, a função retorna um erro controlado com fallback. A IA é usada apenas para enriquecimento — o core da simulação (HP, parâmetros, tratamentos) funciona sem IA.
+
+### "Como você testou o sistema?"
+Testes manuais end-to-end em múltiplos cenários: registro professor/aluno, simulação completa em ambos os modos, validação de RLS com diferentes roles, concorrência de sessões, e verificação de badges. O sistema de logs do banco (session_decisions) permite auditoria completa de cada sessão.
+
+---
+
+## 15. GLOSSÁRIO TÉCNICO RÁPIDO
+
+| Termo | Definição |
+|-------|-----------|
+| **SPA** | Single Page Application — página única que atualiza dinamicamente |
+| **JWT** | JSON Web Token — token de autenticação assinado digitalmente |
+| **RLS** | Row Level Security — filtro de acesso em nível de linha no PostgreSQL |
+| **RBAC** | Role-Based Access Control — controle de acesso baseado em papéis |
+| **Edge Function** | Função serverless executada na borda (edge) da rede CDN |
+| **HMR** | Hot Module Replacement — atualização instantânea durante desenvolvimento |
+| **Tree-shaking** | Remoção de código não utilizado durante o build |
+| **PostgREST** | Middleware que gera API REST automaticamente a partir do schema PostgreSQL |
+| **Deno** | Runtime TypeScript/JavaScript seguro, criado por Ryan Dahl |
+| **BaaS** | Backend as a Service — backend gerenciado (banco, auth, storage) |
+| **CORS** | Cross-Origin Resource Sharing — política de segurança para requisições entre domínios |
+| **Prompt Injection** | Ataque que tenta manipular o comportamento de um modelo de IA |
+| **TCLE** | Termo de Consentimento Livre e Esclarecido |

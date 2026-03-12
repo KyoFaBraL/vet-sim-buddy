@@ -201,7 +201,7 @@ O₄ = Pós-teste final (Junho/2026)
 | Componente | Especificação |
 |------------|---------------|
 | **Servidor** | Supabase Cloud (PostgreSQL 15, Edge Functions Deno) |
-| **CDN** | Lovable Cloud (deploy automático) |
+| **CDN** | Vercel Edge Network (deploy automático via CI/CD) |
 | **Domínio** | vetbalance.app.br (HTTPS/TLS 1.3) |
 | **Banco de dados** | 32 tabelas com RLS, backups automáticos |
 | **Autenticação** | E-mail + senha com verificação obrigatória |
