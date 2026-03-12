@@ -968,7 +968,7 @@ Total session_history: ~600 registros por sessão
 
 ## 17. ARQUITETURA DE SEGURANÇA IMPLEMENTADA
 
-### 16.1 Visão Geral
+### 17.1 Visão Geral
 
 O VetBalance implementa segurança em **cinco camadas complementares**, seguindo o princípio de defesa em profundidade (*defense in depth*):
 
