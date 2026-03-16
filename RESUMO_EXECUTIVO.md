@@ -42,10 +42,10 @@ O software está disponível como aplicação web responsiva (PWA), acessível v
 | Camada | Tecnologias |
 |--------|-------------|
 | **Frontend** | React 18, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, Recharts |
-| **Backend** | PostgreSQL (Supabase), 5 Edge Functions (Deno), Row Level Security (RLS) |
+| **Backend** | PostgreSQL (Supabase), 8 Edge Functions (Deno), Row Level Security (RLS) |
 | **IA** | Google Gemini 2.5, OpenAI GPT — feedback de sessão, dicas de tratamento, geração de casos |
 | **Mobile** | PWA responsiva — compatível com navegadores mobile (Chrome, Safari, Firefox) |
-| **Banco de Dados** | 32 tabelas com RLS em todas, autenticação por papel (professor/aluno) |
+| **Banco de Dados** | 27 tabelas com RLS em todas, autenticação por papel (professor/aluno/admin) |
 
 ### Algoritmo de Simulação (Resumo)
 O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapshots de todos os parâmetros. O HP decai automaticamente, simulando a deterioração do paciente crítico. Tratamentos aplicados são validados contra um gabarito (tabelas `tratamentos_adequados` / `tratamentos_caso`) e seus efeitos propagados nos parâmetros fisiológicos conforme magnitudes pré-definidas. A sessão termina em **vitória** (HP ≥ 100), **derrota por HP** (HP ≤ 0) ou **derrota por tempo** (> 5 minutos). Todo o histórico é persistido no banco de dados para análise posterior.
