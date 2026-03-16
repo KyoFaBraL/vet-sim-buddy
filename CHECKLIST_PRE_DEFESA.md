@@ -83,7 +83,7 @@
 | 5.6 | Artigo / Resumo Expandido | ✅ | `ARTIGO_RESUMO_EXPANDIDO.md` |
 | 5.7 | Cronograma de Validação | ✅ | `CRONOGRAMA_VALIDACAO.md` |
 | 5.8 | Guia de Permissões | ✅ | `PERMISSIONS_GUIDE.md` |
-| 5.9 | Diagramas de Arquitetura (6 Mermaid) | ✅ | `public/diagramas-arquitetura.html` |
+| 5.9 | Diagramas de Arquitetura (10 Mermaid) | ✅ | `public/diagramas-arquitetura.html` |
 | 5.10 | Screenshots documentadas (12) | ✅ | `docs/screenshots/` |
 
 ### 5.2.1 Estrutura do Protocolo CEP (v2.0)
