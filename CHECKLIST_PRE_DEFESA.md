@@ -2,7 +2,7 @@
 
 ## Status Geral: 🟢 Pronto para Validação
 
-**Última atualização:** 12/03/2026  
+**Última atualização:** 16/03/2026  
 **Responsável:** Equipe VetBalance  
 **Referência:** VETBALANCE-PVS-001 (IEEE 829-2008)
 
@@ -13,8 +13,8 @@
 | # | Item | Status | Observação |
 |---|------|--------|------------|
 | 1.1 | App publicado e acessível | ✅ | `vetbalance.lovable.app` |
-| 1.2 | Banco de dados operacional | ✅ | 27 tabelas, todas com RLS |
-| 1.3 | Edge Functions deployadas (8) | ✅ | Deploy automático |
+| 1.2 | Banco de dados operacional | ✅ | 32 tabelas, todas com RLS |
+| 1.3 | Edge Functions deployadas (9) | ✅ | Deploy automático |
 | 1.4 | Secrets configurados (API keys) | ✅ | LOVABLE_API_KEY, SUPABASE_* |
 | 1.5 | Favicon e metadados personalizados | ✅ | Sem referências a plataformas externas |
 | 1.6 | HTTPS ativo | ✅ | Via CDN |
@@ -26,10 +26,10 @@
 
 | # | Item | Status | Observação |
 |---|------|--------|------------|
-| 2.1 | RLS ativado em todas as tabelas | ✅ | 27/27 tabelas protegidas |
+| 2.1 | RLS ativado em todas as tabelas | ✅ | 32/32 tabelas protegidas |
 | 2.2 | RBAC com enum PostgreSQL | ✅ | `professor`, `aluno`, `admin` |
 | 2.3 | Papéis em tabela separada (`user_roles`) | ✅ | Previne escalonamento de privilégios |
-| 2.4 | Sanitização de prompts (8 Edge Functions) | ✅ | 3 camadas: filtro, system prompt, validação de saída |
+| 2.4 | Sanitização de prompts (9 Edge Functions) | ✅ | 3 camadas: filtro, system prompt, validação de saída |
 | 2.5 | Rate limiting em busca de e-mail | ✅ | 10 buscas/hora por professor |
 | 2.6 | Chaves de acesso professor (16 chars) | ✅ | Uso único, com expiração |
 | 2.7 | Privacidade de e-mails de alunos | ✅ | RPCs `SECURITY DEFINER`, view segura |
@@ -47,7 +47,7 @@
 | F-01 | Autenticação (login/registro aluno) | ✅ | Portais separados, RBAC pós-auth |
 | F-02 | Autenticação (login/registro professor) | ✅ | Chave de acesso obrigatória |
 | F-03 | Seleção de caso clínico | ✅ | Biblioteca com filtros, casos públicos + compartilhados |
-| F-04 | Simulação com game loop | ✅ | HP, parâmetros, tempo real, batch write 5s |
+| F-04 | Simulação com game loop | ✅ | HP, parâmetros, tempo real, batch write 5s, 32 tabelas |
 | F-05 | Aplicação de tratamentos | ✅ | Feedback visual, efeitos nos parâmetros |
 | F-06 | Dicas de tratamento via IA | ✅ | Edge Function `treatment-hints` |
 | F-07 | Sistema de badges/conquistas | ✅ | Verificação automática pós-sessão |
@@ -61,7 +61,7 @@
 
 | # | Item | Status | Observação |
 |---|------|--------|------------|
-| 4.1 | Batch write de `session_history` (5s) | ✅ | 10 params × 5 ticks = 50 registros/batch |
+| 4.1 | Batch write de `session_history` (5s) | ✅ | 10 parâmetros × 5 ticks = 50 registros/batch |
 | 4.2 | Sessões com status e duração | ✅ | `em_andamento` → `finalizada` |
 | 4.3 | Decisões e tratamentos registrados | ✅ | `session_decisions`, `session_treatments` |
 | 4.4 | Metas de aprendizado persistidas | ✅ | `metas_aprendizado`, `metas_alcancadas` |
@@ -75,7 +75,7 @@
 
 | # | Documento | Status | Arquivo |
 |---|-----------|--------|---------|
-| 5.1 | Documentação do Software (IEEE 829) | ✅ | `DOCUMENTACAO_SOFTWARE.md` |
+| 5.1 | Documentação do Software (IEEE 829, 22 seções) | ✅ | `DOCUMENTACAO_SOFTWARE.md` |
 | 5.2 | Protocolo CEP (v2.0 — 12 seções Plataforma Brasil) | ✅ | `PROTOCOLO_CEP.md` |
 | 5.3 | Guia Técnico para Defesa | ✅ | `GUIA_TECNICO_DEFESA.md` (16 seções) |
 | 5.4 | Glossário Unificado (43 termos) | ✅ | `GLOSSARIO.md` |
@@ -83,7 +83,7 @@
 | 5.6 | Artigo / Resumo Expandido | ✅ | `ARTIGO_RESUMO_EXPANDIDO.md` |
 | 5.7 | Cronograma de Validação | ✅ | `CRONOGRAMA_VALIDACAO.md` |
 | 5.8 | Guia de Permissões | ✅ | `PERMISSIONS_GUIDE.md` |
-| 5.9 | Diagramas de Arquitetura (6 Mermaid) | ✅ | `public/diagramas-arquitetura.html` |
+| 5.9 | Diagramas de Arquitetura (10 Mermaid) | ✅ | `public/diagramas-arquitetura.html` |
 | 5.10 | Screenshots documentadas (12) | ✅ | `docs/screenshots/` |
 
 ### 5.2.1 Estrutura do Protocolo CEP (v2.0)
@@ -112,11 +112,11 @@
 | 1 | Linguagens e Tecnologias | TypeScript, React, Tailwind |
 | 2 | Arquitetura Frontend | SPA, componentes, roteamento |
 | 3 | Arquitetura Backend | Supabase, Edge Functions, PostgREST |
-| 4 | Banco de Dados | Schema, 27 tabelas, relações |
+| 4 | Banco de Dados | Schema, 32 tabelas, relações |
 | 5 | Autenticação e Autorização | JWT, RBAC, RLS |
 | 6 | Game Loop e Simulação | HP, parâmetros, tempo real |
 | 7 | Sistema de Gamificação | Badges, ranking, metas |
-| 8 | Integração com IA | Gemini 2.5, sanitização, fallbacks |
+| 8 | Integração com IA | Gemini 2.5, GPT, sanitização, fallbacks |
 | 9 | Performance | Bundle ~300KB, batch writes, lazy loading |
 | 10 | Testes e Qualidade | Pré-validação automatizada (20 testes) |
 | 11 | Decisões Arquiteturais | Trade-offs, justificativas |
@@ -184,4 +184,4 @@
 
 ---
 
-*Documento gerado em 12/03/2026. Atualizar conforme progresso das fases F2–F6.*
+*Documento atualizado em 16/03/2026. Atualizar conforme progresso das fases F2–F6.*
