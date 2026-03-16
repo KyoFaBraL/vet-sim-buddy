@@ -47,7 +47,7 @@
 | F-01 | Autenticação (login/registro aluno) | ✅ | Portais separados, RBAC pós-auth |
 | F-02 | Autenticação (login/registro professor) | ✅ | Chave de acesso obrigatória |
 | F-03 | Seleção de caso clínico | ✅ | Biblioteca com filtros, casos públicos + compartilhados |
-| F-04 | Simulação com game loop | ✅ | HP, parâmetros, tempo real, batch write 5s |
+| F-04 | Simulação com game loop | ✅ | HP, parâmetros, tempo real, batch write 5s, 32 tabelas |
 | F-05 | Aplicação de tratamentos | ✅ | Feedback visual, efeitos nos parâmetros |
 | F-06 | Dicas de tratamento via IA | ✅ | Edge Function `treatment-hints` |
 | F-07 | Sistema de badges/conquistas | ✅ | Verificação automática pós-sessão |
