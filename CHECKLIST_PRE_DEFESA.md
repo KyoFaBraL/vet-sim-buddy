@@ -2,7 +2,7 @@
 
 ## Status Geral: 🟢 Pronto para Validação
 
-**Última atualização:** 12/03/2026  
+**Última atualização:** 16/03/2026  
 **Responsável:** Equipe VetBalance  
 **Referência:** VETBALANCE-PVS-001 (IEEE 829-2008)
 
