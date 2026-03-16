@@ -842,7 +842,7 @@ Atenciosamente,
 
 ---
 
-### Anexo F — Instrumento de Avaliação de Conhecimentos em Equilíbrio Ácido-Base (Pré-teste/Pós-teste)
+### Anexo H — Instrumento de Avaliação de Conhecimentos em Equilíbrio Ácido-Base (Pré-teste/Pós-teste)
 
 **Instruções ao participante:** Este questionário avalia seus conhecimentos sobre equilíbrio ácido-base (EAB) em pequenos animais (cães e gatos). Leia atentamente cada questão e assinale **uma única alternativa**. Não há consulta permitida. Tempo estimado: 30 minutos.
 
