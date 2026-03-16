@@ -56,6 +56,16 @@
 10. [Cronograma](#10-cronograma)
 11. [Bibliografia](#11-bibliografia)
 12. [Anexos](#12-anexos)
+    - Anexo A — Folha de Rosto
+    - Anexo B — TCLE (modelo oficial CEP/UFPI)
+    - Anexo C — Declaração de Concordância Institucional e de Infraestrutura
+    - Anexo D — Termo de Compromisso dos Pesquisadores
+    - Anexo E — Termo de Confidencialidade
+    - Anexo F — Carta de Encaminhamento ao CEP
+    - Anexo G — Currículo Lattes
+    - Anexo H — Instrumento de Avaliação (Pré-teste/Pós-teste)
+    - Anexo I — Questionário de Satisfação (SUS Adaptado)
+    - Anexo J — Checklist de Documentos
 
 ---
 
