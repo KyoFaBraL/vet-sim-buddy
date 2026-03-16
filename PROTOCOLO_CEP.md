@@ -1152,20 +1152,22 @@ Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria
 
 ---
 
-### Anexo H — Checklist de Documentos para Submissão na Plataforma Brasil
+### Anexo J — Checklist de Documentos para Submissão na Plataforma Brasil
 
 | # | Documento | Anexo | Status |
 |---|-----------|-------|--------|
 | 1 | Folha de Rosto (gerada pela Plataforma Brasil) | Anexo A | ☐ |
 | 2 | Projeto de Pesquisa completo (este documento) | — | ☐ |
-| 3 | TCLE | Anexo B | ☐ |
-| 4 | Termo de Compromisso do Pesquisador | Anexo C | ☐ |
-| 5 | Currículo Lattes do pesquisador e do orientador | Anexo D | ☐ |
-| 6 | Declaração de Infraestrutura e Concordância Institucional | Anexo E | ☐ |
-| 7 | Instrumento de Avaliação (Pré-teste/Pós-teste) | Anexo F | ☐ |
-| 8 | Questionário de Satisfação (SUS adaptado) | Anexo G | ☐ |
-| 9 | Cronograma detalhado | Seção 10 | ☐ |
-| 10 | Orçamento detalhado | Seção 9 | ☐ |
+| 3 | TCLE (modelo oficial CEP/UFPI) | Anexo B | ☐ |
+| 4 | Declaração de Concordância Institucional e Infraestrutura | Anexo C | ☐ |
+| 5 | Termo de Compromisso dos Pesquisadores | Anexo D | ☐ |
+| 6 | Termo de Confidencialidade | Anexo E | ☐ |
+| 7 | Carta de Encaminhamento ao CEP | Anexo F | ☐ |
+| 8 | Currículo Lattes do pesquisador e do orientador | Anexo G | ☐ |
+| 9 | Instrumento de Avaliação (Pré-teste/Pós-teste) | Anexo H | ☐ |
+| 10 | Questionário de Satisfação (SUS adaptado) | Anexo I | ☐ |
+| 11 | Cronograma detalhado | Seção 10 | ☐ |
+| 12 | Orçamento detalhado | Seção 9 | ☐ |
 
 ---
 
