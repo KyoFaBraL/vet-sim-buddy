@@ -72,7 +72,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 - **Autenticação:** E-mail + senha com verificação obrigatória de e-mail
 - **Autorização:** Dois papéis (`professor`, `aluno`) com permissões segregadas
-- **RLS (Row Level Security):** Habilitado em todas as 32 tabelas — cada usuário acessa apenas seus próprios dados
+- **RLS (Row Level Security):** Habilitado em todas as 27 tabelas — cada usuário acessa apenas seus próprios dados
 - **Chaves de acesso:** Professores necessitam de chave institucional para registro
 - **Funções seguras:** `has_role()` evita recursão em políticas RLS; `validate_professor_access_key()` valida chaves sem exposição
 
