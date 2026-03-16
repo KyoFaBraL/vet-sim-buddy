@@ -574,7 +574,7 @@ Este checklist deve ser executado **integralmente** antes do início da Fase F1 
 | # | Item | Critério de Aceite | Status |
 |---|------|-------------------|--------|
 | 11 | Banco de dados em produção | 32 tabelas com RLS; dados de seed presentes (7 casos, 9 condições, 10 parâmetros, 8 tratamentos, 17 badges) | ☐ |
-| 12 | 5 Edge Functions operacionais | Todas retornam HTTP 200 com JWT válido | ☐ |
+| 12 | 9 Edge Functions operacionais | `analyze-custom-case`, `autofix-case`, `generate-differential-diagnosis`, `generate-random-case`, `generate-session-feedback`, `populate-case-data`, `treatment-hints`, `update-case-data`, `validate-case-acidbase` — todas retornam HTTP 200 com JWT válido | ☐ |
 | 13 | Autenticação e papéis | Registro de aluno e professor funcional; `has_role()` correto | ☐ |
 | 14 | Chaves de acesso de professor | `validate_professor_access_key()` funcional; chaves expiradas rejeitadas | ☐ |
 | 15 | Persistência de sessões | Tabelas `simulation_sessions`, `session_history`, `session_decisions`, `session_treatments` recebem dados | ☐ |
