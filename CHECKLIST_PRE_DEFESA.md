@@ -75,7 +75,7 @@
 
 | # | Documento | Status | Arquivo |
 |---|-----------|--------|---------|
-| 5.1 | Documentação do Software (IEEE 829) | ✅ | `DOCUMENTACAO_SOFTWARE.md` |
+| 5.1 | Documentação do Software (IEEE 829, 22 seções) | ✅ | `DOCUMENTACAO_SOFTWARE.md` |
 | 5.2 | Protocolo CEP (v2.0 — 12 seções Plataforma Brasil) | ✅ | `PROTOCOLO_CEP.md` |
 | 5.3 | Guia Técnico para Defesa | ✅ | `GUIA_TECNICO_DEFESA.md` (16 seções) |
 | 5.4 | Glossário Unificado (43 termos) | ✅ | `GLOSSARIO.md` |
