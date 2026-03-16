@@ -112,7 +112,7 @@
 | 1 | Linguagens e Tecnologias | TypeScript, React, Tailwind |
 | 2 | Arquitetura Frontend | SPA, componentes, roteamento |
 | 3 | Arquitetura Backend | Supabase, Edge Functions, PostgREST |
-| 4 | Banco de Dados | Schema, 27 tabelas, relações |
+| 4 | Banco de Dados | Schema, 32 tabelas, relações |
 | 5 | Autenticação e Autorização | JWT, RBAC, RLS |
 | 6 | Game Loop e Simulação | HP, parâmetros, tempo real |
 | 7 | Sistema de Gamificação | Badges, ranking, metas |
