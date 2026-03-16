@@ -76,7 +76,7 @@
 | # | Documento | Status | Arquivo |
 |---|-----------|--------|---------|
 | 5.1 | Documentação do Software (IEEE 829) | ✅ | `DOCUMENTACAO_SOFTWARE.md` |
-| 5.2 | Protocolo CEP | ✅ | `PROTOCOLO_CEP.md` |
+| 5.2 | Protocolo CEP (v2.0 — 12 seções Plataforma Brasil) | ✅ | `PROTOCOLO_CEP.md` |
 | 5.3 | Guia Técnico para Defesa | ✅ | `GUIA_TECNICO_DEFESA.md` (16 seções) |
 | 5.4 | Glossário Unificado (43 termos) | ✅ | `GLOSSARIO.md` |
 | 5.5 | Resumo Executivo | ✅ | `RESUMO_EXECUTIVO.md` |
@@ -85,6 +85,23 @@
 | 5.8 | Guia de Permissões | ✅ | `PERMISSIONS_GUIDE.md` |
 | 5.9 | Diagramas de Arquitetura (6 Mermaid) | ✅ | `public/diagramas-arquitetura.html` |
 | 5.10 | Screenshots documentadas (12) | ✅ | `docs/screenshots/` |
+
+### 5.2.1 Estrutura do Protocolo CEP (v2.0)
+
+| # | Seção obrigatória (Plataforma Brasil) | Status |
+|---|----------------------------------------|--------|
+| 1 | Capa (cabeçalho, título, pesquisadores, data) | ✅ |
+| 2 | Sumário | ✅ |
+| 3 | Introdução | ✅ |
+| 4 | Tema e Delimitação | ✅ |
+| 5 | Problema da Pesquisa (questão central, antecedentes) | ✅ |
+| 6 | Revisão da Literatura | ✅ |
+| 7 | Objetivos (geral + 4 específicos) | ✅ |
+| 8 | Metodologia (amostra n=40, TCLE, riscos 5 camadas, critérios inclusão/exclusão) | ✅ |
+| 9 | Orçamento detalhado (pesquisador, CAPES, UFPI) | ✅ |
+| 10 | Cronograma (≥3 meses tramitação CEP-UFPI, fases F1–F6) | ✅ |
+| 11 | Bibliografia (30+ referências) | ✅ |
+| 12 | Anexos (A–H: TCLE, instrumentos, infraestrutura) | ✅ |
 
 ---
 
