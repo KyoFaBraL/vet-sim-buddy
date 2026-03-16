@@ -13,8 +13,8 @@
 | # | Item | Status | Observação |
 |---|------|--------|------------|
 | 1.1 | App publicado e acessível | ✅ | `vetbalance.lovable.app` |
-| 1.2 | Banco de dados operacional | ✅ | 27 tabelas, todas com RLS |
-| 1.3 | Edge Functions deployadas (8) | ✅ | Deploy automático |
+| 1.2 | Banco de dados operacional | ✅ | 32 tabelas, todas com RLS |
+| 1.3 | Edge Functions deployadas (9) | ✅ | Deploy automático |
 | 1.4 | Secrets configurados (API keys) | ✅ | LOVABLE_API_KEY, SUPABASE_* |
 | 1.5 | Favicon e metadados personalizados | ✅ | Sem referências a plataformas externas |
 | 1.6 | HTTPS ativo | ✅ | Via CDN |
