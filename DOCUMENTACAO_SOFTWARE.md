@@ -1307,6 +1307,6 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 **Versão do documento:** 1.0  
 **Total de componentes:** 60+ componentes React  
 **Total de tabelas:** 32 tabelas PostgreSQL  
-**Total de Edge Functions:** 5 funções serverless  
+**Total de Edge Functions:** 9 funções serverless  
 **Total de linhas de código:** ~15.000+ linhas TypeScript/TSX  
 **Total de capturas de tela:** 12 telas documentadas com evidências visuais
