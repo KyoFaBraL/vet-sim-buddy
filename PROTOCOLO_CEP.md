@@ -1124,7 +1124,7 @@ Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria
 
 ---
 
-### Anexo G — Questionário de Satisfação (SUS Adaptado)
+### Anexo I — Questionário de Satisfação (SUS Adaptado)
 
 **Instruções:** Para cada afirmação, marque com um **X** a coluna que melhor representa sua opinião.
 
