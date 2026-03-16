@@ -80,20 +80,23 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 ## 6. VALIDAÇÃO PROPOSTA
 
-A validação seguirá metodologia quase-experimental de **20 semanas** (10/03 a 31/07/2026), nas disciplinas de Fisiologia Animal e Farmacologia, com **40 estudantes** randomizados em dois grupos (n=20 cada):
+A validação seguirá metodologia quase-experimental de **20 semanas** (a partir da aprovação pelo CEP), nas disciplinas de Fisiologia Animal e Farmacologia, com **40 estudantes** randomizados em dois grupos (n=20 cada):
 - **Grupo experimental (GE):** Com acesso ao VetBalance durante todo o período de intervenção
-- **Grupo controle (GC):** Atividades tradicionais, sem acesso ao software
+- **Grupo controle (GC):** Atividades tradicionais, sem acesso ao software (acesso garantido após a coleta)
 
 ### Fases do Estudo
 
+> **Nota:** A coleta de dados terá início **somente após a aprovação do projeto pelo CEP/UFPI**. O cronograma prevê um prazo mínimo de **3 meses** para tramitação do projeto no CEP, considerando eventuais pendências.
+
 | Fase | Período | Atividade Principal |
 |------|---------|---------------------|
-| F1 — Preparação | 10/03 – 28/03/2026 | Aprovação CEP, randomização, pré-teste diagnóstico (O₁) |
-| F2 — Intervenção Inicial | 30/03 – 18/04/2026 | Aulas teóricas (GE + GC), treinamento GE no SUT |
-| F3 — Avaliação Intermediária 1 | 27/04 – 16/05/2026 | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
-| F4 — Intervenção Avançada | 18/05 – 06/06/2026 | Casos avançados, modo avaliação (sem IA) |
-| F5 — Avaliação Final | 08/06 – 27/06/2026 | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
-| F6 — Análise e Relatório | 30/06 – 31/07/2026 | Análise estatística, relatório final IEEE 829 |
+| Tramitação CEP | Março–Maio/2026 (~3 meses) | Submissão na Plataforma Brasil, análise pelo CEP, eventuais pendências |
+| F1 — Preparação | Semanas 1–3 (após aprovação) | Apresentação aos docentes, randomização, pré-teste diagnóstico (O₁) |
+| F2 — Intervenção Inicial | Semanas 4–6 | Aulas teóricas (GE + GC), treinamento GE no software |
+| F3 — Avaliação Intermediária 1 | Semanas 7–9 | Uso intensivo GE, avaliação O₂ (distúrbios metabólicos) |
+| F4 — Intervenção Avançada | Semanas 10–12 | Casos avançados, modo avaliação (sem IA) |
+| F5 — Avaliação Final | Semanas 13–15 | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
+| F6 — Análise e Relatório | Semanas 16–20 | Análise estatística (RStudio), relatório final IEEE 829 |
 
 ### Marcos Críticos
 
