@@ -64,6 +64,7 @@ As capturas de tela das principais interfaces do VetBalance estão disponíveis 
 | `DIAGRAMAS_MERMAID.md` | Diagramas de arquitetura, fluxos e ER do sistema |
 | `GLOSSARIO.md` | Glossário unificado — padroniza os 43 termos técnicos, clínicos e metodológicos utilizados neste resumo |
 | `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável para planilhas) |
+| `PROTOCOLO_CEP.md` (v2.0) | Protocolo completo para submissão ao CEP/UFPI — 12 seções + Anexos A–J (TCLE modelo oficial, Autorização Institucional, Compromisso, Confidencialidade, Carta de Encaminhamento, Instrumento, SUS, Checklist) |
 
 ---
 
