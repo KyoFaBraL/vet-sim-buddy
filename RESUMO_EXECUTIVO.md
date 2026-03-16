@@ -163,5 +163,5 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 
 ---
 
-**Software desenvolvido e disponível em:** https://vetbalance.app.br  
+**Software desenvolvido e disponível em:** https://vetbalance.lovable.app  
 **Compatível com:** Navegadores modernos (Chrome, Firefox, Safari, Edge) em desktop e dispositivos móveis
