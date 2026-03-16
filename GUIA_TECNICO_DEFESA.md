@@ -1064,7 +1064,7 @@ IF has_role(target_user_id, 'admin') THEN
 
 **Implementação no VetBalance:**
 
-Todas as 8 Edge Functions que chamam IA utilizam sanitização em 3 camadas:
+Todas as 9 Edge Functions que chamam IA utilizam sanitização em 3 camadas:
 
 **Camada 1 — Função `sanitizeInput()`:**
 ```typescript
