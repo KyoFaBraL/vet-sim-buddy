@@ -56,6 +56,16 @@
 10. [Cronograma](#10-cronograma)
 11. [Bibliografia](#11-bibliografia)
 12. [Anexos](#12-anexos)
+    - Anexo A — Folha de Rosto
+    - Anexo B — TCLE (modelo oficial CEP/UFPI)
+    - Anexo C — Declaração de Concordância Institucional e de Infraestrutura
+    - Anexo D — Termo de Compromisso dos Pesquisadores
+    - Anexo E — Termo de Confidencialidade
+    - Anexo F — Carta de Encaminhamento ao CEP
+    - Anexo G — Currículo Lattes
+    - Anexo H — Instrumento de Avaliação (Pré-teste/Pós-teste)
+    - Anexo I — Questionário de Satisfação (SUS Adaptado)
+    - Anexo J — Checklist de Documentos
 
 ---
 
@@ -647,115 +657,192 @@ INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. **ISO/IEC 25010:2011** — Syste
 
 ### Anexo B — Termo de Consentimento Livre e Esclarecido (TCLE)
 
-> **Modelo a ser adaptado à formatação institucional do CEP**
+> **Modelo oficial do CEP/UFPI — Comitê de Ética em Pesquisa Humana**
 
 ---
 
-#### TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO (TCLE)
+#### MINISTÉRIO DA EDUCAÇÃO — UNIVERSIDADE FEDERAL DO PIAUÍ — COMITÊ DE ÉTICA EM PESQUISA HUMANA
 
-**Título da Pesquisa:** Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta de M-Learning
+#### TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO
 
-**Pesquisador Responsável:** Caio Farias Cabral  
-**Orientador(a):** Prof. Dr. Napoleão Martins Argôlo Neto  
-**Instituição:** Universidade Federal do Piauí (UFPI)  
-**Contato:** caiofcabral@ufpi.edu.br / (86) 98142-5389
+Prezado(a) Senhor(a),
 
----
+Você está sendo convidado(a) a participar como voluntário(a) de uma pesquisa denominada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
 
-Prezado(a) participante,
+Esta pesquisa está sob a responsabilidade do pesquisador **Caio Farias Cabral**, mestrando vinculado ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI), e de seu orientador, **Prof. Dr. Napoleão Martins Argôlo Neto**, e tem como objetivo geral: validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais, junto a estudantes de medicina veterinária.
 
-Você está sendo convidado(a) a participar de uma pesquisa científica vinculada ao Programa de Pós-Graduação em Ciência Animal da Universidade Federal do Piauí (UFPI). Antes de decidir, leia atentamente as informações abaixo.
+Neste sentido, solicitamos sua colaboração mediante a assinatura desse termo. Este documento, chamado Termo de Consentimento Livre e Esclarecido (TCLE), visa assegurar seus direitos como participante. Após seu consentimento, rubrique todas as páginas e ao final deste documento, que está em duas vias. O mesmo também será assinado pelo pesquisador em todas as páginas, ficando uma via com você, participante da pesquisa, e outra com o pesquisador. Por favor, leia com atenção e calma, aproveite para esclarecer todas as suas dúvidas.
 
-**1. Objetivo da Pesquisa**
+Se houver perguntas antes ou mesmo depois de indicar sua concordância, você poderá esclarecê-las com o pesquisador responsável pela pesquisa, **Caio Farias Cabral**, pelo telefone **(86) 98142-5389**, pelo e-mail **caiofcabral@ufpi.edu.br** ou pelo endereço institucional na Universidade Federal do Piauí (UFPI), Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina - PI.
 
-Esta pesquisa tem como objetivo avaliar a eficácia de um software educacional gamificado chamado **VetBalance** como ferramenta complementar no ensino de equilíbrio ácido-base em medicina veterinária de pequenos animais.
+Se, mesmo assim, as dúvidas ainda persistirem, você pode entrar em contato com o **Comitê de Ética em Pesquisa da UFPI**, que acompanha e analisa as pesquisas científicas que envolvem seres humanos, no Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina – PI, telefone **(86) 2222-4824**, e-mail: **cep.ufpi@ufpi.edu.br**; no horário de atendimento ao público, segunda a sexta, manhã: 08h00 às 12h00 e a tarde: 14h00 às 18h00. Se preferir, pode levar este Termo para casa e consultar seus familiares ou outras pessoas antes de decidir participar.
 
-**2. Procedimentos**
+Esclarecemos, mais uma vez, que sua participação é voluntária. Caso decida não participar ou retirar seu consentimento a qualquer momento da pesquisa, não haverá nenhum tipo de penalização ou prejuízo e os pesquisadores estarão à sua disposição para qualquer esclarecimento.
 
-Caso aceite participar, você será alocado(a) por sorteio em um de dois grupos:
+**Justificativa da pesquisa:** O ensino tradicional de distúrbios do equilíbrio ácido-base frequentemente se limita a aulas expositivas, com escassas oportunidades de prática clínica em ambiente controlado e seguro. A pesquisa busca suprir a carência de ferramentas tecnológicas específicas para a medicina veterinária no Brasil, utilizando a gamificação e a aprendizagem móvel (m-learning) para promover maior engajamento, motivação e retenção de conhecimento entre os estudantes.
 
-- **Grupo Experimental (GE):** Além das aulas regulares, você terá acesso ao software VetBalance para prática complementar de simulações clínicas em seu dispositivo pessoal (celular, tablet ou computador).
-- **Grupo Controle (GC):** Você participará normalmente das aulas regulares. Após o término da coleta de dados, você receberá acesso completo ao VetBalance.
+**Procedimentos de coleta de dados:** Você será alocado(a) por sorteio em um de dois grupos. Se for alocado(a) no **Grupo Experimental**, além das aulas regulares, você terá acesso ao software VetBalance em seu dispositivo pessoal para prática de simulações clínicas durante 20 semanas e, ao final, responderá a um questionário de satisfação sobre a usabilidade do sistema. Se for alocado(a) no **Grupo Controle**, você participará normalmente das aulas regulares e receberá acesso integral ao software após o término da coleta de dados. Independentemente do grupo, você realizará quatro avaliações teórico-práticas ao longo do semestre, que já são previstas como componentes regulares das disciplinas (Fisiologia Animal e Farmacologia). O software registrará automaticamente métricas de uso, como decisões clínicas tomadas e tratamentos aplicados.
 
-Independentemente do grupo, você realizará 4 avaliações (já previstas nas disciplinas) ao longo do semestre. Se for alocado(a) no GE, também responderá a um questionário de satisfação sobre o software.
+**Riscos:** Desconforto emocional ao perceber baixo desempenho nas avaliações; frustração ao utilizar o software; sensação de desvantagem educacional por pertencer ao grupo controle; quebra de sigilo de dados pessoais; e fadiga visual por uso prolongado de tela.
 
-**3. Duração**
+**Medidas de mitigação dos riscos:** As avaliações já fazem parte da rotina acadêmica e será oferecido feedback individual e confidencial; haverá um tutorial guiado e suporte técnico para minimizar frustrações tecnológicas; o acesso ao software será garantido ao grupo controle logo após a coleta de dados; os dados serão protegidos por criptografia e controle de acesso (Row Level Security), sendo anonimizados antes de publicações; e as sessões no simulador serão curtas, limitadas a cerca de cinco minutos cada, com uso voluntário no seu próprio ritmo.
 
-A pesquisa terá duração de aproximadamente 20 semanas. O uso do software pelo GE será voluntário e complementar às atividades regulares.
+**Benefícios:** A oportunidade de prática complementar de tomada de decisão clínica em um ambiente virtual seguro e controlado; o recebimento de feedback personalizado sobre o desempenho por meio de inteligência artificial; o desenvolvimento aprimorado de competências na interpretação de parâmetros fisiológicos complexos; e o acesso gratuito a uma ferramenta educacional inovadora. Além disso, a pesquisa contribui indiretamente para o avanço das tecnologias educacionais na medicina veterinária.
 
-**4. Riscos**
+Os resultados obtidos nesta pesquisa serão utilizados para fins acadêmico-científicos (divulgação em trabalhos de conclusão de curso, revistas e em eventos científicos) e os pesquisadores se comprometem a manter o sigilo e identidade anônima, como estabelecem as Resoluções do Conselho Nacional de Saúde nº 466/2012 e 510/2016 e a Norma Operacional 01 de 2013 do Conselho Nacional de Saúde, que tratam de normas regulamentadoras de pesquisas que envolvem seres humanos. Você terá livre acesso a todas as informações e esclarecimentos adicionais sobre o estudo, bem como lhe é garantido acesso a seus resultados.
 
-Esta pesquisa apresenta **risco mínimo**. Você poderá sentir desconforto emocional ao perceber seu desempenho nas avaliações ou frustração ao utilizar o software. Caso isso ocorra, feedback individual e confidencial será oferecido, e suporte técnico estará disponível.
+Esclarecemos ainda que você não terá nenhum custo com a pesquisa, mas, caso haja, por qualquer motivo, asseguramos que você será devidamente ressarcido. Não haverá nenhum tipo de pagamento por sua participação, ela é voluntária. Durante e após o encerramento da pesquisa, será garantido o acompanhamento e a assistência ao participante, conforme previsto na Resolução 466/2012 (item IV.3.c). Em caso de danos decorrentes da pesquisa, será assegurada a assistência integral e a indenização conforme previsto em norma.
 
-**5. Benefícios**
-
-- Prática complementar de tomada de decisão clínica em ambiente seguro
-- Feedback personalizado sobre seu desempenho (GE)
-- Desenvolvimento de competências em equilíbrio ácido-base
-- Acesso gratuito a ferramenta educacional inovadora (todos, após o estudo)
-
-**6. Confidencialidade e Proteção de Dados**
-
-Seus dados pessoais serão mantidos em sigilo absoluto. O software utiliza sistema de segurança com controle de acesso por linha (RLS), e seus dados serão anonimizados antes de qualquer publicação. Apenas o pesquisador responsável e o orientador terão acesso aos dados identificados. Os dados serão armazenados por 5 anos conforme normas institucionais e em conformidade com a LGPD (Lei 13.709/2018).
-
-**7. Voluntariedade e Direito de Desistência**
-
-Sua participação é **totalmente voluntária**. Você pode recusar-se a participar ou retirar seu consentimento a qualquer momento, sem necessidade de justificativa e **sem qualquer prejuízo à sua avaliação acadêmica**. As avaliações realizadas fazem parte das atividades regulares das disciplinas e não serão afetadas pela sua participação ou não na pesquisa.
-
-**8. Contatos**
-
-Em caso de dúvidas sobre a pesquisa, entre em contato com:
-
-- **Pesquisador Responsável:** Caio Farias Cabral – caiofcabral@ufpi.edu.br – (86) 98142-5389
-- **Orientador(a):** Prof. Dr. Napoleão Martins Argôlo Neto
-- **Comitê de Ética em Pesquisa (CEP/UFPI):** Campus Universitário Ministro Petrônio Portella, Bairro Ininga, CEP 64.049-550, Teresina – PI. Telefone: (86) 2222-4824. E-mail: cep.ufpi@ufpi.edu.br. Horário de atendimento: segunda a sexta, das 08h às 12h e das 14h às 18h.
-
-**9. Consentimento**
-
-Declaro que li e compreendi as informações acima, tive a oportunidade de esclarecer minhas dúvidas e concordo em participar desta pesquisa de forma voluntária.
+Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi exposto, Eu, \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_, declaro que aceito participar desta pesquisa, dando pleno consentimento para uso das informações por mim prestadas. Para tanto, assino este consentimento em duas vias, rubrico todas as páginas e fico com a posse de uma delas.
 
 | Campo | Preenchimento |
 |-------|---------------|
-| Nome completo do participante | __________________________________ |
-| Assinatura do participante | __________________________________ |
-| Data | ____/____/2026 |
-| Nome do pesquisador | __________________________________ |
-| Assinatura do pesquisador | __________________________________ |
-| Data | ____/____/2026 |
+| Local e data | __________________________________ |
+| Assinatura do Participante | __________________________________ |
+| Assinatura do Pesquisador Responsável | __________________________________ |
 
 *(Este documento é emitido em 2 vias de igual teor, uma para o participante e outra para o pesquisador.)*
 
 ---
 
-### Anexo C — Termo de Compromisso do Pesquisador
+### Anexo C — Declaração de Concordância Institucional e de Infraestrutura
 
-Eu, **Caio Farias Cabral**, pesquisador responsável pelo projeto de pesquisa intitulado **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta de M-Learning"**, declaro que:
-
-1. **Comprometo-me** a conduzir a pesquisa de acordo com os princípios éticos estabelecidos nas Resoluções CNS nº 466/2012 e 510/2016.
-
-2. **Garantirei** a confidencialidade e o sigilo dos dados dos participantes, utilizando-os exclusivamente para fins acadêmicos e científicos.
-
-3. **Assegurarei** que todos os participantes assinem o TCLE antes do início de qualquer procedimento de coleta de dados.
-
-4. **Comunicarei** ao CEP qualquer evento adverso, emenda ao protocolo ou encerramento antecipado da pesquisa.
-
-5. **Apresentarei** ao CEP o relatório parcial (quando solicitado) e o relatório final da pesquisa, conforme Resolução CNS 466/2012.
-
-6. **Comprometo-me** a disponibilizar o acesso ao VetBalance ao Grupo Controle após a conclusão da coleta de dados.
-
-7. **Armazenarei** os dados da pesquisa por, no mínimo, 5 anos, conforme normas institucionais.
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Nome completo do pesquisador | __________________________________ |
-| CPF | __________________________________ |
-| Assinatura | __________________________________ |
-| Data | ____/____/2026 |
-| Local | __________________________________ |
+> **Documento oficial assinado pela Coordenação do Curso de Medicina Veterinária — CCA/UFPI**
 
 ---
 
-### Anexo D — Currículo Lattes
+#### MINISTÉRIO DA EDUCAÇÃO — UNIVERSIDADE FEDERAL DO PIAUÍ — COMITÊ DE ÉTICA EM PESQUISA HUMANA
+
+#### DECLARAÇÃO DE CONCORDÂNCIA INSTITUCIONAL E DE INFRAESTRUTURA
+
+Eu, **Mônica Arrivabene**, na qualidade de responsável por esta instituição / departamento (Cargo: Coordenadora do Curso de Graduação em Medicina Veterinária da Universidade Federal do Piauí — UFPI), declaro para os devidos fins que tenho conhecimento e **AUTORIZO** a realização do projeto de pesquisa intitulado: **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
+
+Declaro estar ciente de que a referida pesquisa está sob a responsabilidade do pesquisador **Caio Farias Cabral** (Mestrando do Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional — PPGTAIR/UFPI) e de seu orientador, **Prof. Dr. Napoleão Martins Argôlo Neto**.
+
+Tenho ciência de que o objetivo do estudo é validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais.
+
+Autorizo expressamente o recrutamento dos sujeitos da pesquisa nas dependências desta instituição, os quais serão aproximadamente **40 (quarenta) estudantes** regularmente matriculados no curso de graduação em Medicina Veterinária da UFPI, especificamente nas turmas das disciplinas de **Fisiologia Animal** e **Farmacologia**.
+
+Declaro, ainda, que a nossa instituição dispõe da **infraestrutura necessária** (salas de aula, acesso à rede Wi-Fi institucional e apoio do corpo docente das disciplinas envolvidas) para a execução das etapas de recrutamento, aplicação das avaliações acadêmicas e intervenção da pesquisa, concordando com a sua utilização nos termos estipulados no projeto e respeitando os preceitos éticos estabelecidos pelas **Resoluções CNS nº 466/2012** e **nº 510/2016**.
+
+| Campo | Preenchimento |
+|-------|---------------|
+| Local e data | Teresina - PI, 16 de março de 2026 |
+| Nome | Prof. Mônica Arrivabene |
+| Cargo | Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI |
+| Assinatura | __________________________________ |
+
+---
+
+### Anexo D — Termo de Compromisso dos Pesquisadores (Declarações)
+
+> **Documento oficial dirigido ao CEP/CMPP — Universidade Federal do Piauí**
+
+---
+
+#### Declarações do(s) Pesquisador(es) — Ao Comitê de Ética em Pesquisa – CEP/CMPP — Universidade Federal do Piauí
+
+Eu (nós), **Caio Farias Cabral**, pesquisador(es) responsável(is) pela pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, declaro(amos) que:
+
+- Assumo(imos) o compromisso de cumprir os Termos das **Resoluções Nº 466/2012**, de 12 de dezembro de 2012, e **Nº 510/2016**, de 07 de abril de 2016, do Conselho Nacional de Saúde, do Ministério da Saúde e demais resoluções complementares à mesma (240/97, 251/97, 292/99 e 340/2004).
+
+- Assumo(imos) o compromisso de **zelar pela privacidade e pelo sigilo das informações**, que serão obtidas e utilizadas para o desenvolvimento da pesquisa.
+
+- Os materiais e as informações obtidas no desenvolvimento deste trabalho serão utilizados **apenas para se atingir o(s) objetivo(s) previsto(s) nesta pesquisa** e não serão utilizados para outras pesquisas sem o devido consentimento dos voluntários.
+
+- Os materiais e os dados obtidos ao final da pesquisa serão **arquivados sob a responsabilidade de Caio Farias Cabral e Prof. Dr. Napoleão Martins Argôlo Neto** da área de Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) da UFPI; que também será responsável pelo descarte dos materiais e dados, caso os mesmos não sejam estocados ao final da pesquisa.
+
+- **Não há qualquer acordo restritivo** à divulgação pública dos resultados.
+
+- Os resultados da pesquisa serão tornados públicos através de **publicações em periódicos científicos e/ou em encontros científicos**, quer sejam favoráveis ou não, respeitando-se sempre a privacidade e os direitos individuais dos sujeitos da pesquisa.
+
+- O CEP-UFPI/CMPP será comunicado da **suspensão ou do encerramento da pesquisa** por meio de relatório apresentado anualmente ou na ocasião da suspensão ou do encerramento da pesquisa com a devida justificativa.
+
+- O CEP-UFPI/CMPP será **imediatamente comunicado** se ocorrerem efeitos adversos resultantes desta pesquisa com o voluntário.
+
+- **Esta pesquisa ainda não foi total ou parcialmente realizada.**
+
+| Campo | Preenchimento |
+|-------|---------------|
+| Local e data | Teresina, 16 de março de 2026 |
+| **Pesquisador responsável** | Caio Farias Cabral — CPF: 656.268.853-15 |
+| Assinatura | __________________________________ |
+| **Pesquisador orientador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
+| Assinatura | __________________________________ |
+
+---
+
+### Anexo E — Termo de Confidencialidade
+
+> **Documento oficial de sigilo e proteção de dados da pesquisa**
+
+---
+
+#### TERMO DE CONFIDENCIALIDADE
+
+| Campo | Informação |
+|-------|------------|
+| **Título do projeto** | Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning |
+| **Pesquisador responsável** | Caio Farias Cabral |
+| **Instituição/Departamento** | Universidade Federal do Piauí (UFPI) / Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
+| **Telefone para contato** | (86) 98142-5389 |
+| **Local da coleta de dados** | Departamento de Medicina Veterinária da UFPI (Teresina-PI) e ambiente digital (Software VetBalance) |
+
+Os pesquisadores do presente projeto se comprometem a **preservar a privacidade dos participantes** cujos dados serão coletados em bases de dados digitais do software (logs automatizados) e através de instrumentos de avaliação acadêmica e questionários da Universidade Federal do Piauí (UFPI) e do ambiente virtual da aplicação.
+
+Concordam, igualmente, que estas informações serão utilizadas **única e exclusivamente para execução do presente projeto**.
+
+As informações somente poderão ser divulgadas de **forma anônima** e serão mantidas num servidor seguro e em arquivos digitais criptografados por um período de **5 anos** sob a responsabilidade do(a) Sr.(a) Caio Farias Cabral. Após este período, os dados serão destruídos.
+
+| Campo | Preenchimento |
+|-------|---------------|
+| Local e data | Teresina, 16 de março de 2026 |
+| **Pesquisador Responsável** | Caio Farias Cabral — CPF: 656.268.853-15 |
+| Assinatura | __________________________________ |
+| **Pesquisador Orientador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
+| Assinatura | __________________________________ |
+
+---
+
+### Anexo F — Carta de Encaminhamento ao CEP
+
+> **Documento oficial de encaminhamento ao Comitê de Ética em Pesquisa Humana da UFPI/CMPP**
+
+---
+
+Teresina, 16/03/2026
+
+**Profª. Drª. Hilris Rocha e Silva**  
+**Coordenadora do Comitê de Ética em Pesquisa Humana da UFPI/CMPP**
+
+Cara Profª,
+
+Estou enviando o projeto de pesquisa intitulado **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, para a apreciação por este comitê.
+
+Confirmo que todos os pesquisadores envolvidos nesta pesquisa realizaram a leitura e estão cientes do conteúdo da **Resolução 466/12 do CNS** e das resoluções complementares à mesma (240/97, 251/97, 292/99 e 340/2004).
+
+Confirmo também:
+
+1. Que esta pesquisa **ainda não foi iniciada**;
+2. Que **não há participação estrangeira** nesta pesquisa;
+3. Que comunicarei ao CEP-UFPI/CMPP os eventuais **eventos adversos** ocorridos com o voluntário;
+4. Que apresentarei **relatório anual e final** desta pesquisa ao CEP-UFPI/CMPP;
+5. Que retirarei por minha própria conta os **pareceres e o certificado** junto à secretaria do CEP-UFPI/CMPP.
+
+Atenciosamente,
+
+| Campo | Preenchimento |
+|-------|---------------|
+| Pesquisador responsável | Caio Farias Cabral |
+| CPF | 656.268.853-15 |
+| Instituição | Universidade Federal do Piauí (UFPI) |
+| Área | Medicina Veterinária |
+| Departamento | Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
+| Assinatura | __________________________________ |
+
+---
+
+### Anexo G — Currículo Lattes
 
 > Anexar os currículos Lattes atualizados:
 > - **Pesquisador Responsável:** Caio Farias Cabral
@@ -765,32 +852,7 @@ Eu, **Caio Farias Cabral**, pesquisador responsável pelo projeto de pesquisa in
 
 ---
 
-### Anexo E — Declaração de Infraestrutura e Concordância Institucional
-
-> **Modelo a ser adaptado e assinado pela chefia da unidade**
-
-Declaro que a **Universidade Federal do Piauí (UFPI)**, por meio do **Centro de Ciências Agrárias (CCA)**, dispõe de infraestrutura adequada para a realização da pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais"**, incluindo:
-
-- Salas de aula para aplicação das avaliações
-- Rede Wi-Fi institucional com cobertura nas áreas utilizadas
-- Laboratório de informática (caso necessário)
-- Apoio dos docentes das disciplinas de Fisiologia Animal e Farmacologia
-
-Autorizo a realização da pesquisa nas dependências desta instituição, conforme cronograma apresentado.
-
-Comprometo-me a disponibilizar a infraestrutura necessária ao desenvolvimento da pesquisa e para atender eventuais problemas dela resultantes.
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Nome da autoridade institucional | Profa. Mônica Arrivabene |
-| Cargo | Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI (Biênio 2025/2027) |
-| Assinatura | __________________________________ |
-| Data | ____/____/2026 |
-| Carimbo institucional | |
-
----
-
-### Anexo F — Instrumento de Avaliação de Conhecimentos em Equilíbrio Ácido-Base (Pré-teste/Pós-teste)
+### Anexo H — Instrumento de Avaliação de Conhecimentos em Equilíbrio Ácido-Base (Pré-teste/Pós-teste)
 
 **Instruções ao participante:** Este questionário avalia seus conhecimentos sobre equilíbrio ácido-base (EAB) em pequenos animais (cães e gatos). Leia atentamente cada questão e assinale **uma única alternativa**. Não há consulta permitida. Tempo estimado: 30 minutos.
 
@@ -1072,7 +1134,7 @@ Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria
 
 ---
 
-### Anexo G — Questionário de Satisfação (SUS Adaptado)
+### Anexo I — Questionário de Satisfação (SUS Adaptado)
 
 **Instruções:** Para cada afirmação, marque com um **X** a coluna que melhor representa sua opinião.
 
@@ -1100,20 +1162,22 @@ Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria
 
 ---
 
-### Anexo H — Checklist de Documentos para Submissão na Plataforma Brasil
+### Anexo J — Checklist de Documentos para Submissão na Plataforma Brasil
 
 | # | Documento | Anexo | Status |
 |---|-----------|-------|--------|
 | 1 | Folha de Rosto (gerada pela Plataforma Brasil) | Anexo A | ☐ |
 | 2 | Projeto de Pesquisa completo (este documento) | — | ☐ |
-| 3 | TCLE | Anexo B | ☐ |
-| 4 | Termo de Compromisso do Pesquisador | Anexo C | ☐ |
-| 5 | Currículo Lattes do pesquisador e do orientador | Anexo D | ☐ |
-| 6 | Declaração de Infraestrutura e Concordância Institucional | Anexo E | ☐ |
-| 7 | Instrumento de Avaliação (Pré-teste/Pós-teste) | Anexo F | ☐ |
-| 8 | Questionário de Satisfação (SUS adaptado) | Anexo G | ☐ |
-| 9 | Cronograma detalhado | Seção 10 | ☐ |
-| 10 | Orçamento detalhado | Seção 9 | ☐ |
+| 3 | TCLE (modelo oficial CEP/UFPI) | Anexo B | ☐ |
+| 4 | Declaração de Concordância Institucional e Infraestrutura | Anexo C | ☐ |
+| 5 | Termo de Compromisso dos Pesquisadores | Anexo D | ☐ |
+| 6 | Termo de Confidencialidade | Anexo E | ☐ |
+| 7 | Carta de Encaminhamento ao CEP | Anexo F | ☐ |
+| 8 | Currículo Lattes do pesquisador e do orientador | Anexo G | ☐ |
+| 9 | Instrumento de Avaliação (Pré-teste/Pós-teste) | Anexo H | ☐ |
+| 10 | Questionário de Satisfação (SUS adaptado) | Anexo I | ☐ |
+| 11 | Cronograma detalhado | Seção 10 | ☐ |
+| 12 | Orçamento detalhado | Seção 9 | ☐ |
 
 ---
 
