@@ -545,6 +545,7 @@ A validação será considerada **malsucedida** se:
 | `DIAGRAMAS_MERMAID.md` | Diagramas de arquitetura complementam o ambiente de teste (Seção 7) |
 | `GLOSSARIO.md` | Glossário unificado (43 termos, 5 categorias); Seção 4 deste documento referencia o glossário |
 | `cronograma-validacao-vetbalance.csv` | Espelho tabulado (importável) das Seções 8, 9 e 10 deste documento |
+| `METRICAS_PROJETO.md` | Métricas consolidadas do projeto (32 tabelas, 9 Edge Functions, 99 componentes, performance) — referência rápida para defesa; complementa Seção 7 (Ambiente de Teste) |
 
 ---
 
