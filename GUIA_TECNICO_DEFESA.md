@@ -1064,7 +1064,7 @@ IF has_role(target_user_id, 'admin') THEN
 
 **Implementação no VetBalance:**
 
-Todas as 8 Edge Functions que chamam IA utilizam sanitização em 3 camadas:
+Todas as 9 Edge Functions que chamam IA utilizam sanitização em 3 camadas:
 
 **Camada 1 — Função `sanitizeInput()`:**
 ```typescript
@@ -1131,7 +1131,7 @@ END IF;
 
 **Se a banca perguntar:** *"E quanto à segurança das chamadas de IA?"*
 
-> *"Todas as 8 Edge Functions que chamam modelos de IA possuem sanitização de entrada em três camadas: remoção de caracteres de controle e termos de comando, system prompts defensivos que instruem o modelo a ignorar instruções injetadas, e validação da saída contra schemas JSON esperados. Se a IA retornar algo fora do formato, o sistema usa valores de fallback. A comunicação com a API de IA ocorre exclusivamente server-side — o token de acesso nunca é exposto ao cliente."*
+> *"Todas as 9 Edge Functions que chamam modelos de IA possuem sanitização de entrada em três camadas: remoção de caracteres de controle e termos de comando, system prompts defensivos que instruem o modelo a ignorar instruções injetadas, e validação da saída contra schemas JSON esperados. Se a IA retornar algo fora do formato, o sistema usa valores de fallback. A comunicação com a API de IA ocorre exclusivamente server-side — o token de acesso nunca é exposto ao cliente."*
 
 ---
 
