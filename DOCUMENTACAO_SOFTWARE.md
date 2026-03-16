@@ -484,10 +484,14 @@ O sistema integra modelos de IA via Edge Functions (Deno) para enriquecer a expe
 | Função | Endpoint | Finalidade |
 |--------|----------|-----------|
 | `analyze-custom-case` | `/analyze-custom-case` | Análise automática de casos personalizados |
+| `autofix-case` | `/autofix-case` | Correção automática de inconsistências em casos |
 | `generate-differential-diagnosis` | `/generate-differential-diagnosis` | Geração de diagnósticos diferenciais |
+| `generate-random-case` | `/generate-random-case` | Geração aleatória de casos clínicos |
 | `generate-session-feedback` | `/generate-session-feedback` | Feedback personalizado pós-sessão |
 | `populate-case-data` | `/populate-case-data` | Geração automática de parâmetros e tratamentos |
 | `treatment-hints` | `/treatment-hints` | Dicas contextualizadas de tratamento |
+| `update-case-data` | `/update-case-data` | Atualização de dados de casos existentes |
+| `validate-case-acidbase` | `/validate-case-acidbase` | Validação de consistência ácido-base dos casos |
 
 ### 9.2 Modelos Utilizados
 
