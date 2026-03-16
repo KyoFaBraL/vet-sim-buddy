@@ -116,7 +116,7 @@
 | 5 | Autenticação e Autorização | JWT, RBAC, RLS |
 | 6 | Game Loop e Simulação | HP, parâmetros, tempo real |
 | 7 | Sistema de Gamificação | Badges, ranking, metas |
-| 8 | Integração com IA | Gemini 2.5, sanitização, fallbacks |
+| 8 | Integração com IA | Gemini 2.5, GPT, sanitização, fallbacks |
 | 9 | Performance | Bundle ~300KB, batch writes, lazy loading |
 | 10 | Testes e Qualidade | Pré-validação automatizada (20 testes) |
 | 11 | Decisões Arquiteturais | Trade-offs, justificativas |
