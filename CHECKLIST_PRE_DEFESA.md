@@ -26,10 +26,10 @@
 
 | # | Item | Status | Observação |
 |---|------|--------|------------|
-| 2.1 | RLS ativado em todas as tabelas | ✅ | 27/27 tabelas protegidas |
+| 2.1 | RLS ativado em todas as tabelas | ✅ | 32/32 tabelas protegidas |
 | 2.2 | RBAC com enum PostgreSQL | ✅ | `professor`, `aluno`, `admin` |
 | 2.3 | Papéis em tabela separada (`user_roles`) | ✅ | Previne escalonamento de privilégios |
-| 2.4 | Sanitização de prompts (8 Edge Functions) | ✅ | 3 camadas: filtro, system prompt, validação de saída |
+| 2.4 | Sanitização de prompts (9 Edge Functions) | ✅ | 3 camadas: filtro, system prompt, validação de saída |
 | 2.5 | Rate limiting em busca de e-mail | ✅ | 10 buscas/hora por professor |
 | 2.6 | Chaves de acesso professor (16 chars) | ✅ | Uso único, com expiração |
 | 2.7 | Privacidade de e-mails de alunos | ✅ | RPCs `SECURITY DEFINER`, view segura |
