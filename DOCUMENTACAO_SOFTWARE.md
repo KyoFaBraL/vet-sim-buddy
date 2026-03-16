@@ -484,10 +484,14 @@ O sistema integra modelos de IA via Edge Functions (Deno) para enriquecer a expe
 | Função | Endpoint | Finalidade |
 |--------|----------|-----------|
 | `analyze-custom-case` | `/analyze-custom-case` | Análise automática de casos personalizados |
+| `autofix-case` | `/autofix-case` | Correção automática de inconsistências em casos |
 | `generate-differential-diagnosis` | `/generate-differential-diagnosis` | Geração de diagnósticos diferenciais |
+| `generate-random-case` | `/generate-random-case` | Geração aleatória de casos clínicos |
 | `generate-session-feedback` | `/generate-session-feedback` | Feedback personalizado pós-sessão |
 | `populate-case-data` | `/populate-case-data` | Geração automática de parâmetros e tratamentos |
 | `treatment-hints` | `/treatment-hints` | Dicas contextualizadas de tratamento |
+| `update-case-data` | `/update-case-data` | Atualização de dados de casos existentes |
+| `validate-case-acidbase` | `/validate-case-acidbase` | Validação de consistência ácido-base dos casos |
 
 ### 9.2 Modelos Utilizados
 
@@ -1223,7 +1227,7 @@ Este checklist deve ser executado **integralmente** antes do início da Fase F1 
 | # | Item | Critério de Aceite | Status |
 |---|------|-------------------|--------|
 | 11 | Banco de dados em produção | 32 tabelas com RLS habilitado; dados de seed (7 casos, 9 condições, 10 parâmetros, 8 tratamentos, 17 badges) presentes | ☐ |
-| 12 | 5 Edge Functions operacionais | `analyze-custom-case`, `treatment-hints`, `populate-case-data`, `generate-differential-diagnosis`, `generate-session-feedback` — todas retornam HTTP 200 com JWT válido | ☐ |
+| 12 | 9 Edge Functions operacionais | `analyze-custom-case`, `autofix-case`, `generate-differential-diagnosis`, `generate-random-case`, `generate-session-feedback`, `populate-case-data`, `treatment-hints`, `update-case-data`, `validate-case-acidbase` — todas retornam HTTP 200 com JWT válido | ☐ |
 | 13 | Autenticação e papéis | Registro de aluno (sem chave) e professor (com chave institucional) funcional; `has_role()` retorna papel correto | ☐ |
 | 14 | Chaves de acesso de professor | Validação via `validate_professor_access_key()` funcional; chaves expiradas/usadas rejeitadas | ☐ |
 | 15 | Persistência de sessões | `simulation_sessions`, `session_history`, `session_decisions`, `session_treatments` recebem dados corretamente durante simulação | ☐ |
@@ -1303,6 +1307,6 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 **Versão do documento:** 1.0  
 **Total de componentes:** 60+ componentes React  
 **Total de tabelas:** 32 tabelas PostgreSQL  
-**Total de Edge Functions:** 5 funções serverless  
+**Total de Edge Functions:** 9 funções serverless  
 **Total de linhas de código:** ~15.000+ linhas TypeScript/TSX  
 **Total de capturas de tela:** 12 telas documentadas com evidências visuais
