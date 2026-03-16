@@ -61,7 +61,7 @@
 
 | # | Item | Status | Observação |
 |---|------|--------|------------|
-| 4.1 | Batch write de `session_history` (5s) | ✅ | 10 params × 5 ticks = 50 registros/batch |
+| 4.1 | Batch write de `session_history` (5s) | ✅ | 10 parâmetros × 5 ticks = 50 registros/batch |
 | 4.2 | Sessões com status e duração | ✅ | `em_andamento` → `finalizada` |
 | 4.3 | Decisões e tratamentos registrados | ✅ | `session_decisions`, `session_treatments` |
 | 4.4 | Metas de aprendizado persistidas | ✅ | `metas_aprendizado`, `metas_alcancadas` |
