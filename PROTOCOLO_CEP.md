@@ -516,11 +516,11 @@ A concordância institucional documentada é apresentada no **Anexo C** (Declara
 
 | ID | Instrumento | Momento | Amostra | Formato | Referência |
 |----|-------------|---------|---------|---------|------------|
-| I-01 | Pré-teste diagnóstico | 24/03–28/03/2026 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo F |
+| I-01 | Pré-teste diagnóstico | 24/03–28/03/2026 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
 | I-02 | Avaliação intermediária 1 | 11/05–14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
 | I-03 | Avaliação intermediária 2 | 14/06–16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-04 | Pós-teste final | 20/06–23/06/2026 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo F |
-| I-05 | Questionário de satisfação | 17/06–19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo G |
+| I-04 | Pós-teste final | 20/06–23/06/2026 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
+| I-05 | Questionário de satisfação | 17/06–19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo I |
 
 #### 8.14.2 Dados Coletados Automaticamente pelo Software
 
