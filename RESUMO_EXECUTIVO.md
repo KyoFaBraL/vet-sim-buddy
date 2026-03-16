@@ -42,7 +42,7 @@ O software está disponível como aplicação web responsiva (PWA), acessível v
 | Camada | Tecnologias |
 |--------|-------------|
 | **Frontend** | React 18, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, Recharts |
-| **Backend** | PostgreSQL (Supabase), 8 Edge Functions (Deno), Row Level Security (RLS) |
+| **Backend** | PostgreSQL (Supabase), 9 Edge Functions (Deno), Row Level Security (RLS) |
 | **IA** | Google Gemini 2.5, OpenAI GPT — feedback de sessão, dicas de tratamento, geração de casos |
 | **Mobile** | PWA responsiva — compatível com navegadores mobile (Chrome, Safari, Firefox) |
 | **Banco de Dados** | 27 tabelas com RLS em todas, autenticação por papel (professor/aluno/admin) |
@@ -62,7 +62,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 | Tratamentos disponíveis | 8 (Bicarbonato, Oxigenoterapia, Fluidoterapia, etc.) |
 | Badges/Conquistas | 17 em 5 categorias |
 | Tabelas no banco | 27 com RLS |
-| Edge Functions (IA) | 8 funções serverless |
+| Edge Functions (IA) | 9 funções serverless |
 | Componentes React | 60+ |
 | Linhas de código | ~15.000+ TypeScript/TSX |
 
