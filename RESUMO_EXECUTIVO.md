@@ -62,7 +62,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 | Tratamentos disponíveis | 8 (Bicarbonato, Oxigenoterapia, Fluidoterapia, etc.) |
 | Badges/Conquistas | 17 em 5 categorias |
 | Tabelas no banco | 27 com RLS |
-| Edge Functions (IA) | 8 funções serverless |
+| Edge Functions (IA) | 9 funções serverless |
 | Componentes React | 60+ |
 | Linhas de código | ~15.000+ TypeScript/TSX |
 
