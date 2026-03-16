@@ -160,6 +160,7 @@ Todas as 12 capturas de tela das principais interfaces do sistema estão dispon�
 | `cronograma-validacao-vetbalance.csv` | Dados tabulares do cronograma (importável) | Espelho do PVS-001, Seções 8–10 |
 | Checklist pré-validação (20 itens) | `DOCUMENTACAO_SOFTWARE.md` Seção 22.7 + `CRONOGRAMA_VALIDACAO.md` Anexo A | Pré-requisito para início da Fase F1 (Seção 6) |
 | `PROTOCOLO_CEP.md` (v2.0) | Protocolo completo para submissão ao CEP (12 seções + Anexos A–J: Folha de Rosto, TCLE, Concordância Institucional, Compromisso, Confidencialidade, Carta de Encaminhamento, Lattes, Instrumento, SUS, Checklist) | Seções 8, 10, 12 ↔ Seções 5–6 deste documento |
+| `METRICAS_PROJETO.md` | Métricas consolidadas do projeto (tabelas, funções, componentes, performance) | Referência rápida para defesa ↔ Seções 3–5 deste documento |
 
 ---
 

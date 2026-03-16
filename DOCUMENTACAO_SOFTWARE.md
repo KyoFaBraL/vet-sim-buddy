@@ -1285,6 +1285,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 | `GLOSSARIO.md` | — | Glossário unificado (43 termos, 5 categorias) | Seção 21 deste documento; Seção 4 do PVS-001 |
 | `cronograma-validacao-vetbalance.csv` | — | Dados tabulares do cronograma (importável) | Espelho das Seções 8–10 do PVS-001 |
 | `PROTOCOLO_CEP.md` | VETBALANCE-CEP-001 | Protocolo para submissão ao CEP (21 seções + TCLE + termos) | Seção 22 deste documento; Seções 5, 8–12 do PVS-001 |
+| `METRICAS_PROJETO.md` | — | Métricas consolidadas do projeto (32 tabelas, 9 funções, 99 componentes, performance) | Referência rápida para defesa ↔ Seções 2–8, 17 deste documento |
 
 ### Matriz de Rastreabilidade entre Documentos
 
