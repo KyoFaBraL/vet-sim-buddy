@@ -184,4 +184,4 @@
 
 ---
 
-*Documento gerado em 12/03/2026. Atualizar conforme progresso das fases F2–F6.*
+*Documento atualizado em 16/03/2026. Atualizar conforme progresso das fases F2–F6.*
