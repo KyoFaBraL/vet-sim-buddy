@@ -147,31 +147,16 @@ export const RankingNotifications = ({ enabled = true }: RankingNotificationsPro
     initUser();
   }, [calculateRankings]);
 
-  // Subscribe to real-time changes
+  // Poll for ranking changes every 30 seconds
   useEffect(() => {
     if (!enabled) return;
 
-    const channel = supabase
-      .channel('ranking-updates')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'simulation_sessions'
-        },
-        (payload) => {
-          console.log('Session change detected:', payload);
-          // Delay check to allow database to be consistent
-          setTimeout(() => {
-            checkForRankingChanges();
-          }, 1000);
-        }
-      )
-      .subscribe();
+    const interval = setInterval(() => {
+      checkForRankingChanges();
+    }, 30000);
 
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, [enabled, checkForRankingChanges]);
 

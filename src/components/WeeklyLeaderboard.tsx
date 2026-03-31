@@ -95,24 +95,13 @@ export const WeeklyLeaderboard = () => {
 
     fetchWeeklyRanking();
 
-    // Listen for real-time updates
-    const channel = supabase
-      .channel('weekly-leaderboard')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'simulation_sessions'
-        },
-        () => {
-          fetchWeeklyRanking();
-        }
-      )
-      .subscribe();
+    // Poll for updates every 30 seconds
+    const interval = setInterval(() => {
+      fetchWeeklyRanking();
+    }, 30000);
 
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, [weekStart, weekEnd]);
 

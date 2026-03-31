@@ -38,25 +38,13 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
   useEffect(() => {
     loadReports();
     
-    // Recarregar estatísticas quando houver mudanças em simulation_sessions
-    const channel = supabase
-      .channel('session-updates')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'simulation_sessions'
-        },
-        () => {
-          console.log('Nova sessão detectada, atualizando estatísticas...');
-          loadReports();
-        }
-      )
-      .subscribe();
+    // Poll for updates every 30 seconds
+    const interval = setInterval(() => {
+      loadReports();
+    }, 30000);
 
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, [timeRange]);
 
