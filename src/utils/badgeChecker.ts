@@ -106,16 +106,14 @@ export const checkAndAwardBadges = async (params: CheckBadgeParams) => {
       }
 
       if (shouldAward) {
-        // Conceder badge
-        const { error } = await supabase
-          .from('user_badges')
-          .insert({
-            user_id: userId,
-            badge_id: badge.id,
-            session_id: sessionId
+        // Conceder badge via função server-side segura
+        const { data: result } = await supabase
+          .rpc('award_badge', {
+            p_badge_id: badge.id,
+            p_session_id: sessionId
           });
 
-        if (!error) {
+        if (result && (result as any).success) {
           // Notificar usuário
           toast({
             title: "🏆 Nova Conquista!",

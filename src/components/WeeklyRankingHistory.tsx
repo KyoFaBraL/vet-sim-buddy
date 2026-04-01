@@ -57,78 +57,16 @@ export const WeeklyRankingHistory = () => {
     fetchHistory();
   }, []);
 
-  const saveCurrentWeekRanking = async (currentUserId: string) => {
+  const saveCurrentWeekRanking = async (_currentUserId: string) => {
     const now = new Date();
     const weekStart = startOfWeek(now, { weekStartsOn: 1 });
     const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
 
-    // Check if we already have an entry for this week
-    const { data: existing } = await supabase
-      .from("weekly_ranking_history")
-      .select("id")
-      .eq("user_id", currentUserId)
-      .eq("week_start", format(weekStart, "yyyy-MM-dd"))
-      .single();
-
-    // Get current week sessions
-    const { data: sessions } = await supabase
-      .from("simulation_sessions")
-      .select("user_id, status, duracao_segundos")
-      .gte("criado_em", weekStart.toISOString())
-      .lte("criado_em", weekEnd.toISOString())
-      .in("status", ["won", "lost"]);
-
-    if (!sessions) return;
-
-    // Calculate stats for all users
-    const userStats: Record<string, { wins: number; total: number; points: number }> = {};
-    
-    sessions.forEach(session => {
-      if (!userStats[session.user_id]) {
-        userStats[session.user_id] = { wins: 0, total: 0, points: 0 };
-      }
-      userStats[session.user_id].total++;
-      if (session.status === "won") {
-        userStats[session.user_id].wins++;
-        const basePoints = 100;
-        const speedBonus = session.duracao_segundos && session.duracao_segundos < 300 ? 50 : 0;
-        userStats[session.user_id].points += basePoints + speedBonus;
-      }
+    // Use server-side function that computes stats from actual session data
+    await supabase.rpc('save_weekly_ranking', {
+      p_week_start: format(weekStart, "yyyy-MM-dd"),
+      p_week_end: format(weekEnd, "yyyy-MM-dd"),
     });
-
-    // Calculate ranking
-    const sortedUsers = Object.entries(userStats)
-      .sort(([, a], [, b]) => b.points - a.points);
-    
-    const userPosition = sortedUsers.findIndex(([uid]) => uid === currentUserId) + 1;
-    const myStats = userStats[currentUserId] || { wins: 0, total: 0, points: 0 };
-    const winRate = myStats.total > 0 ? (myStats.wins / myStats.total) * 100 : 0;
-
-    if (userPosition === 0 && myStats.total === 0) return;
-
-    const historyData = {
-      user_id: currentUserId,
-      week_start: format(weekStart, "yyyy-MM-dd"),
-      week_end: format(weekEnd, "yyyy-MM-dd"),
-      position: userPosition || sortedUsers.length + 1,
-      wins: myStats.wins,
-      total_sessions: myStats.total,
-      points: myStats.points,
-      win_rate: winRate,
-    };
-
-    if (existing) {
-      // Update existing entry
-      await supabase
-        .from("weekly_ranking_history")
-        .update(historyData)
-        .eq("id", existing.id);
-    } else if (myStats.total > 0) {
-      // Insert new entry
-      await supabase
-        .from("weekly_ranking_history")
-        .insert(historyData);
-    }
   };
 
   const getTrend = (index: number) => {
