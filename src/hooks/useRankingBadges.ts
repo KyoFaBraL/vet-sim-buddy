@@ -130,15 +130,13 @@ export const useRankingBadges = () => {
         }
 
         if (shouldAward) {
-          // Award badge
-          const { error } = await supabase
-            .from("user_badges")
-            .insert({
-              user_id: userId,
-              badge_id: badge.id,
+          // Award badge via server-side secure function
+          const { data: result } = await supabase
+            .rpc('award_badge', {
+              p_badge_id: badge.id,
             });
 
-          if (!error) {
+          if (result && (result as any).success) {
             // Trigger celebration animation
             celebrateAchievement('badge');
             
