@@ -1134,6 +1134,10 @@ export type Database = {
         Args: { new_name: string; target_user_id: string }
         Returns: Json
       }
+      award_badge: {
+        Args: { p_badge_id: string; p_session_id?: string }
+        Returns: Json
+      }
       demote_to_student: { Args: { target_user_id: string }; Returns: Json }
       generate_access_code: { Args: never; Returns: string }
       get_all_profiles_for_admin: {
@@ -1207,6 +1211,10 @@ export type Database = {
             }
             Returns: Json
           }
+      save_weekly_ranking: {
+        Args: { p_week_end: string; p_week_start: string }
+        Returns: Json
+      }
       validate_professor_access_key: {
         Args: { key_to_check: string }
         Returns: boolean
