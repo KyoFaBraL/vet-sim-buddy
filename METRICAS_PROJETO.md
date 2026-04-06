@@ -1,7 +1,7 @@
 # MÉTRICAS CONSOLIDADAS DO PROJETO — VETBALANCE
 
 **Referência rápida para defesa de mestrado**  
-**Última atualização:** 16/03/2026
+**Última atualização:** 06/04/2026
 
 ---
 
