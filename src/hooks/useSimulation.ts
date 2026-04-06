@@ -546,164 +546,155 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       setLastHpChange(hpChange);
       
-      setHp(prev => {
-        const newHp = Math.min(100, Math.max(0, prev + hpChange));
-        return newHp;
-      });
+      const prevHp = hpRef.current;
+      const newHp = Math.min(100, Math.max(0, prevHp + hpChange));
+      hpRef.current = newHp;
+      setHp(newHp);
 
-      // Side effects moved outside state updater to avoid React warning
-      // "Cannot update a component while rendering a different component"
-      setTimeout(() => {
-        setHp(currentHp => {
-          const newHp = currentHp; // already updated above
+      // Side effects using ref value - no state updater needed
+      setMinHpDuringSession(minHp => Math.min(minHp, newHp));
+      
+      // Registrar decisão e tratamento aplicado com retry
+      if (currentSessionId) {
+        retryOperation(
+          async () => supabase
+            .from('session_decisions')
+            .insert({
+              session_id: currentSessionId,
+              timestamp_simulacao: elapsedTime,
+              tipo: 'treatment',
+              dados: {
+                nome: treatmentData.nome,
+                adequado: isAdequate,
+                justificativa
+              },
+              hp_antes: prevHp,
+              hp_depois: newHp
+            })
+            .select(),
+          2,
+          'Registro de decisão'
+        ).then(({ success, error }) => {
+          if (!success) {
+            console.error('Erro ao registrar decisão após retries:', error);
+          } else {
+            console.log('Decisão registrada:', { type: 'treatment', nome: treatmentData.nome, hp: { antes: prevHp, depois: newHp } });
+          }
+        });
+        
+        retryOperation(
+          async () => supabase
+            .from('session_treatments')
+            .insert({
+              session_id: currentSessionId,
+              tratamento_id: treatmentId,
+              timestamp_simulacao: elapsedTime
+            })
+            .select(),
+          2,
+          'Registro de tratamento'
+        ).then(({ success, error }) => {
+          if (!success) console.error('Erro ao registrar tratamento após retries:', error);
+        });
+      }
+      
+      if (newHp >= 100 && gameStatus === 'playing') {
+        setGameStatus('won');
+        setIsRunning(false);
+        
+        if (currentSessionId) {
+          const duracao = Math.floor((Date.now() - startTime) / 1000);
           
-          setMinHpDuringSession(minHp => Math.min(minHp, newHp));
-          
-          // Registrar decisão e tratamento aplicado com retry
-          if (currentSessionId) {
+          supabase.auth.getUser().then(({ data: { user } }) => {
             retryOperation(
               async () => supabase
-                .from('session_decisions')
-                .insert({
-                  session_id: currentSessionId,
-                  timestamp_simulacao: elapsedTime,
-                  tipo: 'treatment',
-                  dados: {
-                    nome: treatmentData.nome,
-                    adequado: isAdequate,
-                    justificativa
-                  },
-                  hp_antes: currentHp - hpChange,
-                  hp_depois: newHp
+                .from('simulation_sessions')
+                .update({
+                  data_fim: new Date().toISOString(),
+                  duracao_segundos: duracao,
+                  status: 'won'
                 })
+                .eq('id', currentSessionId)
                 .select(),
-              2,
-              'Registro de decisão'
+              3,
+              'Finalização de sessão (vitória)'
             ).then(({ success, error }) => {
               if (!success) {
-                console.error('Erro ao registrar decisão após retries:', error);
-              } else {
-                console.log('Decisão registrada:', { type: 'treatment', nome: treatmentData.nome, hp: { antes: currentHp - hpChange, depois: newHp } });
+                toast({
+                  title: "Aviso",
+                  description: "Vitória registrada, mas houve erro ao salvar no servidor.",
+                  variant: "destructive",
+                });
+              } else if (user) {
+                checkAndAwardBadges({
+                  sessionId: currentSessionId,
+                  userId: user.id,
+                  sessionData: { status: 'won', duracao_segundos: duracao, case_id: caseId },
+                  usedHints,
+                  minHp: newHp,
+                  goalsAchieved: 0,
+                  totalGoals: 0
+                });
               }
             });
-            
+          });
+        }
+        
+        toast({
+          title: "🎉 Paciente Estabilizado!",
+          description: "Você conseguiu normalizar o quadro do paciente. Parabéns!",
+          variant: "default",
+        });
+      }
+      
+      if (newHp <= 0 && gameStatus === 'playing') {
+        setGameStatus('lost');
+        setIsRunning(false);
+        
+        if (currentSessionId) {
+          const duracao = Math.floor((Date.now() - startTime) / 1000);
+          
+          supabase.auth.getUser().then(({ data: { user } }) => {
             retryOperation(
               async () => supabase
-                .from('session_treatments')
-                .insert({
-                  session_id: currentSessionId,
-                  tratamento_id: treatmentId,
-                  timestamp_simulacao: elapsedTime
+                .from('simulation_sessions')
+                .update({
+                  data_fim: new Date().toISOString(),
+                  duracao_segundos: duracao,
+                  status: 'lost'
                 })
+                .eq('id', currentSessionId)
                 .select(),
-              2,
-              'Registro de tratamento'
+              3,
+              'Finalização de sessão (derrota por tratamento)'
             ).then(({ success, error }) => {
-              if (!success) console.error('Erro ao registrar tratamento após retries:', error);
-            });
-          }
-          
-          if (newHp >= 100 && gameStatus === 'playing') {
-            setGameStatus('won');
-            setIsRunning(false);
-            
-            if (currentSessionId) {
-              const duracao = Math.floor((Date.now() - startTime) / 1000);
-              
-              supabase.auth.getUser().then(({ data: { user } }) => {
-                retryOperation(
-                  async () => supabase
-                    .from('simulation_sessions')
-                    .update({
-                      data_fim: new Date().toISOString(),
-                      duracao_segundos: duracao,
-                      status: 'won'
-                    })
-                    .eq('id', currentSessionId)
-                    .select(),
-                  3,
-                  'Finalização de sessão (vitória)'
-                ).then(({ success, error }) => {
-                  if (!success) {
-                    toast({
-                      title: "Aviso",
-                      description: "Vitória registrada, mas houve erro ao salvar no servidor.",
-                      variant: "destructive",
-                    });
-                  } else if (user) {
-                    checkAndAwardBadges({
-                      sessionId: currentSessionId,
-                      userId: user.id,
-                      sessionData: { status: 'won', duracao_segundos: duracao, case_id: caseId },
-                      usedHints,
-                      minHp: newHp,
-                      goalsAchieved: 0,
-                      totalGoals: 0
-                    });
-                  }
+              if (!success) {
+                toast({
+                  title: "Erro ao salvar sessão",
+                  description: "Não foi possível salvar o resultado da sessão.",
+                  variant: "destructive",
                 });
-              });
-            }
-            
-            toast({
-              title: "🎉 Paciente Estabilizado!",
-              description: "Você conseguiu normalizar o quadro do paciente. Parabéns!",
-              variant: "default",
-            });
-          }
-          
-          if (newHp <= 0 && gameStatus === 'playing') {
-            setGameStatus('lost');
-            setIsRunning(false);
-            
-            if (currentSessionId) {
-              const duracao = Math.floor((Date.now() - startTime) / 1000);
-              
-              supabase.auth.getUser().then(({ data: { user } }) => {
-                retryOperation(
-                  async () => supabase
-                    .from('simulation_sessions')
-                    .update({
-                      data_fim: new Date().toISOString(),
-                      duracao_segundos: duracao,
-                      status: 'lost'
-                    })
-                    .eq('id', currentSessionId)
-                    .select(),
-                  3,
-                  'Finalização de sessão (derrota por tratamento)'
-                ).then(({ success, error }) => {
-                  if (!success) {
-                    toast({
-                      title: "Erro ao salvar sessão",
-                      description: "Não foi possível salvar o resultado da sessão.",
-                      variant: "destructive",
-                    });
-                  } else if (user) {
-                    checkAndAwardBadges({
-                      sessionId: currentSessionId,
-                      userId: user.id,
-                      sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
-                      usedHints,
-                      minHp: 0,
-                      goalsAchieved: 0,
-                      totalGoals: 0
-                    });
-                  }
+              } else if (user) {
+                checkAndAwardBadges({
+                  sessionId: currentSessionId,
+                  userId: user.id,
+                  sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                  usedHints,
+                  minHp: 0,
+                  goalsAchieved: 0,
+                  totalGoals: 0
                 });
-              });
-            }
-            
-            toast({
-              title: "Paciente faleceu",
-              description: "O HP chegou a zero. Tente novamente!",
-              variant: "destructive",
+              }
             });
-          }
-          
-          return currentHp; // don't change, just reading
+          });
+        }
+        
+        toast({
+          title: "Paciente faleceu",
+          description: "O HP chegou a zero. Tente novamente!",
+          variant: "destructive",
         });
-      }, 0);
+      }
 
       toast({
         title: isAdequate ? "✓ Tratamento Correto" : "✗ Tratamento Inadequado",
