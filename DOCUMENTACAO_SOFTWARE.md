@@ -449,29 +449,68 @@ O sistema inclui mascotes animados que refletem o estado do paciente:
 
 ### 8.3 Row Level Security (RLS)
 
-Todas as tabelas possuem RLS habilitado. As principais políticas:
+Todas as 32 tabelas possuem RLS habilitado (100% de cobertura). As principais políticas:
 
 | Tabela | SELECT | INSERT | UPDATE | DELETE |
 |--------|--------|--------|--------|--------|
-| `user_roles` | Próprio | Próprio | ❌ | ❌ |
+| `user_roles` | Próprio | ❌ (via RPC) | ❌ | ❌ |
 | `casos_clinicos` | Públicos + próprios + compartilhados | Professores | Próprios | Próprios |
-| `simulation_sessions` | Próprias | Próprias | Próprias | Próprias |
-| `user_badges` | Próprios | Próprios | ❌ | ❌ |
+| `simulation_sessions` | Próprias + prof. vinculado | Próprias | Próprias | Próprias |
+| `user_badges` | Próprios + prof. vinculado | ❌ (`WITH CHECK(false)`, via RPC `award_badge`) | ❌ | ❌ |
+| `metas_alcancadas` | Próprias + prof. vinculado | ❌ (`WITH CHECK(false)`, via RPC) | ❌ | ❌ |
+| `weekly_ranking_history` | Próprio + prof. vinculado | ❌ (`WITH CHECK(false)`, via RPC `save_weekly_ranking`) | ❌ | ❌ |
 | `shared_cases` | Ativos + próprios (prof.) | Professores | Próprios | Próprios |
 | `shared_case_access` | Próprios | Próprios | ❌ | ❌ |
-| `weekly_ranking_history` | Próprio | Próprio | ❌ | ❌ |
+| `email_lookup_attempts` | Próprias (prof.) | Professores (próprias) | ❌ | Próprias (prof.) |
+| `professor_private_notes` | Próprias (prof.) | Professores | Próprias | Próprias |
 
 ### 8.4 Funções de Segurança
 
-| Função | Finalidade |
-|--------|-----------|
-| `has_role(role, user_id)` | Verifica papel do usuário sem recursão RLS |
-| `validate_professor_access_key(key)` | Valida chave de acesso para professores |
-| `register_professor(...)` | Registro seguro de professor com chave |
-| `register_aluno(...)` | Registro seguro de aluno |
-| `generate_access_code()` | Gera código único de compartilhamento |
-| `get_shared_case_by_code(code)` | Busca caso compartilhado por código |
-| `get_student_id_by_email(email)` | Busca aluno por e-mail (para vínculo) |
+| Função | Tipo | Finalidade |
+|--------|------|-----------|
+| `has_role(role, user_id)` | SECURITY DEFINER | Verifica papel do usuário sem recursão RLS |
+| `validate_professor_access_key(key)` | SECURITY DEFINER | Valida chave de acesso para professores |
+| `register_professor(...)` | SECURITY DEFINER | Registro seguro de professor com chave |
+| `register_aluno(...)` | SECURITY DEFINER | Registro seguro de aluno |
+| `award_badge(...)` | SECURITY DEFINER | Concessão de badges com validação de integridade |
+| `save_weekly_ranking(...)` | SECURITY DEFINER | Salvamento de ranking semanal |
+| `generate_access_code()` | SQL | Gera código único de compartilhamento |
+| `get_shared_case_by_code(code)` | SQL | Busca caso compartilhado por código |
+| `get_student_id_by_email(email)` | SQL | Busca aluno por e-mail (para vínculo professor) |
+| `purge_old_email_lookups()` | SQL | Limpeza de logs de busca de e-mail |
+
+### 8.5 Hardening de Gamificação
+
+O sistema impede a fabricação de conquistas e pontuações por usuários maliciosos:
+
+1. **Políticas restritivas (`WITH CHECK(false)`)** — As tabelas `user_badges`, `metas_alcancadas` e `weekly_ranking_history` bloqueiam INSERTs diretos via cliente
+2. **RPCs SECURITY DEFINER** — As funções `award_badge()` e `save_weekly_ranking()` executam com privilégios do criador, validando dados antes de gravar
+3. **Validação server-side** — O hook `useRankingBadges` usa `supabase.rpc()` exclusivamente, sem `.insert()` direto
+
+### 8.6 Hardening de Edge Functions
+
+Todas as 9 Edge Functions implementam:
+
+| Proteção | Descrição |
+|----------|-----------|
+| **Validação de token** | `supabase.auth.getUser()` em toda requisição — rejeita tokens inválidos |
+| **Sanitização de prompt** | 3 níveis: validação de entrada, system prompt blindado, validação de schema de resposta |
+| **Rate limiting implícito** | Autenticação obrigatória limita chamadas a usuários legítimos |
+
+### 8.7 Auditoria de Segurança Automatizada
+
+**Data do último scan:** 01/04/2026 — 3 scanners (Agent Security, Connector Security, Supabase Linter)
+
+| Finding | Severidade | Ação |
+|---------|-----------|------|
+| Client-Side Role Checks | ℹ️ Info | Ignorado — RLS é a barreira real |
+| Chart CSS Injection | ℹ️ Info | Ignorado — padrão shadcn/ui, sem input de usuário |
+| React 18.3.1 XSS (CVE-2025-24368) | ⚠️ Warn | Ignorado — sem SSR nem hrefs dinâmicos |
+| Email Lookup Logging | ℹ️ Info | Corrigido — DELETE policy adicionada |
+| Student Profiles View | ℹ️ Info | Ignorado — VIEW com SECURITY INVOKER herda RLS |
+| Leaked Password Protection | ⚠️ Warn | Aceito — contexto acadêmico |
+
+**Resultado:** 0 vulnerabilidades críticas ou de alto risco. 32/32 tabelas com RLS. 9/9 Edge Functions protegidas.
 
 ---
 

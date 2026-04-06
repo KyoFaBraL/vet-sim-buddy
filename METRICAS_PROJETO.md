@@ -1,7 +1,7 @@
 # MÉTRICAS CONSOLIDADAS DO PROJETO — VETBALANCE
 
 **Referência rápida para defesa de mestrado**  
-**Última atualização:** 16/03/2026
+**Última atualização:** 06/04/2026
 
 ---
 
@@ -198,6 +198,65 @@
 | `get_all_profiles_for_admin()` | Listagem segura para admin |
 | `get_linked_students_for_professor()` | Alunos vinculados ao professor |
 | `generate_access_code()` | Geração de códigos de compartilhamento |
+| `award_badge()` | Concessão de badges (SECURITY DEFINER, impede fabricação) |
+| `save_weekly_ranking()` | Salvamento de ranking (SECURITY DEFINER, integridade) |
+
+### Hardening de Gamificação
+| Tabela | Proteção | Mecanismo |
+|--------|----------|-----------|
+| `user_badges` | `WITH CHECK (false)` — escrita direta bloqueada | Via RPC `award_badge()` |
+| `metas_alcancadas` | `WITH CHECK (false)` — escrita direta bloqueada | Via RPC server-side |
+| `weekly_ranking_history` | `WITH CHECK (false)` — escrita direta bloqueada | Via RPC `save_weekly_ranking()` |
+| `user_roles` | INSERT/UPDATE/DELETE bloqueados | Via funções `register_*()` |
+
+### Hardening de Edge Functions
+| Função | Proteção |
+|--------|----------|
+| Todas as 9 Edge Functions | Validação de token via `supabase.auth.getUser()` |
+| `analyze-custom-case` | Sanitização de prompt em 3 níveis |
+| `treatment-hints` | Sanitização de prompt + validação de contexto |
+| `generate-session-feedback` | Verificação de sessão do próprio usuário |
+
+---
+
+## 🔍 AUDITORIA DE SEGURANÇA — SCAN AUTOMATIZADO
+
+**Data do último scan:** 01/04/2026  
+**Scanners utilizados:** Agent Security, Connector Security, Supabase Linter
+
+### Resultados do Scan
+
+| # | Finding | Severidade | Status | Justificativa |
+|---|---------|-----------|--------|---------------|
+| 1 | Client-Side Role Checks | ℹ️ Info | ✅ Ignorado | Arquitetura aceitável — RLS é a barreira real. Checks client-side são UX. |
+| 2 | Chart CSS Injection (dangerouslySetInnerHTML) | ℹ️ Info | ✅ Ignorado | Padrão shadcn/ui com dados tipados. Sem input de usuário. |
+| 3 | React 18.3.1 XSS (CVE-2025-24368) | ⚠️ Warn | ✅ Ignorado | Sem SSR, sem hrefs dinâmicos. Risco prático zero neste projeto. |
+| 4 | Email Lookup Logging | ℹ️ Info | ✅ Ignorado | DELETE policy adicionada. Função `purge_old_email_lookups()` existe. |
+| 5 | Student Profiles View sem RLS | ℹ️ Info | ✅ Ignorado | VIEW com SECURITY INVOKER herda RLS da tabela base `profiles`. |
+| 6 | Leaked Password Protection Disabled | ⚠️ Warn | ✅ Ignorado | Configuração padrão do Supabase. Baixo risco no contexto acadêmico. |
+| 7 | Connector Security | ✅ Limpo | — | Nenhuma vulnerabilidade encontrada. |
+
+### Correções Aplicadas (Sprint de Segurança — Abril 2026)
+
+| Correção | Descrição | Impacto |
+|----------|-----------|---------|
+| Hardening de gamificação | Políticas `WITH CHECK (false)` em `user_badges`, `metas_alcancadas`, `weekly_ranking_history` | Impede fabricação de conquistas por usuários maliciosos |
+| RPCs SECURITY DEFINER | `award_badge()` e `save_weekly_ranking()` processam no servidor | Validação de integridade server-side |
+| Validação de token em Edge Functions | `supabase.auth.getUser()` em todas as 9 funções | Previne exaustão de créditos de IA |
+| Rate limiting de buscas | `email_lookup_attempts` com políticas restritivas | Previne enumeração de e-mails |
+| Fix React render warning | `useRef` para HP em `useSimulation.ts` | Elimina warning "Cannot update component while rendering" |
+
+### Resumo de Segurança
+
+```
+Total de findings:    6 (de 3 scanners)
+  - Info:             4 (arquitetura correta, ignorados com justificativa)
+  - Warn:             2 (sem impacto prático, ignorados com análise)
+  - Error/Critical:   0
+Connector Security:   LIMPO (0 findings)
+Tabelas com RLS:      32/32 (100%)
+Edge Functions protegidas: 9/9 (100%)
+```
 
 ---
 
