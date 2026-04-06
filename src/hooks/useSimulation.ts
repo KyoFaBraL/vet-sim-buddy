@@ -146,6 +146,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       // Resetar HP e game status
       setHp(50);
+      hpRef.current = 50;
       setGameStatus('playing');
       setLastHpChange(0);
     } catch (error: any) {
