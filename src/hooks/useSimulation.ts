@@ -807,14 +807,11 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       }
     }
     
-    setHp(prev => {
-      const newHp = Math.max(0, Math.min(100, prev + delta));
-      return newHp;
-    });
-    setTimeout(() => {
-      setMinHpDuringSession(prev => Math.min(prev, hp + delta));
-      setLastHpChange(delta);
-    }, 0);
+    const newHp = Math.max(0, Math.min(100, hpRef.current + delta));
+    hpRef.current = newHp;
+    setHp(newHp);
+    setMinHpDuringSession(prev => Math.min(prev, newHp));
+    setLastHpChange(delta);
   };
 
   return {
