@@ -260,60 +260,66 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     const hpDecayInterval = setInterval(() => {
       setHp(prev => {
         const newHp = Math.max(0, prev - 1);
-        setMinHpDuringSession(minHp => Math.min(minHp, newHp));
-        setLastHpChange(-1);
-        
-        if (newHp <= 0 && gameStatus === 'playing') {
-          setGameStatus('lost');
-          setIsRunning(false);
-          
-          // Finalizar sessão com retry
-          if (currentSessionId) {
-            const duracao = Math.floor((Date.now() - startTime) / 1000);
-            
-            supabase.auth.getUser().then(({ data: { user } }) => {
-              retryOperation(
-                async () => supabase
-                  .from('simulation_sessions')
-                  .update({
-                    data_fim: new Date().toISOString(),
-                    duracao_segundos: duracao,
-                    status: 'lost'
-                  })
-                  .eq('id', currentSessionId)
-                  .select(),
-                3,
-                'Finalização de sessão (HP zero)'
-              ).then(({ success, error }) => {
-                if (!success) {
-                  toast({
-                    title: "Erro ao salvar sessão",
-                    description: "Não foi possível salvar o resultado da sessão.",
-                    variant: "destructive",
-                  });
-                } else if (user) {
-                  checkAndAwardBadges({
-                    sessionId: currentSessionId,
-                    userId: user.id,
-                    sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
-                    usedHints,
-                    minHp: 0,
-                    goalsAchieved: 0,
-                    totalGoals: 0
-                  });
-                }
-              });
-            });
-          }
-          
-          toast({
-            title: "Paciente faleceu",
-            description: "O HP chegou a zero. Tente novamente!",
-            variant: "destructive",
-          });
-        }
         return newHp;
       });
+
+      // Side effects outside state updater
+      setTimeout(() => {
+        setHp(currentHp => {
+          setMinHpDuringSession(minHp => Math.min(minHp, currentHp));
+          setLastHpChange(-1);
+          
+          if (currentHp <= 0 && gameStatus === 'playing') {
+            setGameStatus('lost');
+            setIsRunning(false);
+            
+            if (currentSessionId) {
+              const duracao = Math.floor((Date.now() - startTime) / 1000);
+              
+              supabase.auth.getUser().then(({ data: { user } }) => {
+                retryOperation(
+                  async () => supabase
+                    .from('simulation_sessions')
+                    .update({
+                      data_fim: new Date().toISOString(),
+                      duracao_segundos: duracao,
+                      status: 'lost'
+                    })
+                    .eq('id', currentSessionId)
+                    .select(),
+                  3,
+                  'Finalização de sessão (HP zero)'
+                ).then(({ success, error }) => {
+                  if (!success) {
+                    toast({
+                      title: "Erro ao salvar sessão",
+                      description: "Não foi possível salvar o resultado da sessão.",
+                      variant: "destructive",
+                    });
+                  } else if (user) {
+                    checkAndAwardBadges({
+                      sessionId: currentSessionId,
+                      userId: user.id,
+                      sessionData: { status: 'lost', duracao_segundos: duracao, case_id: caseId },
+                      usedHints,
+                      minHp: 0,
+                      goalsAchieved: 0,
+                      totalGoals: 0
+                    });
+                  }
+                });
+              });
+            }
+            
+            toast({
+              title: "Paciente faleceu",
+              description: "O HP chegou a zero. Tente novamente!",
+              variant: "destructive",
+            });
+          }
+          return currentHp;
+        });
+      }, 0);
     }, 5000);
 
     return () => clearInterval(hpDecayInterval);
