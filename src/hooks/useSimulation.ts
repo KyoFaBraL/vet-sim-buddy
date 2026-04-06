@@ -438,6 +438,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     setStartTime(Date.now());
     setElapsedTime(0);
     setHp(50);
+    hpRef.current = 50;
     setGameStatus('playing');
     setLastHpChange(0);
     setCurrentSessionId(null);
