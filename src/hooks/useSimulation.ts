@@ -821,10 +821,12 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     
     setHp(prev => {
       const newHp = Math.max(0, Math.min(100, prev + delta));
-      setMinHpDuringSession(minHp => Math.min(minHp, newHp));
-      setLastHpChange(delta);
       return newHp;
     });
+    setTimeout(() => {
+      setMinHpDuringSession(prev => Math.min(prev, hp + delta));
+      setLastHpChange(delta);
+    }, 0);
   };
 
   return {
