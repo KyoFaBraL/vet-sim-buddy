@@ -61,7 +61,7 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 | Parâmetros fisiológicos | 10 principais + secundários por caso |
 | Tratamentos disponíveis | 8 (Bicarbonato, Oxigenoterapia, Fluidoterapia, etc.) |
 | Badges/Conquistas | 17 em 5 categorias |
-| Tabelas no banco | 27 com RLS |
+| Tabelas no banco | 32 com RLS |
 | Edge Functions (IA) | 9 funções serverless |
 | Componentes React | 60+ |
 | Linhas de código | ~15.000+ TypeScript/TSX |
@@ -70,11 +70,22 @@ O motor de simulação opera em ciclos de 1 segundo (ticks), registrando snapsho
 
 ## 5. SEGURANÇA
 
+### 5.1 Camadas de Proteção
 - **Autenticação:** E-mail + senha com verificação obrigatória de e-mail
-- **Autorização:** Dois papéis (`professor`, `aluno`) com permissões segregadas
+- **Autorização:** Três papéis (`professor`, `aluno`, `admin`) com permissões segregadas via RBAC
 - **RLS (Row Level Security):** Habilitado em todas as 32 tabelas — cada usuário acessa apenas seus próprios dados
-- **Chaves de acesso:** Professores necessitam de chave institucional para registro
+- **Chaves de acesso:** Professores necessitam de chave institucional para registro (16 caracteres, uso único)
 - **Funções seguras:** `has_role()` evita recursão em políticas RLS; `validate_professor_access_key()` valida chaves sem exposição
+- **Sanitização de prompts:** 3 camadas de proteção contra prompt injection em todas as 9 Edge Functions
+
+### 5.2 Hardening de Gamificação
+- Tabelas `user_badges`, `metas_alcancadas` e `weekly_ranking_history` possuem políticas RLS `WITH CHECK (false)` que **bloqueiam inserções diretas** pelo cliente
+- Concessão de badges e atualização de ranking ocorrem exclusivamente via funções RPC `SECURITY DEFINER` (`award_badge`, `save_weekly_ranking`) que validam a integridade dos dados antes de registrar
+
+### 5.3 Validação de Autenticação nas Edge Functions
+- Todas as 9 Edge Functions validam o token JWT via `supabase.auth.getUser()` antes de processar qualquer requisição
+- Requisições sem autenticação válida recebem resposta `401 Unauthorized`
+- Prevenção de exaustão de créditos de IA por acessos não autorizados
 
 ---
 
