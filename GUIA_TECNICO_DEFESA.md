@@ -1133,6 +1133,66 @@ END IF;
 
 > *"Todas as 9 Edge Functions que chamam modelos de IA possuem sanitização de entrada em três camadas: remoção de caracteres de controle e termos de comando, system prompts defensivos que instruem o modelo a ignorar instruções injetadas, e validação da saída contra schemas JSON esperados. Se a IA retornar algo fora do formato, o sistema usa valores de fallback. A comunicação com a API de IA ocorre exclusivamente server-side — o token de acesso nunca é exposto ao cliente."*
 
+### 17.8 Hardening de Gamificação (Integridade de Badges e Ranking)
+
+**Problema:** Sem proteção adicional, um usuário mal-intencionado poderia fabricar badges ou pontuações inserindo registros diretamente nas tabelas `user_badges`, `metas_alcancadas` e `weekly_ranking_history` via API REST.
+
+**Solução implementada:**
+
+```sql
+-- Bloquear inserções diretas do cliente
+CREATE POLICY "Apenas server-side pode inserir badges"
+ON user_badges FOR INSERT
+TO authenticated
+WITH CHECK (false);
+
+-- Mesma proteção para metas e ranking
+CREATE POLICY "Apenas server-side pode inserir metas"
+ON metas_alcancadas FOR INSERT TO authenticated WITH CHECK (false);
+
+CREATE POLICY "Apenas server-side pode inserir ranking"
+ON weekly_ranking_history FOR INSERT TO authenticated WITH CHECK (false);
+```
+
+**Fluxo seguro de concessão:**
+```
+Aluno completa sessão → Frontend chama RPC award_badge()
+  → Função SECURITY DEFINER valida sessão e critérios
+    → Insere em user_badges (bypassa RLS por ser DEFINER)
+      → Retorna { success: true } ao frontend
+```
+
+**Funções RPC envolvidas:**
+| Função | Propósito | Validações |
+|--------|-----------|------------|
+| `award_badge` | Conceder badge ao usuário | Verifica se badge existe, se já não foi concedido, se a sessão é válida |
+| `save_weekly_ranking` | Salvar snapshot do ranking semanal | Verifica período, calcula posições, previne duplicatas |
+
+### 17.9 Validação de Autenticação nas Edge Functions
+
+**Todas as 9 Edge Functions** validam o token JWT do usuário antes de processar qualquer requisição:
+
+```typescript
+// Padrão implementado em todas as Edge Functions
+const authHeader = req.headers.get('Authorization');
+const supabase = createClient(url, key, {
+  global: { headers: { Authorization: authHeader } }
+});
+
+const { data: { user }, error } = await supabase.auth.getUser();
+if (error || !user) {
+  return new Response(JSON.stringify({ error: 'Não autorizado' }), {
+    status: 401,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+  });
+}
+```
+
+**Benefícios:**
+- Previne exaustão de créditos de IA por acessos não autorizados
+- Garante rastreabilidade de todas as chamadas (user_id no contexto)
+- 9/9 Edge Functions verificadas e validadas
+
 ---
 
 ## 18. GLOSSÁRIO TÉCNICO RÁPIDO
