@@ -755,7 +755,7 @@ Registra-se que **a participação de docentes regentes** das disciplinas envolv
 
 #### Declarações do(s) Pesquisador(es) — Ao Comitê de Ética em Pesquisa – CEP/CMPP — Universidade Federal do Piauí
 
-Eu (nós), **Caio Farias Cabral**, pesquisador(es) responsável(is) pela pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, declaro(amos) que:
+Eu (nós), **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável/Coordenador) e **Caio Farias Cabral** (Pesquisador Executor — Mestrando PPGTAIR/UFPI), responsáveis pela pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, declaramos que:
 
 - Assumo(imos) o compromisso de cumprir os Termos das **Resoluções Nº 466/2012**, de 12 de dezembro de 2012, e **Nº 510/2016**, de 07 de abril de 2016, do Conselho Nacional de Saúde, do Ministério da Saúde e demais resoluções complementares à mesma (240/97, 251/97, 292/99 e 340/2004).
 
