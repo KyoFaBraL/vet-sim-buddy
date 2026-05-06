@@ -805,7 +805,7 @@ Os pesquisadores do presente projeto se comprometem a **preservar a privacidade 
 
 Concordam, igualmente, que estas informações serão utilizadas **única e exclusivamente para execução do presente projeto**.
 
-As informações somente poderão ser divulgadas de **forma anônima** e serão mantidas num servidor seguro e em arquivos digitais criptografados por um período de **5 anos** sob a responsabilidade do(a) Sr.(a) Caio Farias Cabral. Após este período, os dados serão destruídos.
+As informações somente poderão ser divulgadas de **forma anônima** e serão mantidas num servidor seguro e em arquivos digitais criptografados por um período de **5 anos** sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral. Após este período, os dados serão destruídos.
 
 | Campo | Preenchimento |
 |-------|---------------|
