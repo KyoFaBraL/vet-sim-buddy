@@ -796,7 +796,7 @@ Eu (nós), **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsáve
 | Campo | Informação |
 |-------|------------|
 | **Título do projeto** | Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning |
-| **Pesquisador responsável** | Caio Farias Cabral |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto |
 | **Instituição/Departamento** | Universidade Federal do Piauí (UFPI) / Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
 | **Telefone para contato** | (86) 98142-5389 |
 | **Local da coleta de dados** | Departamento de Medicina Veterinária da UFPI (Teresina-PI) e ambiente digital (Software VetBalance) |
