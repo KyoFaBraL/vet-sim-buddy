@@ -763,7 +763,7 @@ Eu (nós), **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsáve
 
 - Os materiais e as informações obtidas no desenvolvimento deste trabalho serão utilizados **apenas para se atingir o(s) objetivo(s) previsto(s) nesta pesquisa** e não serão utilizados para outras pesquisas sem o devido consentimento dos voluntários.
 
-- Os materiais e os dados obtidos ao final da pesquisa serão **arquivados sob a responsabilidade de Caio Farias Cabral e Prof. Dr. Napoleão Martins Argôlo Neto** da área de Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) da UFPI; que também será responsável pelo descarte dos materiais e dados, caso os mesmos não sejam estocados ao final da pesquisa.
+- Os materiais e os dados obtidos ao final da pesquisa serão **arquivados sob a responsabilidade do Prof. Dr. Napoleão Martins Argôlo Neto (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral**, vinculados ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) da UFPI, sendo o Pesquisador Responsável também responsável pelo descarte dos materiais e dados, caso os mesmos não sejam estocados ao final da pesquisa.
 
 - **Não há qualquer acordo restritivo** à divulgação pública dos resultados.
 
