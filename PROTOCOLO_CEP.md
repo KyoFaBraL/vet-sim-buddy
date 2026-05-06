@@ -846,12 +846,15 @@ Atenciosamente,
 
 | Campo | Preenchimento |
 |-------|---------------|
-| Pesquisador responsável | Caio Farias Cabral |
-| CPF | 656.268.853-15 |
+| Pesquisador Responsável / Coordenador | Prof. Dr. Napoleão Martins Argôlo Neto |
+| CPF | 945.990.505-63 |
+| Vínculo | Servidor docente efetivo da UFPI (Lei nº 12.772/2012) |
+| Pesquisador Executor (discente) | Caio Farias Cabral — CPF: 656.268.853-15 |
 | Instituição | Universidade Federal do Piauí (UFPI) |
 | Área | Medicina Veterinária |
 | Departamento | Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
-| Assinatura | __________________________________ |
+| Assinatura do Pesquisador Responsável | __________________________________ |
+| Assinatura do Pesquisador Executor | __________________________________ |
 
 ---
 
