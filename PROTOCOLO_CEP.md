@@ -322,7 +322,9 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 #### 8.5.1 Recrutamento dos Participantes
 
-O recrutamento será realizado por meio de **convite presencial** durante as aulas das disciplinas de Fisiologia Animal e Farmacologia. O pesquisador realizará uma **apresentação expositiva** (≈ 15 minutos) aos alunos das turmas elegíveis, explicando:
+O recrutamento dos participantes será iniciado **somente após a aprovação consubstanciada deste protocolo pelo Comitê de Ética em Pesquisa (CEP/UFPI-CMPP) e pela CONEP, quando aplicável**, nos termos das Resoluções CNS nº 466/2012 e nº 510/2016. Nenhuma abordagem aos potenciais sujeitos da pesquisa ocorrerá antes da emissão do parecer favorável.
+
+Após a aprovação ética, o recrutamento será realizado por meio de **convite presencial** durante as aulas das disciplinas de Fisiologia Animal e Farmacologia, **mediante anuência prévia e individual de cada docente regente** (preservada a autonomia de cátedra) e mediante autorização de uso do espaço físico expedida pela **Chefia do Departamento competente**. O pesquisador realizará uma **apresentação expositiva** (≈ 15 minutos) aos alunos das turmas elegíveis, explicando:
 
 - Os objetivos da pesquisa;
 - Os procedimentos envolvidos;
@@ -334,7 +336,7 @@ A apresentação será realizada na presença do docente responsável pela disci
 
 #### 8.5.2 Obtenção do TCLE
 
-O Termo de Consentimento Livre e Esclarecido (TCLE) será apresentado de forma **individual e impressa** a cada participante interessado. O pesquisador responsável (Caio Farias Cabral) será o único responsável pela explicação do TCLE e pela obtenção da assinatura.
+O Termo de Consentimento Livre e Esclarecido (TCLE) será apresentado de forma **individual e impressa** a cada participante interessado. O **Pesquisador Responsável (Prof. Dr. Napoleão Martins Argôlo Neto)**, diretamente ou por delegação supervisionada ao pesquisador executor (Caio Farias Cabral), será responsável pela explicação do TCLE e pela obtenção da assinatura.
 
 O participante receberá tempo suficiente para leitura integral do documento (mínimo 24 horas entre a apresentação e a assinatura). O TCLE será emitido em **duas vias de igual teor**: uma para o participante e outra para o pesquisador.
 
