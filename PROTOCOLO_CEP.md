@@ -719,7 +719,7 @@ Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi e
 
 ### Anexo C — Declaração de Concordância Institucional e de Infraestrutura
 
-> **Documento oficial assinado pela Coordenação do Curso de Medicina Veterinária — CCA/UFPI**
+> **Documento oficial a ser assinado pela Chefia do Departamento competente — CCA/UFPI**, autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
 
 ---
 
@@ -727,22 +727,23 @@ Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi e
 
 #### DECLARAÇÃO DE CONCORDÂNCIA INSTITUCIONAL E DE INFRAESTRUTURA
 
-Eu, **Mônica Arrivabene**, na qualidade de responsável por esta instituição / departamento (Cargo: Coordenadora do Curso de Graduação em Medicina Veterinária da Universidade Federal do Piauí — UFPI), declaro para os devidos fins que tenho conhecimento e **AUTORIZO** a realização do projeto de pesquisa intitulado: **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
+Eu, **\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**, na qualidade de **Chefe do Departamento responsável pelo curso de Medicina Veterinária do Centro de Ciências Agrárias (CCA) da Universidade Federal do Piauí — UFPI**, declaro para os devidos fins que tenho conhecimento e, **no estrito limite das competências administrativas desta Chefia**, **AUTORIZO** o uso da infraestrutura departamental para a realização do projeto de pesquisa intitulado: **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
 
-Declaro estar ciente de que a referida pesquisa está sob a responsabilidade do pesquisador **Caio Farias Cabral** (Mestrando do Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional — PPGTAIR/UFPI) e de seu orientador, **Prof. Dr. Napoleão Martins Argôlo Neto**.
+Declaro estar ciente de que a referida pesquisa está sob a coordenação e responsabilidade administrativa do **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo da UFPI (Lei nº 12.772/2012), na qualidade de **único Pesquisador Responsável/Coordenador**, tendo como pesquisador executor o discente **Caio Farias Cabral** (Mestrando do PPGTAIR/UFPI).
 
-Tenho ciência de que o objetivo do estudo é validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais.
+Declaro que esta autorização **fica condicionada à prévia aprovação consubstanciada do projeto pelo Comitê de Ética em Pesquisa (CEP/UFPI-CMPP)** e, quando aplicável, pela CONEP, nos termos das Resoluções CNS nº 466/2012, 510/2016 e 580/2018, sendo o sistema CEP/CONEP a única instância competente para autorizar, sob o prisma ético-científico, o recrutamento de seres humanos.
 
-Autorizo expressamente o recrutamento dos sujeitos da pesquisa nas dependências desta instituição, os quais serão aproximadamente **40 (quarenta) estudantes** regularmente matriculados no curso de graduação em Medicina Veterinária da UFPI, especificamente nas turmas das disciplinas de **Fisiologia Animal** e **Farmacologia**.
+Declaro, ainda, que este Departamento dispõe da **infraestrutura física necessária** (salas de aula e acesso à rede Wi-Fi institucional, conforme escala de uso e disponibilidade) para a execução das etapas operacionais da pesquisa, concordando com sua utilização nos termos estipulados no projeto.
 
-Declaro, ainda, que a nossa instituição dispõe da **infraestrutura necessária** (salas de aula, acesso à rede Wi-Fi institucional e apoio do corpo docente das disciplinas envolvidas) para a execução das etapas de recrutamento, aplicação das avaliações acadêmicas e intervenção da pesquisa, concordando com a sua utilização nos termos estipulados no projeto e respeitando os preceitos éticos estabelecidos pelas **Resoluções CNS nº 466/2012** e **nº 510/2016**.
+Registra-se que **a participação de docentes regentes** das disciplinas envolvidas (Fisiologia Animal e Farmacologia) deverá ser **anuída individualmente por cada docente**, em respeito à autonomia e liberdade de cátedra, não sendo objeto desta declaração.
 
 | Campo | Preenchimento |
 |-------|---------------|
-| Local e data | Teresina - PI, 16 de março de 2026 |
-| Nome | Prof. Mônica Arrivabene |
-| Cargo | Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI |
-| Assinatura | __________________________________ |
+| Local e data | Teresina - PI, ___/___/______ |
+| Nome | __________________________________ |
+| Cargo | Chefe do Departamento — CCA/UFPI |
+| SIAPE | __________________________________ |
+| Assinatura e carimbo | __________________________________ |
 
 ---
 
