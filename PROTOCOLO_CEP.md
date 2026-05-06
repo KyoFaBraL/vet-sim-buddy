@@ -778,9 +778,9 @@ Eu (nós), **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsáve
 | Campo | Preenchimento |
 |-------|---------------|
 | Local e data | Teresina, 16 de março de 2026 |
-| **Pesquisador responsável** | Caio Farias Cabral — CPF: 656.268.853-15 |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
 | Assinatura | __________________________________ |
-| **Pesquisador orientador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
+| **Pesquisador Executor (discente)** | Caio Farias Cabral — CPF: 656.268.853-15 |
 | Assinatura | __________________________________ |
 
 ---
