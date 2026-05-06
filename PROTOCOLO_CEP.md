@@ -425,26 +425,29 @@ A escolha do delineamento quase-experimental com grupo controle (sem software) j
 
 ### 8.10 Responsabilidades
 
-#### 8.10.1 Pesquisador Responsável (Caio Farias Cabral)
+#### 8.10.1 Pesquisador Responsável / Coordenador (Prof. Dr. Napoleão Martins Argôlo Neto)
 
-- Conduzir a pesquisa conforme o protocolo aprovado pelo CEP;
-- Obter o TCLE de todos os participantes antes do início da coleta;
-- Manter a confidencialidade dos dados;
+- Responder, na qualidade de **servidor docente efetivo da UFPI** (Lei nº 12.772/2012), pela coordenação administrativa, civil e ética do projeto perante a União, a IFES e o sistema CEP/CONEP;
+- Garantir a condução da pesquisa conforme o protocolo aprovado pelo CEP;
+- Supervisionar a obtenção do TCLE de todos os participantes antes do início da coleta;
+- Zelar pela confidencialidade dos dados;
 - Comunicar eventos adversos ao CEP em tempo hábil;
 - Apresentar relatórios parciais e final ao CEP;
-- Armazenar os dados por 5 anos.
+- Co-responsabilizar-se pelo armazenamento dos dados por 5 anos.
 
-#### 8.10.2 Orientador (Prof. Dr. Napoleão Martins Argôlo Neto)
+#### 8.10.2 Pesquisador Executor / Discente (Caio Farias Cabral — Mestrando PPGTAIR/UFPI)
 
-- Supervisionar a condução da pesquisa;
-- Orientar o pesquisador quanto aos aspectos metodológicos e éticos;
-- Co-responsabilizar-se pela integridade dos dados.
+- Executar operacionalmente as atividades de coleta, sob supervisão direta do Pesquisador Responsável;
+- Aplicar instrumentos de avaliação e operar o software VetBalance;
+- Apoiar a obtenção das assinaturas dos TCLEs;
+- Manter registros e logs auditáveis;
+- Reportar ao Pesquisador Responsável quaisquer intercorrências.
 
 #### 8.10.3 Instituição (UFPI — Centro de Ciências Agrárias)
 
-- Disponibilizar infraestrutura (salas de aula, rede Wi-Fi, laboratório de informática);
-- Apoiar a realização das avaliações nas disciplinas envolvidas;
-- Garantir que a pesquisa não interfira nas atividades acadêmicas regulares.
+- A disponibilização de infraestrutura física (salas de aula, laboratório de informática e escala de uso de espaços comuns) será autorizada pela **Chefia de Departamento competente**, conforme Regimento Geral da UFPI;
+- A participação de docentes regentes (Fisiologia Animal e Farmacologia) ocorrerá mediante **anuência individual de cada docente**, em respeito à autonomia e liberdade de cátedra;
+- A Coordenação do Curso de Medicina Veterinária atua exclusivamente em sua competência **pedagógico-acadêmica**, sem deliberar sobre uso de infraestrutura, carga horária docente ou autorização ética de recrutamento.
 
 #### 8.10.4 Financiamento
 
