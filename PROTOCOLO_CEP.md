@@ -492,7 +492,7 @@ A pesquisa será encerrada antecipadamente se:
 | **Unidade/Departamento** | Centro de Ciências Agrárias (CCA) |
 | **Disciplinas envolvidas** | Fisiologia Animal e Farmacologia |
 | **Endereço** | Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI |
-| **Responsável pela unidade** | Profa. Mônica Arrivabene (Coordenadora de Medicina Veterinária – CCA/UFPI) |
+| **Autoridade competente para autorização de uso de infraestrutura** | Chefia do Departamento responsável pelo curso de Medicina Veterinária – CCA/UFPI |
 
 #### 8.12.2 Infraestrutura Disponível
 
