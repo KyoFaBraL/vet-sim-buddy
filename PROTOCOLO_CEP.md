@@ -503,7 +503,7 @@ A pesquisa será encerrada antecipadamente se:
 
 #### 8.12.3 Demonstrativo de Infraestrutura
 
-A concordância institucional documentada é apresentada no **Anexo C** (Declaração de Concordância Institucional e de Infraestrutura), assinada pela Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI.
+A concordância institucional documentada é apresentada no **Anexo C** (Declaração de Concordância Institucional e de Infraestrutura), a ser assinada pela **Chefia do Departamento competente da CCA/UFPI** — autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
 
 ### 8.13 Variáveis do Estudo
 
