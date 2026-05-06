@@ -21,17 +21,18 @@
 
 | Campo | Informação |
 |-------|------------|
-| **Pesquisador Responsável** | Caio Farias Cabral |
-| **CPF** | 656.268.853-15 |
-| **Titulação** | Mestrando em Ciência Animal |
-| **E-mail** | caiofcabral@ufpi.edu.br |
-| **Telefone** | (86) 98142-5389 |
-| **Orientador** | Prof. Dr. Napoleão Martins Argôlo Neto |
-| **Colaboradora** | Profa. Mônica Arrivabene (Coordenadora de Medicina Veterinária – CCA/UFPI) |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto (servidor docente efetivo da UFPI, nos termos da Lei nº 12.772/2012) |
+| **CPF do Pesquisador Responsável** | 945.990.505-63 |
+| **Pesquisador Discente / Executor** | Caio Farias Cabral (Mestrando — PPGTAIR/UFPI) |
+| **CPF do Pesquisador Discente** | 656.268.853-15 |
+| **E-mail (contato operacional)** | caiofcabral@ufpi.edu.br |
+| **Telefone (contato operacional)** | (86) 98142-5389 |
 | **Instituição Proponente** | Universidade Federal do Piauí (UFPI) — CNPJ: 06.517.387/0001-34 |
 | **Endereço** | Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI |
 | **Área Temática** | Educação em Saúde / Tecnologia Educacional |
 | **Tipo de Estudo** | Estudo quase-experimental, controlado, com pré e pós-teste |
+
+> **Nota de governança:** Em estrita observância à Lei nº 12.772/2012 e ao Regimento Geral da UFPI, a responsabilidade administrativa, civil e ética perante a União, o sistema CEP/CONEP e a IFES é assumida pelo **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo, que figura como **único Pesquisador Responsável/Coordenador** do projeto. O discente Caio Farias Cabral atua como **pesquisador executor** (mestrando vinculado ao PPGTAIR/UFPI), sob supervisão estatutária do orientador.
 
 **Data de Elaboração:** Março de 2026  
 **Versão:** 2.0
@@ -58,7 +59,7 @@
 12. [Anexos](#12-anexos)
     - Anexo A — Folha de Rosto
     - Anexo B — TCLE (modelo oficial CEP/UFPI)
-    - Anexo C — Declaração de Concordância Institucional e de Infraestrutura
+    - Anexo C — Declaração de Concordância Institucional e de Infraestrutura (Chefia de Departamento)
     - Anexo D — Termo de Compromisso dos Pesquisadores
     - Anexo E — Termo de Confidencialidade
     - Anexo F — Carta de Encaminhamento ao CEP
@@ -321,7 +322,9 @@ A relação risco-benefício é **favorável**, uma vez que os riscos são míni
 
 #### 8.5.1 Recrutamento dos Participantes
 
-O recrutamento será realizado por meio de **convite presencial** durante as aulas das disciplinas de Fisiologia Animal e Farmacologia. O pesquisador realizará uma **apresentação expositiva** (≈ 15 minutos) aos alunos das turmas elegíveis, explicando:
+O recrutamento dos participantes será iniciado **somente após a aprovação consubstanciada deste protocolo pelo Comitê de Ética em Pesquisa (CEP/UFPI-CMPP) e pela CONEP, quando aplicável**, nos termos das Resoluções CNS nº 466/2012 e nº 510/2016. Nenhuma abordagem aos potenciais sujeitos da pesquisa ocorrerá antes da emissão do parecer favorável.
+
+Após a aprovação ética, o recrutamento será realizado por meio de **convite presencial** durante as aulas das disciplinas de Fisiologia Animal e Farmacologia, **mediante anuência prévia e individual de cada docente regente** (preservada a autonomia de cátedra) e mediante autorização de uso do espaço físico expedida pela **Chefia do Departamento competente**. O pesquisador realizará uma **apresentação expositiva** (≈ 15 minutos) aos alunos das turmas elegíveis, explicando:
 
 - Os objetivos da pesquisa;
 - Os procedimentos envolvidos;
@@ -333,7 +336,7 @@ A apresentação será realizada na presença do docente responsável pela disci
 
 #### 8.5.2 Obtenção do TCLE
 
-O Termo de Consentimento Livre e Esclarecido (TCLE) será apresentado de forma **individual e impressa** a cada participante interessado. O pesquisador responsável (Caio Farias Cabral) será o único responsável pela explicação do TCLE e pela obtenção da assinatura.
+O Termo de Consentimento Livre e Esclarecido (TCLE) será apresentado de forma **individual e impressa** a cada participante interessado. O **Pesquisador Responsável (Prof. Dr. Napoleão Martins Argôlo Neto)**, diretamente ou por delegação supervisionada ao pesquisador executor (Caio Farias Cabral), será responsável pela explicação do TCLE e pela obtenção da assinatura.
 
 O participante receberá tempo suficiente para leitura integral do documento (mínimo 24 horas entre a apresentação e a assinatura). O TCLE será emitido em **duas vias de igual teor**: uma para o participante e outra para o pesquisador.
 
@@ -422,26 +425,29 @@ A escolha do delineamento quase-experimental com grupo controle (sem software) j
 
 ### 8.10 Responsabilidades
 
-#### 8.10.1 Pesquisador Responsável (Caio Farias Cabral)
+#### 8.10.1 Pesquisador Responsável / Coordenador (Prof. Dr. Napoleão Martins Argôlo Neto)
 
-- Conduzir a pesquisa conforme o protocolo aprovado pelo CEP;
-- Obter o TCLE de todos os participantes antes do início da coleta;
-- Manter a confidencialidade dos dados;
+- Responder, na qualidade de **servidor docente efetivo da UFPI** (Lei nº 12.772/2012), pela coordenação administrativa, civil e ética do projeto perante a União, a IFES e o sistema CEP/CONEP;
+- Garantir a condução da pesquisa conforme o protocolo aprovado pelo CEP;
+- Supervisionar a obtenção do TCLE de todos os participantes antes do início da coleta;
+- Zelar pela confidencialidade dos dados;
 - Comunicar eventos adversos ao CEP em tempo hábil;
 - Apresentar relatórios parciais e final ao CEP;
-- Armazenar os dados por 5 anos.
+- Co-responsabilizar-se pelo armazenamento dos dados por 5 anos.
 
-#### 8.10.2 Orientador (Prof. Dr. Napoleão Martins Argôlo Neto)
+#### 8.10.2 Pesquisador Executor / Discente (Caio Farias Cabral — Mestrando PPGTAIR/UFPI)
 
-- Supervisionar a condução da pesquisa;
-- Orientar o pesquisador quanto aos aspectos metodológicos e éticos;
-- Co-responsabilizar-se pela integridade dos dados.
+- Executar operacionalmente as atividades de coleta, sob supervisão direta do Pesquisador Responsável;
+- Aplicar instrumentos de avaliação e operar o software VetBalance;
+- Apoiar a obtenção das assinaturas dos TCLEs;
+- Manter registros e logs auditáveis;
+- Reportar ao Pesquisador Responsável quaisquer intercorrências.
 
 #### 8.10.3 Instituição (UFPI — Centro de Ciências Agrárias)
 
-- Disponibilizar infraestrutura (salas de aula, rede Wi-Fi, laboratório de informática);
-- Apoiar a realização das avaliações nas disciplinas envolvidas;
-- Garantir que a pesquisa não interfira nas atividades acadêmicas regulares.
+- A disponibilização de infraestrutura física (salas de aula, laboratório de informática e escala de uso de espaços comuns) será autorizada pela **Chefia de Departamento competente**, conforme Regimento Geral da UFPI;
+- A participação de docentes regentes (Fisiologia Animal e Farmacologia) ocorrerá mediante **anuência individual de cada docente**, em respeito à autonomia e liberdade de cátedra;
+- A Coordenação do Curso de Medicina Veterinária atua exclusivamente em sua competência **pedagógico-acadêmica**, sem deliberar sobre uso de infraestrutura, carga horária docente ou autorização ética de recrutamento.
 
 #### 8.10.4 Financiamento
 
@@ -486,7 +492,7 @@ A pesquisa será encerrada antecipadamente se:
 | **Unidade/Departamento** | Centro de Ciências Agrárias (CCA) |
 | **Disciplinas envolvidas** | Fisiologia Animal e Farmacologia |
 | **Endereço** | Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI |
-| **Responsável pela unidade** | Profa. Mônica Arrivabene (Coordenadora de Medicina Veterinária – CCA/UFPI) |
+| **Autoridade competente para autorização de uso de infraestrutura** | Chefia do Departamento responsável pelo curso de Medicina Veterinária – CCA/UFPI |
 
 #### 8.12.2 Infraestrutura Disponível
 
@@ -497,7 +503,7 @@ A pesquisa será encerrada antecipadamente se:
 
 #### 8.12.3 Demonstrativo de Infraestrutura
 
-A concordância institucional documentada é apresentada no **Anexo C** (Declaração de Concordância Institucional e de Infraestrutura), assinada pela Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI.
+A concordância institucional documentada é apresentada no **Anexo C** (Declaração de Concordância Institucional e de Infraestrutura), a ser assinada pela **Chefia do Departamento competente da CCA/UFPI** — autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
 
 ### 8.13 Variáveis do Estudo
 
@@ -673,11 +679,11 @@ Prezado(a) Senhor(a),
 
 Você está sendo convidado(a) a participar como voluntário(a) de uma pesquisa denominada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
 
-Esta pesquisa está sob a responsabilidade do pesquisador **Caio Farias Cabral**, mestrando vinculado ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI), e de seu orientador, **Prof. Dr. Napoleão Martins Argôlo Neto**, e tem como objetivo geral: validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais, junto a estudantes de medicina veterinária.
+Esta pesquisa está sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo da UFPI, na qualidade de **Pesquisador Responsável/Coordenador**, tendo como pesquisador executor o mestrando **Caio Farias Cabral**, vinculado ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI). O estudo tem como objetivo geral validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais, junto a estudantes de medicina veterinária.
 
 Neste sentido, solicitamos sua colaboração mediante a assinatura desse termo. Este documento, chamado Termo de Consentimento Livre e Esclarecido (TCLE), visa assegurar seus direitos como participante. Após seu consentimento, rubrique todas as páginas e ao final deste documento, que está em duas vias. O mesmo também será assinado pelo pesquisador em todas as páginas, ficando uma via com você, participante da pesquisa, e outra com o pesquisador. Por favor, leia com atenção e calma, aproveite para esclarecer todas as suas dúvidas.
 
-Se houver perguntas antes ou mesmo depois de indicar sua concordância, você poderá esclarecê-las com o pesquisador responsável pela pesquisa, **Caio Farias Cabral**, pelo telefone **(86) 98142-5389**, pelo e-mail **caiofcabral@ufpi.edu.br** ou pelo endereço institucional na Universidade Federal do Piauí (UFPI), Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina - PI.
+Se houver perguntas antes ou mesmo depois de indicar sua concordância, você poderá esclarecê-las com o **Pesquisador Responsável Prof. Dr. Napoleão Martins Argôlo Neto** ou com o pesquisador executor **Caio Farias Cabral**, pelo telefone **(86) 98142-5389**, pelo e-mail **caiofcabral@ufpi.edu.br** ou pelo endereço institucional na Universidade Federal do Piauí (UFPI), Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina - PI.
 
 Se, mesmo assim, as dúvidas ainda persistirem, você pode entrar em contato com o **Comitê de Ética em Pesquisa da UFPI**, que acompanha e analisa as pesquisas científicas que envolvem seres humanos, no Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina – PI, telefone **(86) 2222-4824**, e-mail: **cep.ufpi@ufpi.edu.br**; no horário de atendimento ao público, segunda a sexta, manhã: 08h00 às 12h00 e a tarde: 14h00 às 18h00. Se preferir, pode levar este Termo para casa e consultar seus familiares ou outras pessoas antes de decidir participar.
 
@@ -697,7 +703,7 @@ Os resultados obtidos nesta pesquisa serão utilizados para fins acadêmico-cien
 
 Esclarecemos ainda que você não terá nenhum custo com a pesquisa, mas, caso haja, por qualquer motivo, asseguramos que você será devidamente ressarcido. Não haverá nenhum tipo de pagamento por sua participação, ela é voluntária. Durante e após o encerramento da pesquisa, será garantido o acompanhamento e a assistência ao participante, conforme previsto na Resolução 466/2012 (item IV.3.c). Em caso de danos decorrentes da pesquisa, será assegurada a assistência integral e a indenização conforme previsto em norma.
 
-**Arquivamento e descarte dos dados:** Os dados e materiais coletados serão **arquivados pelo período mínimo de 5 (cinco) anos** sob a responsabilidade do pesquisador **Caio Farias Cabral**, no endereço institucional: **Universidade Federal do Piauí — Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI**, telefone **(86) 98142-5389**, e-mail **caiofcabral@ufpi.edu.br**. Após esse período, os dados digitais serão **destruídos por exclusão segura (sobrescrita criptográfica)** e eventuais documentos físicos serão **fragmentados mecanicamente**, em conformidade com a LGPD (Lei nº 13.709/2018) e com as Resoluções CNS nº 466/2012, 510/2016 e 580/2018.
+**Arquivamento e descarte dos dados:** Os dados e materiais coletados serão **arquivados pelo período mínimo de 5 (cinco) anos** sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral, no endereço institucional: **Universidade Federal do Piauí — Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI**, telefone **(86) 98142-5389**, e-mail **caiofcabral@ufpi.edu.br**. Após esse período, os dados digitais serão **destruídos por exclusão segura (sobrescrita criptográfica)** e eventuais documentos físicos serão **fragmentados mecanicamente**, em conformidade com a LGPD (Lei nº 13.709/2018) e com as Resoluções CNS nº 466/2012, 510/2016 e 580/2018.
 
 Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi exposto, Eu, \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_, declaro que aceito participar desta pesquisa, dando pleno consentimento para uso das informações por mim prestadas. Para tanto, assino este consentimento em duas vias, rubrico todas as páginas e fico com a posse de uma delas.
 
@@ -713,7 +719,7 @@ Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi e
 
 ### Anexo C — Declaração de Concordância Institucional e de Infraestrutura
 
-> **Documento oficial assinado pela Coordenação do Curso de Medicina Veterinária — CCA/UFPI**
+> **Documento oficial a ser assinado pela Chefia do Departamento competente — CCA/UFPI**, autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
 
 ---
 
@@ -721,22 +727,23 @@ Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi e
 
 #### DECLARAÇÃO DE CONCORDÂNCIA INSTITUCIONAL E DE INFRAESTRUTURA
 
-Eu, **Mônica Arrivabene**, na qualidade de responsável por esta instituição / departamento (Cargo: Coordenadora do Curso de Graduação em Medicina Veterinária da Universidade Federal do Piauí — UFPI), declaro para os devidos fins que tenho conhecimento e **AUTORIZO** a realização do projeto de pesquisa intitulado: **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
+Eu, **\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**, na qualidade de **Chefe do Departamento responsável pelo curso de Medicina Veterinária do Centro de Ciências Agrárias (CCA) da Universidade Federal do Piauí — UFPI**, declaro para os devidos fins que tenho conhecimento e, **no estrito limite das competências administrativas desta Chefia**, **AUTORIZO** o uso da infraestrutura departamental para a realização do projeto de pesquisa intitulado: **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
 
-Declaro estar ciente de que a referida pesquisa está sob a responsabilidade do pesquisador **Caio Farias Cabral** (Mestrando do Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional — PPGTAIR/UFPI) e de seu orientador, **Prof. Dr. Napoleão Martins Argôlo Neto**.
+Declaro estar ciente de que a referida pesquisa está sob a coordenação e responsabilidade administrativa do **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo da UFPI (Lei nº 12.772/2012), na qualidade de **único Pesquisador Responsável/Coordenador**, tendo como pesquisador executor o discente **Caio Farias Cabral** (Mestrando do PPGTAIR/UFPI).
 
-Tenho ciência de que o objetivo do estudo é validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais.
+Declaro que esta autorização **fica condicionada à prévia aprovação consubstanciada do projeto pelo Comitê de Ética em Pesquisa (CEP/UFPI-CMPP)** e, quando aplicável, pela CONEP, nos termos das Resoluções CNS nº 466/2012, 510/2016 e 580/2018, sendo o sistema CEP/CONEP a única instância competente para autorizar, sob o prisma ético-científico, o recrutamento de seres humanos.
 
-Autorizo expressamente o recrutamento dos sujeitos da pesquisa nas dependências desta instituição, os quais serão aproximadamente **40 (quarenta) estudantes** regularmente matriculados no curso de graduação em Medicina Veterinária da UFPI, especificamente nas turmas das disciplinas de **Fisiologia Animal** e **Farmacologia**.
+Declaro, ainda, que este Departamento dispõe da **infraestrutura física necessária** (salas de aula e acesso à rede Wi-Fi institucional, conforme escala de uso e disponibilidade) para a execução das etapas operacionais da pesquisa, concordando com sua utilização nos termos estipulados no projeto.
 
-Declaro, ainda, que a nossa instituição dispõe da **infraestrutura necessária** (salas de aula, acesso à rede Wi-Fi institucional e apoio do corpo docente das disciplinas envolvidas) para a execução das etapas de recrutamento, aplicação das avaliações acadêmicas e intervenção da pesquisa, concordando com a sua utilização nos termos estipulados no projeto e respeitando os preceitos éticos estabelecidos pelas **Resoluções CNS nº 466/2012** e **nº 510/2016**.
+Registra-se que **a participação de docentes regentes** das disciplinas envolvidas (Fisiologia Animal e Farmacologia) deverá ser **anuída individualmente por cada docente**, em respeito à autonomia e liberdade de cátedra, não sendo objeto desta declaração.
 
 | Campo | Preenchimento |
 |-------|---------------|
-| Local e data | Teresina - PI, 16 de março de 2026 |
-| Nome | Prof. Mônica Arrivabene |
-| Cargo | Coordenadora do Curso de Graduação em Medicina Veterinária – CCA/UFPI |
-| Assinatura | __________________________________ |
+| Local e data | Teresina - PI, ___/___/______ |
+| Nome | __________________________________ |
+| Cargo | Chefe do Departamento — CCA/UFPI |
+| SIAPE | __________________________________ |
+| Assinatura e carimbo | __________________________________ |
 
 ---
 
@@ -748,7 +755,7 @@ Declaro, ainda, que a nossa instituição dispõe da **infraestrutura necessári
 
 #### Declarações do(s) Pesquisador(es) — Ao Comitê de Ética em Pesquisa – CEP/CMPP — Universidade Federal do Piauí
 
-Eu (nós), **Caio Farias Cabral**, pesquisador(es) responsável(is) pela pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, declaro(amos) que:
+Eu (nós), **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável/Coordenador) e **Caio Farias Cabral** (Pesquisador Executor — Mestrando PPGTAIR/UFPI), responsáveis pela pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, declaramos que:
 
 - Assumo(imos) o compromisso de cumprir os Termos das **Resoluções Nº 466/2012**, de 12 de dezembro de 2012, e **Nº 510/2016**, de 07 de abril de 2016, do Conselho Nacional de Saúde, do Ministério da Saúde e demais resoluções complementares à mesma (240/97, 251/97, 292/99 e 340/2004).
 
@@ -756,7 +763,7 @@ Eu (nós), **Caio Farias Cabral**, pesquisador(es) responsável(is) pela pesquis
 
 - Os materiais e as informações obtidas no desenvolvimento deste trabalho serão utilizados **apenas para se atingir o(s) objetivo(s) previsto(s) nesta pesquisa** e não serão utilizados para outras pesquisas sem o devido consentimento dos voluntários.
 
-- Os materiais e os dados obtidos ao final da pesquisa serão **arquivados sob a responsabilidade de Caio Farias Cabral e Prof. Dr. Napoleão Martins Argôlo Neto** da área de Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) da UFPI; que também será responsável pelo descarte dos materiais e dados, caso os mesmos não sejam estocados ao final da pesquisa.
+- Os materiais e os dados obtidos ao final da pesquisa serão **arquivados sob a responsabilidade do Prof. Dr. Napoleão Martins Argôlo Neto (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral**, vinculados ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) da UFPI, sendo o Pesquisador Responsável também responsável pelo descarte dos materiais e dados, caso os mesmos não sejam estocados ao final da pesquisa.
 
 - **Não há qualquer acordo restritivo** à divulgação pública dos resultados.
 
@@ -771,9 +778,9 @@ Eu (nós), **Caio Farias Cabral**, pesquisador(es) responsável(is) pela pesquis
 | Campo | Preenchimento |
 |-------|---------------|
 | Local e data | Teresina, 16 de março de 2026 |
-| **Pesquisador responsável** | Caio Farias Cabral — CPF: 656.268.853-15 |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
 | Assinatura | __________________________________ |
-| **Pesquisador orientador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
+| **Pesquisador Executor (discente)** | Caio Farias Cabral — CPF: 656.268.853-15 |
 | Assinatura | __________________________________ |
 
 ---
@@ -789,7 +796,7 @@ Eu (nós), **Caio Farias Cabral**, pesquisador(es) responsável(is) pela pesquis
 | Campo | Informação |
 |-------|------------|
 | **Título do projeto** | Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning |
-| **Pesquisador responsável** | Caio Farias Cabral |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto |
 | **Instituição/Departamento** | Universidade Federal do Piauí (UFPI) / Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
 | **Telefone para contato** | (86) 98142-5389 |
 | **Local da coleta de dados** | Departamento de Medicina Veterinária da UFPI (Teresina-PI) e ambiente digital (Software VetBalance) |
@@ -798,14 +805,14 @@ Os pesquisadores do presente projeto se comprometem a **preservar a privacidade 
 
 Concordam, igualmente, que estas informações serão utilizadas **única e exclusivamente para execução do presente projeto**.
 
-As informações somente poderão ser divulgadas de **forma anônima** e serão mantidas num servidor seguro e em arquivos digitais criptografados por um período de **5 anos** sob a responsabilidade do(a) Sr.(a) Caio Farias Cabral. Após este período, os dados serão destruídos.
+As informações somente poderão ser divulgadas de **forma anônima** e serão mantidas num servidor seguro e em arquivos digitais criptografados por um período de **5 anos** sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral. Após este período, os dados serão destruídos.
 
 | Campo | Preenchimento |
 |-------|---------------|
 | Local e data | Teresina, 16 de março de 2026 |
-| **Pesquisador Responsável** | Caio Farias Cabral — CPF: 656.268.853-15 |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
 | Assinatura | __________________________________ |
-| **Pesquisador Orientador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
+| **Pesquisador Executor (discente)** | Caio Farias Cabral — CPF: 656.268.853-15 |
 | Assinatura | __________________________________ |
 
 ---
@@ -839,20 +846,23 @@ Atenciosamente,
 
 | Campo | Preenchimento |
 |-------|---------------|
-| Pesquisador responsável | Caio Farias Cabral |
-| CPF | 656.268.853-15 |
+| Pesquisador Responsável / Coordenador | Prof. Dr. Napoleão Martins Argôlo Neto |
+| CPF | 945.990.505-63 |
+| Vínculo | Servidor docente efetivo da UFPI (Lei nº 12.772/2012) |
+| Pesquisador Executor (discente) | Caio Farias Cabral — CPF: 656.268.853-15 |
 | Instituição | Universidade Federal do Piauí (UFPI) |
 | Área | Medicina Veterinária |
 | Departamento | Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
-| Assinatura | __________________________________ |
+| Assinatura do Pesquisador Responsável | __________________________________ |
+| Assinatura do Pesquisador Executor | __________________________________ |
 
 ---
 
 ### Anexo G — Currículo Lattes
 
 > Anexar os currículos Lattes atualizados:
-> - **Pesquisador Responsável:** Caio Farias Cabral
-> - **Orientador:** Prof. Dr. Napoleão Martins Argôlo Neto
+> - **Pesquisador Responsável / Coordenador:** Prof. Dr. Napoleão Martins Argôlo Neto
+> - **Pesquisador Executor (discente):** Caio Farias Cabral
 
 *(Disponíveis em: https://lattes.cnpq.br)*
 
