@@ -21,17 +21,18 @@
 
 | Campo | Informação |
 |-------|------------|
-| **Pesquisador Responsável** | Caio Farias Cabral |
-| **CPF** | 656.268.853-15 |
-| **Titulação** | Mestrando em Ciência Animal |
-| **E-mail** | caiofcabral@ufpi.edu.br |
-| **Telefone** | (86) 98142-5389 |
-| **Orientador** | Prof. Dr. Napoleão Martins Argôlo Neto |
-| **Colaboradora** | Profa. Mônica Arrivabene (Coordenadora de Medicina Veterinária – CCA/UFPI) |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto (servidor docente efetivo da UFPI, nos termos da Lei nº 12.772/2012) |
+| **CPF do Pesquisador Responsável** | 945.990.505-63 |
+| **Pesquisador Discente / Executor** | Caio Farias Cabral (Mestrando — PPGTAIR/UFPI) |
+| **CPF do Pesquisador Discente** | 656.268.853-15 |
+| **E-mail (contato operacional)** | caiofcabral@ufpi.edu.br |
+| **Telefone (contato operacional)** | (86) 98142-5389 |
 | **Instituição Proponente** | Universidade Federal do Piauí (UFPI) — CNPJ: 06.517.387/0001-34 |
 | **Endereço** | Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI |
 | **Área Temática** | Educação em Saúde / Tecnologia Educacional |
 | **Tipo de Estudo** | Estudo quase-experimental, controlado, com pré e pós-teste |
+
+> **Nota de governança:** Em estrita observância à Lei nº 12.772/2012 e ao Regimento Geral da UFPI, a responsabilidade administrativa, civil e ética perante a União, o sistema CEP/CONEP e a IFES é assumida pelo **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo, que figura como **único Pesquisador Responsável/Coordenador** do projeto. O discente Caio Farias Cabral atua como **pesquisador executor** (mestrando vinculado ao PPGTAIR/UFPI), sob supervisão estatutária do orientador.
 
 **Data de Elaboração:** Março de 2026  
 **Versão:** 2.0
