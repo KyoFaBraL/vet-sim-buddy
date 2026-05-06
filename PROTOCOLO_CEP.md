@@ -861,8 +861,8 @@ Atenciosamente,
 ### Anexo G — Currículo Lattes
 
 > Anexar os currículos Lattes atualizados:
-> - **Pesquisador Responsável:** Caio Farias Cabral
-> - **Orientador:** Prof. Dr. Napoleão Martins Argôlo Neto
+> - **Pesquisador Responsável / Coordenador:** Prof. Dr. Napoleão Martins Argôlo Neto
+> - **Pesquisador Executor (discente):** Caio Farias Cabral
 
 *(Disponíveis em: https://lattes.cnpq.br)*
 
