@@ -292,7 +292,7 @@ Espera-se que o grupo experimental apresente desempenho significativamente super
 
 #### 8.4.1 Riscos
 
-Esta pesquisa apresenta **risco mínimo** aos participantes, conforme classificação da Resolução CNS 466/2012.
+Esta pesquisa apresenta **risco mínimo** aos participantes, conforme classificação da **Resolução CNS nº 466/2012**, e observa adicionalmente as diretrizes da **Resolução CNS nº 510/2016** (pesquisas em Ciências Humanas e Sociais, aplicável ao componente educacional) e da **Resolução CNS nº 580/2018** (que regulamenta as especificidades éticas das pesquisas estratégicas para o SUS, em especial quanto à **devolutiva dos resultados aos participantes**, prevista no art. 9º).
 
 | Risco Identificado | Classificação | Probabilidade | Medidas de Mitigação |
 |---------------------|---------------|---------------|----------------------|
@@ -599,8 +599,9 @@ Não há conflito de interesses financeiros.
 | F4 — Intervenção Avançada | Semanas 10–12 | 3 semanas | Casos avançados, modo avaliação (sem IA) |
 | F5 — Avaliação Final | Semanas 13–15 | 3 semanas | Avaliações O₃ e O₄, questionário SUS, exportação de dados |
 | F6 — Análise e Relatório | Semanas 16–20 | 4 semanas | Análise estatística, redação do relatório final |
-| **Total da Validação** | — | **20 semanas** | — |
-| Mestrado | Após F6 | ~4 semanas | Redação da dissertação e defesa |
+| **F7 — Devolutiva aos Participantes (Res. CNS 580/2018, art. 9º)** | Semanas 21–22 | 2 semanas | **Apresentação dos resultados consolidados aos participantes (GE e GC) por meio de seminário presencial e envio de relatório-resumo por e-mail; liberação definitiva do software ao GC** |
+| **Total da Validação** | — | **22 semanas** | — |
+| Mestrado | Após F7 | ~4 semanas | Redação da dissertação e defesa |
 
 *\*As datas exatas serão ajustadas conforme a data de aprovação do CEP. Os períodos estimados (março–julho/2026) são referenciais.*
 
@@ -615,7 +616,8 @@ Não há conflito de interesses financeiros.
 | 🔴 O₄ | Semanas 14–15 | Pós-teste final abrangente |
 | ✅ Coleta encerrada | Semana 15 | Encerramento da coleta de dados |
 | ✅ Relatório final | Semana 20 | Entrega do relatório final de validação (IEEE 829) |
-| 🎓 Defesa | Após semana 20 | Defesa do mestrado |
+| 📢 Devolutiva aos participantes | Semanas 21–22 | Apresentação dos resultados aos participantes (Res. CNS 580/2018, art. 9º) |
+| 🎓 Defesa | Após semana 22 | Defesa do mestrado |
 
 ---
 
@@ -624,6 +626,8 @@ Não há conflito de interesses financeiros.
 BRASIL. Conselho Nacional de Saúde. **Resolução nº 466, de 12 de dezembro de 2012**. Aprova as diretrizes e normas regulamentadoras de pesquisas envolvendo seres humanos. Diário Oficial da União, Brasília, 13 jun. 2013.
 
 BRASIL. Conselho Nacional de Saúde. **Resolução nº 510, de 7 de abril de 2016**. Dispõe sobre as normas aplicáveis a pesquisas em Ciências Humanas e Sociais. Diário Oficial da União, Brasília, 24 maio 2016.
+
+BRASIL. Conselho Nacional de Saúde. **Resolução nº 580, de 22 de março de 2018**. Regulamenta as especificidades éticas das pesquisas de interesse estratégico para o Sistema Único de Saúde (SUS), em especial a devolutiva dos resultados aos participantes (art. 9º). Diário Oficial da União, Brasília, 16 jul. 2018.
 
 BRASIL. **Lei nº 13.709, de 14 de agosto de 2018** (Lei Geral de Proteção de Dados Pessoais – LGPD). Diário Oficial da União, Brasília, 15 ago. 2018.
 
@@ -692,6 +696,8 @@ Esclarecemos, mais uma vez, que sua participação é voluntária. Caso decida n
 Os resultados obtidos nesta pesquisa serão utilizados para fins acadêmico-científicos (divulgação em trabalhos de conclusão de curso, revistas e em eventos científicos) e os pesquisadores se comprometem a manter o sigilo e identidade anônima, como estabelecem as Resoluções do Conselho Nacional de Saúde nº 466/2012 e 510/2016 e a Norma Operacional 01 de 2013 do Conselho Nacional de Saúde, que tratam de normas regulamentadoras de pesquisas que envolvem seres humanos. Você terá livre acesso a todas as informações e esclarecimentos adicionais sobre o estudo, bem como lhe é garantido acesso a seus resultados.
 
 Esclarecemos ainda que você não terá nenhum custo com a pesquisa, mas, caso haja, por qualquer motivo, asseguramos que você será devidamente ressarcido. Não haverá nenhum tipo de pagamento por sua participação, ela é voluntária. Durante e após o encerramento da pesquisa, será garantido o acompanhamento e a assistência ao participante, conforme previsto na Resolução 466/2012 (item IV.3.c). Em caso de danos decorrentes da pesquisa, será assegurada a assistência integral e a indenização conforme previsto em norma.
+
+**Arquivamento e descarte dos dados:** Os dados e materiais coletados serão **arquivados pelo período mínimo de 5 (cinco) anos** sob a responsabilidade do pesquisador **Caio Farias Cabral**, no endereço institucional: **Universidade Federal do Piauí — Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI**, telefone **(86) 98142-5389**, e-mail **caiofcabral@ufpi.edu.br**. Após esse período, os dados digitais serão **destruídos por exclusão segura (sobrescrita criptográfica)** e eventuais documentos físicos serão **fragmentados mecanicamente**, em conformidade com a LGPD (Lei nº 13.709/2018) e com as Resoluções CNS nº 466/2012, 510/2016 e 580/2018.
 
 Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi exposto, Eu, \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_, declaro que aceito participar desta pesquisa, dando pleno consentimento para uso das informações por mim prestadas. Para tanto, assino este consentimento em duas vias, rubrico todas as páginas e fico com a posse de uma delas.
 
