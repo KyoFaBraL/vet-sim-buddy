@@ -198,21 +198,21 @@ export type Database = {
           found: boolean
           id: string
           professor_id: string
-          searched_email: string
+          searched_email_hash: string | null
         }
         Insert: {
           attempted_at?: string
           found: boolean
           id?: string
           professor_id: string
-          searched_email: string
+          searched_email_hash?: string | null
         }
         Update: {
           attempted_at?: string
           found?: boolean
           id?: string
           professor_id?: string
-          searched_email?: string
+          searched_email_hash?: string | null
         }
         Relationships: []
       }
@@ -1182,6 +1182,17 @@ export type Database = {
           created_at: string
           id: string
           nome_completo: string
+        }[]
+      }
+      get_student_tcle_consents: {
+        Args: { student_user_id: string }
+        Returns: {
+          aceito: boolean
+          aceito_em: string
+          criado_em: string
+          id: string
+          user_id: string
+          versao: string
         }[]
       }
       has_role: {
