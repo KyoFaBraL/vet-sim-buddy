@@ -52,10 +52,12 @@ export function ProfessorAccessKeys() {
 
   const generateKey = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
     let key = "";
     for (let i = 0; i < 16; i++) {
       if (i > 0 && i % 4 === 0) key += "-";
-      key += chars.charAt(Math.floor(Math.random() * chars.length));
+      key += chars.charAt(bytes[i] % chars.length);
     }
     return key;
   };
