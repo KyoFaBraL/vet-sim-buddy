@@ -31,21 +31,23 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/" replace />;
   }
 
+  const path = window.location.pathname;
+
   // Admin tem acesso total - redirecionar para painel de professor
-  if (role === 'admin' && window.location.pathname === '/app') {
+  if (role === 'admin' && path === '/app') {
     return <Navigate to="/professor" replace />;
   }
 
   // Redirecionar professores para o painel de professor
-  if (role === 'professor' && window.location.pathname === '/app') {
+  if (role === 'professor' && path === '/app') {
     return <Navigate to="/professor" replace />;
   }
 
-  // Redirecionar alunos para o simulador
-  if (role === 'aluno' && window.location.pathname === '/professor') {
-    return <Navigate to="/app" replace />;
+  // Bloquear /professor para qualquer usuário que não seja professor ou admin
+  if (path.startsWith('/professor') && role !== 'professor' && role !== 'admin') {
+    return <Navigate to="/" replace />;
   }
-  
+
   return <>{children}</>;
 };
 
