@@ -123,9 +123,8 @@ Avalie se o tratamento é adequado para este caso. Responda em formato JSON:
     });
   } catch (error) {
     console.error('Error in analyze-custom-case:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(JSON.stringify({ 
-      error: errorMessage,
+      error: 'Internal server error',
       adequado: false,
       justificativa: 'Erro ao analisar tratamento',
       eficacia: 0.5
