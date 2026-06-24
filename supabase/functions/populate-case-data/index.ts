@@ -271,7 +271,7 @@ Retorne APENAS um JSON válido no seguinte formato:
   } catch (error) {
     console.error('Erro ao processar:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Erro desconhecido' }),
+      JSON.stringify({ error: 'Erro interno do servidor' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
