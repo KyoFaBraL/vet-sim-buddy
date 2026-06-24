@@ -86,6 +86,13 @@ serve(async (req) => {
       );
     }
 
+    if (caseData.user_id !== user.id) {
+      return new Response(
+        JSON.stringify({ error: 'Sem permissão para editar este caso' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { data: parametros } = await supabase
       .from('parametros')
       .select('*');
