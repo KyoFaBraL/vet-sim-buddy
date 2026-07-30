@@ -12,6 +12,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import PreValidation from "./pages/PreValidation";
 import ConsentimentoTCLE from "./pages/ConsentimentoTCLE";
+import OAuthConsent from "./pages/OAuthConsent";
 import { RoleSelection } from "./components/RoleSelection";
 import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
@@ -124,6 +125,7 @@ const App = () => (
               </PublicRoute>
             } />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
             <Route path="/consentimento" element={
               <ProtectedRoute>
                 <ConsentimentoTCLE />
