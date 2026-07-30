@@ -12,6 +12,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import PreValidation from "./pages/PreValidation";
 import ConsentimentoTCLE from "./pages/ConsentimentoTCLE";
+import OAuthConsent from "./pages/OAuthConsent";
 import { RoleSelection } from "./components/RoleSelection";
 import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
@@ -76,6 +77,12 @@ const StudentRouteWithConsent = ({ children }: { children: React.ReactNode }) =>
   return <>{children}</>;
 };
 
+const safeNextPath = () => {
+  const next = new URLSearchParams(window.location.search).get("next");
+  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+  return null;
+};
+
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading: authLoading } = useAuth();
   const { role, loading: roleLoading } = useUserRole(user);
@@ -85,6 +92,8 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   if (user && role) {
+    const next = safeNextPath();
+    if (next) return <Navigate to={next} replace />;
     if (role === 'admin') return <Navigate to="/professor" replace />;
     return <Navigate to={role === 'professor' ? '/professor' : '/app'} replace />;
   }
@@ -116,6 +125,7 @@ const App = () => (
               </PublicRoute>
             } />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
             <Route path="/consentimento" element={
               <ProtectedRoute>
                 <ConsentimentoTCLE />
