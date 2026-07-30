@@ -91,6 +91,8 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   if (user && role) {
+    const next = safeNextPath();
+    if (next) return <Navigate to={next} replace />;
     if (role === 'admin') return <Navigate to="/professor" replace />;
     return <Navigate to={role === 'professor' ? '/professor' : '/app'} replace />;
   }
