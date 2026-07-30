@@ -1,0 +1,162 @@
+{
+  "version": 1,
+  "sdk_version": "0.25.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://ztyjbhzcvhaafjvkqmvv.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "vetbalance",
+      "version": "0.1.0",
+      "title": "vetbalance"
+    },
+    "tools": [
+      {
+        "name": "list_clinical_cases",
+        "title": "Listar casos clínicos",
+        "description": "Lista os casos clínicos de desequilíbrio ácido-base disponíveis para o usuário conectado (públicos, próprios e compartilhados).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string",
+              "description": "Filtro opcional por nome do caso."
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Número máximo de casos retornados (padrão 25)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_clinical_case",
+        "title": "Detalhar caso clínico",
+        "description": "Retorna os detalhes de um caso clínico: descrição, condição primária e valores iniciais dos parâmetros fisiológicos.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "case_id": {
+              "type": "integer",
+              "description": "ID numérico do caso clínico."
+            }
+          },
+          "required": [
+            "case_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_treatments",
+        "title": "Listar tratamentos",
+        "description": "Lista os tratamentos disponíveis no simulador VetBalance, com tipo e descrição.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "tipo": {
+              "type": "string",
+              "description": "Filtrar por tipo de tratamento."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_sessions",
+        "title": "Listar minhas simulações",
+        "description": "Lista as sessões de simulação do usuário conectado, com status (won/lost/playing), duração e caso associado.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "description": "Filtrar por status: won, lost ou playing."
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Número máximo de sessões (padrão 20)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_session_report",
+        "title": "Relatório da simulação",
+        "description": "Retorna o relatório de uma sessão de simulação do usuário: dados da sessão, tratamentos aplicados e decisões registradas.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "ID (UUID) da sessão de simulação."
+            }
+          },
+          "required": [
+            "session_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_my_progress",
+        "title": "Meu desempenho",
+        "description": "Resumo do desempenho do usuário conectado: total de simulações, vitórias, derrotas, taxa de sucesso e conquistas (badges).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
