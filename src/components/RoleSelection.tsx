@@ -7,6 +7,11 @@ import { VetBalanceLogo } from "./VetBalanceLogo";
 
 export const RoleSelection = () => {
   const navigate = useNavigate();
+  const nextParam = new URLSearchParams(window.location.search).get("next");
+  const suffix =
+    nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//")
+      ? `?next=${encodeURIComponent(nextParam)}`
+      : "";
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/30">
@@ -66,7 +71,7 @@ export const RoleSelection = () => {
                 <Button 
                   className="w-full" 
                   size="lg"
-                  onClick={() => navigate('/auth/professor')}
+                  onClick={() => navigate(`/auth/professor${suffix}`)}
                 >
                   Entrar como Professor
                 </Button>
@@ -107,7 +112,7 @@ export const RoleSelection = () => {
                   className="w-full" 
                   size="lg"
                   variant="secondary"
-                  onClick={() => navigate('/auth/aluno')}
+                  onClick={() => navigate(`/auth/aluno${suffix}`)}
                 >
                   Entrar como Aluno
                 </Button>
