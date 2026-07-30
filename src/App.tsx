@@ -76,6 +76,12 @@ const StudentRouteWithConsent = ({ children }: { children: React.ReactNode }) =>
   return <>{children}</>;
 };
 
+const safeNextPath = () => {
+  const next = new URLSearchParams(window.location.search).get("next");
+  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+  return null;
+};
+
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading: authLoading } = useAuth();
   const { role, loading: roleLoading } = useUserRole(user);
