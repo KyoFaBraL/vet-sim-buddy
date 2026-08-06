@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { VetBalanceLogo } from '@/components/VetBalanceLogo';
+import { Seo } from '@/components/Seo';
 import { useAuth } from '@/hooks/useAuth';
 import { useTcleConsent } from '@/hooks/useTcleConsent';
 import { useToast } from '@/hooks/use-toast';
@@ -52,6 +53,13 @@ const ConsentimentoTCLE = () => {
   };
 
   return (
+    <>
+      <Seo
+        title="Termo de Consentimento (TCLE) — VetBalance"
+        description="Termo de Consentimento Livre e Esclarecido da pesquisa VetBalance, conforme a Resolução CNS 466/2012."
+        path="/consentimento"
+        noindex
+      />
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
       <Card className="w-full max-w-3xl shadow-xl">
         <CardHeader className="text-center space-y-4">
@@ -59,10 +67,10 @@ const ConsentimentoTCLE = () => {
             <VetBalanceLogo className="h-16 w-16" />
           </div>
           <div>
-            <CardTitle className="text-2xl flex items-center justify-center gap-2">
+            <h1 className="text-2xl font-semibold leading-none tracking-tight flex items-center justify-center gap-2">
               <FileText className="h-6 w-6" />
               Termo de Consentimento Livre e Esclarecido
-            </CardTitle>
+            </h1>
             <div className="flex items-center justify-center gap-2 mt-2">
               <Badge variant="outline">TCLE v{TCLE_VERSION}</Badge>
               <Badge variant="secondary" className="flex items-center gap-1">
@@ -264,6 +272,7 @@ const ConsentimentoTCLE = () => {
         </div>
       </Card>
     </div>
+    </>
   );
 };
 

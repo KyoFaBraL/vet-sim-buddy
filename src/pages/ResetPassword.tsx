@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowLeft, Mail, KeyRound, CheckCircle } from "lucide-react";
 import { z } from "zod";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
+import { Seo } from "@/components/Seo";
 
 const emailSchema = z.object({
   email: z.string()
@@ -161,6 +162,13 @@ export default function ResetPassword() {
   };
 
   return (
+    <>
+      <Seo
+        title="Recuperação de Senha — VetBalance"
+        description="Redefina a senha da sua conta VetBalance para voltar a acessar o simulador de cuidados críticos veterinários."
+        path="/reset-password"
+        noindex
+      />
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="w-full max-w-md px-4">
         <Button 
@@ -175,7 +183,7 @@ export default function ResetPassword() {
         <Card>
           <CardHeader className="text-center">
             <VetBalanceLogo className="mx-auto mb-4 h-16 w-16 object-contain" />
-            <CardTitle>VetBalance</CardTitle>
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">Recuperação de Senha</h1>
             <CardDescription>
               Simulador de Cuidados Críticos - {viewMode === "request" && "Recuperação de Senha"}
               {viewMode === "update" && "Nova Senha"}
@@ -276,5 +284,6 @@ export default function ResetPassword() {
         </Card>
       </div>
     </div>
+    </>
   );
 }
