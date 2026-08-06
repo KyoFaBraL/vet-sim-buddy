@@ -4,6 +4,7 @@ import { GraduationCap, UserCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { VetBalanceLogo } from "./VetBalanceLogo";
+import { Seo } from "./Seo";
 
 export const RoleSelection = () => {
   const navigate = useNavigate();
@@ -14,6 +15,12 @@ export const RoleSelection = () => {
       : "";
 
   return (
+    <>
+      <Seo
+        title="VetBalance — Simulador de Cuidados Críticos Veterinários"
+        description="Simulador gamificado de cuidados críticos veterinários para distúrbios ácido-básicos em cães e gatos. Acesse como aluno ou professor."
+        path="/"
+      />
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/30">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm">
@@ -21,7 +28,7 @@ export const RoleSelection = () => {
           <div className="flex items-center gap-3">
             <VetBalanceLogo className="h-12 w-12 object-contain" />
             <div>
-              <h1 className="text-xl font-bold">VetBalance</h1>
+              <h1 className="text-xl font-bold">VetBalance — Simulador Gamificado de Cuidados Críticos</h1>
               <p className="text-sm text-muted-foreground">Simulador Gamificado de Cuidados Críticos em Distúrbios Ácidos Básicos</p>
             </div>
           </div>
@@ -127,5 +134,6 @@ export const RoleSelection = () => {
         <p>VetBalance - Simulador gamificado de cuidados críticos em distúrbios ácidos básicos para cães e gatos</p>
       </footer>
     </div>
+    </>
   );
 };

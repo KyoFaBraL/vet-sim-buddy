@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
+import { Seo } from "@/components/Seo";
 
 const signUpSchema = z.object({
   email: z.string()
@@ -197,6 +198,12 @@ export default function AuthAluno() {
   };
 
   return (
+    <>
+      <Seo
+        title="Portal do Aluno — VetBalance"
+        description="Acesso do aluno ao VetBalance: pratique casos clínicos de distúrbios ácido-básicos em cães e gatos e acompanhe seu progresso."
+        path="/auth/aluno"
+      />
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="w-full max-w-md px-4">
         <Button 
@@ -211,7 +218,7 @@ export default function AuthAluno() {
         <Card>
           <CardHeader className="text-center">
             <VetBalanceLogo className="mx-auto mb-4 h-16 w-16 object-contain" />
-            <CardTitle>VetBalance</CardTitle>
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">Portal do Aluno</h1>
             <CardDescription>
               Simulador de Cuidados Críticos em Distúrbios Ácidos Básicos - Portal do Aluno
             </CardDescription>
@@ -309,5 +316,6 @@ export default function AuthAluno() {
         </Card>
       </div>
     </div>
+    </>
   );
 }

@@ -22,6 +22,7 @@ import { WeeklyRankingHistory } from "@/components/WeeklyRankingHistory";
 import { useAchievementAnimation } from "@/hooks/useAchievementAnimation";
 import { useWeeklyResetNotification } from "@/hooks/useWeeklyResetNotification";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Seo } from "@/components/Seo";
 import { SoundAlertsExtended } from "@/components/SoundAlertsExtended";
 import { SessionComparison } from "@/components/SessionComparison";
 import { SessionHistory } from "@/components/SessionHistory";
@@ -196,7 +197,7 @@ const Index = () => {
               <div className="flex items-center gap-3">
                 <VetBalanceLogo className="h-12 w-12 object-contain" />
                 <div>
-                  <h1 className="text-xl font-bold">VetBalance</h1>
+                  <h1 className="text-xl font-bold">VetBalance — Simulador Gamificado de Cuidados Críticos</h1>
                   <p className="text-sm text-muted-foreground">Simulador de Cuidados Críticos</p>
                 </div>
               </div>
@@ -338,6 +339,13 @@ const Index = () => {
   );
 
   return (
+    <>
+      <Seo
+        title="Simulador — VetBalance"
+        description="Ambiente de simulação do VetBalance: atenda casos clínicos de distúrbios ácido-básicos em cães e gatos e acompanhe seu desempenho."
+        path="/app"
+        noindex
+      />
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       {/* Ranking Notifications - Real-time listener */}
       <RankingNotifications />
@@ -348,7 +356,7 @@ const Index = () => {
             <div className="flex items-center gap-3">
               <VetBalanceLogo className="h-12 w-12 object-contain" />
               <div>
-                <h1 className="text-xl font-bold">VetBalance</h1>
+                <h1 className="text-xl font-bold">VetBalance — Simulador Gamificado de Cuidados Críticos</h1>
                 <p className="text-sm text-muted-foreground">Modo Aluno</p>
               </div>
             </div>
@@ -655,6 +663,7 @@ const Index = () => {
         />
       )}
     </div>
+    </>
   );
 };
 

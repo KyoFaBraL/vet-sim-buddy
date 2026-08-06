@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText } from "lucide-react";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
+import { Seo } from "@/components/Seo";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,13 @@ export default function ProfessorDashboard() {
   };
 
   return (
+    <>
+      <Seo
+        title="Painel do Professor — VetBalance"
+        description="Painel do professor no VetBalance: turmas, alunos, biblioteca de casos, relatórios de desempenho e consentimentos."
+        path="/professor"
+        noindex
+      />
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="container mx-auto p-4 space-y-4">
         {/* Header */}
@@ -48,7 +56,7 @@ export default function ProfessorDashboard() {
               <div className="flex items-center gap-3">
                 <VetBalanceLogo className="h-14 w-14 object-contain" />
                 <div>
-                  <CardTitle className="text-2xl">VetBalance</CardTitle>
+                  <h1 className="text-2xl font-semibold leading-none tracking-tight">Painel do Professor</h1>
                   <CardDescription>Simulador de Cuidados Críticos - Portal do Professor</CardDescription>
                 </div>
               </div>
@@ -190,5 +198,6 @@ export default function ProfessorDashboard() {
         </Tabs>
       </div>
     </div>
+    </>
   );
 }
