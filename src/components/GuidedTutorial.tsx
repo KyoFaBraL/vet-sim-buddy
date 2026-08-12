@@ -123,14 +123,17 @@ export const GuidedTutorial = ({ caseId, onClose }: GuidedTutorialProps) => {
 
       const currentStep = steps[currentStepIndex];
 
-      await supabase
-        .from('user_tutorial_progress')
-        .upsert({
-          user_id: userData.user.id,
-          tutorial_step_id: currentStep.id,
-          completado: true,
-          completado_em: new Date().toISOString()
-        });
+      // Passos locais (tutorial padrão) não são persistidos no banco
+      if (!currentStep.local) {
+        await supabase
+          .from('user_tutorial_progress')
+          .upsert({
+            user_id: userData.user.id,
+            tutorial_step_id: currentStep.id,
+            completado: true,
+            completado_em: new Date().toISOString()
+          });
+      }
 
       const updatedSteps = [...steps];
       updatedSteps[currentStepIndex].completado = true;
