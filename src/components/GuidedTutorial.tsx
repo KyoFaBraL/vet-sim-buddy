@@ -48,8 +48,9 @@ export const GuidedTutorial = ({ caseId, onClose }: GuidedTutorialProps) => {
         .order('ordem', { ascending: true });
 
       if (!tutorialSteps || tutorialSteps.length === 0) {
-        // Criar tutorial padrão se não existir
-        await createDefaultTutorial();
+        // Sem passos cadastrados: usar o tutorial padrão local (sem gravar no banco)
+        setSteps(getDefaultSteps());
+        setCurrentStepIndex(0);
         return;
       }
 
@@ -75,59 +76,45 @@ export const GuidedTutorial = ({ caseId, onClose }: GuidedTutorialProps) => {
       setCurrentStepIndex(firstIncomplete >= 0 ? firstIncomplete : 0);
     } catch (error) {
       console.error('Erro ao carregar tutorial:', error);
+      setSteps(getDefaultSteps());
     } finally {
       setIsLoading(false);
     }
   };
 
-  const createDefaultTutorial = async () => {
-    const defaultSteps = [
-      {
-        case_id: caseId,
-        ordem: 1,
-        titulo: "Observe os Parâmetros",
-        descricao: "Primeiro, observe os parâmetros vitais do paciente no monitor. Identifique quais estão fora do normal (em amarelo ou vermelho).",
-        dica: "Parâmetros críticos aparecem em vermelho e requerem atenção imediata!"
-      },
-      {
-        case_id: caseId,
-        ordem: 2,
-        titulo: "Revise as Informações do Caso",
-        descricao: "Leia atentamente a descrição do caso clínico, espécie e condição do paciente. Isso ajudará a escolher o tratamento adequado.",
-        dica: "A condição primária do paciente indica o tipo de distúrbio ácido-base presente."
-      },
-      {
-        case_id: caseId,
-        ordem: 3,
-        titulo: "Escolha um Tratamento",
-        descricao: "Com base nos parâmetros alterados, selecione um tratamento apropriado na lista de tratamentos disponíveis.",
-        dica: "Você pode usar o sistema de dicas (com penalidade de -10 HP) se estiver em dúvida!"
-      },
-      {
-        case_id: caseId,
-        ordem: 4,
-        titulo: "Monitore o HP",
-        descricao: "Observe como suas decisões afetam a saúde do paciente (HP). Tratamentos adequados aumentam o HP, inadequados diminuem.",
-        dica: "O HP diminui 1 ponto a cada 5 segundos. Aja rápido mas com sabedoria!"
-      },
-      {
-        case_id: caseId,
-        ordem: 5,
-        titulo: "Complete as Metas",
-        descricao: "Alcance as metas de aprendizado para ganhar pontos e demonstrar seu conhecimento clínico.",
-        dica: "Metas alcançadas ficam marcadas em verde. Tente completar todas!"
-      }
-    ];
-
-    const { data, error } = await supabase
-      .from('tutorial_steps')
-      .insert(defaultSteps)
-      .select();
-
-    if (!error) {
-      await loadTutorialSteps();
+  const getDefaultSteps = (): TutorialStep[] => [
+    {
+      titulo: "Observe os Parâmetros",
+      descricao: "Primeiro, observe os parâmetros vitais do paciente no monitor. Identifique quais estão fora do normal (em amarelo ou vermelho).",
+      dica: "Parâmetros críticos aparecem em vermelho e requerem atenção imediata!"
+    },
+    {
+      titulo: "Revise as Informações do Caso",
+      descricao: "Leia atentamente a descrição do caso clínico, espécie e condição do paciente. Isso ajudará a escolher o tratamento adequado.",
+      dica: "A condição primária do paciente indica o tipo de distúrbio ácido-base presente."
+    },
+    {
+      titulo: "Escolha um Tratamento",
+      descricao: "Com base nos parâmetros alterados, selecione um tratamento apropriado na lista de tratamentos disponíveis.",
+      dica: "Você pode usar o sistema de dicas (com penalidade de -10 HP) se estiver em dúvida!"
+    },
+    {
+      titulo: "Monitore o HP",
+      descricao: "Observe como suas decisões afetam a saúde do paciente (HP). Tratamentos adequados aumentam o HP, inadequados diminuem.",
+      dica: "O HP diminui 1 ponto a cada 5 segundos. Aja rápido mas com sabedoria!"
+    },
+    {
+      titulo: "Complete as Metas",
+      descricao: "Alcance as metas de aprendizado para ganhar pontos e demonstrar seu conhecimento clínico.",
+      dica: "Metas alcançadas ficam marcadas em verde. Tente completar todas!"
     }
-  };
+  ].map((step, index) => ({
+    ...step,
+    id: `local-${caseId}-${index + 1}`,
+    ordem: index + 1,
+    completado: false,
+    local: true
+  }));
 
   const handleCompleteStep = async () => {
     try {
