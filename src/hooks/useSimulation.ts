@@ -481,50 +481,41 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       let justificativa = "";
       let hpChange = -15;
 
-      // Verificar se é caso personalizado (tem user_id)
-      if (caseData?.user_id) {
-        // Verificar na tabela tratamentos_caso para casos personalizados
-        const { data: caseTreatment } = await supabase
-          .from("tratamentos_caso")
-          .select("prioridade, justificativa")
-          .eq("case_id", caseData?.id)
-          .eq("tratamento_id", treatmentId)
-          .maybeSingle();
+      // 1) Gabarito específico do caso (vale para casos personalizados e pré-definidos)
+      const { data: caseTreatment } = await supabase
+        .from("tratamentos_caso")
+        .select("prioridade, justificativa")
+        .eq("case_id", caseData?.id)
+        .eq("tratamento_id", treatmentId)
+        .maybeSingle();
 
-        isAdequate = !!caseTreatment;
-        eficacia = isAdequate ? 1.0 : 0.3;
-        justificativa = caseTreatment?.justificativa || "";
-        
-        if (caseTreatment) {
-          switch (caseTreatment.prioridade) {
-            case 1: hpChange = 25; break;
-            case 2: hpChange = 15; break;
-            case 3: hpChange = 10; break;
-            default: hpChange = 10; break;
-          }
-        }
-      } else {
-        // Verificar gabarito para casos pré-definidos
+      let match: { prioridade: number; justificativa: string | null } | null =
+        caseTreatment ?? null;
+
+      // 2) Fallback: gabarito da condição primária (casos pré-definidos)
+      if (!match && !caseData?.user_id && caseData?.id_condicao_primaria) {
         const { data: adequateTreatment } = await supabase
           .from("tratamentos_adequados")
           .select("prioridade, justificativa")
-          .eq("condicao_id", caseData?.id_condicao_primaria)
+          .eq("condicao_id", caseData.id_condicao_primaria)
           .eq("tratamento_id", treatmentId)
           .maybeSingle();
+        match = adequateTreatment ?? null;
+      }
 
-        isAdequate = !!adequateTreatment;
-        eficacia = isAdequate ? 1.0 : 0.3;
-        justificativa = adequateTreatment?.justificativa || "";
-        
-        if (adequateTreatment) {
-          switch (adequateTreatment.prioridade) {
-            case 1: hpChange = 25; break;
-            case 2: hpChange = 15; break;
-            case 3: hpChange = 10; break;
-            default: hpChange = 10; break;
-          }
+      isAdequate = !!match;
+      eficacia = isAdequate ? 1.0 : 0.3;
+      justificativa = match?.justificativa || "";
+
+      if (match) {
+        switch (match.prioridade) {
+          case 1: hpChange = 25; break;
+          case 2: hpChange = 15; break;
+          case 3: hpChange = 10; break;
+          default: hpChange = 10; break;
         }
       }
+
 
       // Carregar e aplicar efeitos do tratamento
       const { data: treatmentEffects, error } = await supabase
