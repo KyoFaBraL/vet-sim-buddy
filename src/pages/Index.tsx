@@ -335,8 +335,11 @@ const Index = () => {
   // INTERFACE DO ALUNO - Simulação
   // ============================================
   const secondaryParameters = parameters.filter(
-    (p) => !['pH', 'PaCO2', 'HCO3-', 'FrequenciaCardiaca'].includes(p.nome)
+    (p) =>
+      !['pH', 'PaCO2', 'HCO3-', 'FrequenciaCardiaca'].includes(p.nome) &&
+      Number.isFinite(currentState[p.id])
   );
+
 
   return (
     <>
