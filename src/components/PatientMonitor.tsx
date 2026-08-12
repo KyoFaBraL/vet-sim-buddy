@@ -57,8 +57,22 @@ export const PatientMonitor = ({
     return <Minus className="h-4 w-4 text-muted-foreground" />;
   };
 
-  const mainParameters = ['pH', 'pCO2', 'HCO3-'];
-  const mainParams = parameters.filter(p => mainParameters.includes(p.nome));
+  // Exibe todos os parâmetros monitorados no caso, com a gasometria primeiro
+  const priorityOrder = ['pH', 'PaCO2', 'pCO2', 'HCO3-', 'HCO3', 'PaO2', 'Lactato'];
+  const paramLabels: Record<string, string> = {
+    FrequenciaCardiaca: 'FC',
+    PressaoArterial: 'PA',
+    ContratilidadeCardiaca: 'Contratilidade',
+    ResistenciaVascular: 'RVP',
+    DebitoCardiaco: 'Débito Card.',
+  };
+  const mainParams = parameters
+    .filter((p) => currentState[p.id] !== undefined)
+    .sort((a, b) => {
+      const ia = priorityOrder.indexOf(a.nome);
+      const ib = priorityOrder.indexOf(b.nome);
+      return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+    });
 
   return (
     <Card className="overflow-hidden">
