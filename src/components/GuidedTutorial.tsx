@@ -15,6 +15,7 @@ interface TutorialStep {
   descricao: string;
   dica: string;
   completado: boolean;
+  local?: boolean;
 }
 
 interface GuidedTutorialProps {
