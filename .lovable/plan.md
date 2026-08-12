@@ -1,66 +1,55 @@
-## Verificação do Checklist Plataforma Brasil vs. e-mail CEP-UFPI/CMPP
+# Piloto na Uninassau sem prejuízo de aprendizado
 
-Comparei os 11 itens exigidos pelo CEP com o conteúdo atual de `/mnt/documents/`. Resumo do status:
+Desenho definido: turma dividida em dois grupos (metade usa o VetBalance, metade não), sem valer nota. Suas duas preocupações são conteúdo clínico incorreto e falhas técnicas durante a aula.
 
-| # | Item exigido pelo CEP | Arquivo atual | Status |
-|---|---|---|---|
-| 01 | Declaração dos Pesquisadores assinada por todos | `DECLARACAO_PESQUISADORES.docx` | OK em conteúdo — falta confirmar assinaturas de TODOS os pesquisadores |
-| 02 | Currículos Lattes (atualizados <6 meses) | `Lattes_Napoleao_Argolo.pdf`, `Lattes_Caio_Cabral.pdf` | Confirmar data de atualização (hoje = 24/06/2026 → atualização exigida a partir de 24/12/2025) |
-| 03 | Carta de Encaminhamento à atual coordenadora | `CARTA_ENCAMINHAMENTO_CEP.docx` | **Pendente** — dirigida a "Prof. Dr. Raimundo Nonato"; precisa ser à **Prof.ª Dr.ª Hilris Rocha e Silva** |
-| 04 | Termo de Confidencialidade c/ guarda mín. 5 anos | `ANEXO_E_TERMO_CONFIDENCIALIDADE.docx` | Revisar cláusula de guarda mínima de 5 anos (Res. 510/2016, Cap. VI, Art. 28, IV) e assinaturas |
-| 05 | Folha de Rosto assinada + carimbo instituição | `Folha_de_Rosto_Plataforma_Brasil.pdf` | Confirmar assinaturas físicas + carimbo da instituição proponente |
-| 06 | Instrumento de coleta anonimizado | `ANEXO_H_INSTRUMENTO_AVALIACAO.docx`, `ANEXO_I_QUESTIONARIO_SUS.docx` | Verificar que não há campo "nome do participante" |
-| 07 | TCLE com endereço/telefone/e-mail/horário CEP, 2 vias, paginação, sem assinatura prévia | `TCLE_VETBALANCE.docx` | **Pendente** — coordenador desatualizado (Raimundo Nonato → Hilris Rocha e Silva); restante OK |
-| 08 | Autorização Institucional assinada e carimbada | `TERMO_ANUENCIA_INSTITUCIONAL.docx` | Confirmar assinatura + carimbo do responsável da instituição |
-| 09 | Projeto completo | `PROJETO_PESQUISA_VETBALANCE.docx/.pdf` | OK |
-| 10 | Cronograma com tramitação mín. 3 meses, em base **mensal** | `Cronograma_Geral.docx` | **Pendente** — atualmente tramitação CEP em ~6 semanas e granularidade semanal; precisa ser mensal e ≥3 meses (30+30+30) |
-| 11 | Orçamento detalhado em arquivo separado + PB | `ORCAMENTO_VETBALANCE.docx` | OK; revisar detalhamento (item / tipo / valor R$) |
+A boa notícia: "sem prejuízo de aprendizado" é atingível com duas garantias — (1) o grupo controle recebe o mesmo conteúdo por método tradicional e ganha acesso ao software **depois** da coleta; (2) o simulador não pode ensinar nada errado nem falhar no meio da aula. O plano abaixo cobre as duas.
 
-## Pendências a corrigir (bloqueantes)
+## 1. Blindagem do conteúdo clínico (prioridade)
 
-**P1 — Carta de Encaminhamento (item 03)**
-- Trocar destinatário para `Prof.ª Dr.ª Hilris Rocha e Silva — Coordenadora do CEP-UFPI/CMPP`.
-- Atualizar Lattes da coordenadora e referência ao comitê (CEP-UFPI/CMPP).
-- Manter assinatura do pesquisador responsável.
+O que foi verificado no banco agora:
 
-**P2 — TCLE (item 07)**
-- Substituir, no item "11. Contatos", o coordenador para **Prof.ª Dr.ª Hilris Rocha e Silva (CEP-UFPI/CMPP)**.
-- Confirmar endereço/telefone/e-mail/horário do CEP (já constam).
-- Manter rubricas/assinaturas APENAS como linhas em branco (não pré-assinar).
-- Versão na Plataforma Brasil: enviar SEM rubricas/assinaturas físicas.
+- Casos 1 a 7 (os casos oficiais) têm valores iniciais e gabarito de tratamentos completos.
+- **Metas de aprendizado estão rasas**: o caso 1 tem 5 metas; os casos 2 a 7 têm apenas 2 metas cada. Com só 2 metas, o feedback pedagógico e a pontuação ficam pobres e podem induzir leitura errada de desempenho.
+- **Existem casos de teste/rascunho no banco** (caso 14 "teste", além dos casos 15 a 18 criados por professor) sem metas de aprendizado. Se qualquer um deles aparecer para os alunos do piloto, o aluno roda um caso sem objetivos e sem feedback.
+- A tabela de passos do tutorial está vazia (0 registros) — o tutorial hoje roda 100% pelo conteúdo local do aplicativo.
 
-**P3 — Cronograma (item 10)**
-- Reescrever em granularidade **mensal** (não semanal).
-- Garantir que o intervalo entre validação documental e início da coleta de dados seja **≥ 3 meses** (30 dias análise CEP + 30 dias pendências + 30 dias reavaliação).
-- Ajustar datas finais (defesa) em cadeia.
+Ações:
 
-**P4 — Termo de Confidencialidade (item 04)**
-- Verificar/inserir cláusula explícita de guarda mínima de **5 anos** após o término da pesquisa, em arquivo físico ou digital, sob responsabilidade do pesquisador.
+- Revisão clínica caso a caso (1 a 7): conferir valores iniciais, faixas de referência, gabarito de tratamentos e justificativas contra a literatura, e registrar isso num documento de validação de conteúdo assinável por você e pelo orientador.
+- Ampliar as metas de aprendizado dos casos 2 a 7 para o mesmo nível do caso 1 (diagnóstico, correção do distúrbio ácido-base, estabilização e tempo), cada uma com justificativa clínica.
+- Definir o conjunto oficial do piloto: apenas os casos 1 a 7. Garantir que casos de rascunho de outros usuários não sejam listados para os alunos da turma.
 
-**P5 — Anexos do instrumento (item 06)**
-- Conferir `ANEXO_H_INSTRUMENTO_AVALIACAO.docx` e `ANEXO_I_QUESTIONARIO_SUS.docx`: remover qualquer campo de identificação nominal (apenas ID/código anônimo).
+## 2. Blindagem técnica da aula
 
-**P6 — Checklist Plataforma Brasil**
-- Atualizar `CHECKLIST_PLATAFORMA_BRASIL.docx` adicionando uma coluna "Atendimento à carta CEP" mapeando cada item 01–11 do e-mail ao arquivo correspondente, com status (OK / Revisado / Aguardando assinatura).
+- Ensaio geral (dry run) com 2 ou 3 contas de aluno simulando ao mesmo tempo, percorrendo cadastro, aceite do TCLE, tutorial, simulação completa e relatório final.
+- Teste dos 7 casos de ponta a ponta, verificando que HP, monitor de sinais vitais, metas e pontuação respondem coerentemente.
+- Verificação de resiliência: recarregar a página no meio da simulação, perder conexão por alguns segundos e voltar — o progresso do aluno não pode desaparecer.
+- Plano B de aula: roteiro impresso do caso e das perguntas, para o professor continuar a atividade caso a internet do laboratório caia.
 
-## Pendências de coleta de assinaturas (não bloqueiam edição, mas bloqueiam submissão)
+## 3. Protocolo do piloto (grupo A x grupo B)
 
-- Assinaturas em: Declaração de Pesquisadores, Termo de Confidencialidade, Termo de Anuência Institucional, Folha de Rosto (assinatura + carimbo institucional), Carta de Encaminhamento.
-- Atualização dos PDFs Lattes (gerar novamente se últimos uploads forem anteriores a 24/12/2025).
+- Alocação aleatória da turma em dois grupos de tamanho semelhante, registrada previamente.
+- Grupo A: aula com o simulador. Grupo B: mesma aula com método tradicional (caso clínico em papel e discussão), com o mesmo tempo e o mesmo conteúdo.
+- Pré-teste idêntico para os dois grupos antes da aula e pós-teste idêntico depois — usando o instrumento de avaliação já existente no projeto (Anexo A).
+- Só o grupo A responde o questionário SUS (Anexo B), por ser sobre usabilidade do software.
+- **Compensação pedagógica**: ao final da coleta, o grupo B recebe acesso liberado ao simulador e uma sessão de reposição com os mesmos casos. É isso que garante ausência de prejuízo, e deve estar escrito no TCLE e no roteiro do professor.
+- Resultado não vale nota para nenhum dos grupos; deixar isso explícito para a turma no início.
 
-## Entregáveis após implementação
+## 4. Entregáveis
 
-1. `CARTA_ENCAMINHAMENTO_CEP_v2.docx` — destinatária corrigida.
-2. `TCLE_VETBALANCE_v3.docx` — coordenadora atualizada.
-3. `Cronograma_Geral_v2.docx` — base mensal, tramitação ≥ 3 meses.
-4. `ANEXO_E_TERMO_CONFIDENCIALIDADE_v2.docx` — cláusula 5 anos reforçada (se ausente).
-5. `CHECKLIST_PLATAFORMA_BRASIL_v2.docx` — checklist cruzado com os 11 itens do CEP.
-6. Nota técnica `CONFERENCIA_CEP_UFPI.md` em `/mnt/documents/` listando, por item 01–11, o arquivo correspondente e o status.
+- Documento de validação de conteúdo clínico dos 7 casos (para o orientador assinar).
+- Roteiro de aula do professor, uma versão para o grupo A e uma para o grupo B, com tempos.
+- Checklist de sala de aula: o que testar 30 minutos antes de começar.
+- Relatório do ensaio geral com o que foi corrigido.
 
-## Detalhes técnicos (formato/automação)
+## Detalhes técnicos
 
-- Edição dos `.docx` via skill `docx` (unpack → editar XML → repack) preservando layout existente.
-- QA: converter cada `.docx` resultante para PDF (LibreOffice) e inspecionar páginas para validar formatação e ausência de truncamentos.
-- Não há alteração de código de aplicação nesta tarefa.
+- Ampliação das metas: inserções em `metas_aprendizado` para os casos 2 a 7, seguindo o padrão de tipos já usado no caso 1.
+- Restrição do catálogo do piloto: revisar a listagem de casos exibida ao aluno para que rascunhos de outros usuários (casos 14 a 18) não apareçam, mantendo as políticas de acesso atuais.
+- Validação técnica com Playwright contra o preview local, cobrindo os 7 casos, mais consultas ao banco para confirmar que sessões, decisões e metas alcançadas são persistidas.
+- Nenhuma mudança na mecânica do simulador (HP inicia em 50, dica custa -10, tick de 1s, salvamento em lote a cada 5s) — apenas conteúdo, listagem e verificação.
 
-Confirma a execução desse plano? Se quiser, posso já tratar como bloqueante "P5" (anonimização dos instrumentos) e enviar uma versão revisada dos anexos H e I no mesmo lote.
+## Fora de escopo
+
+- Alterar pontuação, gamificação ou ranking.
+- Novos casos clínicos além dos 7 já existentes.
