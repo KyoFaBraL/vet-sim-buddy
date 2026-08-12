@@ -160,7 +160,7 @@ export const PatientMonitor = ({
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-medium text-muted-foreground">
-                      {param.nome}
+                      {paramLabels[param.nome] ?? param.nome}
                     </span>
                     {getTrendIcon(trend)}
                   </div>
