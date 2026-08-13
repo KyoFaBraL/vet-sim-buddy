@@ -15,6 +15,8 @@ export const useTcleConsent = (user: User | null) => {
       return;
     }
 
+    setLoading(true);
+
     const checkConsent = async () => {
       try {
         const { data, error } = await supabase
@@ -35,8 +37,15 @@ export const useTcleConsent = (user: User | null) => {
       }
     };
 
-    checkConsent();
-  }, [user]);
+    const watchdog = setTimeout(() => {
+      console.warn('Timeout ao verificar consentimento TCLE');
+      setLoading(false);
+    }, 6000);
+
+    checkConsent().finally(() => clearTimeout(watchdog));
+
+    return () => clearTimeout(watchdog);
+  }, [user?.id]);
 
   const acceptConsent = async () => {
     if (!user) return false;

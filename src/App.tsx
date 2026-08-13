@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -14,6 +14,7 @@ import PreValidation from "./pages/PreValidation";
 import ConsentimentoTCLE from "./pages/ConsentimentoTCLE";
 import OAuthConsent from "./pages/OAuthConsent";
 import { RoleSelection } from "./components/RoleSelection";
+import { AuthProvider } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
 import { useTcleConsent } from "./hooks/useTcleConsent";
@@ -23,6 +24,7 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading: authLoading } = useAuth();
   const { role, loading: roleLoading } = useUserRole(user);
+  const location = useLocation();
   
   if (authLoading || roleLoading) {
     return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
@@ -32,7 +34,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/" replace />;
   }
 
-  const path = window.location.pathname;
+  const path = location.pathname;
 
   // Admin tem acesso total - redirecionar para painel de professor
   if (role === 'admin' && path === '/app') {
@@ -107,6 +109,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <AuthProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={
@@ -150,6 +153,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </AuthProvider>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
