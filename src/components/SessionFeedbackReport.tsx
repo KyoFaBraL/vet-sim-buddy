@@ -47,6 +47,8 @@ export const SessionFeedbackReport = ({ sessionId, onClose }: SessionFeedbackRep
 
       setFeedback(data.feedback);
       setSessionData(data.sessionData);
+      setEngine(data.engine || 'ai');
+
       
       toast({
         title: "Relatório Gerado!",
