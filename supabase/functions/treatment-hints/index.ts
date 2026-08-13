@@ -47,10 +47,12 @@ serve(async (req) => {
     const body = await req.json();
     const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = body;
     
+    const aiMode = getAiMode();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
+    if (!LOVABLE_API_KEY && aiMode !== "deterministic") {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
+
 
     const sanitizedCondition = sanitizeInput(condition, 200);
     const sanitizedCaseDescription = sanitizeInput(caseDescription, 500);
