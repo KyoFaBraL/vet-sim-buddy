@@ -137,7 +137,7 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
       });
 
       // Se for professor, carregar dados dos alunos
-      if (userRole === 'professor') {
+      if ((userRole === 'professor' || userRole === 'admin')) {
         await loadStudentStats(dateFilter);
       }
     } catch (error) {
@@ -298,7 +298,7 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="overview">Visão Geral</TabsTrigger>
             <TabsTrigger value="activity">Atividade</TabsTrigger>
-            {userRole === 'professor' && (
+            {(userRole === 'professor' || userRole === 'admin') && (
               <TabsTrigger value="students">Alunos</TabsTrigger>
             )}
           </TabsList>
@@ -420,7 +420,7 @@ export const AdvancedReports = ({ userRole }: { userRole?: string }) => {
             )}
           </TabsContent>
 
-          {userRole === 'professor' && (
+          {(userRole === 'professor' || userRole === 'admin') && (
             <TabsContent value="students">
               <Card>
                 <CardHeader>
