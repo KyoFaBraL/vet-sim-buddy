@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { getAuthErrorMessage } from "@/lib/authErrors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -98,7 +99,7 @@ export const Auth = ({ onAuthSuccess }: AuthProps) => {
     } catch (error: any) {
       toast({
         title: "Erro ao criar conta",
-        description: error.message,
+        description: getAuthErrorMessage(error),
         variant: "destructive",
       });
     } finally {
@@ -145,7 +146,7 @@ export const Auth = ({ onAuthSuccess }: AuthProps) => {
     } catch (error: any) {
       toast({
         title: "Erro ao fazer login",
-        description: error.message,
+        description: getAuthErrorMessage(error),
         variant: "destructive",
       });
     } finally {

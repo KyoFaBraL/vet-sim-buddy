@@ -1,0 +1,10 @@
+DELETE FROM public.session_history WHERE session_id IN (SELECT id FROM public.simulation_sessions WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%'));
+DELETE FROM public.session_decisions WHERE session_id IN (SELECT id FROM public.simulation_sessions WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%'));
+DELETE FROM public.session_treatments WHERE session_id IN (SELECT id FROM public.simulation_sessions WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%'));
+DELETE FROM public.metas_alcancadas WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%');
+DELETE FROM public.simulation_notes WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%');
+DELETE FROM public.simulation_sessions WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%');
+DELETE FROM public.user_badges WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%');
+DELETE FROM public.user_roles WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%');
+DELETE FROM public.tcle_consents WHERE user_id IN (SELECT id FROM public.profiles WHERE email LIKE 'loadtest.%');
+DELETE FROM auth.users WHERE email LIKE 'loadtest.%';
