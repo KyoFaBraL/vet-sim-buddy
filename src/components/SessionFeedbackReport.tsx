@@ -128,7 +128,14 @@ export const SessionFeedbackReport = ({ sessionId, onClose }: SessionFeedbackRep
               {statusBadge}
               <span>•</span>
               <span>Duração: {Math.floor(sessionData?.duration / 60)}min {sessionData?.duration % 60}s</span>
+              {engine !== 'ai' && (
+                <>
+                  <span>•</span>
+                  <Badge variant="outline">Análise local (sem custo de IA)</Badge>
+                </>
+              )}
             </CardDescription>
+
           </div>
           {onClose && (
             <Button variant="ghost" size="sm" onClick={onClose}>
