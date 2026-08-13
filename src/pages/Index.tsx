@@ -197,8 +197,8 @@ const Index = () => {
               <div className="flex items-center gap-3">
                 <VetBalanceLogo className="h-12 w-12 object-contain" />
                 <div>
-                  <h1 className="text-xl font-bold">VetBalance — Simulador Gamificado de Cuidados Críticos</h1>
-                  <p className="text-sm text-muted-foreground">Simulador de Cuidados Críticos</p>
+                  <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
+                  <p className="text-sm text-muted-foreground">Portal do Professor</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -359,7 +359,7 @@ const Index = () => {
             <div className="flex items-center gap-3">
               <VetBalanceLogo className="h-12 w-12 object-contain" />
               <div>
-                <h1 className="text-xl font-bold">VetBalance — Simulador Gamificado de Cuidados Críticos</h1>
+                <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
                 <p className="text-sm text-muted-foreground">Modo Aluno</p>
               </div>
             </div>
