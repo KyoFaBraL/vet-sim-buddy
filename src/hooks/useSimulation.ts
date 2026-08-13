@@ -805,6 +805,13 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     setHp(newHp);
     setMinHpDuringSession(prev => Math.min(prev, newHp));
     setLastHpChange(delta);
+
+    // Encerrar a partida quando o HP atinge os extremos por ajuste direto
+    // (ex.: penalidade de dica), mantendo a UI consistente com o resultado.
+    if (gameStatus === 'playing' && (newHp >= 100 || newHp <= 0)) {
+      setGameStatus(newHp >= 100 ? 'won' : 'lost');
+      setIsRunning(false);
+    }
   };
 
   return {
