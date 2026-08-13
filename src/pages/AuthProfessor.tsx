@@ -73,21 +73,8 @@ export default function AuthProfessor() {
     setLoading(true);
 
     try {
-      // Pre-validate access key using secure function before signup
-      const { data: isKeyValid, error: keyError } = await supabase
-        .rpc('validate_professor_access_key', { key_to_check: result.data.accessKey });
-      
-      if (keyError) throw keyError;
-      
-      if (!isKeyValid) {
-        toast({
-          title: "Chave inválida",
-          description: "A chave de acesso é inválida, já foi utilizada ou expirou.",
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
-      }
+      // A chave de acesso é validada no servidor por register_professor (após autenticação)
+
 
       const redirectUrl = `${window.location.origin}/`;
       
