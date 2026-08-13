@@ -77,6 +77,52 @@ serve(async (req) => {
     const caseName = sanitizeInput(session.casos_clinicos.nome, 200);
     const caseSpecies = sanitizeInput(session.casos_clinicos.especie, 50);
 
+    const { data: caseTreatments } = await supabase
+      .from('tratamentos_caso')
+      .select('prioridade, justificativa, tratamentos(nome, descricao)')
+      .eq('case_id', session.case_id)
+      .order('prioridade', { ascending: true });
+
+    const appropriateTreatments = (caseTreatments || []).map((ct: any) => ({
+      nome: ct.tratamentos?.nome,
+      descricao: ct.tratamentos?.descricao,
+      prioridade: ct.prioridade,
+      justificativa: ct.justificativa,
+    }));
+
+    const won = session.status === 'won' || session.status === 'vitoria';
+    const sessionPayload = {
+      caseName: session.casos_clinicos.nome,
+      status: session.status,
+      duration: session.duracao_segundos,
+    };
+
+    const aiMode = getAiMode();
+
+    const deterministic = () => buildDeterministicFeedback({
+      caseName,
+      caseSpecies,
+      condition: sanitizeInput(session.casos_clinicos.descricao, 200),
+      won,
+      duration: session.duracao_segundos || 0,
+      decisionsCount: decisions?.length || 0,
+      appliedTreatments: (treatments || []).map((t: any) => sanitizeInput(t.tratamentos?.nome, 100)).filter(Boolean),
+      appropriateTreatments,
+    });
+
+    if (aiMode === 'deterministic' || !lovableApiKey) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          engine: 'deterministic',
+          sessionData: sessionPayload,
+          feedback: deterministic(),
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+
     const prompt = `Você é um tutor especialista em medicina veterinária. Analise o desempenho do estudante e forneça feedback CONSTRUTIVO e EDUCACIONAL.
 
 CASO: ${caseName} (${caseSpecies})
