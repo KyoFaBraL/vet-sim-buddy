@@ -106,7 +106,7 @@ export function buildDeterministicHints(args: {
         p.unidade ? ` ${p.unidade}` : ""
       } (normal ${p.min}–${p.max}).`,
       treatment: treatmentName,
-      mechanism: `${rationale} No contexto de ${clean(condition, "distúrbio ácido-base")}, essa intervenção atua diretamente sobre a alteração de ${p.nome}.`,
+      mechanism: `${rationale.replace(/\s*$/, "").replace(/([^.!?])$/, "$1.")} No contexto de ${clean(condition, "distúrbio ácido-base")}, essa intervenção atua diretamente sobre a alteração de ${p.nome}.`,
       targetParameter: target,
       expectedChange:
         p.direction === "abaixo"
