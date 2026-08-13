@@ -2,7 +2,7 @@
 
 ## Objetivo
 Substituir o nome exibido no cabeçalho da tela do simulador para o texto enxuto solicitado:
-**"VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para cães e gatos"**
+**"VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos"**
 
 ## Escopo
 - Alterar o `<h1>` do cabeçalho do professor em `src/pages/Index.tsx` (linha ~200).
