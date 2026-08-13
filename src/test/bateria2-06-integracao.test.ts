@@ -69,12 +69,13 @@ describe("Integração — simulação + persistência", () => {
       await result.current.toggleSimulation();
     });
 
-    vi.useFakeTimers();
-    await act(async () => {
-      vi.advanceTimersByTime(6000);
+    await waitFor(() => expect(result.current.history.length).toBeGreaterThan(0), {
+      timeout: 4000,
     });
+    await waitFor(
+      () => expect(supabaseMock.from.mock.calls.map((c) => c[0])).toContain("session_history"),
+      { timeout: 9000 }
+    );
+  }, 20000);
 
-    expect(result.current.history.length).toBeGreaterThan(0);
-    expect(supabaseMock.from.mock.calls.map((c) => c[0])).toContain("session_history");
-  });
 });
