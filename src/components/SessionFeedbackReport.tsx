@@ -22,8 +22,10 @@ interface SessionFeedbackReportProps {
 export const SessionFeedbackReport = ({ sessionId, onClose }: SessionFeedbackReportProps) => {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null);
   const [sessionData, setSessionData] = useState<any>(null);
+  const [engine, setEngine] = useState<string>('ai');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
 
   const generateFeedback = async () => {
     if (!sessionId) {
