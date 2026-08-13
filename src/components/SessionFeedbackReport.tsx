@@ -22,8 +22,10 @@ interface SessionFeedbackReportProps {
 export const SessionFeedbackReport = ({ sessionId, onClose }: SessionFeedbackReportProps) => {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null);
   const [sessionData, setSessionData] = useState<any>(null);
+  const [engine, setEngine] = useState<string>('ai');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
 
   const generateFeedback = async () => {
     if (!sessionId) {
@@ -45,6 +47,8 @@ export const SessionFeedbackReport = ({ sessionId, onClose }: SessionFeedbackRep
 
       setFeedback(data.feedback);
       setSessionData(data.sessionData);
+      setEngine(data.engine || 'ai');
+
       
       toast({
         title: "Relatório Gerado!",
@@ -124,7 +128,14 @@ export const SessionFeedbackReport = ({ sessionId, onClose }: SessionFeedbackRep
               {statusBadge}
               <span>•</span>
               <span>Duração: {Math.floor(sessionData?.duration / 60)}min {sessionData?.duration % 60}s</span>
+              {engine !== 'ai' && (
+                <>
+                  <span>•</span>
+                  <Badge variant="outline">Análise local (sem custo de IA)</Badge>
+                </>
+              )}
             </CardDescription>
+
           </div>
           {onClose && (
             <Button variant="ghost" size="sm" onClick={onClose}>

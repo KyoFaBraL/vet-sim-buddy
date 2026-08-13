@@ -1,5 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
+import { buildDeterministicHints, getAiMode } from '../_shared/deterministic-feedback.ts';
+
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -47,10 +49,12 @@ serve(async (req) => {
     const body = await req.json();
     const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = body;
     
+    const aiMode = getAiMode();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
+    if (!LOVABLE_API_KEY && aiMode !== "deterministic") {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
+
 
     const sanitizedCondition = sanitizeInput(condition, 200);
     const sanitizedCaseDescription = sanitizeInput(caseDescription, 500);
@@ -92,6 +96,22 @@ serve(async (req) => {
         }));
       }
     }
+
+    const deterministicHints = () => buildDeterministicHints({
+      currentState: currentState || {},
+      parameters: Array.isArray(parameters) ? parameters : [],
+      condition: sanitizedCondition,
+      appropriateTreatments,
+      availableTreatments: Array.isArray(availableTreatments) ? availableTreatments : [],
+    });
+
+    if (aiMode === "deterministic") {
+      return new Response(
+        JSON.stringify({ hints: deterministicHints(), engine: "deterministic" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
 
     const treatmentsContext = (Array.isArray(availableTreatments) ? availableTreatments : []).map((t: any) => 
       `- ${sanitizeInput(t.nome, 100)}: ${sanitizeInput(t.descricao, 200)}`
@@ -193,7 +213,16 @@ Formato da resposta (JSON):
       }),
     });
 
+    const fallback = (reason: string) => {
+      console.log("Fallback determinístico de dicas:", reason);
+      return new Response(
+        JSON.stringify({ hints: deterministicHints(), engine: "deterministic-fallback" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    };
+
     if (!response.ok) {
+      if (aiMode === "auto") return fallback(`status ${response.status}`);
       if (response.status === 429) {
         return new Response(
           JSON.stringify({ error: "Muitas requisições. Por favor, tente novamente em alguns instantes." }),
@@ -218,6 +247,7 @@ Formato da resposta (JSON):
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     
     if (!toolCall) {
+      if (aiMode === "auto") return fallback("resposta sem tool_call");
       return new Response(
         JSON.stringify({ error: "Resposta inválida da IA" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -227,9 +257,10 @@ Formato da resposta (JSON):
     const hints = JSON.parse(toolCall.function.arguments);
 
     return new Response(
-      JSON.stringify(hints),
+      JSON.stringify({ ...hints, engine: "ai" }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
+
 
   } catch (error) {
     console.error("Error in treatment-hints function:", error);

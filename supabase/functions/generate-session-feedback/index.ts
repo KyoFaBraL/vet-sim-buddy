@@ -1,6 +1,8 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
+import { buildDeterministicFeedback, getAiMode } from '../_shared/deterministic-feedback.ts';
+
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -77,6 +79,52 @@ serve(async (req) => {
     const caseName = sanitizeInput(session.casos_clinicos.nome, 200);
     const caseSpecies = sanitizeInput(session.casos_clinicos.especie, 50);
 
+    const { data: caseTreatments } = await supabase
+      .from('tratamentos_caso')
+      .select('prioridade, justificativa, tratamentos(nome, descricao)')
+      .eq('case_id', session.case_id)
+      .order('prioridade', { ascending: true });
+
+    const appropriateTreatments = (caseTreatments || []).map((ct: any) => ({
+      nome: ct.tratamentos?.nome,
+      descricao: ct.tratamentos?.descricao,
+      prioridade: ct.prioridade,
+      justificativa: ct.justificativa,
+    }));
+
+    const won = session.status === 'won' || session.status === 'vitoria';
+    const sessionPayload = {
+      caseName: session.casos_clinicos.nome,
+      status: session.status,
+      duration: session.duracao_segundos,
+    };
+
+    const aiMode = getAiMode();
+
+    const deterministic = () => buildDeterministicFeedback({
+      caseName,
+      caseSpecies,
+      condition: sanitizeInput(session.casos_clinicos.descricao, 200),
+      won,
+      duration: session.duracao_segundos || 0,
+      decisionsCount: decisions?.length || 0,
+      appliedTreatments: (treatments || []).map((t: any) => sanitizeInput(t.tratamentos?.nome, 100)).filter(Boolean),
+      appropriateTreatments,
+    });
+
+    if (aiMode === 'deterministic' || !lovableApiKey) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          engine: 'deterministic',
+          sessionData: sessionPayload,
+          feedback: deterministic(),
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+
     const prompt = `Você é um tutor especialista em medicina veterinária. Analise o desempenho do estudante e forneça feedback CONSTRUTIVO e EDUCACIONAL.
 
 CASO: ${caseName} (${caseSpecies})
@@ -125,17 +173,32 @@ Retorne APENAS JSON válido:
       }),
     });
 
+    const fallback = (reason: string) => {
+      console.log('Fallback determinístico de feedback:', reason);
+      return new Response(
+        JSON.stringify({
+          success: true,
+          engine: 'deterministic-fallback',
+          sessionData: sessionPayload,
+          feedback: deterministic(),
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    };
+
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Erro na IA:', response.status, errorText);
+      if (aiMode === 'auto') return fallback(`status ${response.status}`);
       throw new Error('Erro ao gerar feedback');
     }
 
     const aiData = await response.json();
-    const aiContent = aiData.choices[0].message.content;
+    const aiContent = aiData.choices?.[0]?.message?.content ?? '';
 
     const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
+      if (aiMode === 'auto') return fallback('resposta inválida');
       throw new Error('Resposta da IA inválida');
     }
 
@@ -144,15 +207,13 @@ Retorne APENAS JSON válido:
     return new Response(
       JSON.stringify({
         success: true,
-        sessionData: {
-          caseName: session.casos_clinicos.nome,
-          status: session.status,
-          duration: session.duracao_segundos
-        },
+        engine: 'ai',
+        sessionData: sessionPayload,
         feedback
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
 
   } catch (error) {
     console.error('Erro:', error);
