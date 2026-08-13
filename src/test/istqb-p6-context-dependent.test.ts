@@ -11,7 +11,10 @@ vi.mock("@/integrations/supabase/client", () => ({ supabase: supabaseMock }));
 import { useSimulation } from "@/hooks/useSimulation";
 
 describe("P6 — Testes dependem do contexto (Prática vs Avaliação)", () => {
-  beforeEach(() => seedDefaultCase());
+  beforeEach(() => {
+    seedDefaultCase();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+  });
   afterEach(() => vi.useRealTimers());
 
   it("modo avaliação encerra por tempo em 300s", async () => {
@@ -19,9 +22,7 @@ describe("P6 — Testes dependem do contexto (Prática vs Avaliação)", () => {
     await waitFor(() => expect(result.current.parameters.length).toBe(3));
 
     await act(async () => { await result.current.toggleSimulation(); });
-    vi.useFakeTimers();
-    vi.setSystemTime(Date.now() + 301_000);
-    await act(async () => { vi.advanceTimersByTime(1500); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(302_000); });
 
     expect(result.current.gameStatus).toBe("lost");
     expect(result.current.isRunning).toBe(false);
@@ -32,9 +33,7 @@ describe("P6 — Testes dependem do contexto (Prática vs Avaliação)", () => {
     await waitFor(() => expect(result.current.parameters.length).toBe(3));
 
     await act(async () => { await result.current.toggleSimulation(); });
-    vi.useFakeTimers();
-    vi.setSystemTime(Date.now() + 301_000);
-    await act(async () => { vi.advanceTimersByTime(1500); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(302_000); });
 
     expect(result.current.gameStatus).toBe("playing");
   });

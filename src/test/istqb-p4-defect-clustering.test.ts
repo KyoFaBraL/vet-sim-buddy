@@ -13,7 +13,7 @@ import { useSimulation } from "@/hooks/useSimulation";
 describe("P4 — Defeitos se agrupam (módulo de HP)", () => {
   beforeEach(() => {
     seedDefaultCase();
-    vi.useFakeTimers();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
   });
   afterEach(() => vi.useRealTimers());
 
