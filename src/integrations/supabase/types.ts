@@ -1202,6 +1202,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_professor_or_admin: { Args: { _user_id: string }; Returns: boolean }
       promote_to_professor: { Args: { target_user_id: string }; Returns: Json }
       purge_old_email_lookups: { Args: never; Returns: undefined }
       register_aluno: {
