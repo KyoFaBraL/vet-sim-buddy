@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { getAuthErrorMessage } from "@/lib/authErrors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -118,11 +119,7 @@ export default function AuthAluno() {
       }
     } catch (error: any) {
       // Handle specific error cases
-      let errorMessage = error.message;
-      
-      if (error.message?.includes("User already registered")) {
-        errorMessage = "Este email já está cadastrado. Por favor, faça login.";
-      }
+      const errorMessage = getAuthErrorMessage(error);
       
       toast({
         title: "Erro ao criar conta",
@@ -189,7 +186,7 @@ export default function AuthAluno() {
     } catch (error: any) {
       toast({
         title: "Erro ao fazer login",
-        description: error.message,
+        description: getAuthErrorMessage(error),
         variant: "destructive",
       });
     } finally {
