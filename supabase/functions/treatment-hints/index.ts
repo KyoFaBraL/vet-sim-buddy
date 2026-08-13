@@ -49,7 +49,7 @@ serve(async (req) => {
     const body = await req.json();
     const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = body;
     
-    const aiMode = await resolveAiMode(supabase);
+    const aiMode = await resolveAiMode(supabaseForAuth);
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY && aiMode !== "deterministic") {
       throw new Error("LOVABLE_API_KEY is not configured");
