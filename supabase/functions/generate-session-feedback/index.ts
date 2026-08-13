@@ -171,17 +171,32 @@ Retorne APENAS JSON válido:
       }),
     });
 
+    const fallback = (reason: string) => {
+      console.log('Fallback determinístico de feedback:', reason);
+      return new Response(
+        JSON.stringify({
+          success: true,
+          engine: 'deterministic-fallback',
+          sessionData: sessionPayload,
+          feedback: deterministic(),
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    };
+
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Erro na IA:', response.status, errorText);
+      if (aiMode === 'auto') return fallback(`status ${response.status}`);
       throw new Error('Erro ao gerar feedback');
     }
 
     const aiData = await response.json();
-    const aiContent = aiData.choices[0].message.content;
+    const aiContent = aiData.choices?.[0]?.message?.content ?? '';
 
     const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
+      if (aiMode === 'auto') return fallback('resposta inválida');
       throw new Error('Resposta da IA inválida');
     }
 
@@ -190,15 +205,13 @@ Retorne APENAS JSON válido:
     return new Response(
       JSON.stringify({
         success: true,
-        sessionData: {
-          caseName: session.casos_clinicos.nome,
-          status: session.status,
-          duration: session.duracao_segundos
-        },
+        engine: 'ai',
+        sessionData: sessionPayload,
         feedback
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
 
   } catch (error) {
     console.error('Erro:', error);
