@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: string
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value: string
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
       badges: {
         Row: {
           criado_em: string
@@ -1140,6 +1161,7 @@ export type Database = {
       }
       demote_to_student: { Args: { target_user_id: string }; Returns: Json }
       generate_access_code: { Args: never; Returns: string }
+      get_ai_feedback_mode: { Args: never; Returns: string }
       get_all_profiles_for_admin: {
         Args: never
         Returns: {
@@ -1227,6 +1249,7 @@ export type Database = {
         Args: { p_week_end: string; p_week_start: string }
         Returns: Json
       }
+      set_ai_feedback_mode: { Args: { new_mode: string }; Returns: Json }
       validate_professor_access_key: {
         Args: { key_to_check: string }
         Returns: boolean

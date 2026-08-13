@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.get_ai_feedback_mode() FROM anon;

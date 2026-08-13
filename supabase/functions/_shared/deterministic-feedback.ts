@@ -209,9 +209,32 @@ export function buildDeterministicFeedback(args: {
   return { analiseGeral, pontoFortes, areasMelhoria, sugestoesEstudo, recomendacao };
 }
 
+export type AiMode = "deterministic" | "ai" | "auto";
+
+function normalizeMode(raw: string | null | undefined): AiMode | null {
+  const v = (raw || "").toLowerCase().trim();
+  if (v === "ai" || v === "auto" || v === "deterministic") return v as AiMode;
+  return null;
+}
+
 // "deterministic" (padrão): nunca chama IA. "ai": sempre IA. "auto": IA com fallback.
-export function getAiMode(): "deterministic" | "ai" | "auto" {
-  const raw = (Deno.env.get("AI_FEEDBACK_MODE") || "deterministic").toLowerCase();
-  if (raw === "ai" || raw === "auto") return raw;
-  return "deterministic";
+export function getAiMode(): AiMode {
+  return normalizeMode(Deno.env.get("AI_FEEDBACK_MODE")) ?? "deterministic";
+}
+
+// Preferência configurada pelo admin no painel (tabela app_settings).
+// Cai para a variável de ambiente se a consulta falhar.
+export async function resolveAiMode(supabase: {
+  rpc: (fn: string) => Promise<{ data: unknown; error: unknown }>;
+}): Promise<AiMode> {
+  try {
+    const { data, error } = await supabase.rpc("get_ai_feedback_mode");
+    if (!error) {
+      const mode = normalizeMode(typeof data === "string" ? data : null);
+      if (mode) return mode;
+    }
+  } catch (_e) {
+    // ignora e usa fallback
+  }
+  return getAiMode();
 }
