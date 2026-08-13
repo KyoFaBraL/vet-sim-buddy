@@ -95,6 +95,22 @@ serve(async (req) => {
       }
     }
 
+    const deterministicHints = () => buildDeterministicHints({
+      currentState: currentState || {},
+      parameters: Array.isArray(parameters) ? parameters : [],
+      condition: sanitizedCondition,
+      appropriateTreatments,
+      availableTreatments: Array.isArray(availableTreatments) ? availableTreatments : [],
+    });
+
+    if (aiMode === "deterministic") {
+      return new Response(
+        JSON.stringify({ hints: deterministicHints(), engine: "deterministic" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+
     const treatmentsContext = (Array.isArray(availableTreatments) ? availableTreatments : []).map((t: any) => 
       `- ${sanitizeInput(t.nome, 100)}: ${sanitizeInput(t.descricao, 200)}`
     ).join('\n');
