@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
-import { buildDeterministicHints, getAiMode } from '../_shared/deterministic-feedback.ts';
+import { buildDeterministicHints, resolveAiMode } from '../_shared/deterministic-feedback.ts';
 
 
 const corsHeaders = {
@@ -49,7 +49,7 @@ serve(async (req) => {
     const body = await req.json();
     const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = body;
     
-    const aiMode = getAiMode();
+    const aiMode = await resolveAiMode(supabase);
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY && aiMode !== "deterministic") {
       throw new Error("LOVABLE_API_KEY is not configured");
