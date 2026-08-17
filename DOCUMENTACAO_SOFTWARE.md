@@ -1,9 +1,9 @@
 # DOCUMENTAÇÃO TÉCNICA COMPLETA DO SOFTWARE
 
-## VETBALANCE – Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais
+## VETBALANCE — Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos
 
-**Versão:** 1.0  
-**Data:** Fevereiro de 2026  
+**Versão:** 2.0  
+**Data:** Agosto de 2026  
 **Formato:** Progressive Web App (PWA)  
 **URL de Produção:** https://vetbalance.app.br
 
@@ -49,6 +49,15 @@ O **VetBalance** é um software educacional gamificado desenvolvido como ferrame
 - Registrar e analisar o desempenho dos estudantes ao longo do tempo
 - Disponibilizar relatórios exportáveis para análise acadêmica
 
+### 1.1.1 Registro e Reconhecimento
+
+| Item | Situação |
+|------|----------|
+| **Registro de programa de computador (INPI)** | Em cadastramento — titular: UFPI; autores: Caio Farias Cabral e Prof. Dr. Napoleão Martins Argôlo Neto |
+| **Hash do código-fonte (SHA-512)** | Gerado e declarado no formulário do INPI |
+| **Validação ética (CEP/UFPI)** | Projeto submetido ao CEP/UFPI (coordenação: Prof.ª Dr.ª Hilris Rocha e Silva); execução após parecer favorável |
+| **Seleção internacional** | HICOOL 2026 Global Entrepreneur Summit |
+
 ### 1.2 Público-Alvo
 
 | Perfil | Descrição |
@@ -56,6 +65,15 @@ O **VetBalance** é um software educacional gamificado desenvolvido como ferrame
 | **Estudantes de Medicina Veterinária** | Utilizam o simulador para praticar e aprender |
 | **Professores/Docentes** | Criam casos, gerenciam turmas e analisam desempenho |
 | **Profissionais recém-formados** | Aprimoram competências em equilíbrio ácido-base |
+| **Administradores** | Gerenciam usuários, cargos e o modo de feedback do sistema |
+
+### 1.3 Recursos Complementares da Versão 2.0
+
+- **Motor de feedback determinístico** com alternância administrativa (`AI_FEEDBACK_MODE`) entre avaliação determinística e assistida por IA.
+- **Integrações para agentes (MCP)** com autorização OAuth, expondo consultas de casos clínicos, sessões e progresso.
+- **Bateria de testes automatizados** organizada segundo os 7 princípios do ISTQB (102 casos), incluindo testes de caixa branca/preta/cinza, regressão, carga, estresse e usabilidade.
+- **Perfil de administrador global** com permissões plenas validadas no servidor (funções SECURITY DEFINER e políticas de RLS).
+- **SEO e PWA**: metadados dinâmicos, `sitemap.xml`, `robots.txt` e tags Open Graph.
 
 ---
 
