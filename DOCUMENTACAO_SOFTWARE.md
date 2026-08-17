@@ -1364,7 +1364,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 
 ---
 
-**Documento gerado em:** Fevereiro de 2026  
+**Documento gerado em:** Agosto de 2026  
 **Versão do documento:** 1.0  
 **Total de componentes:** 60+ componentes React  
 **Total de tabelas:** 32 tabelas PostgreSQL  
