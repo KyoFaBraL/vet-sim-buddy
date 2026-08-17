@@ -46,7 +46,7 @@ Verificar se o software atende aos requisitos de qualidade definidos pela ISO/IE
 | Item | Valor |
 |------|-------|
 | **Data de início** | S1 |
-| **Data de término** | pós-validação |
+| **Data de término** | S20 |
 | **Duração total** | ~5 meses (20 semanas) |
 | **Agosto/2026** | Reservado para redação e defesa do mestrado |
 
@@ -264,17 +264,17 @@ O₄ = Pós-teste final (Junho/2026)
 | 14–15 | S15 – S16 | **Pós-teste final** (O₄) — avaliação abrangente (GE + GC) | Docentes | Notas tabuladas |
 | 15 | S16 | Exportação completa dos dados do SUT (CSV/TXT) | Pesquisador | Arquivos de dados |
 
-### 8.6 Fase 6 — Análise e Relatório (S17 – pós-validação)
+### 8.6 Fase 6 — Análise e Relatório (S17 – S20)
 
 | Semana | Período | Procedimento | Responsável | Entregável |
 |--------|---------|-------------|-------------|------------|
 | 17 | S17 | Processamento estatístico: testes t de Student (pareado e independente), teste de Shapiro-Wilk | Pesquisador | Tabelas estatísticas |
 | 18 | S18 | Análise dos dados do SUT: sessões, win rate, badges, ranking; cálculo do d de Cohen | Pesquisador | Relatório de uso |
 | 19 | S19 | Cruzamento: desempenho no software × notas nas avaliações; correlação de Pearson | Pesquisador | Análise cruzada |
-| 20 | S20 – pós-validação | Redação do relatório final de validação | Pesquisador | Rascunho do relatório |
-| 20 | pós-validação – pós-validação | **Entrega do relatório final de validação** (IEEE 829 — Test Summary Report) | Pesquisador | Documento final ✅ |
+| 20 | S20 | Redação do relatório final de validação | Pesquisador | Rascunho do relatório |
+| 20 | S20 | **Entrega do relatório final de validação** (IEEE 829 — Test Summary Report) | Pesquisador | Documento final ✅ |
 
-> **Nota:** O mês de agosto de 2026 está reservado exclusivamente para a redação da dissertação e defesa do mestrado, com base nos dados consolidados até pós-validação.
+> **Nota:** O mês de agosto de 2026 está reservado exclusivamente para a redação da dissertação e defesa do mestrado, com base nos dados consolidados até após S20.
 
 ---
 
@@ -303,9 +303,9 @@ O₄ = Pós-teste final (Junho/2026)
 | 16 | S17 | S17 | F6 — Análise | Processamento estatístico (testes t, Shapiro-Wilk) | |
 | 17 | S18 | S18 | F6 — Análise | Análise dados SUT (sessões, win rate, badges); d de Cohen | |
 | 18 | S19 | S19 | F6 — Análise | Cruzamento de dados (software × notas); Pearson | |
-| 19 | S20 | pós-validação | F6 — Relatório | Redação do relatório final de validação | |
-| 20 | pós-validação | pós-validação | F6 — Relatório | **Entrega do relatório final** (IEEE 829) | ✅ Relatório final |
-| — | pós-validação | pós-validação | **MESTRADO** | **Redação da dissertação e defesa** | 🎓 Defesa |
+| 19 | S20 | S20 | F6 — Relatório | Redação do relatório final de validação | |
+| 20 | S20 | S20 | F6 — Relatório | **Entrega do relatório final** (IEEE 829) | ✅ Relatório final |
+| — | após S20 | após S20 | **MESTRADO** | **Redação da dissertação e defesa** | 🎓 Defesa |
 
 ### 9.2 Resumo por Fase
 
@@ -316,9 +316,9 @@ O₄ = Pós-teste final (Junho/2026)
 | F3 — Avaliação Intermediária 1 | S7 | S10 | 20 dias | 7–9 |
 | F4 — Intervenção Avançada | S10 | S13 | 20 dias | 10–12 |
 | F5 — Avaliação Final e Coleta | S13 | S16 | 20 dias | 13–15 |
-| F6 — Análise e Relatório | S17 | pós-validação | 32 dias | 16–20 |
-| **Total da validação** | **S1** | **pós-validação** | **144 dias** | **20 semanas** |
-| Mestrado (redação + defesa) | pós-validação | pós-validação | 31 dias | — |
+| F6 — Análise e Relatório | S17 | S20 | 32 dias | 16–20 |
+| **Total da validação** | **S1** | **S20** | **144 dias** | **20 semanas** |
+| Mestrado (redação + defesa) | após S20 | após S20 | 31 dias | — |
 
 ### 9.3 Marcos Críticos (Milestones)
 
@@ -329,7 +329,7 @@ O₄ = Pós-teste final (Junho/2026)
 | 🔴 O₃ | S14 – S15 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
 | 🔴 O₄ | S15 – S16 | Pós-teste final — avaliação abrangente |
 | ✅ Coleta | S16 | Encerramento da coleta de dados |
-| ✅ Relatório | pós-validação | Entrega do relatório final de validação (IEEE 829) |
+| ✅ Relatório | S20 | Entrega do relatório final de validação (IEEE 829) |
 | 🎓 Defesa | Agosto/2026 | Defesa do mestrado |
 
 ### 9.4 Diagrama de Gantt
@@ -595,7 +595,7 @@ Este checklist deve ser executado **integralmente** antes do início da Fase F1 
 | Item | Detalhe |
 |------|---------|
 | **Responsável** | Pesquisador principal |
-| **Prazo** | Concluir até **pré-aprovação** (3 dias antes de F1) |
+| **Prazo** | Concluir até **pré-F1** (3 dias antes de F1) |
 | **Ambiente** | Produção (https://vetbalance.app.br) |
 | **Método** | Executar com conta de aluno-teste e professor-teste |
 | **Registro** | ✅ Aprovado / ❌ Falha + evidências (screenshots/logs) |

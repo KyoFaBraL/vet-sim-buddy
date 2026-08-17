@@ -1161,7 +1161,7 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 | **Identificador do documento** | VETBALANCE-PVS-001 v1.0 |
 | **Tipo de estudo** | Quase-experimental, controlado, com pré e pós-teste |
 | **Data de início** | S1 |
-| **Data de término** | pós-validação |
+| **Data de término** | S20 |
 | **Duração total** | ~5 meses (20 semanas) |
 | **Agosto/2026** | Reservado para redação e defesa do mestrado |
 
@@ -1174,7 +1174,7 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 | **F3 — Avaliação Intermediária 1** | 7–9 | S7 – S10 | 20 dias | Uso intensivo do SUT pelo GE, atividades tradicionais GC, avaliação intermediária 1 (O₂ — distúrbios metabólicos), análise parcial em RStudio |
 | **F4 — Intervenção Avançada** | 10–12 | S10 – S13 | 20 dias | Casos avançados (cetoacidose diabética, hipercapnia, mistos), aulas sobre compensação e protocolos terapêuticos, modo avaliação do SUT (sem dicas de IA) |
 | **F5 — Avaliação Final e Coleta** | 13–15 | S13 – S16 | 20 dias | Revisão geral no SUT, avaliação intermediária 2 (O₃ — distúrbios respiratórios e mistos), questionário SUS adaptado, pós-teste final (O₄), exportação completa dos dados (CSV/TXT) |
-| **F6 — Análise e Relatório** | 17–20 | S17 – pós-validação | 32 dias | Processamento estatístico (testes t de Student, Shapiro-Wilk), análise de dados do SUT (sessões, win rate, badges, d de Cohen), cruzamento software × notas (correlação de Pearson), redação e entrega do relatório final IEEE 829 |
+| **F6 — Análise e Relatório** | 17–20 | S17 – S20 | 32 dias | Processamento estatístico (testes t de Student, Shapiro-Wilk), análise de dados do SUT (sessões, win rate, badges, d de Cohen), cruzamento software × notas (correlação de Pearson), redação e entrega do relatório final IEEE 829 |
 
 ### 22.3 Marcos Críticos (Milestones)
 
@@ -1185,7 +1185,7 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 | 🔴 O₃ | S14 – S15 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
 | 🔴 O₄ | S15 – S16 | Pós-teste final — avaliação abrangente |
 | ✅ Coleta | S16 | Encerramento da coleta de dados |
-| ✅ Relatório | pós-validação | Entrega do relatório final de validação (IEEE 829) |
+| ✅ Relatório | S20 | Entrega do relatório final de validação (IEEE 829) |
 | 🎓 Defesa | Agosto/2026 | Redação da dissertação e defesa do mestrado |
 
 ### 22.4 Funcionalidades Sob Validação
@@ -1284,7 +1284,7 @@ Este checklist deve ser executado **integralmente** antes do início da Fase F1 
 #### 22.7.4 Procedimento de Execução
 
 1. **Responsável:** Pesquisador principal
-2. **Prazo:** Concluir até **pré-aprovação** (3 dias antes do início de F1)
+2. **Prazo:** Concluir até **pré-F1** (3 dias antes do início de F1)
 3. **Ambiente:** Produção (https://vetbalance.app.br)
 4. **Método:** Executar cada item com conta de aluno-teste e conta de professor-teste
 5. **Registro:** Marcar status (✅ Aprovado / ❌ Falha) e documentar evidências (screenshots ou logs)

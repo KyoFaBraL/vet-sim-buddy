@@ -163,7 +163,7 @@
 | F3 | S7–S12 | Coleta de dados (n=40) | ⬜ Pendente |
 | F4 | S12–S15 | Análise estatística | ⬜ Pendente |
 | F5 | S15–S19 | Redação dos resultados | ⬜ Pendente |
-| F6 | S19–pós-validação | Revisão final e submissão | ⬜ Pendente |
+| F6 | S19–S20 | Revisão final e submissão | ⬜ Pendente |
 | — | Agosto/2026 | Defesa de mestrado | ⬜ Pendente |
 
 ---
