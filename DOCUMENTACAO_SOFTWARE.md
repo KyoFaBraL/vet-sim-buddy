@@ -499,7 +499,7 @@ Todas as 9 Edge Functions implementam:
 
 ### 8.7 Auditoria de Segurança Automatizada
 
-**Data do último scan:** 01/04/2026 — 3 scanners (Agent Security, Connector Security, Supabase Linter)
+**Data do último scan:** S4 — 3 scanners (Agent Security, Connector Security, Supabase Linter)
 
 | Finding | Severidade | Ação |
 |---------|-----------|------|
@@ -1160,8 +1160,8 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 |------|-------|
 | **Identificador do documento** | VETBALANCE-PVS-001 v1.0 |
 | **Tipo de estudo** | Quase-experimental, controlado, com pré e pós-teste |
-| **Data de início** | 10/03/2026 |
-| **Data de término** | 31/07/2026 |
+| **Data de início** | S1 |
+| **Data de término** | pós-validação |
 | **Duração total** | ~5 meses (20 semanas) |
 | **Agosto/2026** | Reservado para redação e defesa do mestrado |
 
@@ -1169,23 +1169,23 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 | Fase | Semanas | Período | Duração | Atividades Principais |
 |------|---------|---------|---------|----------------------|
-| **F1 — Preparação** | 1–3 | 10/03 – 28/03/2026 | 19 dias | Submissão CEP, apresentação aos docentes, cadastro e randomização GE/GC, pré-teste diagnóstico (O₁) |
-| **F2 — Intervenção Inicial** | 4–6 | 30/03 – 18/04/2026 | 20 dias | Aulas teóricas partes 1 e 2 (GE + GC), treinamento no SUT (tutorial guiado), uso supervisionado GE (acidose/alcalose metabólica) |
-| **F3 — Avaliação Intermediária 1** | 7–9 | 27/04 – 16/05/2026 | 20 dias | Uso intensivo do SUT pelo GE, atividades tradicionais GC, avaliação intermediária 1 (O₂ — distúrbios metabólicos), análise parcial em RStudio |
-| **F4 — Intervenção Avançada** | 10–12 | 18/05 – 06/06/2026 | 20 dias | Casos avançados (cetoacidose diabética, hipercapnia, mistos), aulas sobre compensação e protocolos terapêuticos, modo avaliação do SUT (sem dicas de IA) |
-| **F5 — Avaliação Final e Coleta** | 13–15 | 08/06 – 27/06/2026 | 20 dias | Revisão geral no SUT, avaliação intermediária 2 (O₃ — distúrbios respiratórios e mistos), questionário SUS adaptado, pós-teste final (O₄), exportação completa dos dados (CSV/TXT) |
-| **F6 — Análise e Relatório** | 17–20 | 30/06 – 31/07/2026 | 32 dias | Processamento estatístico (testes t de Student, Shapiro-Wilk), análise de dados do SUT (sessões, win rate, badges, d de Cohen), cruzamento software × notas (correlação de Pearson), redação e entrega do relatório final IEEE 829 |
+| **F1 — Preparação** | 1–3 | S1 – S3 | 19 dias | Submissão CEP, apresentação aos docentes, cadastro e randomização GE/GC, pré-teste diagnóstico (O₁) |
+| **F2 — Intervenção Inicial** | 4–6 | S3 – S6 | 20 dias | Aulas teóricas partes 1 e 2 (GE + GC), treinamento no SUT (tutorial guiado), uso supervisionado GE (acidose/alcalose metabólica) |
+| **F3 — Avaliação Intermediária 1** | 7–9 | S7 – S10 | 20 dias | Uso intensivo do SUT pelo GE, atividades tradicionais GC, avaliação intermediária 1 (O₂ — distúrbios metabólicos), análise parcial em RStudio |
+| **F4 — Intervenção Avançada** | 10–12 | S10 – S13 | 20 dias | Casos avançados (cetoacidose diabética, hipercapnia, mistos), aulas sobre compensação e protocolos terapêuticos, modo avaliação do SUT (sem dicas de IA) |
+| **F5 — Avaliação Final e Coleta** | 13–15 | S13 – S16 | 20 dias | Revisão geral no SUT, avaliação intermediária 2 (O₃ — distúrbios respiratórios e mistos), questionário SUS adaptado, pós-teste final (O₄), exportação completa dos dados (CSV/TXT) |
+| **F6 — Análise e Relatório** | 17–20 | S17 – pós-validação | 32 dias | Processamento estatístico (testes t de Student, Shapiro-Wilk), análise de dados do SUT (sessões, win rate, badges, d de Cohen), cruzamento software × notas (correlação de Pearson), redação e entrega do relatório final IEEE 829 |
 
 ### 22.3 Marcos Críticos (Milestones)
 
 | Marco | Data | Descrição |
 |-------|------|-----------|
-| 🔴 O₁ | 24/03 – 28/03/2026 | Pré-teste diagnóstico (GE + GC) |
-| 🔴 O₂ | 11/05 – 14/05/2026 | Avaliação intermediária 1 — distúrbios metabólicos |
-| 🔴 O₃ | 14/06 – 16/06/2026 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
-| 🔴 O₄ | 20/06 – 23/06/2026 | Pós-teste final — avaliação abrangente |
-| ✅ Coleta | 27/06/2026 | Encerramento da coleta de dados |
-| ✅ Relatório | 31/07/2026 | Entrega do relatório final de validação (IEEE 829) |
+| 🔴 O₁ | S3 | Pré-teste diagnóstico (GE + GC) |
+| 🔴 O₂ | S9 – S10 | Avaliação intermediária 1 — distúrbios metabólicos |
+| 🔴 O₃ | S14 – S15 | Avaliação intermediária 2 — distúrbios respiratórios e mistos |
+| 🔴 O₄ | S15 – S16 | Pós-teste final — avaliação abrangente |
+| ✅ Coleta | S16 | Encerramento da coleta de dados |
+| ✅ Relatório | pós-validação | Entrega do relatório final de validação (IEEE 829) |
 | 🎓 Defesa | Agosto/2026 | Redação da dissertação e defesa do mestrado |
 
 ### 22.4 Funcionalidades Sob Validação
@@ -1222,11 +1222,11 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 | ID | Instrumento | Momento | Amostra | Formato | Referência |
 |----|-------------|---------|---------|---------|------------|
-| I-01 | Pré-teste diagnóstico | 24/03 – 28/03/2026 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
-| I-02 | Avaliação intermediária 1 | 11/05 – 14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-03 | Avaliação intermediária 2 | 14/06 – 16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-04 | Pós-teste final | 20/06 – 23/06/2026 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
-| I-05 | Questionário de satisfação | 17/06 – 19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | PROTOCOLO_CEP.md, Apêndice B |
+| I-01 | Pré-teste diagnóstico | S3 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
+| I-02 | Avaliação intermediária 1 | S9 – S10 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
+| I-03 | Avaliação intermediária 2 | S14 – S15 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
+| I-04 | Pós-teste final | S15 – S16 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | PROTOCOLO_CEP.md, Apêndice A |
+| I-05 | Questionário de satisfação | S15 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | PROTOCOLO_CEP.md, Apêndice B |
 
 #### 22.6.2 Dados Coletados Automaticamente pelo SUT
 
@@ -1242,9 +1242,9 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 
 ---
 
-### 22.7 Checklist de Pré-Validação (antes de 10/03/2026)
+### 22.7 Checklist de Pré-Validação (antes de S1)
 
-Este checklist deve ser executado **integralmente** antes do início da Fase F1 (10/03/2026) para garantir que todas as funcionalidades sob teste estejam operacionais em ambiente de produção.
+Este checklist deve ser executado **integralmente** antes do início da Fase F1 (S1) para garantir que todas as funcionalidades sob teste estejam operacionais em ambiente de produção.
 
 #### 22.7.1 Funcionalidades do Simulador (F-01 a F-10)
 
@@ -1284,12 +1284,12 @@ Este checklist deve ser executado **integralmente** antes do início da Fase F1 
 #### 22.7.4 Procedimento de Execução
 
 1. **Responsável:** Pesquisador principal
-2. **Prazo:** Concluir até **07/03/2026** (3 dias antes do início de F1)
+2. **Prazo:** Concluir até **pré-aprovação** (3 dias antes do início de F1)
 3. **Ambiente:** Produção (https://vetbalance.app.br)
 4. **Método:** Executar cada item com conta de aluno-teste e conta de professor-teste
 5. **Registro:** Marcar status (✅ Aprovado / ❌ Falha) e documentar evidências (screenshots ou logs)
 6. **Critério de aprovação:** 100% dos itens aprovados (20/20)
-7. **Contingência:** Itens reprovados devem ser corrigidos e retestados antes de 10/03/2026
+7. **Contingência:** Itens reprovados devem ser corrigidos e retestados antes de S1
 
 ---
 

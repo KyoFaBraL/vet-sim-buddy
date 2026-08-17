@@ -113,11 +113,11 @@ A validação seguirá metodologia quase-experimental de **20 semanas** (a parti
 
 | Marco | Data | Descrição |
 |-------|------|-----------|
-| 🔴 O₁ | 24–28/03/2026 | Pré-teste diagnóstico |
-| 🔴 O₂ | 11–14/05/2026 | Avaliação intermediária 1 |
-| 🔴 O₃ | 14–16/06/2026 | Avaliação intermediária 2 |
-| 🔴 O₄ | 20–23/06/2026 | Pós-teste final |
-| ✅ | 31/07/2026 | Entrega do relatório final |
+| 🔴 O₁ | 24–S3 | Pré-teste diagnóstico |
+| 🔴 O₂ | 11–S10 | Avaliação intermediária 1 |
+| 🔴 O₃ | 14–S15 | Avaliação intermediária 2 |
+| 🔴 O₄ | 20–S16 | Pós-teste final |
+| ✅ | pós-validação | Entrega do relatório final |
 | 🎓 | Agosto/2026 | Defesa do mestrado |
 
 **Análise estatística:** Teste t de Student (α=0,05), d de Cohen (≥ 0,8), correlação de Pearson (r ≥ 0,3), questionário SUS adaptado (média ≥ 4,0/5,0), com processamento no **RStudio**.

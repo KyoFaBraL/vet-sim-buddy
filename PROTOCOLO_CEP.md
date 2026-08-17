@@ -357,18 +357,18 @@ O software registrará automaticamente todos os dados de uso: sessões realizada
 
 #### 8.6.2 Grupo Controle (GC)
 
-Os participantes do GC receberão o ensino tradicional (aulas teóricas presenciais) sem acesso ao software durante o período de intervenção. **Após a conclusão da coleta de dados (27/06/2026), o GC receberá acesso integral ao VetBalance**, garantindo equidade.
+Os participantes do GC receberão o ensino tradicional (aulas teóricas presenciais) sem acesso ao software durante o período de intervenção. **Após a conclusão da coleta de dados (S16), o GC receberá acesso integral ao VetBalance**, garantindo equidade.
 
 #### 8.6.3 Avaliações (Ambos os Grupos)
 
 Todos os participantes (GE + GC) serão submetidos a 4 avaliações teórico-práticas nos seguintes momentos:
 
-- **O₁** — Pré-teste diagnóstico (24–28/03/2026)
-- **O₂** — Avaliação intermediária 1: distúrbios metabólicos (11–14/05/2026)
-- **O₃** — Avaliação intermediária 2: distúrbios respiratórios e mistos (14–16/06/2026)
-- **O₄** — Pós-teste final abrangente (20–23/06/2026)
+- **O₁** — Pré-teste diagnóstico (24–S3)
+- **O₂** — Avaliação intermediária 1: distúrbios metabólicos (11–S10)
+- **O₃** — Avaliação intermediária 2: distúrbios respiratórios e mistos (14–S15)
+- **O₄** — Pós-teste final abrangente (20–S16)
 
-Os participantes do GE responderão adicionalmente a um questionário de satisfação (SUS adaptado) entre 17–19/06/2026.
+Os participantes do GE responderão adicionalmente a um questionário de satisfação (SUS adaptado) entre 17–S15.
 
 ### 8.7 Métodos Alternativos e Justificativa
 
@@ -522,11 +522,11 @@ A concordância institucional documentada é apresentada no **Anexo C** (Declara
 
 | ID | Instrumento | Momento | Amostra | Formato | Referência |
 |----|-------------|---------|---------|---------|------------|
-| I-01 | Pré-teste diagnóstico | 24/03–28/03/2026 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
-| I-02 | Avaliação intermediária 1 | 11/05–14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-03 | Avaliação intermediária 2 | 14/06–16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-04 | Pós-teste final | 20/06–23/06/2026 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
-| I-05 | Questionário de satisfação | 17/06–19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo I |
+| I-01 | Pré-teste diagnóstico | S3 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
+| I-02 | Avaliação intermediária 1 | S9–S10 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
+| I-03 | Avaliação intermediária 2 | S14–S15 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
+| I-04 | Pós-teste final | S15–S16 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
+| I-05 | Questionário de satisfação | S15 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo I |
 
 #### 8.14.2 Dados Coletados Automaticamente pelo Software
 
@@ -823,7 +823,7 @@ As informações somente poderão ser divulgadas de **forma anônima** e serão 
 
 ---
 
-Teresina, 16/03/2026
+Teresina, S1
 
 **Profª. Drª. Hilris Rocha e Silva**  
 **Coordenadora do Comitê de Ética em Pesquisa Humana da UFPI/CMPP**

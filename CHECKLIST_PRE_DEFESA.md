@@ -2,7 +2,7 @@
 
 ## Status Geral: 🟢 Pronto para Validação
 
-**Última atualização:** 16/03/2026  
+**Última atualização:** S1  
 **Responsável:** Equipe VetBalance  
 **Referência:** VETBALANCE-PVS-001 (IEEE 829-2008)
 
@@ -147,9 +147,9 @@
 |---|------|------------|-----------------|
 | 8.1 | Ativar proteção contra leaked passwords | 🟡 Média | Ativar no dashboard de Auth > Password Security |
 | 8.2 | Domínio customizado (opcional) | 🔵 Baixa | Configurar `vetbalance.app.br` se desejado |
-| 8.3 | Validação com usuários reais (n=40) | 🔴 Alta | Fase F3 do cronograma (25/04–30/05/2026) |
+| 8.3 | Validação com usuários reais (n=40) | 🔴 Alta | Fase F3 do cronograma (S7–S12) |
 | 8.4 | Coleta de dados SUS pós-uso | 🔴 Alta | Instrumento no Apêndice A do PVS-001 |
-| 8.5 | Análise estatística (Cohen's d, Pearson) | 🔴 Alta | Após coleta de dados (F4: 01/06–20/06/2026) |
+| 8.5 | Análise estatística (Cohen's d, Pearson) | 🔴 Alta | Após coleta de dados (F4: S12–S15) |
 
 ---
 
@@ -157,13 +157,13 @@
 
 | Fase | Período | Atividade | Status |
 |------|---------|-----------|--------|
-| F1 | 10/03–31/03/2026 | Preparação e configuração | ✅ Concluída |
-| F2 | 01/04–19/04/2026 | Pré-teste e calibração | 🟡 Próxima |
-| — | 20/04–25/04/2026 | Intervalo técnico | — |
-| F3 | 25/04–30/05/2026 | Coleta de dados (n=40) | ⬜ Pendente |
-| F4 | 01/06–20/06/2026 | Análise estatística | ⬜ Pendente |
-| F5 | 21/06–15/07/2026 | Redação dos resultados | ⬜ Pendente |
-| F6 | 16/07–31/07/2026 | Revisão final e submissão | ⬜ Pendente |
+| F1 | S1–S4 | Preparação e configuração | ✅ Concluída |
+| F2 | S4–S6 | Pré-teste e calibração | 🟡 Próxima |
+| — | S6–S7 | Intervalo técnico | — |
+| F3 | S7–S12 | Coleta de dados (n=40) | ⬜ Pendente |
+| F4 | S12–S15 | Análise estatística | ⬜ Pendente |
+| F5 | S15–S19 | Redação dos resultados | ⬜ Pendente |
+| F6 | S19–pós-validação | Revisão final e submissão | ⬜ Pendente |
 | — | Agosto/2026 | Defesa de mestrado | ⬜ Pendente |
 
 ---
@@ -184,4 +184,4 @@
 
 ---
 
-*Documento atualizado em 16/03/2026. Atualizar conforme progresso das fases F2–F6.*
+*Documento atualizado em S1. Atualizar conforme progresso das fases F2–F6.*
