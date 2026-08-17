@@ -1160,10 +1160,13 @@ O processo de validação do VetBalance está formalizado no documento **VETBALA
 |------|-------|
 | **Identificador do documento** | VETBALANCE-PVS-001 v1.0 |
 | **Tipo de estudo** | Quase-experimental, controlado, com pré e pós-teste |
-| **Data de início** | S1 |
-| **Data de término** | S20 |
+| **Início da execução** | S1 — primeira semana após a aprovação do CEP/UFPI |
+| **Término da execução** | S20 |
 | **Duração total** | ~5 meses (20 semanas) |
-| **Agosto/2026** | Reservado para redação e defesa do mestrado |
+| **Janela de submissão ao CEP** | Agosto–Outubro/2026 |
+| **Mestrado** | Redação da dissertação e defesa após S20 |
+
+> Todas as datas são **relativas à aprovação do CEP/UFPI** (S1 = primeira semana após o parecer favorável).
 
 ### 22.2 Fases do Cronograma
 

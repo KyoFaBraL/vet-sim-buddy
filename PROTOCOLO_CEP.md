@@ -21,9 +21,9 @@
 
 | Campo | Informação |
 |-------|------------|
-| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto (servidor docente efetivo da UFPI, nos termos da Lei nº 12.772/2012) |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto (servidor docente efetivo da UFPI, nos termos da Lei nº 12.772/2012) — Lattes: http://lattes.cnpq.br/1217803958117241 |
 | **CPF do Pesquisador Responsável** | 945.990.505-63 |
-| **Pesquisador Discente / Executor** | Caio Farias Cabral (Mestrando — PPGTAIR/UFPI) |
+| **Pesquisador Discente / Executor** | Caio Farias Cabral (Mestrando — PPGTAIR/UFPI) — Lattes: https://lattes.cnpq.br/5891771881336869 |
 | **CPF do Pesquisador Discente** | 656.268.853-15 |
 | **E-mail (contato operacional)** | caiofcabral@ufpi.edu.br |
 | **Telefone (contato operacional)** | (86) 98142-5389 |
@@ -34,12 +34,13 @@
 
 > **Nota de governança:** Em estrita observância à Lei nº 12.772/2012 e ao Regimento Geral da UFPI, a responsabilidade administrativa, civil e ética perante a União, o sistema CEP/CONEP e a IFES é assumida pelo **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo, que figura como **único Pesquisador Responsável/Coordenador** do projeto. O discente Caio Farias Cabral atua como **pesquisador executor** (mestrando vinculado ao PPGTAIR/UFPI), sob supervisão estatutária do orientador.
 
-**Data de Elaboração:** Março de 2026  
-**Versão:** 2.0
+**Data de Elaboração:** Agosto de 2026  
+**Versão:** 3.0
 
 **Identificador:** VETBALANCE-CEP-001  
 **Normas de Referência:** Resolução CNS nº 466/2012, Resolução CNS nº 510/2016, Norma Operacional CNS nº 001/2013  
-**Plataforma Brasil:** *(número de registro a ser preenchido após submissão)*
+**Plataforma Brasil:** *(número de registro a ser preenchido após submissão — janela prevista: agosto–outubro/2026)*  
+**Coordenação do CEP/UFPI:** Prof.ª Dr.ª Hilris Rocha e Silva
 
 ---
 
@@ -57,16 +58,8 @@
 10. [Cronograma](#10-cronograma)
 11. [Bibliografia](#11-bibliografia)
 12. [Anexos](#12-anexos)
-    - Anexo A — Folha de Rosto
-    - Anexo B — TCLE (modelo oficial CEP/UFPI)
-    - Anexo C — Declaração de Concordância Institucional e de Infraestrutura (Chefia de Departamento)
-    - Anexo D — Termo de Compromisso dos Pesquisadores
-    - Anexo E — Termo de Confidencialidade
-    - Anexo F — Carta de Encaminhamento ao CEP
-    - Anexo G — Currículo Lattes
-    - Anexo H — Instrumento de Avaliação (Pré-teste/Pós-teste)
-    - Anexo I — Questionário de Satisfação (SUS Adaptado)
-    - Anexo J — Checklist de Documentos
+    - Anexo A — Questionário de Satisfação (SUS Adaptado)
+    - Documentos complementares enviados separadamente na Plataforma Brasil (Folha de Rosto, TCLE, declarações institucionais, termos e currículos Lattes)
 
 ---
 
@@ -518,15 +511,17 @@ A concordância institucional documentada é apresentada no **Anexo C** (Declara
 
 ### 8.14 Instrumentos de Coleta de Dados
 
-#### 8.14.1 Instrumentos Aplicados pelo Pesquisador
+#### 8.14.1 Instrumentos de Avaliação
+
+> **Nota sobre os instrumentos:** a aplicação e a correção do pré-teste e do pós-teste de conteúdo são de **responsabilidade do docente responsável pela disciplina**, no âmbito da avaliação regular do componente curricular. Aos pesquisadores compete exclusivamente a aplicação do **Anexo A — Questionário de Satisfação (SUS Adaptado)**.
 
 | ID | Instrumento | Momento | Amostra | Formato | Referência |
 |----|-------------|---------|---------|---------|------------|
-| I-01 | Pré-teste diagnóstico | S3 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
+| I-01 | Pré-teste diagnóstico | S3 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Instrumento do docente da disciplina |
 | I-02 | Avaliação intermediária 1 | S9–S10 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
 | I-03 | Avaliação intermediária 2 | S14–S15 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-04 | Pós-teste final | S15–S16 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
-| I-05 | Questionário de satisfação | S15 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo I |
+| I-04 | Pós-teste final | S15–S16 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Instrumento do docente da disciplina |
+| I-05 | Questionário de satisfação | S15 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo A |
 
 #### 8.14.2 Dados Coletados Automaticamente pelo Software
 
@@ -580,10 +575,6 @@ A concordância institucional documentada é apresentada no **Anexo C** (Declara
 A pesquisa é **autofinanciada pelo pesquisador**, sem financiamento externo direto para o projeto. Não há patrocínio por empresas ou indústrias. Não há instituições de fomento financiando diretamente esta pesquisa (não há financiamento CNPq, FAPEPI ou outras agências para este projeto específico).
 
 Os custos operacionais da ferramenta VetBalance são custeados integralmente com recursos próprios do pesquisador.
-
-### 9.3 Nota de Transparência (Bolsa CAPES)
-
-A título de transparência, registra-se que o pesquisador responsável foi bolsista de mestrado pelo Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI), com fomento da **Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES)**, no período de abril de 2025 a fevereiro de 2026 (auxílio mensal de R$ 2.100,00). Tal fomento destinou-se exclusivamente ao apoio da formação acadêmica do pós-graduando, **não havendo relação direta com o financiamento desta pesquisa**.
 
 Não há conflito de interesses financeiros.
 

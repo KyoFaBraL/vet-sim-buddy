@@ -45,10 +45,13 @@ Verificar se o software atende aos requisitos de qualidade definidos pela ISO/IE
 
 | Item | Valor |
 |------|-------|
-| **Data de início** | S1 |
-| **Data de término** | S20 |
+| **Início da execução** | S1 — primeira semana **após a aprovação do CEP/UFPI** |
+| **Término da execução** | S20 |
 | **Duração total** | ~5 meses (20 semanas) |
-| **Agosto/2026** | Reservado para redação e defesa do mestrado |
+| **Janela de submissão ao CEP** | Agosto–Outubro/2026 (Plataforma Brasil) |
+| **Mestrado** | Redação da dissertação e defesa após S20 |
+
+> **Nota:** todas as referências temporais deste documento são **relativas à aprovação do projeto pelo CEP/UFPI** (S1 = primeira semana após o parecer consubstanciado favorável). Nenhuma coleta de dados ocorre antes da aprovação.
 
 ---
 
