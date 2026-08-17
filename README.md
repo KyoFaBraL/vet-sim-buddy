@@ -1,6 +1,8 @@
 # VetBalance
 
-Simulador gamificado de cuidados críticos veterinários para estudo de distúrbios do equilíbrio ácido-base em cães e gatos.
+**VetBalance — Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos.**
+
+Plataforma educacional (PWA) de m-learning para o ensino de equilíbrio ácido-base em pequenos animais.
 
 ## Sobre o Projeto
 
@@ -14,7 +16,12 @@ O VetBalance é uma plataforma educacional interativa voltada ao treinamento de 
 - **Diagnóstico diferencial** com suporte de IA
 - **Feedback personalizado** ao final de cada sessão
 - **Histórico de sessões** e relatórios de desempenho
-- **Dois perfis de usuário**: Professor e Aluno
+- **Três perfis de usuário**: Administrador, Professor e Aluno (portais distintos)
+- **Modo de feedback configurável** (`AI_FEEDBACK_MODE`): motor determinístico ou assistido por IA, ajustável pelo administrador
+- **Gestão de turmas**, vínculo professor–aluno e relatórios exportáveis em CSV (delimitador `;`, UTF-8 com BOM)
+- **Consentimento digital (TCLE)** com trilha de auditoria
+- **Integrações para agentes (MCP)** com autorização OAuth
+- **Bateria de testes automatizados** baseada nos 7 princípios ISTQB (102 casos de teste)
 - **Compartilhamento de casos** via códigos de acesso
 - **Responsivo** para uso em dispositivos móveis (m-learning)
 
@@ -30,6 +37,18 @@ O VetBalance é uma plataforma educacional interativa voltada ao treinamento de 
 ## Acesso
 
 - **Produção**: [vetbalance.app.br](https://vetbalance.app.br)
+
+## Registro e validação
+
+- Registro de programa de computador em cadastramento no **INPI**, com titularidade da UFPI e autoria de Caio Farias Cabral e Prof. Dr. Napoleão Martins Argôlo Neto.
+- Projeto de validação submetido ao **CEP/UFPI** (coordenação: Prof.ª Dr.ª Hilris Rocha e Silva); janela de submissão prevista para agosto–outubro/2026, com execução iniciando somente após o parecer favorável.
+- Projeto selecionado para o **HICOOL 2026 Global Entrepreneur Summit**.
+
+## Testes
+
+```sh
+npx vitest run
+```
 
 ## Instalação Local
 

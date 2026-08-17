@@ -1,7 +1,7 @@
 # MÉTRICAS CONSOLIDADAS DO PROJETO — VETBALANCE
 
 **Referência rápida para defesa de mestrado**  
-**Última atualização:** 06/04/2026
+**Última atualização:** S4
 
 ---
 
@@ -221,7 +221,7 @@
 
 ## 🔍 AUDITORIA DE SEGURANÇA — SCAN AUTOMATIZADO
 
-**Data do último scan:** 01/04/2026  
+**Data do último scan:** S4  
 **Scanners utilizados:** Agent Security, Connector Security, Supabase Linter
 
 ### Resultados do Scan

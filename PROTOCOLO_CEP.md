@@ -21,9 +21,9 @@
 
 | Campo | Informação |
 |-------|------------|
-| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto (servidor docente efetivo da UFPI, nos termos da Lei nº 12.772/2012) |
+| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto (servidor docente efetivo da UFPI, nos termos da Lei nº 12.772/2012) — Lattes: http://lattes.cnpq.br/1217803958117241 |
 | **CPF do Pesquisador Responsável** | 945.990.505-63 |
-| **Pesquisador Discente / Executor** | Caio Farias Cabral (Mestrando — PPGTAIR/UFPI) |
+| **Pesquisador Discente / Executor** | Caio Farias Cabral (Mestrando — PPGTAIR/UFPI) — Lattes: https://lattes.cnpq.br/5891771881336869 |
 | **CPF do Pesquisador Discente** | 656.268.853-15 |
 | **E-mail (contato operacional)** | caiofcabral@ufpi.edu.br |
 | **Telefone (contato operacional)** | (86) 98142-5389 |
@@ -34,12 +34,13 @@
 
 > **Nota de governança:** Em estrita observância à Lei nº 12.772/2012 e ao Regimento Geral da UFPI, a responsabilidade administrativa, civil e ética perante a União, o sistema CEP/CONEP e a IFES é assumida pelo **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo, que figura como **único Pesquisador Responsável/Coordenador** do projeto. O discente Caio Farias Cabral atua como **pesquisador executor** (mestrando vinculado ao PPGTAIR/UFPI), sob supervisão estatutária do orientador.
 
-**Data de Elaboração:** Março de 2026  
-**Versão:** 2.0
+**Data de Elaboração:** Agosto de 2026  
+**Versão:** 3.0
 
 **Identificador:** VETBALANCE-CEP-001  
 **Normas de Referência:** Resolução CNS nº 466/2012, Resolução CNS nº 510/2016, Norma Operacional CNS nº 001/2013  
-**Plataforma Brasil:** *(número de registro a ser preenchido após submissão)*
+**Plataforma Brasil:** *(número de registro a ser preenchido após submissão — janela prevista: agosto–outubro/2026)*  
+**Coordenação do CEP/UFPI:** Prof.ª Dr.ª Hilris Rocha e Silva
 
 ---
 
@@ -57,16 +58,8 @@
 10. [Cronograma](#10-cronograma)
 11. [Bibliografia](#11-bibliografia)
 12. [Anexos](#12-anexos)
-    - Anexo A — Folha de Rosto
-    - Anexo B — TCLE (modelo oficial CEP/UFPI)
-    - Anexo C — Declaração de Concordância Institucional e de Infraestrutura (Chefia de Departamento)
-    - Anexo D — Termo de Compromisso dos Pesquisadores
-    - Anexo E — Termo de Confidencialidade
-    - Anexo F — Carta de Encaminhamento ao CEP
-    - Anexo G — Currículo Lattes
-    - Anexo H — Instrumento de Avaliação (Pré-teste/Pós-teste)
-    - Anexo I — Questionário de Satisfação (SUS Adaptado)
-    - Anexo J — Checklist de Documentos
+    - Anexo A — Questionário de Satisfação (SUS Adaptado)
+    - Documentos complementares enviados separadamente na Plataforma Brasil (Folha de Rosto, TCLE, declarações institucionais, termos e currículos Lattes)
 
 ---
 
@@ -357,18 +350,18 @@ O software registrará automaticamente todos os dados de uso: sessões realizada
 
 #### 8.6.2 Grupo Controle (GC)
 
-Os participantes do GC receberão o ensino tradicional (aulas teóricas presenciais) sem acesso ao software durante o período de intervenção. **Após a conclusão da coleta de dados (27/06/2026), o GC receberá acesso integral ao VetBalance**, garantindo equidade.
+Os participantes do GC receberão o ensino tradicional (aulas teóricas presenciais) sem acesso ao software durante o período de intervenção. **Após a conclusão da coleta de dados (S16), o GC receberá acesso integral ao VetBalance**, garantindo equidade.
 
 #### 8.6.3 Avaliações (Ambos os Grupos)
 
 Todos os participantes (GE + GC) serão submetidos a 4 avaliações teórico-práticas nos seguintes momentos:
 
-- **O₁** — Pré-teste diagnóstico (24–28/03/2026)
-- **O₂** — Avaliação intermediária 1: distúrbios metabólicos (11–14/05/2026)
-- **O₃** — Avaliação intermediária 2: distúrbios respiratórios e mistos (14–16/06/2026)
-- **O₄** — Pós-teste final abrangente (20–23/06/2026)
+- **O₁** — Pré-teste diagnóstico (24–S3)
+- **O₂** — Avaliação intermediária 1: distúrbios metabólicos (11–S10)
+- **O₃** — Avaliação intermediária 2: distúrbios respiratórios e mistos (14–S15)
+- **O₄** — Pós-teste final abrangente (20–S16)
 
-Os participantes do GE responderão adicionalmente a um questionário de satisfação (SUS adaptado) entre 17–19/06/2026.
+Os participantes do GE responderão adicionalmente a um questionário de satisfação (SUS adaptado) entre 17–S15.
 
 ### 8.7 Métodos Alternativos e Justificativa
 
@@ -503,7 +496,7 @@ A pesquisa será encerrada antecipadamente se:
 
 #### 8.12.3 Demonstrativo de Infraestrutura
 
-A concordância institucional documentada é apresentada no **Anexo C** (Declaração de Concordância Institucional e de Infraestrutura), a ser assinada pela **Chefia do Departamento competente da CCA/UFPI** — autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
+A concordância institucional documentada é apresentada em documento próprio (Declaração de Concordância Institucional e de Infraestrutura), anexado separadamente na Plataforma Brasil, a ser assinada pela **Chefia do Departamento competente da CCA/UFPI** — autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
 
 ### 8.13 Variáveis do Estudo
 
@@ -518,15 +511,17 @@ A concordância institucional documentada é apresentada no **Anexo C** (Declara
 
 ### 8.14 Instrumentos de Coleta de Dados
 
-#### 8.14.1 Instrumentos Aplicados pelo Pesquisador
+#### 8.14.1 Instrumentos de Avaliação
+
+> **Nota sobre os instrumentos:** a aplicação e a correção do pré-teste e do pós-teste de conteúdo são de **responsabilidade do docente responsável pela disciplina**, no âmbito da avaliação regular do componente curricular. Aos pesquisadores compete exclusivamente a aplicação do **Anexo A — Questionário de Satisfação (SUS Adaptado)**.
 
 | ID | Instrumento | Momento | Amostra | Formato | Referência |
 |----|-------------|---------|---------|---------|------------|
-| I-01 | Pré-teste diagnóstico | 24/03–28/03/2026 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
-| I-02 | Avaliação intermediária 1 | 11/05–14/05/2026 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-03 | Avaliação intermediária 2 | 14/06–16/06/2026 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
-| I-04 | Pós-teste final | 20/06–23/06/2026 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Anexo H |
-| I-05 | Questionário de satisfação | 17/06–19/06/2026 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo I |
+| I-01 | Pré-teste diagnóstico | S3 (O₁) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Instrumento do docente da disciplina |
+| I-02 | Avaliação intermediária 1 | S9–S10 (O₂) | GE + GC | Prova teórico-prática (0–10) | — |
+| I-03 | Avaliação intermediária 2 | S14–S15 (O₃) | GE + GC | Prova teórico-prática (0–10) | — |
+| I-04 | Pós-teste final | S15–S16 (O₄) | GE + GC | 20 objetivas + 3 discursivas (0–10) | Instrumento do docente da disciplina |
+| I-05 | Questionário de satisfação | S15 | GE apenas | Escala Likert 5 pontos (SUS adaptado) | Anexo A |
 
 #### 8.14.2 Dados Coletados Automaticamente pelo Software
 
@@ -580,10 +575,6 @@ A concordância institucional documentada é apresentada no **Anexo C** (Declara
 A pesquisa é **autofinanciada pelo pesquisador**, sem financiamento externo direto para o projeto. Não há patrocínio por empresas ou indústrias. Não há instituições de fomento financiando diretamente esta pesquisa (não há financiamento CNPq, FAPEPI ou outras agências para este projeto específico).
 
 Os custos operacionais da ferramenta VetBalance são custeados integralmente com recursos próprios do pesquisador.
-
-### 9.3 Nota de Transparência (Bolsa CAPES)
-
-A título de transparência, registra-se que o pesquisador responsável foi bolsista de mestrado pelo Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI), com fomento da **Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES)**, no período de abril de 2025 a fevereiro de 2026 (auxílio mensal de R$ 2.100,00). Tal fomento destinou-se exclusivamente ao apoio da formação acadêmica do pós-graduando, **não havendo relação direta com o financiamento desta pesquisa**.
 
 Não há conflito de interesses financeiros.
 
@@ -659,498 +650,12 @@ INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. **ISO/IEC 25010:2011** — Syste
 
 ## 12. ANEXOS
 
-### Anexo A — Folha de Rosto
+> **Nota sobre os instrumentos:** a aplicação e a correção do **pré-teste e do pós-teste de conteúdo** são de responsabilidade do **docente responsável pela disciplina**, no âmbito da avaliação regular do componente curricular. Aos pesquisadores compete exclusivamente a aplicação do **Anexo A — Questionário de Satisfação (SUS Adaptado)**, único anexo deste projeto.
+>
+> Os demais documentos exigidos pelo CEP/UFPI (Folha de Rosto, TCLE, Declaração de Concordância Institucional, Termo de Compromisso dos Pesquisadores, Termo de Confidencialidade, Carta de Encaminhamento e currículos Lattes) são elaborados em arquivos próprios e anexados separadamente na Plataforma Brasil.
 
-> A Folha de Rosto será gerada diretamente pela **Plataforma Brasil** (https://plataformabrasil.saude.gov.br) no momento do cadastramento do projeto, conforme orientações do sistema.
 
----
-
-### Anexo B — Termo de Consentimento Livre e Esclarecido (TCLE)
-
-> **Modelo oficial do CEP/UFPI — Comitê de Ética em Pesquisa Humana**
-
----
-
-#### MINISTÉRIO DA EDUCAÇÃO — UNIVERSIDADE FEDERAL DO PIAUÍ — COMITÊ DE ÉTICA EM PESQUISA HUMANA
-
-#### TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO
-
-Prezado(a) Senhor(a),
-
-Você está sendo convidado(a) a participar como voluntário(a) de uma pesquisa denominada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
-
-Esta pesquisa está sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo da UFPI, na qualidade de **Pesquisador Responsável/Coordenador**, tendo como pesquisador executor o mestrando **Caio Farias Cabral**, vinculado ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR/UFPI). O estudo tem como objetivo geral validar a eficácia pedagógica do software educacional gamificado VetBalance como ferramenta complementar de m-learning no ensino de equilíbrio ácido-base em pequenos animais, junto a estudantes de medicina veterinária.
-
-Neste sentido, solicitamos sua colaboração mediante a assinatura desse termo. Este documento, chamado Termo de Consentimento Livre e Esclarecido (TCLE), visa assegurar seus direitos como participante. Após seu consentimento, rubrique todas as páginas e ao final deste documento, que está em duas vias. O mesmo também será assinado pelo pesquisador em todas as páginas, ficando uma via com você, participante da pesquisa, e outra com o pesquisador. Por favor, leia com atenção e calma, aproveite para esclarecer todas as suas dúvidas.
-
-Se houver perguntas antes ou mesmo depois de indicar sua concordância, você poderá esclarecê-las com o **Pesquisador Responsável Prof. Dr. Napoleão Martins Argôlo Neto** ou com o pesquisador executor **Caio Farias Cabral**, pelo telefone **(86) 98142-5389**, pelo e-mail **caiofcabral@ufpi.edu.br** ou pelo endereço institucional na Universidade Federal do Piauí (UFPI), Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina - PI.
-
-Se, mesmo assim, as dúvidas ainda persistirem, você pode entrar em contato com o **Comitê de Ética em Pesquisa da UFPI**, que acompanha e analisa as pesquisas científicas que envolvem seres humanos, no Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina – PI, telefone **(86) 2222-4824**, e-mail: **cep.ufpi@ufpi.edu.br**; no horário de atendimento ao público, segunda a sexta, manhã: 08h00 às 12h00 e a tarde: 14h00 às 18h00. Se preferir, pode levar este Termo para casa e consultar seus familiares ou outras pessoas antes de decidir participar.
-
-Esclarecemos, mais uma vez, que sua participação é voluntária. Caso decida não participar ou retirar seu consentimento a qualquer momento da pesquisa, não haverá nenhum tipo de penalização ou prejuízo e os pesquisadores estarão à sua disposição para qualquer esclarecimento.
-
-**Justificativa da pesquisa:** O ensino tradicional de distúrbios do equilíbrio ácido-base frequentemente se limita a aulas expositivas, com escassas oportunidades de prática clínica em ambiente controlado e seguro. A pesquisa busca suprir a carência de ferramentas tecnológicas específicas para a medicina veterinária no Brasil, utilizando a gamificação e a aprendizagem móvel (m-learning) para promover maior engajamento, motivação e retenção de conhecimento entre os estudantes.
-
-**Procedimentos de coleta de dados:** Você será alocado(a) por sorteio em um de dois grupos. Se for alocado(a) no **Grupo Experimental**, além das aulas regulares, você terá acesso ao software VetBalance em seu dispositivo pessoal para prática de simulações clínicas durante 20 semanas e, ao final, responderá a um questionário de satisfação sobre a usabilidade do sistema. Se for alocado(a) no **Grupo Controle**, você participará normalmente das aulas regulares e receberá acesso integral ao software após o término da coleta de dados. Independentemente do grupo, você realizará quatro avaliações teórico-práticas ao longo do semestre, que já são previstas como componentes regulares das disciplinas (Fisiologia Animal e Farmacologia). O software registrará automaticamente métricas de uso, como decisões clínicas tomadas e tratamentos aplicados.
-
-**Riscos:** Desconforto emocional ao perceber baixo desempenho nas avaliações; frustração ao utilizar o software; sensação de desvantagem educacional por pertencer ao grupo controle; quebra de sigilo de dados pessoais; e fadiga visual por uso prolongado de tela.
-
-**Medidas de mitigação dos riscos:** As avaliações já fazem parte da rotina acadêmica e será oferecido feedback individual e confidencial; haverá um tutorial guiado e suporte técnico para minimizar frustrações tecnológicas; o acesso ao software será garantido ao grupo controle logo após a coleta de dados; os dados serão protegidos por criptografia e controle de acesso (Row Level Security), sendo anonimizados antes de publicações; e as sessões no simulador serão curtas, limitadas a cerca de cinco minutos cada, com uso voluntário no seu próprio ritmo.
-
-**Benefícios:** A oportunidade de prática complementar de tomada de decisão clínica em um ambiente virtual seguro e controlado; o recebimento de feedback personalizado sobre o desempenho por meio de inteligência artificial; o desenvolvimento aprimorado de competências na interpretação de parâmetros fisiológicos complexos; e o acesso gratuito a uma ferramenta educacional inovadora. Além disso, a pesquisa contribui indiretamente para o avanço das tecnologias educacionais na medicina veterinária.
-
-Os resultados obtidos nesta pesquisa serão utilizados para fins acadêmico-científicos (divulgação em trabalhos de conclusão de curso, revistas e em eventos científicos) e os pesquisadores se comprometem a manter o sigilo e identidade anônima, como estabelecem as Resoluções do Conselho Nacional de Saúde nº 466/2012 e 510/2016 e a Norma Operacional 01 de 2013 do Conselho Nacional de Saúde, que tratam de normas regulamentadoras de pesquisas que envolvem seres humanos. Você terá livre acesso a todas as informações e esclarecimentos adicionais sobre o estudo, bem como lhe é garantido acesso a seus resultados.
-
-Esclarecemos ainda que você não terá nenhum custo com a pesquisa, mas, caso haja, por qualquer motivo, asseguramos que você será devidamente ressarcido. Não haverá nenhum tipo de pagamento por sua participação, ela é voluntária. Durante e após o encerramento da pesquisa, será garantido o acompanhamento e a assistência ao participante, conforme previsto na Resolução 466/2012 (item IV.3.c). Em caso de danos decorrentes da pesquisa, será assegurada a assistência integral e a indenização conforme previsto em norma.
-
-**Arquivamento e descarte dos dados:** Os dados e materiais coletados serão **arquivados pelo período mínimo de 5 (cinco) anos** sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral, no endereço institucional: **Universidade Federal do Piauí — Campus Universitário Ministro Petrônio Portella, s/n, Bairro Ininga, CEP 64049-550, Teresina – PI**, telefone **(86) 98142-5389**, e-mail **caiofcabral@ufpi.edu.br**. Após esse período, os dados digitais serão **destruídos por exclusão segura (sobrescrita criptográfica)** e eventuais documentos físicos serão **fragmentados mecanicamente**, em conformidade com a LGPD (Lei nº 13.709/2018) e com as Resoluções CNS nº 466/2012, 510/2016 e 580/2018.
-
-Após os devidos esclarecimentos e estando ciente e de acordo com o que me foi exposto, Eu, \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_, declaro que aceito participar desta pesquisa, dando pleno consentimento para uso das informações por mim prestadas. Para tanto, assino este consentimento em duas vias, rubrico todas as páginas e fico com a posse de uma delas.
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Local e data | __________________________________ |
-| Assinatura do Participante | __________________________________ |
-| Assinatura do Pesquisador Responsável | __________________________________ |
-
-*(Este documento é emitido em 2 vias de igual teor, uma para o participante e outra para o pesquisador.)*
-
----
-
-### Anexo C — Declaração de Concordância Institucional e de Infraestrutura
-
-> **Documento oficial a ser assinado pela Chefia do Departamento competente — CCA/UFPI**, autoridade administrativa com prerrogativa para deliberar sobre o uso de espaços físicos e infraestrutura institucional, nos termos do Regimento Geral da UFPI.
-
----
-
-#### MINISTÉRIO DA EDUCAÇÃO — UNIVERSIDADE FEDERAL DO PIAUÍ — COMITÊ DE ÉTICA EM PESQUISA HUMANA
-
-#### DECLARAÇÃO DE CONCORDÂNCIA INSTITUCIONAL E DE INFRAESTRUTURA
-
-Eu, **\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**, na qualidade de **Chefe do Departamento responsável pelo curso de Medicina Veterinária do Centro de Ciências Agrárias (CCA) da Universidade Federal do Piauí — UFPI**, declaro para os devidos fins que tenho conhecimento e, **no estrito limite das competências administrativas desta Chefia**, **AUTORIZO** o uso da infraestrutura departamental para a realização do projeto de pesquisa intitulado: **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**.
-
-Declaro estar ciente de que a referida pesquisa está sob a coordenação e responsabilidade administrativa do **Prof. Dr. Napoleão Martins Argôlo Neto**, servidor docente efetivo da UFPI (Lei nº 12.772/2012), na qualidade de **único Pesquisador Responsável/Coordenador**, tendo como pesquisador executor o discente **Caio Farias Cabral** (Mestrando do PPGTAIR/UFPI).
-
-Declaro que esta autorização **fica condicionada à prévia aprovação consubstanciada do projeto pelo Comitê de Ética em Pesquisa (CEP/UFPI-CMPP)** e, quando aplicável, pela CONEP, nos termos das Resoluções CNS nº 466/2012, 510/2016 e 580/2018, sendo o sistema CEP/CONEP a única instância competente para autorizar, sob o prisma ético-científico, o recrutamento de seres humanos.
-
-Declaro, ainda, que este Departamento dispõe da **infraestrutura física necessária** (salas de aula e acesso à rede Wi-Fi institucional, conforme escala de uso e disponibilidade) para a execução das etapas operacionais da pesquisa, concordando com sua utilização nos termos estipulados no projeto.
-
-Registra-se que **a participação de docentes regentes** das disciplinas envolvidas (Fisiologia Animal e Farmacologia) deverá ser **anuída individualmente por cada docente**, em respeito à autonomia e liberdade de cátedra, não sendo objeto desta declaração.
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Local e data | Teresina - PI, ___/___/______ |
-| Nome | __________________________________ |
-| Cargo | Chefe do Departamento — CCA/UFPI |
-| SIAPE | __________________________________ |
-| Assinatura e carimbo | __________________________________ |
-
----
-
-### Anexo D — Termo de Compromisso dos Pesquisadores (Declarações)
-
-> **Documento oficial dirigido ao CEP/CMPP — Universidade Federal do Piauí**
-
----
-
-#### Declarações do(s) Pesquisador(es) — Ao Comitê de Ética em Pesquisa – CEP/CMPP — Universidade Federal do Piauí
-
-Eu (nós), **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável/Coordenador) e **Caio Farias Cabral** (Pesquisador Executor — Mestrando PPGTAIR/UFPI), responsáveis pela pesquisa intitulada **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, declaramos que:
-
-- Assumo(imos) o compromisso de cumprir os Termos das **Resoluções Nº 466/2012**, de 12 de dezembro de 2012, e **Nº 510/2016**, de 07 de abril de 2016, do Conselho Nacional de Saúde, do Ministério da Saúde e demais resoluções complementares à mesma (240/97, 251/97, 292/99 e 340/2004).
-
-- Assumo(imos) o compromisso de **zelar pela privacidade e pelo sigilo das informações**, que serão obtidas e utilizadas para o desenvolvimento da pesquisa.
-
-- Os materiais e as informações obtidas no desenvolvimento deste trabalho serão utilizados **apenas para se atingir o(s) objetivo(s) previsto(s) nesta pesquisa** e não serão utilizados para outras pesquisas sem o devido consentimento dos voluntários.
-
-- Os materiais e os dados obtidos ao final da pesquisa serão **arquivados sob a responsabilidade do Prof. Dr. Napoleão Martins Argôlo Neto (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral**, vinculados ao Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) da UFPI, sendo o Pesquisador Responsável também responsável pelo descarte dos materiais e dados, caso os mesmos não sejam estocados ao final da pesquisa.
-
-- **Não há qualquer acordo restritivo** à divulgação pública dos resultados.
-
-- Os resultados da pesquisa serão tornados públicos através de **publicações em periódicos científicos e/ou em encontros científicos**, quer sejam favoráveis ou não, respeitando-se sempre a privacidade e os direitos individuais dos sujeitos da pesquisa.
-
-- O CEP-UFPI/CMPP será comunicado da **suspensão ou do encerramento da pesquisa** por meio de relatório apresentado anualmente ou na ocasião da suspensão ou do encerramento da pesquisa com a devida justificativa.
-
-- O CEP-UFPI/CMPP será **imediatamente comunicado** se ocorrerem efeitos adversos resultantes desta pesquisa com o voluntário.
-
-- **Esta pesquisa ainda não foi total ou parcialmente realizada.**
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Local e data | Teresina, 16 de março de 2026 |
-| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
-| Assinatura | __________________________________ |
-| **Pesquisador Executor (discente)** | Caio Farias Cabral — CPF: 656.268.853-15 |
-| Assinatura | __________________________________ |
-
----
-
-### Anexo E — Termo de Confidencialidade
-
-> **Documento oficial de sigilo e proteção de dados da pesquisa**
-
----
-
-#### TERMO DE CONFIDENCIALIDADE
-
-| Campo | Informação |
-|-------|------------|
-| **Título do projeto** | Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning |
-| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto |
-| **Instituição/Departamento** | Universidade Federal do Piauí (UFPI) / Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
-| **Telefone para contato** | (86) 98142-5389 |
-| **Local da coleta de dados** | Departamento de Medicina Veterinária da UFPI (Teresina-PI) e ambiente digital (Software VetBalance) |
-
-Os pesquisadores do presente projeto se comprometem a **preservar a privacidade dos participantes** cujos dados serão coletados em bases de dados digitais do software (logs automatizados) e através de instrumentos de avaliação acadêmica e questionários da Universidade Federal do Piauí (UFPI) e do ambiente virtual da aplicação.
-
-Concordam, igualmente, que estas informações serão utilizadas **única e exclusivamente para execução do presente projeto**.
-
-As informações somente poderão ser divulgadas de **forma anônima** e serão mantidas num servidor seguro e em arquivos digitais criptografados por um período de **5 anos** sob a responsabilidade do **Prof. Dr. Napoleão Martins Argôlo Neto** (Pesquisador Responsável), com apoio operacional do pesquisador executor Caio Farias Cabral. Após este período, os dados serão destruídos.
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Local e data | Teresina, 16 de março de 2026 |
-| **Pesquisador Responsável / Coordenador** | Prof. Dr. Napoleão Martins Argôlo Neto — CPF: 945.990.505-63 |
-| Assinatura | __________________________________ |
-| **Pesquisador Executor (discente)** | Caio Farias Cabral — CPF: 656.268.853-15 |
-| Assinatura | __________________________________ |
-
----
-
-### Anexo F — Carta de Encaminhamento ao CEP
-
-> **Documento oficial de encaminhamento ao Comitê de Ética em Pesquisa Humana da UFPI/CMPP**
-
----
-
-Teresina, 16/03/2026
-
-**Profª. Drª. Hilris Rocha e Silva**  
-**Coordenadora do Comitê de Ética em Pesquisa Humana da UFPI/CMPP**
-
-Cara Profª,
-
-Estou enviando o projeto de pesquisa intitulado **"Simulador Veterinário Gamificado para Ensino de Equilíbrio Ácido-Base em Pequenos Animais: Desenvolvimento e Validação de Ferramenta Educacional de M-Learning"**, para a apreciação por este comitê.
-
-Confirmo que todos os pesquisadores envolvidos nesta pesquisa realizaram a leitura e estão cientes do conteúdo da **Resolução 466/12 do CNS** e das resoluções complementares à mesma (240/97, 251/97, 292/99 e 340/2004).
-
-Confirmo também:
-
-1. Que esta pesquisa **ainda não foi iniciada**;
-2. Que **não há participação estrangeira** nesta pesquisa;
-3. Que comunicarei ao CEP-UFPI/CMPP os eventuais **eventos adversos** ocorridos com o voluntário;
-4. Que apresentarei **relatório anual e final** desta pesquisa ao CEP-UFPI/CMPP;
-5. Que retirarei por minha própria conta os **pareceres e o certificado** junto à secretaria do CEP-UFPI/CMPP.
-
-Atenciosamente,
-
-| Campo | Preenchimento |
-|-------|---------------|
-| Pesquisador Responsável / Coordenador | Prof. Dr. Napoleão Martins Argôlo Neto |
-| CPF | 945.990.505-63 |
-| Vínculo | Servidor docente efetivo da UFPI (Lei nº 12.772/2012) |
-| Pesquisador Executor (discente) | Caio Farias Cabral — CPF: 656.268.853-15 |
-| Instituição | Universidade Federal do Piauí (UFPI) |
-| Área | Medicina Veterinária |
-| Departamento | Programa de Pós-Graduação em Tecnologias Aplicadas a Animais de Interesse Regional (PPGTAIR) |
-| Assinatura do Pesquisador Responsável | __________________________________ |
-| Assinatura do Pesquisador Executor | __________________________________ |
-
----
-
-### Anexo G — Currículo Lattes
-
-> Anexar os currículos Lattes atualizados:
-> - **Pesquisador Responsável / Coordenador:** Prof. Dr. Napoleão Martins Argôlo Neto
-> - **Pesquisador Executor (discente):** Caio Farias Cabral
-
-*(Disponíveis em: https://lattes.cnpq.br)*
-
----
-
-### Anexo H — Instrumento de Avaliação de Conhecimentos em Equilíbrio Ácido-Base (Pré-teste/Pós-teste)
-
-**Instruções ao participante:** Este questionário avalia seus conhecimentos sobre equilíbrio ácido-base (EAB) em pequenos animais (cães e gatos). Leia atentamente cada questão e assinale **uma única alternativa**. Não há consulta permitida. Tempo estimado: 30 minutos.
-
-**Participante (código):** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ **Grupo:** ☐ GE ☐ GC **Data:** \_\_\_/\_\_\_/\_\_\_\_\_\_ **Aplicação:** ☐ Pré-teste ☐ Pós-teste
-
----
-
-#### Bloco 1 — Conceitos Fundamentais de EAB (Questões 1–5)
-
-**Questão 1.** Qual é a faixa de pH sanguíneo considerada **normal** para cães e gatos?
-
-- a) 7,20 – 7,30
-- b) 7,35 – 7,45
-- c) 7,45 – 7,55
-- d) 7,25 – 7,40
-
-**Questão 2.** A equação de Henderson-Hasselbalch relaciona o pH com a razão entre:
-
-- a) PaCO₂ e PaO₂
-- b) HCO₃⁻ e PaCO₂
-- c) Na⁺ e Cl⁻
-- d) Albumina e lactato
-
-**Questão 3.** A principal função do sistema tampão bicarbonato (HCO₃⁻/H₂CO₃) é:
-
-- a) Transportar oxigênio para os tecidos
-- b) Minimizar variações bruscas do pH sanguíneo
-- c) Regular a pressão arterial sistêmica
-- d) Aumentar a excreção renal de potássio
-
-**Questão 4.** Qual órgão é o principal responsável pela compensação **rápida** (minutos) dos distúrbios ácido-base?
-
-- a) Rim
-- b) Fígado
-- c) Pulmão
-- d) Baço
-
-**Questão 5.** A compensação **renal** de um distúrbio ácido-base ocorre tipicamente em qual intervalo de tempo?
-
-- a) Segundos a minutos
-- b) Minutos a 1 hora
-- c) 6 a 12 horas
-- d) 24 a 72 horas
-
----
-
-#### Bloco 2 — Interpretação de Gasometria Arterial (Questões 6–10)
-
-**Questão 6.** Um cão apresenta os seguintes valores: pH = 7,28; PaCO₂ = 30 mmHg; HCO₃⁻ = 14 mEq/L. Qual é o distúrbio primário?
-
-- a) Alcalose respiratória
-- b) Acidose respiratória
-- c) Acidose metabólica com compensação respiratória
-- d) Alcalose metabólica com compensação respiratória
-
-**Questão 7.** Um gato apresenta: pH = 7,52; PaCO₂ = 50 mmHg; HCO₃⁻ = 38 mEq/L. Qual é a interpretação correta?
-
-- a) Acidose respiratória descompensada
-- b) Alcalose metabólica com compensação respiratória
-- c) Alcalose respiratória primária
-- d) Distúrbio misto com predomínio respiratório
-
-**Questão 8.** Um cão sedado apresenta: pH = 7,22; PaCO₂ = 65 mmHg; HCO₃⁻ = 25 mEq/L. Qual é o diagnóstico?
-
-- a) Acidose metabólica
-- b) Acidose respiratória aguda
-- c) Alcalose metabólica
-- d) Distúrbio misto
-
-**Questão 9.** Em um paciente com acidose metabólica, qual resposta compensatória é esperada?
-
-- a) Aumento da PaCO₂ por hipoventilação
-- b) Diminuição da PaCO₂ por hiperventilação
-- c) Aumento do HCO₃⁻ por reabsorção renal
-- d) Diminuição do HCO₃⁻ por excreção renal
-
-**Questão 10.** Qual parâmetro da gasometria avalia diretamente a **oxigenação** do paciente?
-
-- a) pH
-- b) PaCO₂
-- c) HCO₃⁻
-- d) PaO₂
-
----
-
-#### Bloco 3 — Fisiopatologia e Mecanismos de Compensação (Questões 11–15)
-
-**Questão 11.** Um cão com vômitos intensos (perda de HCl gástrico) provavelmente desenvolverá:
-
-- a) Acidose metabólica
-- b) Alcalose metabólica
-- c) Acidose respiratória
-- d) Alcalose respiratória
-
-**Questão 12.** Um gato com obstrução uretral completa e oligúria provavelmente apresentará:
-
-- a) Alcalose metabólica hipoclorêmica
-- b) Acidose metabólica com hipercalemia
-- c) Alcalose respiratória
-- d) Acidose respiratória crônica
-
-**Questão 13.** A cetoacidose diabética em cães causa acidose metabólica principalmente por:
-
-- a) Perda renal excessiva de bicarbonato
-- b) Acúmulo de corpos cetônicos (ácidos orgânicos)
-- c) Hipoventilação central
-- d) Hipercloremia por excesso de NaCl 0,9%
-
-**Questão 14.** Em um paciente com acidose respiratória **crônica**, espera-se encontrar:
-
-- a) HCO₃⁻ normal e pH muito baixo
-- b) HCO₃⁻ elevado e pH próximo ao normal
-- c) PaCO₂ baixo e pH alto
-- d) HCO₃⁻ baixo e PaCO₂ normal
-
-**Questão 15.** O ânion gap (AG) é útil para:
-
-- a) Avaliar a função hepática
-- b) Classificar o tipo de acidose metabólica
-- c) Determinar o grau de compensação respiratória
-- d) Mensurar a pressão oncótica plasmática
-
----
-
-#### Bloco 4 — Tomada de Decisão Terapêutica (Questões 16–20)
-
-**Questão 16.** Qual é a conduta terapêutica prioritária em um cão com acidose metabólica grave (pH = 7,10; HCO₃⁻ = 8 mEq/L) por diarreia profusa?
-
-- a) Oxigenoterapia isolada
-- b) Fluidoterapia com Ringer Lactato e monitoração
-- c) Administração de furosemida IV
-- d) Ventilação mecânica imediata
-
-**Questão 17.** A administração de bicarbonato de sódio intravenoso é indicada com maior segurança quando:
-
-- a) O pH está abaixo de 7,10 e não responde à fluidoterapia
-- b) A PaCO₂ está acima de 40 mmHg
-- c) O paciente apresenta vômitos
-- d) O HCO₃⁻ está entre 18 e 22 mEq/L
-
-**Questão 18.** Um gato com acidose respiratória aguda por efusão pleural bilateral. Qual intervenção inicial é mais apropriada?
-
-- a) Fluidoterapia agressiva com NaCl 0,9%
-- b) Toracocentese de alívio
-- c) Administração de bicarbonato de sódio IV
-- d) Oxigenoterapia nasal isolada
-
-**Questão 19.** Durante a correção de uma acidose metabólica com bicarbonato de sódio, qual risco principal deve ser monitorado?
-
-- a) Hipoglicemia
-- b) Alcalose metabólica iatrogênica e hipocalemia
-- c) Bradicardia sinusal
-- d) Hipertermia maligna
-
-**Questão 20.** Um cão com insuficiência renal crônica estável apresenta: pH = 7,30; HCO₃⁻ = 16 mEq/L; PaCO₂ = 32 mmHg. A conduta mais adequada é:
-
-- a) Bicarbonato de sódio IV em bolus
-- b) Ventilação mecânica
-- c) Manejo conservador com fluidoterapia e suplementação oral de bicarbonato
-- d) Diálise peritoneal de urgência
-
----
-
-#### Gabarito (uso exclusivo do pesquisador)
-
-| Q | Resp. | Q | Resp. | Q | Resp. | Q | Resp. |
-|---|-------|---|-------|---|-------|---|-------|
-| 1 | B | 6 | C | 11 | B | 16 | B |
-| 2 | B | 7 | B | 12 | B | 17 | A |
-| 3 | B | 8 | B | 13 | B | 18 | B |
-| 4 | C | 9 | B | 14 | B | 19 | B |
-| 5 | D | 10 | D | 15 | B | 20 | C |
-
-**Critério de correção (questões objetivas):** Cada questão vale 0,5 ponto. Subtotal objetivas = soma dos acertos × 0,5 (máximo 10,0 pontos).
-
----
-
-#### Bloco 5 — Questões Discursivas — Casos Clínicos Integrados (Questões 21–23)
-
-**Instruções:** Leia atentamente cada caso clínico e responda de forma completa e fundamentada. Utilize os dados laboratoriais fornecidos para embasar sua análise.
-
----
-
-**Questão 21.** (3,0 pontos)
-
-Um cão da raça Labrador, macho, 5 anos, 30 kg, é atendido em emergência com histórico de diarreia aquosa profusa há 3 dias, apatia progressiva e anorexia. Ao exame físico: mucosas pálidas, TPC = 3 s, FC = 160 bpm, FR = 36 mpm, temperatura = 37,8 °C. A gasometria arterial revela:
-
-| Parâmetro | Valor | Referência |
-|-----------|-------|------------|
-| pH | 7,18 | 7,35 – 7,45 |
-| PaCO₂ | 24 mmHg | 35 – 45 mmHg |
-| HCO₃⁻ | 9 mEq/L | 18 – 24 mEq/L |
-| PaO₂ | 92 mmHg | 80 – 100 mmHg |
-| Na⁺ | 138 mEq/L | 140 – 155 mEq/L |
-| K⁺ | 3,0 mEq/L | 3,5 – 5,5 mEq/L |
-| Cl⁻ | 112 mEq/L | 105 – 115 mEq/L |
-
-**a)** Identifique e classifique o distúrbio ácido-base primário. Existe compensação? Justifique com base nos valores da gasometria. (1,0 ponto)
-
-**b)** Calcule o ânion gap (AG = Na⁺ − [Cl⁻ + HCO₃⁻]) e interprete o resultado. Qual é a provável etiologia da acidose neste caso? (1,0 ponto)
-
-**c)** Proponha um plano terapêutico inicial, incluindo tipo de fluido, via de administração e monitoramento dos parâmetros. Justifique suas escolhas. (1,0 ponto)
-
----
-
-**Questão 22.** (3,0 pontos)
-
-Uma gata, SRD, 8 anos, 4 kg, com diagnóstico prévio de diabetes mellitus descompensada, é trazida à clínica com vômitos, polidipsia, poliúria, respiração de Kussmaul e odor cetótico. A gasometria arterial mostra:
-
-| Parâmetro | Valor | Referência |
-|-----------|-------|------------|
-| pH | 7,12 | 7,35 – 7,45 |
-| PaCO₂ | 18 mmHg | 35 – 45 mmHg |
-| HCO₃⁻ | 6 mEq/L | 18 – 24 mEq/L |
-| PaO₂ | 98 mmHg | 80 – 100 mmHg |
-| Glicose | 480 mg/dL | 70 – 120 mg/dL |
-| K⁺ | 5,8 mEq/L | 3,5 – 5,5 mEq/L |
-
-**a)** Identifique o distúrbio ácido-base e explique a relação entre a cetoacidose diabética e a queda do pH e do HCO₃⁻. (1,0 ponto)
-
-**b)** A PaCO₂ está em 18 mmHg. Essa alteração é esperada? Explique o mecanismo fisiológico envolvido. (1,0 ponto)
-
-**c)** Descreva a abordagem terapêutica prioritária para este paciente, considerando fluidoterapia, insulinoterapia e correção eletrolítica. Indique em que momento o bicarbonato de sódio IV poderia ser considerado. (1,0 ponto)
-
----
-
-**Questão 23.** (4,0 pontos)
-
-Um cão Bulldog Francês, macho, 3 anos, 12 kg, é atendido após episódio de dispneia aguda durante exercício em dia quente. Apresenta cianose de mucosas, estridor inspiratório intenso, FR = 8 mpm (bradipneia por obstrução), FC = 180 bpm e temperatura = 41,2 °C. A gasometria arterial inicial revela:
-
-| Parâmetro | Valor | Referência |
-|-----------|-------|------------|
-| pH | 7,15 | 7,35 – 7,45 |
-| PaCO₂ | 72 mmHg | 35 – 45 mmHg |
-| HCO₃⁻ | 24 mEq/L | 18 – 24 mEq/L |
-| PaO₂ | 52 mmHg | 80 – 100 mmHg |
-| Lactato | 8,5 mmol/L | < 2,5 mmol/L |
-
-Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria mostra:
-
-| Parâmetro | Valor |
-|-----------|-------|
-| pH | 7,22 |
-| PaCO₂ | 55 mmHg |
-| HCO₃⁻ | 18 mEq/L |
-| PaO₂ | 75 mmHg |
-| Lactato | 5,2 mmol/L |
-
-**a)** Classifique o distúrbio ácido-base na gasometria **inicial**. O HCO₃⁻ normal indica compensação renal? Justifique. (1,0 ponto)
-
-**b)** Analise a **segunda gasometria**: o distúrbio está melhorando ou se complicando? Justifique comparando os dois momentos, incluindo a evolução do lactato e da PaO₂. (1,5 pontos)
-
-**c)** Proponha o manejo terapêutico para as próximas horas, considerando que a PaCO₂ permanece elevada. Discuta se há indicação de intervenção nas vias aéreas e quais parâmetros devem ser monitorados prioritariamente. (1,5 pontos)
-
----
-
-#### Gabarito Discursivo — Pontos-Chave Esperados (uso exclusivo do pesquisador)
-
-**Questão 21:**
-- **a)** Acidose metabólica (pH ↓, HCO₃⁻ ↓). Compensação respiratória presente (PaCO₂ ↓ = hiperventilação). Compensação parcial pois pH ainda < 7,35.
-- **b)** AG = 138 − (112 + 9) = 17 mEq/L → AG normal (hiperclorêmica). Etiologia: perda de HCO₃⁻ por diarreia com reposição de Cl⁻.
-- **c)** Ringer Lactato IV (30 mL/kg/h nas primeiras 1–2h), suplementação de K⁺ (KCl), monitorar pH, HCO₃⁻, K⁺ e estado de hidratação. Bicarbonato IV se pH não responder à fluidoterapia.
-
-**Questão 22:**
-- **a)** Acidose metabólica grave por acúmulo de corpos cetônicos (β-hidroxibutirato, acetoacetato). Cetoácidos consomem HCO₃⁻ como tampão → pH ↓.
-- **b)** Sim, esperada. Compensação respiratória: quimiorreceptores centrais detectam acidemia → hiperventilação (respiração de Kussmaul) → ↓ PaCO₂.
-- **c)** 1) NaCl 0,9% IV (10–20 mL/kg/h); 2) Insulina regular (0,05–0,1 UI/kg/h IV após reposição volêmica); 3) Monitorar K⁺ — hipocalemia pode ocorrer com insulinoterapia; 4) Bicarbonato IV somente se pH < 7,0 e sem resposta à fluidoterapia + insulina.
-
-**Questão 23:**
-- **a)** Acidose respiratória aguda (PaCO₂ ↑↑, pH ↓). HCO₃⁻ normal NÃO indica compensação renal — compensação renal leva 24–72h; trata-se de distúrbio agudo. Lactato elevado sugere componente metabólico associado (hipóxia tecidual).
-- **b)** Melhora parcial: PaCO₂ ↓ (72→55), PaO₂ ↑ (52→75), lactato ↓ (8,5→5,2). Porém pH ainda baixo (7,22) e HCO₃⁻ caiu (24→18), indicando acidose metabólica sobreposta (acidose láctica em resolução parcial). Distúrbio misto em evolução.
-- **c)** PaCO₂ persistentemente elevada → avaliar desobstrução de vias aéreas (considerar intubação ou traqueostomia temporária se síndrome braquicefálica grave). Manter oxigenoterapia. Monitorar: PaCO₂, PaO₂, lactato, pH, temperatura, FR e SpO₂. Resfriamento ativo até T < 39,5 °C. Fluidoterapia de manutenção.
-
-**Critério de correção (questões discursivas):** Total = 10,0 pontos (Q21: 3,0 + Q22: 3,0 + Q23: 4,0). Avaliação por rubrica: resposta completa e fundamentada = pontuação integral; parcialmente correta = 50%; incorreta ou ausente = 0.
-
-**Nota final do instrumento:** Média ponderada = (Subtotal Objetivas × 0,5) + (Subtotal Discursivas × 0,5), resultando em escala 0–10.
-
-> **Nota:** Este instrumento é um rascunho para validação com os docentes das disciplinas de Fisiologia Animal e Farmacologia. As questões poderão ser revisadas quanto ao nível de dificuldade, adequação ao conteúdo programático e clareza textual antes da aplicação definitiva.
-
----
-
-### Anexo I — Questionário de Satisfação (SUS Adaptado)
+### Anexo A — Questionário de Satisfação (SUS Adaptado)
 
 **Instruções:** Para cada afirmação, marque com um **X** a coluna que melhor representa sua opinião.
 
@@ -1175,25 +680,6 @@ Após 2 horas de oxigenoterapia, sedação e resfriamento ativo, nova gasometria
 | 15 | O software funcionou bem no meu dispositivo (celular/computador). | ☐ | ☐ | ☐ | ☐ | ☐ |
 
 **Participante:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ **Data:** \_\_\_/\_\_\_/\_\_\_\_\_\_
-
----
-
-### Anexo J — Checklist de Documentos para Submissão na Plataforma Brasil
-
-| # | Documento | Anexo | Status |
-|---|-----------|-------|--------|
-| 1 | Folha de Rosto (gerada pela Plataforma Brasil) | Anexo A | ☐ |
-| 2 | Projeto de Pesquisa completo (este documento) | — | ☐ |
-| 3 | TCLE (modelo oficial CEP/UFPI) | Anexo B | ☐ |
-| 4 | Declaração de Concordância Institucional e Infraestrutura | Anexo C | ☐ |
-| 5 | Termo de Compromisso dos Pesquisadores | Anexo D | ☐ |
-| 6 | Termo de Confidencialidade | Anexo E | ☐ |
-| 7 | Carta de Encaminhamento ao CEP | Anexo F | ☐ |
-| 8 | Currículo Lattes do pesquisador e do orientador | Anexo G | ☐ |
-| 9 | Instrumento de Avaliação (Pré-teste/Pós-teste) | Anexo H | ☐ |
-| 10 | Questionário de Satisfação (SUS adaptado) | Anexo I | ☐ |
-| 11 | Cronograma detalhado | Seção 10 | ☐ |
-| 12 | Orçamento detalhado | Seção 9 | ☐ |
 
 ---
 
