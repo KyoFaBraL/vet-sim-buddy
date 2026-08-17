@@ -98,7 +98,7 @@
 | 6 | Revisão da Literatura | ✅ |
 | 7 | Objetivos (geral + 4 específicos) | ✅ |
 | 8 | Metodologia (amostra n=40, TCLE, riscos 5 camadas, critérios inclusão/exclusão) | ✅ |
-| 9 | Orçamento detalhado (pesquisador, CAPES, UFPI) | ✅ |
+| 9 | Orçamento detalhado (recursos próprios do pesquisador e infraestrutura da UFPI) | ✅ |
 | 10 | Cronograma (≥3 meses tramitação CEP-UFPI, fases F1–F6) | ✅ |
 | 11 | Bibliografia (30+ referências) | ✅ |
 | 12 | Anexos (A–J: TCLE oficial, concordância institucional, compromisso, confidencialidade, carta de encaminhamento, Lattes, instrumento, SUS, checklist) | ✅ |
