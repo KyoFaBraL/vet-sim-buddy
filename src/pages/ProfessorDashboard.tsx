@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash } from "lucide-react";
+import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash, ClipboardList } from "lucide-react";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { Seo } from "@/components/Seo";
 import { useAuth } from "@/hooks/useAuth";
