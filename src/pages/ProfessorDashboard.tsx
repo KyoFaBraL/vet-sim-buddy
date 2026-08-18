@@ -213,6 +213,10 @@ export default function ProfessorDashboard() {
             </Card>
           </TabsContent>
 
+          <TabsContent value="sus" className="space-y-4">
+            <SusResponsesManager />
+          </TabsContent>
+
           <TabsContent value="tcle" className="space-y-4">
             <Card>
               <CardHeader>
