@@ -95,12 +95,18 @@ export function buildDeterministicHints(args: {
   }
 
   return abnormal.map((p, i) => {
-    const t = treatments[Math.min(i, Math.max(treatments.length - 1, 0))];
-    const treatmentName = clean(t?.nome, "Reavaliar plano terapêutico disponível");
+    const t = treatments.length > 0
+      ? treatments[Math.min(i, treatments.length - 1)]
+      : undefined;
+    const treatmentName = clean(
+      t?.nome,
+      "Reavaliar o plano terapêutico com base no distúrbio de base",
+    );
     const rationale = clean(
       t?.justificativa || t?.descricao,
       "Corrige a alteração identificada atuando sobre o distúrbio de base.",
     );
+
     const target = `${p.nome}${p.unidade ? ` (${p.unidade})` : ""}`;
     return {
       priority: priorityFor(i, p.relativeGap),
