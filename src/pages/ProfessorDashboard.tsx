@@ -79,7 +79,7 @@ export default function ProfessorDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="students" className="space-y-4">
-          <TabsList className={`grid w-full ${isAdmin ? "grid-cols-9" : "grid-cols-8"}`}>
+          <TabsList className={`grid w-full ${isAdmin ? "grid-cols-10" : "grid-cols-9"}`}>
             <TabsTrigger value="students">
               <Users className="h-4 w-4 mr-2" />
               Alunos
