@@ -18,6 +18,7 @@ interface ParticipantCodeRow {
   nome_completo: string | null;
   codigo: string;
   grupo: string;
+  instituicao: string | null;
   turma_id: string | null;
   turma_nome: string | null;
   criado_em: string;
@@ -46,10 +47,11 @@ export const ParticipantCodesManager = () => {
   }, []);
 
   const exportCsv = () => {
-    const header = ["Codigo", "Grupo", "Nome", "Turma", "Data de atribuicao"];
+    const header = ["Codigo", "Grupo", "Instituicao", "Nome", "Turma", "Data de atribuicao"];
     const lines = rows.map((r) => [
       r.codigo,
       r.grupo,
+      r.instituicao || "UFPI",
       r.nome_completo || "",
       r.turma_nome || "Sem turma",
       new Date(r.criado_em).toLocaleDateString("pt-BR"),
@@ -69,6 +71,8 @@ export const ParticipantCodesManager = () => {
 
   const totalGE = rows.filter((r) => r.grupo === "GE").length;
   const totalGC = rows.filter((r) => r.grupo === "GC").length;
+  const totalUfpi = rows.filter((r) => (r.instituicao || "UFPI") === "UFPI").length;
+  const totalUninassau = rows.filter((r) => r.instituicao === "UNINASSAU").length;
 
   return (
     <div className="space-y-4">
@@ -76,6 +80,8 @@ export const ParticipantCodesManager = () => {
         <div className="flex items-center gap-2">
           <Badge variant="default">GE: {totalGE}</Badge>
           <Badge variant="secondary">GC: {totalGC}</Badge>
+          <Badge variant="outline">UFPI: {totalUfpi}</Badge>
+          <Badge variant="outline">UNINASSAU: {totalUninassau}</Badge>
           <span className="text-sm text-muted-foreground">
             Total de participantes: {rows.length}
           </span>
@@ -105,6 +111,7 @@ export const ParticipantCodesManager = () => {
               <TableRow>
                 <TableHead>Código</TableHead>
                 <TableHead>Grupo</TableHead>
+                <TableHead>Instituição</TableHead>
                 <TableHead>Aluno</TableHead>
                 <TableHead>Turma</TableHead>
                 <TableHead>Atribuído em</TableHead>
@@ -116,6 +123,9 @@ export const ParticipantCodesManager = () => {
                   <TableCell className="font-mono font-medium">{r.codigo}</TableCell>
                   <TableCell>
                     <Badge variant={r.grupo === "GE" ? "default" : "secondary"}>{r.grupo}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{r.instituicao || "UFPI"}</Badge>
                   </TableCell>
                   <TableCell>{r.nome_completo || "—"}</TableCell>
                   <TableCell>{r.turma_nome || "Sem turma"}</TableCell>

@@ -10,7 +10,9 @@ import { VetBalanceLogo } from '@/components/VetBalanceLogo';
 import { Seo } from '@/components/Seo';
 import { useAuth } from '@/hooks/useAuth';
 import { useTcleConsent } from '@/hooks/useTcleConsent';
-import { assignParticipantCode } from '@/hooks/useParticipantCode';
+import { assignParticipantCode, INSTITUICOES, Instituicao } from '@/hooks/useParticipantCode';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { GraduationCap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { FileText, Shield, AlertTriangle, LogOut } from 'lucide-react';
 
@@ -20,18 +22,19 @@ const ConsentimentoTCLE = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
+  const [instituicao, setInstituicao] = useState<Instituicao | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const handleAccept = async () => {
-    if (!agreed) return;
+    if (!agreed || !instituicao) return;
     setSubmitting(true);
-    const success = await acceptConsent();
+    const success = await acceptConsent(instituicao);
     if (success) {
-      const code = await assignParticipantCode();
+      const code = await assignParticipantCode(instituicao);
       toast({
         title: 'Consentimento registrado',
         description: code
-          ? `Seu código de participante é ${code.codigo}. Anote-o: ele deve ser usado no questionário impresso, sem informar seu nome.`
+          ? `Seu código de participante é ${code.codigo} (${instituicao}). Anote-o: ele deve ser usado no questionário impresso, sem informar seu nome.`
           : 'Obrigado por aceitar o Termo de Consentimento. Você será redirecionado ao simulador.',
         duration: 12000,
       });
@@ -293,7 +296,34 @@ const ConsentimentoTCLE = () => {
             </div>
           </ScrollArea>
 
-          <div className="flex items-start gap-3 mt-6 p-4 rounded-lg border bg-muted/30">
+          <div className="mt-6 p-4 rounded-lg border bg-muted/30 space-y-3">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <GraduationCap className="h-4 w-4" />
+              Selecione sua turma / instituição de ensino
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Essa escolha define seu código de participante (ex.: UFPI-GE-001 ou UNI-GC-002) e organiza a
+              exportação dos dados por turma para as análises da pesquisa.
+            </p>
+            <RadioGroup
+              value={instituicao ?? ''}
+              onValueChange={(value) => setInstituicao(value as Instituicao)}
+              className="gap-2"
+            >
+              {INSTITUICOES.map((opt) => (
+                <label
+                  key={opt.value}
+                  htmlFor={`inst-${opt.value}`}
+                  className="flex items-center gap-3 rounded-md border bg-background p-3 text-sm cursor-pointer hover:bg-accent/40"
+                >
+                  <RadioGroupItem value={opt.value} id={`inst-${opt.value}`} />
+                  {opt.label}
+                </label>
+              ))}
+            </RadioGroup>
+          </div>
+
+          <div className="flex items-start gap-3 mt-4 p-4 rounded-lg border bg-muted/30">
             <Checkbox
               id="consent"
               checked={agreed}
@@ -320,7 +350,7 @@ const ConsentimentoTCLE = () => {
           </Button>
           <Button
             onClick={handleAccept}
-            disabled={!agreed || submitting}
+            disabled={!agreed || !instituicao || submitting}
             className="flex items-center gap-2"
           >
             <Shield className="h-4 w-4" />
