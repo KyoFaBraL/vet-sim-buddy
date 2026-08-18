@@ -101,6 +101,8 @@ const Index = () => {
     hp,
     gameStatus,
     lastHpChange,
+    abnormalParameters,
+    allParametersNormal,
     toggleSimulation,
     resetSimulation,
     applyTreatment,

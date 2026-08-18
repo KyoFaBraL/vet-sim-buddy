@@ -22,6 +22,8 @@ interface PatientMonitorProps {
   currentState: Record<number, number>;
   getParameterStatus: (parameterId: number, value: number) => { isNormal: boolean; isCritical: boolean };
   getParameterTrend: (parameterId: number, currentValue: number) => 'up' | 'down' | 'stable';
+  abnormalParameters?: string[];
+  allParametersNormal?: boolean;
 }
 
 export const PatientMonitor = ({
@@ -33,7 +35,9 @@ export const PatientMonitor = ({
   parameters,
   currentState,
   getParameterStatus,
-  getParameterTrend
+  getParameterTrend,
+  abnormalParameters = [],
+  allParametersNormal = false
 }: PatientMonitorProps) => {
   const getAnimalImage = () => {
     const isCat = animalType?.toLowerCase().includes('gato') || animalType?.toLowerCase().includes('felino');
@@ -134,6 +138,35 @@ export const PatientMonitor = ({
             )}
           </div>
         </div>
+
+        {/* Verificação de estabilização global (tempo real) */}
+        {gameStatus === 'playing' && (
+          <div
+            className={`rounded-lg border-2 p-3 text-sm ${
+              allParametersNormal
+                ? 'border-success bg-success/10 text-success'
+                : 'border-warning bg-warning/10 text-warning-foreground'
+            }`}
+          >
+            {allParametersNormal ? (
+              <p className="font-medium">
+                ✓ Todos os parâmetros estão na faixa de referência — o paciente pode atingir a recuperação total.
+              </p>
+            ) : (
+              <>
+                <p className="font-medium">
+                  Para estabilizar o paciente é necessário normalizar TODOS os parâmetros.
+                </p>
+                <p className="mt-1 text-muted-foreground">
+                  Pendentes ({abnormalParameters.length}): {abnormalParameters.join(', ')}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  O HP fica limitado a 99 enquanto houver parâmetro alterado.
+                </p>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Parâmetros Principais */}
         <div className="pt-4 border-t">
