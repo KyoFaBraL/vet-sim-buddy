@@ -485,7 +485,10 @@ const Index = () => {
               currentState={currentState}
               getParameterStatus={getParameterStatus}
               getParameterTrend={getParameterTrend}
+              abnormalParameters={abnormalParameters}
+              allParametersNormal={allParametersNormal}
             />
+
 
             {/* Metas de Aprendizado */}
             <LearningGoals
