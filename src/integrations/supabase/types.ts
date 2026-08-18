@@ -827,6 +827,39 @@ export type Database = {
           },
         ]
       }
+      sus_responses: {
+        Row: {
+          atualizado_em: string
+          codigo: string | null
+          comentarios: string | null
+          criado_em: string
+          id: string
+          instituicao: string
+          respostas: Json
+          user_id: string
+        }
+        Insert: {
+          atualizado_em?: string
+          codigo?: string | null
+          comentarios?: string | null
+          criado_em?: string
+          id?: string
+          instituicao?: string
+          respostas: Json
+          user_id: string
+        }
+        Update: {
+          atualizado_em?: string
+          codigo?: string | null
+          comentarios?: string | null
+          criado_em?: string
+          id?: string
+          instituicao?: string
+          respostas?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       tcle_consents: {
         Row: {
           aceito: boolean
