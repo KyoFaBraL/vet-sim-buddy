@@ -444,10 +444,55 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     setCurrentSessionId(null);
     setUsedHints(false);
     setMinHpDuringSession(50);
+    treatmentUsage.current = {};
+    wasStableRef.current = false;
     loadCase();
   };
 
+  // ===== Verificação de estabilização global =====
+  // O paciente só é considerado recuperado quando TODOS os parâmetros
+  // monitorizados no caso estão dentro da faixa de referência.
+  const isParamNormal = useCallback((param: Parameter, value: number) => {
+    const min = param.valor_minimo ?? -Infinity;
+    const max = param.valor_maximo ?? Infinity;
+    return value >= min && value <= max;
+  }, []);
+
+  const getAbnormalFrom = useCallback((state: SimulationState) => {
+    return parameters
+      .filter((p) => state[p.id] !== undefined && !isParamNormal(p, state[p.id]))
+      .map((p) => p.nome);
+  }, [parameters, isParamNormal]);
+
+  const abnormalParameters = getAbnormalFrom(currentState);
+  const allParametersNormal =
+    Object.keys(currentState).length > 0 && abnormalParameters.length === 0;
+
+  // Notificação em tempo real quando o paciente atinge (ou perde) a estabilização
+  const wasStableRef = useRef(false);
+  useEffect(() => {
+    if (!isRunning || gameStatus !== 'playing') return;
+    if (allParametersNormal && !wasStableRef.current) {
+      wasStableRef.current = true;
+      toast({
+        title: "✓ Todos os parâmetros normalizados",
+        description: "Mantenha o suporte: o paciente pode agora alcançar a recuperação total (100 HP).",
+      });
+    } else if (!allParametersNormal && wasStableRef.current) {
+      wasStableRef.current = false;
+      toast({
+        title: "⚠️ Paciente desestabilizou",
+        description: `Parâmetros fora da faixa: ${abnormalParameters.join(', ')}`,
+        variant: "destructive",
+      });
+    }
+  }, [allParametersNormal, abnormalParameters.join(','), isRunning, gameStatus, toast]);
+
+  // Contagem de aplicações por tratamento (evita farm de HP repetindo o mesmo tratamento)
+  const treatmentUsage = useRef<Record<number, number>>({});
+
   const applyTreatment = async (treatmentId: number) => {
+
     // Prevenir múltiplas aplicações simultâneas (race condition protection)
     if (isApplyingTreatment) {
       console.log('Tratamento já em aplicação, ignorando click duplicado');
@@ -527,27 +572,79 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       if (error) throw error;
 
-      setCurrentState((prevState) => {
-        const newState = { ...prevState };
-        
-        treatmentEffects?.forEach((effect) => {
-          const currentValue = newState[effect.id_parametro] || 0;
-          const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
-          newState[effect.id_parametro] = currentValue + (magnitude * eficacia);
-        });
-        
-        return newState;
+      // Rendimento decrescente: repetir o mesmo tratamento perde eficácia
+      const timesUsed = treatmentUsage.current[treatmentId] ?? 0;
+      treatmentUsage.current[treatmentId] = timesUsed + 1;
+      const repeatFactor = isAdequate ? Math.max(0.2, 1 - 0.4 * timesUsed) : 1;
+      eficacia = eficacia * repeatFactor;
+
+      // Calcular novo estado e medir se houve melhora real em parâmetros anormais
+      const baseState = { ...currentState };
+      const newState = { ...baseState };
+      treatmentEffects?.forEach((effect) => {
+        const currentValue = newState[effect.id_parametro] ?? 0;
+        const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
+        // Só altera parâmetros efetivamente monitorizados neste caso
+        if (baseState[effect.id_parametro] === undefined) return;
+        newState[effect.id_parametro] = currentValue + (magnitude * eficacia);
       });
 
+      const abnormalBefore = getAbnormalFrom(baseState);
+      const abnormalAfter = getAbnormalFrom(newState);
+
+      // Melhora real = algum parâmetro anormal se aproximou/entrou na faixa
+      let improved = false;
+      parameters.forEach((p) => {
+        const before = baseState[p.id];
+        const after = newState[p.id];
+        if (before === undefined || after === undefined || before === after) return;
+        const min = p.valor_minimo ?? -Infinity;
+        const max = p.valor_maximo ?? Infinity;
+        const distBefore = before < min ? min - before : before > max ? before - max : 0;
+        const distAfter = after < min ? min - after : after > max ? after - max : 0;
+        if (distAfter < distBefore) improved = true;
+      });
+
+      setCurrentState(newState);
+
+      // HP só é ganho quando o tratamento realmente melhora algum parâmetro anormal
+      if (hpChange > 0 && !improved) {
+        hpChange = 0;
+        toast({
+          title: "Sem efeito clínico",
+          description: abnormalAfter.length > 0
+            ? `Este tratamento não corrigiu nenhum parâmetro alterado. Ainda faltam: ${abnormalAfter.join(', ')}.`
+            : "Este tratamento não alterou o quadro do paciente.",
+          variant: "destructive",
+        });
+      } else if (hpChange > 0 && repeatFactor < 1) {
+        hpChange = Math.max(1, Math.round(hpChange * repeatFactor));
+      }
+
+      const allNormalAfter = Object.keys(newState).length > 0 && abnormalAfter.length === 0;
+
       setLastHpChange(hpChange);
-      
+
       const prevHp = hpRef.current;
-      const newHp = Math.min(100, Math.max(0, prevHp + hpChange));
+      // Recuperação total (100 HP) exige TODOS os parâmetros normalizados
+      const hpCeiling = allNormalAfter ? 100 : 99;
+      const newHp = Math.min(hpCeiling, Math.max(0, prevHp + hpChange));
       hpRef.current = newHp;
       setHp(newHp);
 
       // Side effects using ref value - no state updater needed
       setMinHpDuringSession(minHp => Math.min(minHp, newHp));
+
+      // Aviso em tempo real dos parâmetros pendentes
+      if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 90) {
+        toast({
+          title: "Paciente ainda instável",
+          description: `Estabilize todos os parâmetros para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
+        });
+      }
+      void abnormalBefore;
+      
+
       
       // Registrar decisão e tratamento aplicado com retry
       if (currentSessionId) {
@@ -593,7 +690,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         });
       }
       
-      if (newHp >= 100 && gameStatus === 'playing') {
+      if (newHp >= 100 && allNormalAfter && gameStatus === 'playing') {
         setGameStatus('won');
         setIsRunning(false);
         
@@ -802,7 +899,8 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       }
     }
     
-    const newHp = Math.max(0, Math.min(100, hpRef.current + delta));
+    const hpCeiling = allParametersNormal ? 100 : 99;
+    const newHp = Math.max(0, Math.min(hpCeiling, hpRef.current + delta));
     hpRef.current = newHp;
     setHp(newHp);
     setMinHpDuringSession(prev => Math.min(prev, newHp));
@@ -810,7 +908,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
     // Encerrar a partida quando o HP atinge os extremos por ajuste direto
     // (ex.: penalidade de dica), mantendo a UI consistente com o resultado.
-    if (gameStatus === 'playing' && (newHp >= 100 || newHp <= 0)) {
+    if (gameStatus === 'playing' && ((newHp >= 100 && allParametersNormal) || newHp <= 0)) {
       setGameStatus(newHp >= 100 ? 'won' : 'lost');
       setIsRunning(false);
     }
@@ -827,6 +925,8 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     hp,
     gameStatus,
     lastHpChange,
+    abnormalParameters,
+    allParametersNormal,
     toggleSimulation,
     resetSimulation,
     applyTreatment,

@@ -49,12 +49,14 @@ export function buildDeterministicHints(args: {
   availableTreatments: TreatmentLike[];
 }): Hint[] {
   const { currentState, parameters, condition } = args;
-  const treatments = (args.appropriateTreatments.length > 0
-    ? args.appropriateTreatments
-    : args.availableTreatments
-  ).slice();
+  // Só sugere tratamentos do gabarito do caso. Nunca sugerir um tratamento
+  // inadequado (isso gerava dica que resultava em "Tratamento Inadequado").
+  const treatments = args.appropriateTreatments.slice();
+
 
   const abnormal = (Array.isArray(parameters) ? parameters : [])
+    // Considera apenas parâmetros efetivamente monitorizados neste caso
+    .filter((p) => currentState?.[p.id as number] !== undefined && currentState?.[p.id as number] !== null)
     .map((p) => {
       const value = Number(currentState?.[p.id as number] ?? 0);
       const min = Number(p.valor_minimo ?? 0);
@@ -93,12 +95,18 @@ export function buildDeterministicHints(args: {
   }
 
   return abnormal.map((p, i) => {
-    const t = treatments[Math.min(i, Math.max(treatments.length - 1, 0))];
-    const treatmentName = clean(t?.nome, "Reavaliar plano terapêutico disponível");
+    const t = treatments.length > 0
+      ? treatments[Math.min(i, treatments.length - 1)]
+      : undefined;
+    const treatmentName = clean(
+      t?.nome,
+      "Reavaliar o plano terapêutico com base no distúrbio de base",
+    );
     const rationale = clean(
       t?.justificativa || t?.descricao,
       "Corrige a alteração identificada atuando sobre o distúrbio de base.",
     );
+
     const target = `${p.nome}${p.unidade ? ` (${p.unidade})` : ""}`;
     return {
       priority: priorityFor(i, p.relativeGap),
