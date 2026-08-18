@@ -18,6 +18,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { TcleConsentStatus } from "@/components/TcleConsentStatus";
 import { AiFeedbackModeSettings } from "@/components/AiFeedbackModeSettings";
 import { ParticipantCodesManager } from "@/components/ParticipantCodesManager";
+import { SusResponsesManager } from "@/components/SusResponsesManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { supabase } from "@/integrations/supabase/client";
 
