@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
 
-const TCLE_VERSION = '2.0';
+const TCLE_VERSION = '2.1';
 
 export const useTcleConsent = (user: User | null) => {
   const [hasConsent, setHasConsent] = useState<boolean | null>(null);

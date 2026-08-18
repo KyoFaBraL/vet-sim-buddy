@@ -193,6 +193,22 @@ const ConsentimentoTCLE = () => {
                 </p>
               </section>
 
+              <section className="p-4 rounded-lg border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-950/20">
+                <h3 className="font-bold text-base mb-2 flex items-center gap-2 text-amber-800 dark:text-amber-200">
+                  <AlertTriangle className="h-4 w-4" />
+                  Observação especial — parceria institucional e refinamento do software
+                </h3>
+                <p className="text-amber-900 dark:text-amber-100">
+                  O presente TCLE é realizado em <strong>parceria com a Faculdade Uninassau de Teresina</strong>,
+                  na qual o software VetBalance será aplicado como atividade de ensino com a turma de Medicina
+                  Veterinária. Os dados de desempenho, usabilidade e satisfação coletados durante esses testes
+                  serão utilizados como <strong>base de dados (database)</strong> para o refinamento, aperfeiçoamento
+                  e validação do software, contribuindo para a melhoria contínua da ferramenta e para a produção
+                  acadêmico-científica da pesquisa. A participação dos estudantes segue os mesmos princípios de
+                  voluntariedade, anonimização e sigilo descritos neste termo.
+                </p>
+              </section>
+
               <section>
                 <h3 className="font-bold text-base mb-2">Riscos</h3>
                 <p>
