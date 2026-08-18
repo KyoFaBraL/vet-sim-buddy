@@ -10,6 +10,7 @@ import { VetBalanceLogo } from '@/components/VetBalanceLogo';
 import { Seo } from '@/components/Seo';
 import { useAuth } from '@/hooks/useAuth';
 import { useTcleConsent } from '@/hooks/useTcleConsent';
+import { assignParticipantCode } from '@/hooks/useParticipantCode';
 import { useToast } from '@/hooks/use-toast';
 import { FileText, Shield, AlertTriangle, LogOut } from 'lucide-react';
 
@@ -26,9 +27,13 @@ const ConsentimentoTCLE = () => {
     setSubmitting(true);
     const success = await acceptConsent();
     if (success) {
+      const code = await assignParticipantCode();
       toast({
         title: 'Consentimento registrado',
-        description: 'Obrigado por aceitar o Termo de Consentimento. Você será redirecionado ao simulador.',
+        description: code
+          ? `Seu código de participante é ${code.codigo}. Anote-o: ele deve ser usado no questionário impresso, sem informar seu nome.`
+          : 'Obrigado por aceitar o Termo de Consentimento. Você será redirecionado ao simulador.',
+        duration: 12000,
       });
       navigate('/app', { replace: true });
     } else {

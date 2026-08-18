@@ -45,6 +45,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useParticipantCode } from "@/hooks/useParticipantCode";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -84,6 +85,7 @@ const Index = () => {
 
   const { toast } = useToast();
   const { checkAndAwardBadges } = useRankingBadges();
+  const { code: participantCode } = useParticipantCode(user);
   const { celebrateAchievement } = useAchievementAnimation();
   useWeeklyResetNotification();
   
@@ -365,6 +367,15 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-3">
               <Badge variant="secondary">Aluno</Badge>
+              {participantCode && (
+                <Badge
+                  variant={participantCode.grupo === "GE" ? "default" : "outline"}
+                  className="font-mono"
+                  title="Código de participante da pesquisa (use no questionário impresso)"
+                >
+                  {participantCode.codigo}
+                </Badge>
+              )}
               <span className="text-sm text-muted-foreground">{user.email}</span>
               <SoundAlertsExtended 
                 parameters={parameters}

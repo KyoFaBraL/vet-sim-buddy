@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
+import { assignParticipantCode, ParticipantCode } from '@/hooks/useParticipantCode';
 
 const TCLE_VERSION = '2.1';
 
 export const useTcleConsent = (user: User | null) => {
   const [hasConsent, setHasConsent] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
+  const [participantCode, setParticipantCode] = useState<ParticipantCode | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -62,6 +64,11 @@ export const useTcleConsent = (user: User | null) => {
 
       if (error) throw error;
       setHasConsent(true);
+
+      // Atribui automaticamente o código de participante (GE/GC)
+      const code = await assignParticipantCode();
+      setParticipantCode(code);
+
       return true;
     } catch (err) {
       console.error('Erro ao registrar consentimento:', err);
@@ -90,5 +97,5 @@ export const useTcleConsent = (user: User | null) => {
     }
   };
 
-  return { hasConsent, loading, acceptConsent, declineConsent, TCLE_VERSION };
+  return { hasConsent, loading, acceptConsent, declineConsent, participantCode, TCLE_VERSION };
 };

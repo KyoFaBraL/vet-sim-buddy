@@ -366,6 +366,47 @@ export type Database = {
         }
         Relationships: []
       }
+      participant_codes: {
+        Row: {
+          atualizado_em: string
+          codigo: string
+          criado_em: string
+          grupo: string
+          id: string
+          sequencia: number
+          turma_id: string | null
+          user_id: string
+        }
+        Insert: {
+          atualizado_em?: string
+          codigo: string
+          criado_em?: string
+          grupo: string
+          id?: string
+          sequencia: number
+          turma_id?: string | null
+          user_id: string
+        }
+        Update: {
+          atualizado_em?: string
+          codigo?: string
+          criado_em?: string
+          grupo?: string
+          id?: string
+          sequencia?: number
+          turma_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "participant_codes_turma_id_fkey"
+            columns: ["turma_id"]
+            isOneToOne: false
+            referencedRelation: "turmas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       professor_access_keys: {
         Row: {
           access_key: string
@@ -1155,6 +1196,7 @@ export type Database = {
         Args: { new_name: string; target_user_id: string }
         Returns: Json
       }
+      assign_participant_code: { Args: { p_user_id?: string }; Returns: Json }
       award_badge: {
         Args: { p_badge_id: string; p_session_id?: string }
         Returns: Json
@@ -1182,6 +1224,18 @@ export type Database = {
           rel_id: string
           student_id: string
           turma_id: string
+        }[]
+      }
+      get_participant_codes_for_professor: {
+        Args: never
+        Returns: {
+          codigo: string
+          criado_em: string
+          grupo: string
+          nome_completo: string
+          turma_id: string
+          turma_nome: string
+          user_id: string
         }[]
       }
       get_shared_case_by_code: {
@@ -1227,6 +1281,10 @@ export type Database = {
       is_professor_or_admin: { Args: { _user_id: string }; Returns: boolean }
       promote_to_professor: { Args: { target_user_id: string }; Returns: Json }
       purge_old_email_lookups: { Args: never; Returns: undefined }
+      reassign_participant_code: {
+        Args: { p_turma_id: string; p_user_id: string }
+        Returns: Json
+      }
       register_aluno: {
         Args: { email: string; nome_completo: string; user_id: string }
         Returns: Json
