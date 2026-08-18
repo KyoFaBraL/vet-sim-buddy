@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash } from "lucide-react";
+import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash, ClipboardList } from "lucide-react";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { Seo } from "@/components/Seo";
 import { useAuth } from "@/hooks/useAuth";
@@ -18,6 +18,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { TcleConsentStatus } from "@/components/TcleConsentStatus";
 import { AiFeedbackModeSettings } from "@/components/AiFeedbackModeSettings";
 import { ParticipantCodesManager } from "@/components/ParticipantCodesManager";
+import { SusResponsesManager } from "@/components/SusResponsesManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -78,7 +79,7 @@ export default function ProfessorDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="students" className="space-y-4">
-          <TabsList className={`grid w-full ${isAdmin ? "grid-cols-9" : "grid-cols-8"}`}>
+          <TabsList className={`grid w-full ${isAdmin ? "grid-cols-10" : "grid-cols-9"}`}>
             <TabsTrigger value="students">
               <Users className="h-4 w-4 mr-2" />
               Alunos
@@ -102,6 +103,10 @@ export default function ProfessorDashboard() {
             <TabsTrigger value="codigos">
               <Hash className="h-4 w-4 mr-2" />
               Códigos
+            </TabsTrigger>
+            <TabsTrigger value="sus">
+              <ClipboardList className="h-4 w-4 mr-2" />
+              SUS
             </TabsTrigger>
             <TabsTrigger value="tcle">
               <FileText className="h-4 w-4 mr-2" />
@@ -206,6 +211,10 @@ export default function ProfessorDashboard() {
                 <ParticipantCodesManager />
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="sus" className="space-y-4">
+            <SusResponsesManager />
           </TabsContent>
 
           <TabsContent value="tcle" className="space-y-4">
