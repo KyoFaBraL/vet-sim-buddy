@@ -447,7 +447,50 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     loadCase();
   };
 
+  // ===== Verificação de estabilização global =====
+  // O paciente só é considerado recuperado quando TODOS os parâmetros
+  // monitorizados no caso estão dentro da faixa de referência.
+  const isParamNormal = useCallback((param: Parameter, value: number) => {
+    const min = param.valor_minimo ?? -Infinity;
+    const max = param.valor_maximo ?? Infinity;
+    return value >= min && value <= max;
+  }, []);
+
+  const getAbnormalFrom = useCallback((state: SimulationState) => {
+    return parameters
+      .filter((p) => state[p.id] !== undefined && !isParamNormal(p, state[p.id]))
+      .map((p) => p.nome);
+  }, [parameters, isParamNormal]);
+
+  const abnormalParameters = getAbnormalFrom(currentState);
+  const allParametersNormal =
+    Object.keys(currentState).length > 0 && abnormalParameters.length === 0;
+
+  // Notificação em tempo real quando o paciente atinge (ou perde) a estabilização
+  const wasStableRef = useRef(false);
+  useEffect(() => {
+    if (!isRunning || gameStatus !== 'playing') return;
+    if (allParametersNormal && !wasStableRef.current) {
+      wasStableRef.current = true;
+      toast({
+        title: "✓ Todos os parâmetros normalizados",
+        description: "Mantenha o suporte: o paciente pode agora alcançar a recuperação total (100 HP).",
+      });
+    } else if (!allParametersNormal && wasStableRef.current) {
+      wasStableRef.current = false;
+      toast({
+        title: "⚠️ Paciente desestabilizou",
+        description: `Parâmetros fora da faixa: ${abnormalParameters.join(', ')}`,
+        variant: "destructive",
+      });
+    }
+  }, [allParametersNormal, abnormalParameters.join(','), isRunning, gameStatus, toast]);
+
+  // Contagem de aplicações por tratamento (evita farm de HP repetindo o mesmo tratamento)
+  const treatmentUsage = useRef<Record<number, number>>({});
+
   const applyTreatment = async (treatmentId: number) => {
+
     // Prevenir múltiplas aplicações simultâneas (race condition protection)
     if (isApplyingTreatment) {
       console.log('Tratamento já em aplicação, ignorando click duplicado');
