@@ -394,6 +394,9 @@ const Index = () => {
 
       {/* Conteúdo Principal */}
       <main className="container mx-auto px-4 py-6 space-y-6">
+        {/* Questionário SUS (Anexo A) - prazo 28/08/2026 */}
+        <SusReminderBanner user={user} participantCode={participantCode} />
+
         {/* Configuração de Simulação - Apenas para Alunos */}
         <Card>
           <CardHeader>
