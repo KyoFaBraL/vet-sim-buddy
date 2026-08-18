@@ -134,6 +134,11 @@ export const StudentManagement = () => {
         return;
       }
 
+      await supabase.rpc("reassign_participant_code", {
+        p_user_id: studentId,
+        p_turma_id: selectedTurma === "none" ? null : selectedTurma,
+      });
+
       toast.success("Aluno adicionado com sucesso!");
       setStudentEmail("");
       setSelectedTurma("none");
@@ -146,7 +151,7 @@ export const StudentManagement = () => {
     }
   };
 
-  const changeTurma = async (studentRelId: string, turmaId: string | null) => {
+  const changeTurma = async (studentRelId: string, turmaId: string | null, studentId?: string) => {
     try {
       const { error } = await supabase
         .from("professor_students")
@@ -154,6 +159,13 @@ export const StudentManagement = () => {
         .eq("id", studentRelId);
 
       if (error) throw error;
+
+      if (studentId && turmaId) {
+        await supabase.rpc("reassign_participant_code", {
+          p_user_id: studentId,
+          p_turma_id: turmaId,
+        });
+      }
       toast.success("Turma atualizada!");
       loadStudents();
     } catch (error) {
@@ -289,7 +301,7 @@ export const StudentManagement = () => {
                     <TableCell>
                       <Select
                         value={student.turma_id || "none"}
-                        onValueChange={(value) => changeTurma(student.id, value === "none" ? null : value)}
+                        onValueChange={(value) => changeTurma(student.id, value === "none" ? null : value, student.student_id)}
                       >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Sem turma" />

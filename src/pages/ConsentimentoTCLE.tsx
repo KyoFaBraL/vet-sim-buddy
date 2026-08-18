@@ -26,9 +26,14 @@ const ConsentimentoTCLE = () => {
     setSubmitting(true);
     const success = await acceptConsent();
     if (success) {
+      const codigo = (await import('@/hooks/useParticipantCode')).assignParticipantCode;
+      const code = await codigo();
       toast({
         title: 'Consentimento registrado',
-        description: 'Obrigado por aceitar o Termo de Consentimento. Você será redirecionado ao simulador.',
+        description: code
+          ? `Seu código de participante é ${code.codigo}. Anote-o: ele deve ser usado no questionário impresso, sem informar seu nome.`
+          : 'Obrigado por aceitar o Termo de Consentimento. Você será redirecionado ao simulador.',
+        duration: 12000,
       });
       navigate('/app', { replace: true });
     } else {

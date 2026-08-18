@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain } from "lucide-react";
+import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash } from "lucide-react";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { Seo } from "@/components/Seo";
 import { useAuth } from "@/hooks/useAuth";
@@ -17,6 +17,7 @@ import { UserManagement } from "@/components/UserManagement";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TcleConsentStatus } from "@/components/TcleConsentStatus";
 import { AiFeedbackModeSettings } from "@/components/AiFeedbackModeSettings";
+import { ParticipantCodesManager } from "@/components/ParticipantCodesManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -77,7 +78,7 @@ export default function ProfessorDashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="students" className="space-y-4">
-          <TabsList className={`grid w-full ${isAdmin ? "grid-cols-8" : "grid-cols-7"}`}>
+          <TabsList className={`grid w-full ${isAdmin ? "grid-cols-9" : "grid-cols-8"}`}>
             <TabsTrigger value="students">
               <Users className="h-4 w-4 mr-2" />
               Alunos
@@ -97,6 +98,10 @@ export default function ProfessorDashboard() {
             <TabsTrigger value="keys">
               <Key className="h-4 w-4 mr-2" />
               Chaves
+            </TabsTrigger>
+            <TabsTrigger value="codigos">
+              <Hash className="h-4 w-4 mr-2" />
+              Códigos
             </TabsTrigger>
             <TabsTrigger value="tcle">
               <FileText className="h-4 w-4 mr-2" />
@@ -186,6 +191,21 @@ export default function ProfessorDashboard() {
 
           <TabsContent value="keys" className="space-y-4">
             <ProfessorAccessKeys />
+          </TabsContent>
+
+          <TabsContent value="codigos" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Códigos de Participantes (GE/GC)</CardTitle>
+                <CardDescription>
+                  Códigos gerados automaticamente no aceite do TCLE, em alocação alternada por turma
+                  (1º aluno GE, 2º GC, 3º GE...). Exporte o CSV para alimentar a lista mestre.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ParticipantCodesManager />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="tcle" className="space-y-4">
