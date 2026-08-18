@@ -65,6 +65,18 @@ export const useTcleConsent = (user: User | null) => {
       if (error) throw error;
       setHasConsent(true);
 
+      // Log de participação: aceite do TCLE (data, hora e instituição)
+      supabase
+        .rpc('log_participation_event', {
+          p_tipo: 'tcle_aceito',
+          p_instituicao: instituicao,
+          p_versao_tcle: TCLE_VERSION,
+          p_user_agent: navigator.userAgent,
+        })
+        .then(({ error: logError }) => {
+          if (logError) console.error('Erro ao registrar log de aceite do TCLE:', logError);
+        });
+
       // Atribui automaticamente o código de participante (GE/GC)
       const code = await assignParticipantCode(instituicao);
       setParticipantCode(code);
