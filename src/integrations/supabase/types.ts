@@ -1240,6 +1240,13 @@ export type Database = {
         Args: { p_badge_id: string; p_session_id?: string }
         Returns: Json
       }
+      check_treatment_adequacy: {
+        Args: { p_condicao_id: number; p_tratamento_id: number }
+        Returns: {
+          justificativa: string
+          prioridade: number
+        }[]
+      }
       demote_to_student: { Args: { target_user_id: string }; Returns: Json }
       generate_access_code: { Args: never; Returns: string }
       get_ai_feedback_mode: { Args: never; Returns: string }
