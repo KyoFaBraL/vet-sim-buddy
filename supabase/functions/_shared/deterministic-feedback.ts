@@ -49,10 +49,10 @@ export function buildDeterministicHints(args: {
   availableTreatments: TreatmentLike[];
 }): Hint[] {
   const { currentState, parameters, condition } = args;
-  const treatments = (args.appropriateTreatments.length > 0
-    ? args.appropriateTreatments
-    : args.availableTreatments
-  ).slice();
+  // Só sugere tratamentos do gabarito do caso. Nunca sugerir um tratamento
+  // inadequado (isso gerava dica que resultava em "Tratamento Inadequado").
+  const treatments = args.appropriateTreatments.slice();
+
 
   const abnormal = (Array.isArray(parameters) ? parameters : [])
     // Considera apenas parâmetros efetivamente monitorizados neste caso
