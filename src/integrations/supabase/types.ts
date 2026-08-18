@@ -1199,12 +1199,10 @@ export type Database = {
         Args: { new_name: string; target_user_id: string }
         Returns: Json
       }
-      assign_participant_code:
-        | { Args: { p_user_id?: string }; Returns: Json }
-        | {
-            Args: { p_instituicao?: string; p_user_id?: string }
-            Returns: Json
-          }
+      assign_participant_code: {
+        Args: { p_instituicao?: string; p_user_id?: string }
+        Returns: Json
+      }
       award_badge: {
         Args: { p_badge_id: string; p_session_id?: string }
         Returns: Json
