@@ -28,10 +28,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
       finish();
+
+      // Log de participação: registra o login (com data, hora e instituição)
+      if (event === "SIGNED_IN" && s?.user) {
+        setTimeout(() => {
+          supabase
+            .rpc("log_participation_event", {
+              p_tipo: "login",
+              p_user_agent: navigator.userAgent,
+            })
+            .then(({ error }) => {
+              if (error) console.error("Erro ao registrar login:", error);
+            });
+        }, 0);
+      }
     });
 
     supabase.auth

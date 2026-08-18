@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash, ClipboardList } from "lucide-react";
+import { LogOut, Users, BookOpen, BarChart3, Settings, Key, FileText, Brain, Hash, ClipboardList , History} from "lucide-react";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { Seo } from "@/components/Seo";
 import { useAuth } from "@/hooks/useAuth";
@@ -19,6 +19,7 @@ import { TcleConsentStatus } from "@/components/TcleConsentStatus";
 import { AiFeedbackModeSettings } from "@/components/AiFeedbackModeSettings";
 import { ParticipantCodesManager } from "@/components/ParticipantCodesManager";
 import { SusResponsesManager } from "@/components/SusResponsesManager";
+import { ParticipationLogManager } from "@/components/ParticipationLogManager";
 import { useUserRole } from "@/hooks/useUserRole";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -111,6 +112,10 @@ export default function ProfessorDashboard() {
             <TabsTrigger value="tcle">
               <FileText className="h-4 w-4 mr-2" />
               TCLE
+            </TabsTrigger>
+            <TabsTrigger value="log">
+              <History className="h-4 w-4 mr-2" />
+              Log
             </TabsTrigger>
             <TabsTrigger value="users">
               <Users className="h-4 w-4 mr-2" />
@@ -229,6 +234,10 @@ export default function ProfessorDashboard() {
                 <TcleConsentStatus />
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="log" className="space-y-4">
+            <ParticipationLogManager />
           </TabsContent>
 
           <TabsContent value="users" className="space-y-4">

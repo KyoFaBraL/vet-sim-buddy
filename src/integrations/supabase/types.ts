@@ -410,6 +410,39 @@ export type Database = {
           },
         ]
       }
+      participation_log: {
+        Row: {
+          codigo: string | null
+          criado_em: string
+          id: string
+          instituicao: string | null
+          tipo: string
+          user_agent: string | null
+          user_id: string
+          versao_tcle: string | null
+        }
+        Insert: {
+          codigo?: string | null
+          criado_em?: string
+          id?: string
+          instituicao?: string | null
+          tipo: string
+          user_agent?: string | null
+          user_id: string
+          versao_tcle?: string | null
+        }
+        Update: {
+          codigo?: string | null
+          criado_em?: string
+          id?: string
+          instituicao?: string | null
+          tipo?: string
+          user_agent?: string | null
+          user_id?: string
+          versao_tcle?: string | null
+        }
+        Relationships: []
+      }
       professor_access_keys: {
         Row: {
           access_key: string
@@ -1285,6 +1318,20 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_participation_log_for_professor: {
+        Args: never
+        Returns: {
+          codigo: string
+          criado_em: string
+          email: string
+          id: string
+          instituicao: string
+          nome_completo: string
+          tipo: string
+          user_id: string
+          versao_tcle: string
+        }[]
+      }
       get_shared_case_by_code: {
         Args: { code: string }
         Returns: {
@@ -1326,6 +1373,15 @@ export type Database = {
         Returns: boolean
       }
       is_professor_or_admin: { Args: { _user_id: string }; Returns: boolean }
+      log_participation_event: {
+        Args: {
+          p_instituicao?: string
+          p_tipo: string
+          p_user_agent?: string
+          p_versao_tcle?: string
+        }
+        Returns: Json
+      }
       promote_to_professor: { Args: { target_user_id: string }; Returns: Json }
       purge_old_email_lookups: { Args: never; Returns: undefined }
       reassign_participant_code: {
