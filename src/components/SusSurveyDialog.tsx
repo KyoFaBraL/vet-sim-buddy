@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { ScrollArea } from '@/components/ui/scroll-area';
+
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -82,7 +82,7 @@ export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode }: P
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col">
+      <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle>Anexo A — Questionário de Satisfação (SUS Adaptado)</DialogTitle>
           <DialogDescription>
@@ -104,7 +104,10 @@ export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode }: P
           {prazoEncerrado && <Badge variant="destructive">Prazo encerrado</Badge>}
         </div>
 
-        <ScrollArea className="flex-1 pr-4 max-h-[55vh]">
+        <div
+          className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-2 -mr-2"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
           <div className="space-y-4 py-2">
             <p className="text-xs text-muted-foreground">
               Escala: 1 = Discordo totalmente • 2 = Discordo • 3 = Neutro • 4 = Concordo • 5 = Concordo
@@ -153,7 +156,7 @@ export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode }: P
               />
             </div>
           </div>
-        </ScrollArea>
+        </div>
 
         <DialogFooter className="flex-col sm:flex-row gap-2">
           <p className="text-xs text-muted-foreground sm:mr-auto">
