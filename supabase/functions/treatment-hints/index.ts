@@ -60,7 +60,9 @@ serve(async (req) => {
     const sanitizedCaseDescription = sanitizeInput(caseDescription, 500);
 
     // Build parameters context from validated data
-    const parametersContext = (Array.isArray(parameters) ? parameters : []).map((p: any) => {
+    const parametersContext = (Array.isArray(parameters) ? parameters : [])
+      .filter((p: any) => currentState?.[p.id] !== undefined && currentState?.[p.id] !== null)
+      .map((p: any) => {
       const value = currentState?.[p.id] || 0;
       const min = p.valor_minimo || 0;
       const max = p.valor_maximo || 100;

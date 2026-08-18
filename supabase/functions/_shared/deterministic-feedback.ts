@@ -55,6 +55,8 @@ export function buildDeterministicHints(args: {
   ).slice();
 
   const abnormal = (Array.isArray(parameters) ? parameters : [])
+    // Considera apenas parâmetros efetivamente monitorizados neste caso
+    .filter((p) => currentState?.[p.id as number] !== undefined && currentState?.[p.id as number] !== null)
     .map((p) => {
       const value = Number(currentState?.[p.id as number] ?? 0);
       const min = Number(p.valor_minimo ?? 0);
