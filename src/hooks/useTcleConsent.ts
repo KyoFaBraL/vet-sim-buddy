@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
-import { assignParticipantCode, ParticipantCode } from '@/hooks/useParticipantCode';
+import { assignParticipantCode, Instituicao, ParticipantCode } from '@/hooks/useParticipantCode';
 
 const TCLE_VERSION = '2.1';
 
@@ -49,7 +49,7 @@ export const useTcleConsent = (user: User | null) => {
     return () => clearTimeout(watchdog);
   }, [user?.id]);
 
-  const acceptConsent = async () => {
+  const acceptConsent = async (instituicao: Instituicao = 'UFPI') => {
     if (!user) return false;
 
     try {
@@ -66,7 +66,7 @@ export const useTcleConsent = (user: User | null) => {
       setHasConsent(true);
 
       // Atribui automaticamente o código de participante (GE/GC)
-      const code = await assignParticipantCode();
+      const code = await assignParticipantCode(instituicao);
       setParticipantCode(code);
 
       return true;
