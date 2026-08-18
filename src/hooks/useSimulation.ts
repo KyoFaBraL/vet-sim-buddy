@@ -444,6 +444,8 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     setCurrentSessionId(null);
     setUsedHints(false);
     setMinHpDuringSession(50);
+    treatmentUsage.current = {};
+    wasStableRef.current = false;
     loadCase();
   };
 
@@ -688,7 +690,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         });
       }
       
-      if (newHp >= 100 && gameStatus === 'playing') {
+      if (newHp >= 100 && allNormalAfter && gameStatus === 'playing') {
         setGameStatus('won');
         setIsRunning(false);
         
@@ -897,7 +899,8 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       }
     }
     
-    const newHp = Math.max(0, Math.min(100, hpRef.current + delta));
+    const hpCeiling = allParametersNormal ? 100 : 99;
+    const newHp = Math.max(0, Math.min(hpCeiling, hpRef.current + delta));
     hpRef.current = newHp;
     setHp(newHp);
     setMinHpDuringSession(prev => Math.min(prev, newHp));
@@ -905,7 +908,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
     // Encerrar a partida quando o HP atinge os extremos por ajuste direto
     // (ex.: penalidade de dica), mantendo a UI consistente com o resultado.
-    if (gameStatus === 'playing' && (newHp >= 100 || newHp <= 0)) {
+    if (gameStatus === 'playing' && ((newHp >= 100 && allParametersNormal) || newHp <= 0)) {
       setGameStatus(newHp >= 100 ? 'won' : 'lost');
       setIsRunning(false);
     }
@@ -922,6 +925,8 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     hp,
     gameStatus,
     lastHpChange,
+    abnormalParameters,
+    allParametersNormal,
     toggleSimulation,
     resetSimulation,
     applyTreatment,
