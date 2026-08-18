@@ -27,7 +27,13 @@ function builder(table: string) {
 
 export const supabaseMock = {
   from: vi.fn((table: string) => builder(table)),
-  rpc: vi.fn(async () => ({ data: null, error: null })),
+  rpc: vi.fn(async (fn: string) => {
+    // O gabarito por condição agora é consultado via função segura no servidor.
+    if (fn === "check_treatment_adequacy") {
+      return { data: mockTables["tratamentos_adequados"] ?? [], error: null };
+    }
+    return { data: null, error: null };
+  }),
   auth: {
     getUser: vi.fn(async () => ({ data: { user: { id: "user-test-1" } }, error: null })),
   },
