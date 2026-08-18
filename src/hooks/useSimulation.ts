@@ -493,14 +493,16 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         caseTreatment ?? null;
 
       // 2) Fallback: gabarito da condição primária (casos pré-definidos)
+      // Consultado via RPC segura: o gabarito completo não é exposto ao aluno.
       if (!match && !caseData?.user_id && caseData?.id_condicao_primaria) {
-        const { data: adequateTreatment } = await supabase
-          .from("tratamentos_adequados")
-          .select("prioridade, justificativa")
-          .eq("condicao_id", caseData.id_condicao_primaria)
-          .eq("tratamento_id", treatmentId)
-          .maybeSingle();
-        match = adequateTreatment ?? null;
+        const { data: adequateTreatment } = await supabase.rpc(
+          "check_treatment_adequacy",
+          {
+            p_condicao_id: caseData.id_condicao_primaria,
+            p_tratamento_id: treatmentId,
+          }
+        );
+        match = adequateTreatment?.[0] ?? null;
       }
 
       isAdequate = !!match;
