@@ -62,6 +62,11 @@ export const useTcleConsent = (user: User | null) => {
 
       if (error) throw error;
       setHasConsent(true);
+
+      // Atribui automaticamente o código de participante (GE/GC)
+      const code = await assignParticipantCode();
+      setParticipantCode(code);
+
       return true;
     } catch (err) {
       console.error('Erro ao registrar consentimento:', err);
