@@ -280,7 +280,7 @@ const ConsentimentoTCLE = () => {
                   consentimento para uso das informações por mim prestadas.
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Registro digital: seu aceite será armazenado com data/hora, versão do TCLE (v2.0) e identificação do
+                  Registro digital: seu aceite será armazenado com data/hora, versão do TCLE (v2.1) e identificação do
                   navegador, garantindo rastreabilidade e equivalência à assinatura em duas vias, conforme as
                   Resoluções CNS nº 466/2012 e nº 510/2016.
                 </p>
