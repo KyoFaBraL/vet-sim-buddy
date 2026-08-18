@@ -10,6 +10,7 @@ import { VetBalanceLogo } from '@/components/VetBalanceLogo';
 import { Seo } from '@/components/Seo';
 import { useAuth } from '@/hooks/useAuth';
 import { useTcleConsent } from '@/hooks/useTcleConsent';
+import { assignParticipantCode } from '@/hooks/useParticipantCode';
 import { useToast } from '@/hooks/use-toast';
 import { FileText, Shield, AlertTriangle, LogOut } from 'lucide-react';
 
@@ -26,8 +27,7 @@ const ConsentimentoTCLE = () => {
     setSubmitting(true);
     const success = await acceptConsent();
     if (success) {
-      const codigo = (await import('@/hooks/useParticipantCode')).assignParticipantCode;
-      const code = await codigo();
+      const code = await assignParticipantCode();
       toast({
         title: 'Consentimento registrado',
         description: code
