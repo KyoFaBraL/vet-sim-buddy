@@ -373,6 +373,7 @@ export type Database = {
           criado_em: string
           grupo: string
           id: string
+          instituicao: string
           sequencia: number
           turma_id: string | null
           user_id: string
@@ -383,6 +384,7 @@ export type Database = {
           criado_em?: string
           grupo: string
           id?: string
+          instituicao?: string
           sequencia: number
           turma_id?: string | null
           user_id: string
@@ -393,6 +395,7 @@ export type Database = {
           criado_em?: string
           grupo?: string
           id?: string
+          instituicao?: string
           sequencia?: number
           turma_id?: string | null
           user_id?: string
@@ -1196,7 +1199,12 @@ export type Database = {
         Args: { new_name: string; target_user_id: string }
         Returns: Json
       }
-      assign_participant_code: { Args: { p_user_id?: string }; Returns: Json }
+      assign_participant_code:
+        | { Args: { p_user_id?: string }; Returns: Json }
+        | {
+            Args: { p_instituicao?: string; p_user_id?: string }
+            Returns: Json
+          }
       award_badge: {
         Args: { p_badge_id: string; p_session_id?: string }
         Returns: Json
@@ -1232,6 +1240,7 @@ export type Database = {
           codigo: string
           criado_em: string
           grupo: string
+          instituicao: string
           nome_completo: string
           turma_id: string
           turma_nome: string
