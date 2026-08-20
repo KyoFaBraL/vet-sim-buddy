@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const SusReminderBanner = ({ user, participantCode }: Props) => {
-  const { response, loading } = useSusResponse(user);
+  const { response, loading, reload } = useSusResponse(user);
   const [open, setOpen] = useState(false);
   const dias = diasRestantesSus();
   const encerrado = isSusPrazoEncerrado();
@@ -127,6 +127,7 @@ export const SusReminderBanner = ({ user, participantCode }: Props) => {
         onOpenChange={setOpen}
         user={user}
         participantCode={participantCode}
+        onSubmitted={reload}
       />
     </>
   );

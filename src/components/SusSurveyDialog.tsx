@@ -29,9 +29,10 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   user: User;
   participantCode: ParticipantCode | null;
+  onSubmitted?: () => void;
 }
 
-export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode }: Props) => {
+export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode, onSubmitted }: Props) => {
   const { response, submit } = useSusResponse(user);
   const [answers, setAnswers] = useState<SusAnswers>({});
   const [comentarios, setComentarios] = useState('');
@@ -70,6 +71,7 @@ export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode }: P
         title: 'Questionário enviado',
         description: 'Obrigado! Suas respostas serão usadas de forma anônima e agregada.',
       });
+      onSubmitted?.();
       onOpenChange(false);
     } else {
       toast({
