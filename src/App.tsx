@@ -134,6 +134,13 @@ const App = () => (
                 <AuthAluno />
               </PublicRoute>
             } />
+            {/* Acesso de visitantes do congresso Delta Saúde 2026 (QR code) */}
+            <Route path="/demo" element={<Navigate to="/auth/visitante" replace />} />
+            <Route path="/auth/visitante" element={
+              <PublicRoute>
+                <AuthVisitante />
+              </PublicRoute>
+            } />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
             <Route path="/consentimento" element={
