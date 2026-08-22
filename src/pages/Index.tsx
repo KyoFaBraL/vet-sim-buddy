@@ -373,7 +373,12 @@ const Index = () => {
                   <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  {isVisitante ? "Modo Visitante — Congresso Delta Saúde 2026" : "Modo Aluno"}
+                  {isVisitante ? (
+                    <>
+                      <span className="sm:hidden">Modo Visitante — Delta Saúde 2026</span>
+                      <span className="hidden sm:inline">Modo Visitante — Congresso Delta Saúde 2026</span>
+                    </>
+                  ) : "Modo Aluno"}
                 </p>
               </div>
             </div>
