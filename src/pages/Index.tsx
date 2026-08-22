@@ -197,13 +197,16 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         {/* Header do Professor */}
-        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+        <header className="border-b bg-card/50 backdrop-blur-sm md:sticky md:top-0 z-10">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <VetBalanceLogo className="h-12 w-12 object-contain" />
-                <div>
-                  <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-3 min-w-0">
+                <VetBalanceLogo className="h-12 w-12 object-contain shrink-0" />
+                <div className="min-w-0">
+                  <h1 className="text-xl font-bold leading-tight">
+                    <span className="md:hidden">VetBalance</span>
+                    <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
+                  </h1>
                   <p className="text-sm text-muted-foreground">Portal do Professor</p>
                 </div>
               </div>
@@ -359,13 +362,16 @@ const Index = () => {
       {/* Ranking Notifications - Real-time listener */}
       <RankingNotifications />
       {/* Header do Aluno */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b bg-card/50 backdrop-blur-sm md:sticky md:top-0 z-10">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <VetBalanceLogo className="h-12 w-12 object-contain" />
-              <div>
-                <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <VetBalanceLogo className="h-12 w-12 object-contain shrink-0" />
+              <div className="min-w-0">
+                <h1 className="text-xl font-bold leading-tight">
+                  <span className="md:hidden">VetBalance</span>
+                  <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
+                </h1>
                 <p className="text-sm text-muted-foreground">
                   {isVisitante ? "Modo Visitante — Congresso Delta Saúde 2026" : "Modo Aluno"}
                 </p>
