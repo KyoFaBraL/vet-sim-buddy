@@ -9,7 +9,7 @@ interface SimulationControlsProps {
 
 const SimulationControls = ({ isRunning, onToggle, onReset }: SimulationControlsProps) => {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-wrap items-center gap-2 md:gap-3">
       <Button
         onClick={onToggle}
         size="lg"

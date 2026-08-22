@@ -197,19 +197,22 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         {/* Header do Professor */}
-        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+        <header className="border-b bg-card/50 backdrop-blur-sm md:sticky md:top-0 z-10">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <VetBalanceLogo className="h-12 w-12 object-contain" />
-                <div>
-                  <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
-                  <p className="text-sm text-muted-foreground">Portal do Professor</p>
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-2">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <VetBalanceLogo className="h-9 w-9 md:h-12 md:w-12 object-contain shrink-0" />
+                <div className="min-w-0">
+                  <h1 className="text-base md:text-xl font-bold leading-tight">
+                    <span className="md:hidden">VetBalance</span>
+                    <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
+                  </h1>
+                  <p className="text-xs md:text-sm text-muted-foreground truncate">Portal do Professor</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-auto w-full justify-end sm:w-auto">
                 <Badge variant="default">Professor</Badge>
-                <span className="text-sm text-muted-foreground">{user.email}</span>
+                <span className="hidden lg:inline text-sm text-muted-foreground truncate max-w-[200px]">{user.email}</span>
                 <ThemeToggle />
                 <Button variant="outline" size="icon" onClick={signOut}>
                   <LogOut className="h-4 w-4" />
@@ -359,20 +362,23 @@ const Index = () => {
       {/* Ranking Notifications - Real-time listener */}
       <RankingNotifications />
       {/* Header do Aluno */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b bg-card/50 backdrop-blur-sm md:sticky md:top-0 z-10">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <VetBalanceLogo className="h-12 w-12 object-contain" />
-              <div>
-                <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
-                <p className="text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-2">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
+              <VetBalanceLogo className="h-9 w-9 md:h-12 md:w-12 object-contain shrink-0" />
+              <div className="min-w-0">
+                <h1 className="text-base md:text-xl font-bold leading-tight truncate">
+                  <span className="md:hidden">VetBalance</span>
+                  <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
+                </h1>
+                <p className="text-xs md:text-sm text-muted-foreground truncate">
                   {isVisitante ? "Modo Visitante — Congresso Delta Saúde 2026" : "Modo Aluno"}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Badge variant="secondary">{isVisitante ? "Visitante" : "Aluno"}</Badge>
+            <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-auto w-full justify-end sm:w-auto">
+              <Badge variant="secondary" className="hidden sm:inline-flex">{isVisitante ? "Visitante" : "Aluno"}</Badge>
               {participantCode && (
                 <Badge
                   variant={participantCode.grupo === "GE" ? "default" : "outline"}
@@ -384,7 +390,7 @@ const Index = () => {
                   {participantCode.codigo}
                 </Badge>
               )}
-              <span className="text-sm text-muted-foreground">{user.email}</span>
+              <span className="hidden lg:inline text-sm text-muted-foreground truncate max-w-[200px]">{user.email}</span>
               <SoundAlertsExtended 
                 parameters={parameters}
                 currentState={currentState}
@@ -460,17 +466,17 @@ const Index = () => {
         {/* Controles de Simulação */}
         <Card>
           <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <SimulationControls
                 isRunning={isRunning}
                 onToggle={toggleSimulation}
                 onReset={resetSimulation}
               />
-              <div className="flex gap-4">
-                <Badge variant="outline" className="text-lg px-4 py-2">
+              <div className="flex flex-wrap gap-2 md:gap-4">
+                <Badge variant="outline" className="text-sm md:text-lg px-3 md:px-4 py-1 md:py-2">
                   🎯 Metas: {goalPoints}
                 </Badge>
-                <Badge variant="outline" className="text-lg px-4 py-2">
+                <Badge variant="outline" className="text-sm md:text-lg px-3 md:px-4 py-1 md:py-2">
                   🔬 Diagnósticos: {diagnosticPoints}
                 </Badge>
               </div>
@@ -481,7 +487,7 @@ const Index = () => {
         {/* ÁREA PRINCIPAL DE SIMULAÇÃO */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Coluna Esquerda: Monitor do Paciente e Metas */}
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0">
             <PatientMonitor
               hp={hp}
               elapsedTime={elapsedTime}
@@ -534,7 +540,7 @@ const Index = () => {
           </div>
 
           {/* Coluna Direita: Workspace (Tratamentos, Dicas, Diagnóstico, Notas) */}
-          <div>
+          <div className="min-w-0">
             <SimulationWorkspace
               isRunning={isRunning}
               simulationMode={simulationMode}

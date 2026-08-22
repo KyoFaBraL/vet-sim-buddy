@@ -130,6 +130,12 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html,
+  body {
+    /* Evita barra de rolagem horizontal no mobile (toasts animados e transições) */
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
