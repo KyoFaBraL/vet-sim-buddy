@@ -45,7 +45,7 @@ export const useParticipantCode = (user: User | null) => {
         data
           ? {
               codigo: data.codigo,
-              grupo: data.grupo as 'GE' | 'GC',
+              grupo: data.grupo as 'GE' | 'GC' | 'VIS',
               instituicao: (data as { instituicao?: string }).instituicao as Instituicao | undefined,
             }
           : null,
@@ -79,7 +79,7 @@ export const assignParticipantCode = async (
     if (result?.success && result.codigo && result.grupo) {
       return {
         codigo: result.codigo,
-        grupo: result.grupo as 'GE' | 'GC',
+        grupo: result.grupo as 'GE' | 'GC' | 'VIS',
         instituicao: (result.instituicao as Instituicao) || instituicao,
       };
     }
