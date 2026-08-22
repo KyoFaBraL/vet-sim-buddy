@@ -377,7 +377,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3 shrink-0">
               <Badge variant="secondary">{isVisitante ? "Visitante" : "Aluno"}</Badge>
               {participantCode && (
                 <Badge
@@ -390,7 +390,7 @@ const Index = () => {
                   {participantCode.codigo}
                 </Badge>
               )}
-              <span className="text-sm text-muted-foreground">{user.email}</span>
+              <span className="hidden lg:inline text-sm text-muted-foreground truncate max-w-[200px]">{user.email}</span>
               <SoundAlertsExtended 
                 parameters={parameters}
                 currentState={currentState}
