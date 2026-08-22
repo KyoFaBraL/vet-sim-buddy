@@ -199,15 +199,15 @@ const Index = () => {
         {/* Header do Professor */}
         <header className="border-b bg-card/50 backdrop-blur-sm md:sticky md:top-0 z-10">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-3 min-w-0">
-                <VetBalanceLogo className="h-12 w-12 object-contain shrink-0" />
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-2">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <VetBalanceLogo className="h-9 w-9 md:h-12 md:w-12 object-contain shrink-0" />
                 <div className="min-w-0">
-                  <h1 className="text-xl font-bold leading-tight">
+                  <h1 className="text-base md:text-xl font-bold leading-tight">
                     <span className="md:hidden">VetBalance</span>
                     <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
                   </h1>
-                  <p className="text-sm text-muted-foreground">Portal do Professor</p>
+                  <p className="text-xs md:text-sm text-muted-foreground truncate">Portal do Professor</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 md:gap-3 shrink-0">
@@ -364,25 +364,20 @@ const Index = () => {
       {/* Header do Aluno */}
       <header className="border-b bg-card/50 backdrop-blur-sm md:sticky md:top-0 z-10">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-3 min-w-0">
-              <VetBalanceLogo className="h-12 w-12 object-contain shrink-0" />
+          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-2">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
+              <VetBalanceLogo className="h-9 w-9 md:h-12 md:w-12 object-contain shrink-0" />
               <div className="min-w-0">
-                <h1 className="text-xl font-bold leading-tight">
+                <h1 className="text-base md:text-xl font-bold leading-tight">
                   <span className="md:hidden">VetBalance</span>
                   <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
                 </h1>
-                <p className="text-sm text-muted-foreground">
-                  {isVisitante ? (
-                    <>
-                      <span className="sm:hidden">Modo Visitante — Delta Saúde 2026</span>
-                      <span className="hidden sm:inline">Modo Visitante — Congresso Delta Saúde 2026</span>
-                    </>
-                  ) : "Modo Aluno"}
+                <p className="text-xs md:text-sm text-muted-foreground truncate">
+                  {isVisitante ? "Modo Visitante — Congresso Delta Saúde 2026" : "Modo Aluno"}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-auto">
               <Badge variant="secondary" className="hidden sm:inline-flex">{isVisitante ? "Visitante" : "Aluno"}</Badge>
               {participantCode && (
                 <Badge
