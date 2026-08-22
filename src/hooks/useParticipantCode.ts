@@ -2,8 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
 
-export type Instituicao = 'UFPI' | 'UNINASSAU';
+export type Instituicao = 'UFPI' | 'UNINASSAU' | 'DELTA_SAUDE_2026';
 
+// Instituição especial: visitantes do congresso Delta Saúde 2026 (demonstração
+// pública — NÃO são participantes da pesquisa, dispensados de TCLE e SUS).
+export const INSTITUICAO_VISITANTE: Instituicao = 'DELTA_SAUDE_2026';
+export const isVisitanteCongresso = (instituicao?: Instituicao | null) =>
+  instituicao === INSTITUICAO_VISITANTE;
+
+// Opções exibidas no TCLE (visitantes não passam pelo TCLE, então não aparecem aqui)
 export const INSTITUICOES: { value: Instituicao; label: string }[] = [
   { value: 'UFPI', label: 'UFPI — Universidade Federal do Piauí' },
   { value: 'UNINASSAU', label: 'UNINASSAU — Faculdade Uninassau Teresina' },
@@ -11,7 +18,7 @@ export const INSTITUICOES: { value: Instituicao; label: string }[] = [
 
 export interface ParticipantCode {
   codigo: string;
-  grupo: 'GE' | 'GC';
+  grupo: 'GE' | 'GC' | 'VIS';
   instituicao?: Instituicao;
 }
 
@@ -38,7 +45,7 @@ export const useParticipantCode = (user: User | null) => {
         data
           ? {
               codigo: data.codigo,
-              grupo: data.grupo as 'GE' | 'GC',
+              grupo: data.grupo as 'GE' | 'GC' | 'VIS',
               instituicao: (data as { instituicao?: string }).instituicao as Instituicao | undefined,
             }
           : null,
@@ -72,7 +79,7 @@ export const assignParticipantCode = async (
     if (result?.success && result.codigo && result.grupo) {
       return {
         codigo: result.codigo,
-        grupo: result.grupo as 'GE' | 'GC',
+        grupo: result.grupo as 'GE' | 'GC' | 'VIS',
         instituicao: (result.instituicao as Instituicao) || instituicao,
       };
     }

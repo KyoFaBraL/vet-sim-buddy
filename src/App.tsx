@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AuthProfessor from "./pages/AuthProfessor";
 import AuthAluno from "./pages/AuthAluno";
+import AuthVisitante from "./pages/AuthVisitante";
 import ResetPassword from "./pages/ResetPassword";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import PreValidation from "./pages/PreValidation";
@@ -18,6 +19,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
 import { useTcleConsent } from "./hooks/useTcleConsent";
+import { useParticipantCode, isVisitanteCongresso } from "./hooks/useParticipantCode";
 
 const queryClient = new QueryClient();
 
@@ -58,8 +60,9 @@ const StudentRouteWithConsent = ({ children }: { children: React.ReactNode }) =>
   const { user, loading: authLoading } = useAuth();
   const { role, loading: roleLoading } = useUserRole(user);
   const { hasConsent, loading: consentLoading } = useTcleConsent(user);
+  const { code: participantCode, loading: codeLoading } = useParticipantCode(user);
 
-  if (authLoading || roleLoading || consentLoading) {
+  if (authLoading || roleLoading || consentLoading || (user && codeLoading)) {
     return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
   }
 
@@ -71,8 +74,12 @@ const StudentRouteWithConsent = ({ children }: { children: React.ReactNode }) =>
   if (role === 'admin') return <Navigate to="/professor" replace />;
   if (role === 'professor') return <Navigate to="/professor" replace />;
 
+  // Visitantes do congresso (Delta Saúde 2026) não participam da pesquisa:
+  // dispensados do TCLE
+  const visitante = isVisitanteCongresso(participantCode?.instituicao);
+
   // Students must accept TCLE before accessing the simulator
-  if (role === 'aluno' && hasConsent === false) {
+  if (role === 'aluno' && hasConsent === false && !visitante) {
     return <Navigate to="/consentimento" replace />;
   }
 
@@ -125,6 +132,13 @@ const App = () => (
             <Route path="/auth/aluno" element={
               <PublicRoute>
                 <AuthAluno />
+              </PublicRoute>
+            } />
+            {/* Acesso de visitantes do congresso Delta Saúde 2026 (QR code) */}
+            <Route path="/demo" element={<Navigate to="/auth/visitante" replace />} />
+            <Route path="/auth/visitante" element={
+              <PublicRoute>
+                <AuthVisitante />
               </PublicRoute>
             } />
             <Route path="/reset-password" element={<ResetPassword />} />

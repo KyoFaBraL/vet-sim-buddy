@@ -45,7 +45,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useParticipantCode } from "@/hooks/useParticipantCode";
+import { useParticipantCode, isVisitanteCongresso } from "@/hooks/useParticipantCode";
 import { SusReminderBanner } from "@/components/SusReminderBanner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -86,7 +86,8 @@ const Index = () => {
 
   const { toast } = useToast();
   const { checkAndAwardBadges } = useRankingBadges();
-  const { code: participantCode } = useParticipantCode(user);
+  const { code: participantCode, loading: participantCodeLoading } = useParticipantCode(user);
+  const isVisitante = isVisitanteCongresso(participantCode?.instituicao);
   const { celebrateAchievement } = useAchievementAnimation();
   useWeeklyResetNotification();
   
@@ -365,16 +366,20 @@ const Index = () => {
               <VetBalanceLogo className="h-12 w-12 object-contain" />
               <div>
                 <h1 className="text-xl font-bold">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</h1>
-                <p className="text-sm text-muted-foreground">Modo Aluno</p>
+                <p className="text-sm text-muted-foreground">
+                  {isVisitante ? "Modo Visitante — Congresso Delta Saúde 2026" : "Modo Aluno"}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Badge variant="secondary">Aluno</Badge>
+              <Badge variant="secondary">{isVisitante ? "Visitante" : "Aluno"}</Badge>
               {participantCode && (
                 <Badge
                   variant={participantCode.grupo === "GE" ? "default" : "outline"}
                   className="font-mono"
-                  title="Código de participante da pesquisa (use no questionário impresso)"
+                  title={isVisitante
+                    ? "Código de visitante — Congresso Delta Saúde 2026"
+                    : "Código de participante da pesquisa (use no questionário impresso)"}
                 >
                   {participantCode.codigo}
                 </Badge>
@@ -397,8 +402,10 @@ const Index = () => {
 
       {/* Conteúdo Principal */}
       <main className="container mx-auto px-4 py-6 space-y-6">
-        {/* Questionário SUS (Anexo A) - prazo 28/08/2026 */}
-        <SusReminderBanner user={user} participantCode={participantCode} />
+        {/* Questionário SUS (Anexo A) - prazo 28/08/2026 — apenas participantes da pesquisa (não visitantes) */}
+        {!participantCodeLoading && !isVisitante && (
+          <SusReminderBanner user={user} participantCode={participantCode} />
+        )}
 
         {/* Configuração de Simulação - Apenas para Alunos */}
         <Card>
