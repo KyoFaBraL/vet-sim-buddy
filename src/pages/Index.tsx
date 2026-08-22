@@ -210,7 +210,7 @@ const Index = () => {
                   <p className="text-xs md:text-sm text-muted-foreground truncate">Portal do Professor</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 md:gap-3 shrink-0">
+              <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-auto w-full justify-end sm:w-auto">
                 <Badge variant="default">Professor</Badge>
                 <span className="hidden lg:inline text-sm text-muted-foreground truncate max-w-[200px]">{user.email}</span>
                 <ThemeToggle />

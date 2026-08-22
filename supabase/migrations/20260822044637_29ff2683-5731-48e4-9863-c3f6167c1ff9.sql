@@ -1,0 +1,1 @@
+DELETE FROM auth.users WHERE email LIKE 'visitante.%@demo.com';
