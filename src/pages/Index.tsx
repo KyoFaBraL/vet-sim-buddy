@@ -378,7 +378,7 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2 md:gap-3 shrink-0">
-              <Badge variant="secondary">{isVisitante ? "Visitante" : "Aluno"}</Badge>
+              <Badge variant="secondary" className="hidden sm:inline-flex">{isVisitante ? "Visitante" : "Aluno"}</Badge>
               {participantCode && (
                 <Badge
                   variant={participantCode.grupo === "GE" ? "default" : "outline"}
@@ -466,17 +466,17 @@ const Index = () => {
         {/* Controles de Simulação */}
         <Card>
           <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <SimulationControls
                 isRunning={isRunning}
                 onToggle={toggleSimulation}
                 onReset={resetSimulation}
               />
-              <div className="flex gap-4">
-                <Badge variant="outline" className="text-lg px-4 py-2">
+              <div className="flex flex-wrap gap-2 md:gap-4">
+                <Badge variant="outline" className="text-sm md:text-lg px-3 md:px-4 py-1 md:py-2">
                   🎯 Metas: {goalPoints}
                 </Badge>
-                <Badge variant="outline" className="text-lg px-4 py-2">
+                <Badge variant="outline" className="text-sm md:text-lg px-3 md:px-4 py-1 md:py-2">
                   🔬 Diagnósticos: {diagnosticPoints}
                 </Badge>
               </div>
@@ -487,7 +487,7 @@ const Index = () => {
         {/* ÁREA PRINCIPAL DE SIMULAÇÃO */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Coluna Esquerda: Monitor do Paciente e Metas */}
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0">
             <PatientMonitor
               hp={hp}
               elapsedTime={elapsedTime}
@@ -540,7 +540,7 @@ const Index = () => {
           </div>
 
           {/* Coluna Direita: Workspace (Tratamentos, Dicas, Diagnóstico, Notas) */}
-          <div>
+          <div className="min-w-0">
             <SimulationWorkspace
               isRunning={isRunning}
               simulationMode={simulationMode}
