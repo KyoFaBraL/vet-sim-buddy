@@ -368,7 +368,7 @@ const Index = () => {
             <div className="flex items-center gap-3 min-w-0 flex-1">
               <VetBalanceLogo className="h-9 w-9 md:h-12 md:w-12 object-contain shrink-0" />
               <div className="min-w-0">
-                <h1 className="text-base md:text-xl font-bold leading-tight">
+                <h1 className="text-base md:text-xl font-bold leading-tight truncate">
                   <span className="md:hidden">VetBalance</span>
                   <span className="hidden md:inline">VetBalance - Simulador Gamificado de Cuidados Críticos em Distúrbios Ácido Básico para Cães e Gatos</span>
                 </h1>
@@ -377,7 +377,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-auto">
+            <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-auto w-full justify-end sm:w-auto">
               <Badge variant="secondary" className="hidden sm:inline-flex">{isVisitante ? "Visitante" : "Aluno"}</Badge>
               {participantCode && (
                 <Badge
