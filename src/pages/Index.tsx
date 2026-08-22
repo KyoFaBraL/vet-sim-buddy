@@ -210,9 +210,9 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground">Portal do Professor</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3 shrink-0">
                 <Badge variant="default">Professor</Badge>
-                <span className="text-sm text-muted-foreground">{user.email}</span>
+                <span className="hidden lg:inline text-sm text-muted-foreground truncate max-w-[200px]">{user.email}</span>
                 <ThemeToggle />
                 <Button variant="outline" size="icon" onClick={signOut}>
                   <LogOut className="h-4 w-4" />
