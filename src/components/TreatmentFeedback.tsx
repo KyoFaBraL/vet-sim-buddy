@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { TrendingUp, TrendingDown, Activity } from "lucide-react";
+import { TrendingUp, TrendingDown, Activity, X } from "lucide-react";
 
 interface ParameterEffect {
   nome: string;
@@ -16,38 +16,53 @@ interface TreatmentFeedbackProps {
   onHide: () => void;
 }
 
-export const TreatmentFeedback = ({ 
-  treatmentName, 
-  effects, 
+export const TreatmentFeedback = ({
+  treatmentName,
+  effects,
   show,
-  onHide 
+  onHide
 }: TreatmentFeedbackProps) => {
   const [visible, setVisible] = useState(false);
+
+  const dismiss = () => {
+    setVisible(false);
+    setTimeout(onHide, 300);
+  };
 
   useEffect(() => {
     if (show) {
       setVisible(true);
-      const timer = setTimeout(() => {
-        setVisible(false);
-        setTimeout(onHide, 300);
-      }, 4000);
+      const timer = setTimeout(dismiss, 3500);
       return () => clearTimeout(timer);
     }
-  }, [show, onHide]);
+  }, [show]);
 
   if (!show && !visible) return null;
 
   return (
-    <div className={`fixed bottom-4 right-4 z-50 transition-all duration-300 ${
-      visible ? 'animate-slide-in-right opacity-100' : 'animate-slide-out-right opacity-0'
-    }`}>
-      <Card className="p-4 bg-card/95 backdrop-blur-sm border-2 border-primary shadow-lg max-w-md">
+    <div
+      className={`fixed z-50 transition-all duration-300 ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      } left-2 right-2 bottom-2 sm:left-auto sm:right-4 sm:bottom-4 sm:max-w-md`}
+      onClick={dismiss}
+    >
+      <Card className="p-4 bg-card/95 backdrop-blur-sm border-2 border-primary shadow-lg cursor-pointer">
         <div className="space-y-3">
-          <div className="flex items-center gap-2 font-semibold text-lg">
-            <Activity className="h-5 w-5 text-primary animate-pulse" />
-            <span>Tratamento Aplicado</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 font-semibold text-base sm:text-lg">
+              <Activity className="h-5 w-5 text-primary animate-pulse" />
+              <span>Tratamento Aplicado</span>
+            </div>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); dismiss(); }}
+              className="text-muted-foreground hover:text-foreground transition-colors p-1 -m-1 rounded"
+              aria-label="Fechar"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          
+
           <div className="text-sm font-medium bg-primary/10 px-3 py-2 rounded">
             {treatmentName}
           </div>
@@ -59,15 +74,15 @@ export const TreatmentFeedback = ({
             {effects.map((effect, index) => {
               const mudanca = effect.valorDepois - effect.valorAntes;
               const isPositivo = mudanca > 0;
-              
+
               return (
-                <div 
+                <div
                   key={index}
                   className={`flex items-center justify-between p-2 rounded transition-all duration-300 ${
-                    isPositivo 
-                      ? 'bg-green-500/10 border border-green-500/30' 
+                    isPositivo
+                      ? 'bg-green-500/10 border border-green-500/30'
                       : 'bg-red-500/10 border border-red-500/30'
-                  } animate-fade-in`}
+                  }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-center gap-2">
@@ -78,7 +93,7 @@ export const TreatmentFeedback = ({
                     )}
                     <span className="font-medium text-sm">{effect.nome}</span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 text-sm">
                     <span className="text-muted-foreground">
                       {effect.valorAntes.toFixed(2)}
@@ -97,6 +112,9 @@ export const TreatmentFeedback = ({
               );
             })}
           </div>
+          <p className="text-[10px] text-muted-foreground text-center pt-1">
+            Toque para fechar
+          </p>
         </div>
       </Card>
     </div>
