@@ -485,8 +485,8 @@ const Index = () => {
         </Card>
 
         {/* ÁREA PRINCIPAL DE SIMULAÇÃO
-            Mobile: Paciente → Tratamentos → Metas → Parâmetros (tratamentos logo abaixo do paciente)
-            Desktop: coluna esquerda (paciente/metas/parâmetros) | coluna direita (workspace) */}
+            Mobile: Paciente → Modo Guiado → Tratamentos → Parâmetros → Metas (aprendizado por último)
+            Desktop: coluna esquerda (paciente/guia/parâmetros/metas) | coluna direita (workspace) */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* 1. Monitor do Paciente — mobile primeiro, desktop col-1 */}
           <div className="min-w-0 order-1 lg:col-start-1 lg:row-start-1">
@@ -505,8 +505,18 @@ const Index = () => {
             />
           </div>
 
-          {/* 2. Workspace (Tratamentos, Dicas, Diagnóstico, Notas) — mobile logo abaixo do paciente, desktop col-2 */}
-          <div className="min-w-0 order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+          {/* 2. Modo Guiado — mobile antes da usabilidade, desktop col-1 abaixo do paciente */}
+          {showTutorial && selectedCaseId && (
+            <div className="min-w-0 order-2 lg:col-start-1 lg:row-start-2">
+              <GuidedTutorial
+                caseId={selectedCaseId}
+                onClose={() => setShowTutorial(false)}
+              />
+            </div>
+          )}
+
+          {/* 3. Workspace (Tratamentos, Dicas, Diagnóstico, Notas) — mobile após o modo guiado, desktop col-2 */}
+          <div className="min-w-0 order-3 lg:col-start-2 lg:row-start-1 lg:row-span-4">
             <SimulationWorkspace
               isRunning={isRunning}
               simulationMode={simulationMode}
@@ -539,19 +549,7 @@ const Index = () => {
             />
           </div>
 
-          {/* 3. Metas de Aprendizado — desktop col-1 abaixo do paciente */}
-          <div className="min-w-0 order-3 lg:col-start-1 lg:row-start-2">
-            <LearningGoals
-              key={selectedCaseId}
-              caseId={selectedCaseId}
-              currentState={currentState}
-              parameters={parameters}
-              elapsedTime={elapsedTime}
-              onGoalAchieved={handleGoalAchieved}
-            />
-          </div>
-
-          {/* 4. Parâmetros Secundários — desktop col-1 abaixo das metas */}
+          {/* 4. Parâmetros Secundários — desktop col-1 */}
           <div className="min-w-0 order-4 lg:col-start-1 lg:row-start-3">
             <Card>
               <CardHeader>
@@ -576,6 +574,18 @@ const Index = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* 5. Metas de Aprendizado — último na ordem mobile, desktop col-1 */}
+          <div className="min-w-0 order-5 lg:col-start-1 lg:row-start-4">
+            <LearningGoals
+              key={selectedCaseId}
+              caseId={selectedCaseId}
+              currentState={currentState}
+              parameters={parameters}
+              elapsedTime={elapsedTime}
+              onGoalAchieved={handleGoalAchieved}
+            />
           </div>
         </div>
 
