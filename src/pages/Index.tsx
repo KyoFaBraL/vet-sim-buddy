@@ -484,10 +484,12 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        {/* ÁREA PRINCIPAL DE SIMULAÇÃO */}
+        {/* ÁREA PRINCIPAL DE SIMULAÇÃO
+            Mobile: Paciente → Tratamentos → Metas → Parâmetros (tratamentos logo abaixo do paciente)
+            Desktop: coluna esquerda (paciente/metas/parâmetros) | coluna direita (workspace) */}
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Coluna Esquerda: Monitor do Paciente e Metas */}
-          <div className="space-y-6 min-w-0">
+          {/* 1. Monitor do Paciente — mobile primeiro, desktop col-1 */}
+          <div className="min-w-0 order-1 lg:col-start-1 lg:row-start-1">
             <PatientMonitor
               hp={hp}
               elapsedTime={elapsedTime}
@@ -501,46 +503,10 @@ const Index = () => {
               abnormalParameters={abnormalParameters}
               allParametersNormal={allParametersNormal}
             />
-
-
-            {/* Metas de Aprendizado */}
-            <LearningGoals
-              key={selectedCaseId}
-              caseId={selectedCaseId}
-              currentState={currentState}
-              parameters={parameters}
-              elapsedTime={elapsedTime}
-              onGoalAchieved={handleGoalAchieved}
-            />
-
-            {/* Parâmetros Secundários */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Parâmetros Secundários</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  {secondaryParameters.map((param) => {
-                    const status = getParameterStatus(param.id, currentState[param.id]);
-                    const statusVariant = status.isCritical ? 'destructive' : !status.isNormal ? 'default' : 'secondary';
-                    return (
-                      <div key={param.nome} className="space-y-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">{param.nome}</span>
-                          <Badge variant={statusVariant}>
-                            {currentState[param.id]?.toFixed(1)} {param.unidade}
-                          </Badge>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
-          {/* Coluna Direita: Workspace (Tratamentos, Dicas, Diagnóstico, Notas) */}
-          <div className="min-w-0">
+          {/* 2. Workspace (Tratamentos, Dicas, Diagnóstico, Notas) — mobile logo abaixo do paciente, desktop col-2 */}
+          <div className="min-w-0 order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2">
             <SimulationWorkspace
               isRunning={isRunning}
               simulationMode={simulationMode}
@@ -571,6 +537,45 @@ const Index = () => {
               onDiagnosticSuccess={() => setDiagnosticPoints(prev => prev + 10)}
               onNotesChange={(fn) => setAddTreatmentLogFn(() => fn)}
             />
+          </div>
+
+          {/* 3. Metas de Aprendizado — desktop col-1 abaixo do paciente */}
+          <div className="min-w-0 order-3 lg:col-start-1 lg:row-start-2">
+            <LearningGoals
+              key={selectedCaseId}
+              caseId={selectedCaseId}
+              currentState={currentState}
+              parameters={parameters}
+              elapsedTime={elapsedTime}
+              onGoalAchieved={handleGoalAchieved}
+            />
+          </div>
+
+          {/* 4. Parâmetros Secundários — desktop col-1 abaixo das metas */}
+          <div className="min-w-0 order-4 lg:col-start-1 lg:row-start-3">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Parâmetros Secundários</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4">
+                  {secondaryParameters.map((param) => {
+                    const status = getParameterStatus(param.id, currentState[param.id]);
+                    const statusVariant = status.isCritical ? 'destructive' : !status.isNormal ? 'default' : 'secondary';
+                    return (
+                      <div key={param.nome} className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium">{param.nome}</span>
+                          <Badge variant={statusVariant}>
+                            {currentState[param.id]?.toFixed(1)} {param.unidade}
+                          </Badge>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
