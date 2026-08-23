@@ -706,13 +706,6 @@ const Index = () => {
         </p>
       </footer>
 
-      {/* Tutorial Guiado */}
-      {showTutorial && selectedCaseId && (
-        <GuidedTutorial
-          caseId={selectedCaseId}
-          onClose={() => setShowTutorial(false)}
-        />
-      )}
     </div>
     </>
   );
