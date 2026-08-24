@@ -33,6 +33,7 @@
 20. [Requisitos de Sistema](#20-requisitos-de-sistema)
 21. [Glossário Técnico](#21-glossário-técnico)
 22. [Cronograma de Validação](#22-cronograma-de-validação)
+23. [Metodologia de Depuração e Validação](#23-metodologia-de-depuração-e-validação)
 
 ---
 
@@ -1311,6 +1312,42 @@ Este checklist deve ser executado **integralmente** antes do início da Fase F1 
 5. **Registro:** Marcar status (✅ Aprovado / ❌ Falha) e documentar evidências (screenshots ou logs)
 6. **Critério de aprovação:** 100% dos itens aprovados (20/20)
 7. **Contingência:** Itens reprovados devem ser corrigidos e retestados antes de S1
+
+---
+
+## 23. METODOLOGIA DE DEPURAÇÃO E VALIDAÇÃO
+
+A depuração e a validação contínua do código do VetBalance foram conduzidas por meio de uma combinação de ferramentas padrão de mercado, cada uma responsável por uma camada distinta do ciclo de desenvolvimento.
+
+### 23.1 Ferramentas Utilizadas
+
+| Ferramenta | Função no VetBalance | Arquivo de Referência |
+|------------|----------------------|-----------------------|
+| **Vite Dev Server (HMR)** | Servidor de desenvolvimento com Hot Module Replacement — recarga instantânea dos módulos editados durante a depuração, sem reinicializar a aplicação | `vite.config.ts` |
+| **Vitest** | Framework de testes automatizados, executando 102 testes baseados nos princípios ISTQB, distribuídos em baterias de caixa branca, caixa preta, caixa cinza, regressão, unidade, integração, carga, usabilidade e estresse | `src/test/*.test.ts`, `vitest.config.ts` |
+| **TypeScript (tsc/tsgo)** | Verificação estática de tipos em tempo de compilação, detectando erros de tipagem e inconsistências de interface antes da execução | `tsconfig.app.json` |
+| **Chrome DevTools** | Inspeção de DOM, console de erros, análise de requisições de rede (Network) e profiling de performance em tempo de execução, com foco em dispositivos iOS/Android | — |
+| **Ferramenta de Pré-Validação (interna)** | Checklist automatizado de prontidão do sistema, com 20 itens de aceite executáveis diretamente na aplicação | `src/pages/PreValidation.tsx` |
+
+### 23.2 Fluxo de Depuração
+
+1. **Desenvolvimento iterativo:** edições de código são recarregadas instantaneamente pelo Vite HMR, permitindo a verificação imediata de mudanças na interface e na lógica.
+2. **Verificação de tipos:** o TypeScript valida a consistência de tipos a cada salvamento, bloqueando a introdução de erros de tipagem no repositório.
+3. **Execução de testes:** o Vitest executa a suíte completa de testes automatizados (caixa branca, preta e cinza), garantindo que regressões sejam detectadas antes da publicação.
+4. **Inspeção em runtime:** o Chrome DevTools é empregado para inspecionar o comportamento da aplicação no navegador, diagnosticar gargalos de performance, erros de console e falhas de requisição às Edge Functions.
+5. **Pré-validação automatizada:** a ferramenta interna verifica 20 critérios de aceite (infraestrutura, segurança, funcionalidades core, persistência e usabilidade) antes do início de cada fase de coleta de dados.
+
+### 23.3 Citação Pronta para Dissertação
+
+> *A depuração e a validação do código foram realizadas utilizando o Vite Dev Server com Hot Module Replacement (HMR) para recarga instantânea de módulos, o framework de testes Vitest para execução de testes automatizados baseados nos princípios ISTQB (cobrindo testes de caixa branca, preta e cinza, regressão, unidade, integração, carga, usabilidade e estresse), a verificação estática de tipos via TypeScript, e a inspeção em runtime por meio do Chrome DevTools para análise de DOM, console, rede e performance. Adicionalmente, uma ferramenta interna de pré-validação automatizada foi desenvolvida para verificar 20 critérios de aceite do sistema antes de cada fase de coleta de dados.*
+
+### 23.4 Referências das Ferramentas
+
+- Vite. *Next Generation Frontend Tooling*. Disponível em: https://vitejs.dev.
+- Vitest. *A Blazing-Fast Unit-Test Framework Powered by Vite*. Disponível em: https://vitest.dev.
+- Microsoft. *TypeScript — JavaScript with Syntax for Types*. Disponível em: https://www.typescriptlang.org.
+- Google. *Chrome DevTools — Web Developer Tools*. Disponível em: https://developer.chrome.com/docs/devtools.
+- ISTQB. *Certified Tester Foundation Level Syllabus*. International Software Testing Qualifications Board, 2018.
 
 ---
 
