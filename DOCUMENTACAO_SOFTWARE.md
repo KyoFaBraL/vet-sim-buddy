@@ -1373,7 +1373,7 @@ O sistema está funcional e disponível em produção em https://vetbalance.app.
 
 | Documento | Identificador | Conteúdo | Seções Relacionadas |
 |-----------|---------------|----------|---------------------|
-| `DOCUMENTACAO_SOFTWARE.md` | — (este documento) | Documentação técnica completa (22 seções) | Seção 22 → Validação |
+| `DOCUMENTACAO_SOFTWARE.md` | — (este documento) | Documentação técnica completa (23 seções) | Seção 22 → Validação; Seção 23 → Metodologia de Depuração |
 | `CRONOGRAMA_VALIDACAO.md` | VETBALANCE-PVS-001 v1.0 | Plano de Validação de Software (IEEE 829) | Seções 8–9 (Procedimentos e Cronograma) ↔ Seção 22 deste documento |
 | `ARTIGO_RESUMO_EXPANDIDO.md` | — | Resumo expandido para publicação acadêmica | Material e Métodos ↔ Seção 22 deste documento; Seções 5, 10, 12 do PVS-001 |
 | `RESUMO_EXECUTIVO.md` | — | Resumo executivo para banca/orientador | Seção 6 (Validação) ↔ Seção 22 deste documento; Seção 9 do PVS-001 |
