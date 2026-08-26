@@ -149,9 +149,14 @@ Deno.serve(async (req) => {
   } catch (err) {
     console.error('send-sus-reminder error:', err)
     const code = (err as { code?: string })?.code
+    const status = (err as { status?: number })?.status
     if (code === 'domain_not_verified' || code === 'emails_disabled') {
       return json({ error: 'E-mail indisponível', reason: code }, 503)
     }
-    return json({ error: 'Não foi possível enviar o lembrete' }, 500)
+    if (status === 429) {
+      const wait = (err as { retryAfterSeconds?: number })?.retryAfterSeconds ?? 60
+      return json({ error: 'Limite de envios atingido', reason: 'rate_limited', retryAfterSeconds: wait }, 429)
+    }
+    return json({ error: 'Não foi possível enviar o lembrete', reason: code ?? 'unknown' }, 500)
   }
 })
