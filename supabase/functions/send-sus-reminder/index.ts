@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
               respondeu: false,
               url: APP_URL,
             },
-            idempotencyKey: `sus-reminder-${target.user_id}-${today}`,
+            idempotencyKey: `sus-reminder-${target.user_id}-${today}-${attemptStamp}`,
           })
           if (res.sent) sent++
           else skipped++
