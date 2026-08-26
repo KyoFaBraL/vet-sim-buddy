@@ -47,6 +47,21 @@ export const SusSurveyDialog = ({ open, onOpenChange, user, participantCode, onS
     }
   }, [response]);
 
+  // Engajamento: registra a abertura do questionário (dedupe de 5 min no servidor).
+  useEffect(() => {
+    if (!open) return;
+    supabase
+      .rpc('log_participation_event', {
+        p_tipo: 'sus_aberto',
+        p_instituicao: participantCode?.instituicao ?? null,
+        p_user_agent: navigator.userAgent,
+      })
+      .then(({ error }) => {
+        if (error) console.error('Erro ao registrar abertura do SUS:', error);
+      });
+  }, [open, participantCode?.instituicao]);
+
+
   const faltantes = SUS_ITEMS.filter((item) => !answers[String(item.id)]).length;
 
   const handleSubmit = async () => {
