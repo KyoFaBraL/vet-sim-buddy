@@ -110,13 +110,20 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const BroadcastListener = () => {
+  useNotificationBroadcast();
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <BroadcastListener />
         <AuthProvider>
+
         <BrowserRouter>
           <Routes>
             <Route path="/" element={
