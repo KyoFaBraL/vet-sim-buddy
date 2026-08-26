@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   Table,
   TableBody,
@@ -22,6 +23,9 @@ interface TargetRow {
   codigo: string | null;
   grupo: string | null;
   respondeu: boolean;
+  aberturas: number | null;
+  ultima_abertura: string | null;
+  respondido_em: string | null;
 }
 
 export const SusReminderManager = () => {
@@ -36,7 +40,7 @@ export const SusReminderManager = () => {
     try {
       const { data, error } = await supabase.rpc('get_sus_reminder_targets');
       if (error) throw error;
-      setRows((data ?? []) as TargetRow[]);
+      setRows((data ?? []) as unknown as TargetRow[]);
     } catch (err) {
       console.error('Erro ao carregar alunos UNINASSAU:', err);
       toast({
@@ -53,14 +57,25 @@ export const SusReminderManager = () => {
     load();
   }, [load]);
 
-  const stats = useMemo(
-    () => ({
-      total: rows.length,
-      responderam: rows.filter((r) => r.respondeu).length,
-      pendentes: rows.filter((r) => !r.respondeu).length,
-    }),
-    [rows],
-  );
+  const stats = useMemo(() => {
+    const total = rows.length;
+    const responderam = rows.filter((r) => r.respondeu).length;
+    const abriram = rows.filter((r) => (r.aberturas ?? 0) > 0).length;
+    const abriuSemResponder = rows.filter((r) => (r.aberturas ?? 0) > 0 && !r.respondeu).length;
+    return {
+      total,
+      responderam,
+      pendentes: total - responderam,
+      abriram,
+      abriuSemResponder,
+      taxaResposta: total ? Math.round((responderam / total) * 100) : 0,
+      taxaAbertura: total ? Math.round((abriram / total) * 100) : 0,
+      conversao: abriram ? Math.round((responderam / abriram) * 100) : 0,
+    };
+  }, [rows]);
+
+  const fmt = (iso: string | null) =>
+    iso ? new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
 
   const [sendingAll, setSendingAll] = useState(false);
 
@@ -148,6 +163,36 @@ export const SusReminderManager = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-lg border p-3">
+            <p className="text-xs text-muted-foreground">Taxa de resposta</p>
+            <p className="text-2xl font-semibold text-primary">{stats.taxaResposta}%</p>
+            <p className="text-xs text-muted-foreground">
+              {stats.responderam} de {stats.total} aluno(s)
+            </p>
+            <Progress value={stats.taxaResposta} className="mt-2 h-2" />
+          </div>
+          <div className="rounded-lg border p-3">
+            <p className="text-xs text-muted-foreground">Abriram o questionário</p>
+            <p className="text-2xl font-semibold">{stats.taxaAbertura}%</p>
+            <p className="text-xs text-muted-foreground">{stats.abriram} aluno(s) abriram ao menos uma vez</p>
+            <Progress value={stats.taxaAbertura} className="mt-2 h-2" />
+          </div>
+          <div className="rounded-lg border p-3">
+            <p className="text-xs text-muted-foreground">Concluíram após abrir</p>
+            <p className="text-2xl font-semibold">{stats.conversao}%</p>
+            <p className="text-xs text-muted-foreground">
+              {stats.abriuSemResponder} abriram e não concluíram
+            </p>
+            <Progress value={stats.conversao} className="mt-2 h-2" />
+          </div>
+          <div className="rounded-lg border p-3">
+            <p className="text-xs text-muted-foreground">Pendentes</p>
+            <p className="text-2xl font-semibold text-destructive">{stats.pendentes}</p>
+            <p className="text-xs text-muted-foreground">Prazo: {SUS_DEADLINE_LABEL}</p>
+          </div>
+        </div>
+
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline">Turma: {stats.total}</Badge>
           <Badge variant="secondary">Responderam: {stats.responderam}</Badge>
@@ -188,6 +233,7 @@ export const SusReminderManager = () => {
                   <TableHead>Código</TableHead>
                   <TableHead>Aluno</TableHead>
                   <TableHead>SUS</TableHead>
+                  <TableHead>Engajamento</TableHead>
                   <TableHead className="text-right">Lembrete</TableHead>
                 </TableRow>
               </TableHeader>
@@ -212,6 +258,16 @@ export const SusReminderManager = () => {
                           <Clock className="h-3 w-3" />
                           Pendente
                         </Badge>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-xs text-muted-foreground">
+                      <span className="block">
+                        {(r.aberturas ?? 0) > 0
+                          ? `${r.aberturas} abertura(s) — última em ${fmt(r.ultima_abertura)}`
+                          : 'Nunca abriu o questionário'}
+                      </span>
+                      {r.respondeu && (
+                        <span className="block">Concluído em {fmt(r.respondido_em)}</span>
                       )}
                     </TableCell>
                     <TableCell className="text-right">
