@@ -63,6 +63,8 @@ Deno.serve(async (req) => {
       const profileMap = new Map((profiles ?? []).map((p) => [p.id, p]))
 
       const today = new Date().toISOString().slice(0, 16)
+      // Uma chave nova por tentativa: chaves reutilizadas após falha retornam 409.
+      const attemptStamp = crypto.randomUUID().slice(0, 8)
       let sent = 0
       let skipped = 0
       const failures: string[] = []
