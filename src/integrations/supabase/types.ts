@@ -315,6 +315,39 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_broadcasts: {
+        Row: {
+          ativo: boolean
+          criado_em: string
+          criado_por: string | null
+          expira_em: string
+          id: string
+          mensagem: string
+          titulo: string
+          url: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          criado_em?: string
+          criado_por?: string | null
+          expira_em?: string
+          id?: string
+          mensagem: string
+          titulo: string
+          url?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          criado_em?: string
+          criado_por?: string | null
+          expira_em?: string
+          id?: string
+          mensagem?: string
+          titulo?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       parametros: {
         Row: {
           descricao: string | null
@@ -1280,6 +1313,16 @@ export type Database = {
           prioridade: number
         }[]
       }
+      create_notification_broadcast: {
+        Args: {
+          p_duracao_horas?: number
+          p_mensagem: string
+          p_titulo: string
+          p_url?: string
+        }
+        Returns: Json
+      }
+      deactivate_notification_broadcasts: { Args: never; Returns: Json }
       demote_to_student: { Args: { target_user_id: string }; Returns: Json }
       generate_access_code: { Args: never; Returns: string }
       get_ai_feedback_mode: { Args: never; Returns: string }

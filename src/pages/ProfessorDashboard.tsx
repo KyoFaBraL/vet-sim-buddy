@@ -17,6 +17,8 @@ import { UserManagement } from "@/components/UserManagement";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TcleConsentStatus } from "@/components/TcleConsentStatus";
 import { AiFeedbackModeSettings } from "@/components/AiFeedbackModeSettings";
+import { NotificationBroadcastManager } from "@/components/NotificationBroadcastManager";
+
 import { ParticipantCodesManager } from "@/components/ParticipantCodesManager";
 import { SusResponsesManager } from "@/components/SusResponsesManager";
 import { SusReminderManager } from "@/components/SusReminderManager";
@@ -248,9 +250,11 @@ export default function ProfessorDashboard() {
 
           {isAdmin && (
             <TabsContent value="settings" className="space-y-4">
+              <NotificationBroadcastManager />
               <AiFeedbackModeSettings />
             </TabsContent>
           )}
+
         </Tabs>
       </div>
     </div>

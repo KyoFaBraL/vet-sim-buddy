@@ -20,6 +20,8 @@ import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
 import { useTcleConsent } from "./hooks/useTcleConsent";
 import { useParticipantCode, isVisitanteCongresso } from "./hooks/useParticipantCode";
+import { useNotificationBroadcast } from "./hooks/useNotificationBroadcast";
+
 
 const queryClient = new QueryClient();
 
@@ -110,13 +112,20 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const BroadcastListener = () => {
+  useNotificationBroadcast();
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <BroadcastListener />
         <AuthProvider>
+
         <BrowserRouter>
           <Routes>
             <Route path="/" element={
