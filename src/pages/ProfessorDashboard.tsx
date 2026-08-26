@@ -221,6 +221,7 @@ export default function ProfessorDashboard() {
 
           <TabsContent value="sus" className="space-y-4">
             <SusResponsesManager />
+            <SusReminderManager />
           </TabsContent>
 
           <TabsContent value="tcle" className="space-y-4">
