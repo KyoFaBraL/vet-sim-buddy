@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { ClipboardList, CalendarClock, CheckCircle2, Bell, BellOff, BellRing } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -54,6 +54,20 @@ export const SusReminderBanner = ({ user, participantCode }: Props) => {
       variant: ok ? 'default' : 'destructive',
     });
   };
+
+  // Reforço dentro do app: alunos da UNINASSAU com o SUS pendente veem o
+  // questionário abrir automaticamente uma vez por dia, até o prazo final.
+  useEffect(() => {
+    if (loading || respondido || encerrado) return;
+    if (participantCode?.instituicao !== 'UNINASSAU') return;
+    const key = `vetbalance_sus_prompt_${new Date().toISOString().slice(0, 10)}`;
+    if (localStorage.getItem(key)) return;
+    const timer = window.setTimeout(() => {
+      localStorage.setItem(key, '1');
+      setOpen(true);
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [loading, respondido, encerrado, participantCode?.instituicao]);
 
   if (loading) return null;
 
