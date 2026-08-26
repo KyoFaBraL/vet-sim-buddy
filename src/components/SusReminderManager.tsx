@@ -361,6 +361,54 @@ export const SusReminderManager = () => {
             </Table>
           </div>
         )}
+
+        <div className="rounded-lg border p-3 space-y-2">
+          <div className="flex items-center gap-2">
+            <ScrollText className="h-4 w-4 text-muted-foreground" />
+            <p className="text-sm font-medium">Histórico de tentativas ({logs.length})</p>
+            {logs.length > 0 && (
+              <Button
+                size="sm"
+                variant="ghost"
+                className="ml-auto"
+                onClick={() => setLogs([])}
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                Limpar
+              </Button>
+            )}
+          </div>
+          {logs.length === 0 ? (
+            <p className="text-xs text-muted-foreground">
+              Cada envio (individual ou em lote) registra aqui o horário, o aluno e o motivo do
+              resultado — enviado, ignorado ou falha.
+            </p>
+          ) : (
+            <div className="max-h-64 overflow-y-auto space-y-1">
+              {logs.map((l) => (
+                <div
+                  key={l.id}
+                  className="flex flex-wrap items-center gap-2 border-b pb-1 text-xs last:border-0"
+                >
+                  <span className="font-mono text-muted-foreground">{l.hora}</span>
+                  <Badge
+                    variant={
+                      l.status === 'enviado'
+                        ? 'secondary'
+                        : l.status === 'falha'
+                          ? 'destructive'
+                          : 'outline'
+                    }
+                  >
+                    {l.status}
+                  </Badge>
+                  <span className="font-medium">{l.alvo}</span>
+                  <span className="text-muted-foreground">— {l.motivo}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
