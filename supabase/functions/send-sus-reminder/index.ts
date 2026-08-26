@@ -68,15 +68,28 @@ Deno.serve(async (req) => {
       let sent = 0
       let skipped = 0
       const failures: string[] = []
+      const details: Array<{
+        codigo: string | null
+        email: string | null
+        status: 'enviado' | 'ignorado' | 'falha'
+        motivo: string
+      }> = []
+      const batchId = crypto.randomUUID().slice(0, 8)
+      console.log(`[sus-reminder][${batchId}] lote iniciado por ${caller.id} — ${(targets ?? []).length} alvo(s)`)
 
       for (const target of targets ?? []) {
+        const profile = profileMap.get(target.user_id)
+        const label = target.codigo ?? target.user_id
         if (answeredSet.has(target.user_id)) {
           skipped++
+          details.push({ codigo: target.codigo, email: profile?.email ?? null, status: 'ignorado', motivo: 'ja_respondeu' })
+          console.log(`[sus-reminder][${batchId}] ${label}: ignorado (já respondeu)`)
           continue
         }
-        const profile = profileMap.get(target.user_id)
         if (!profile?.email || profile.email.endsWith('@example.com')) {
           skipped++
+          details.push({ codigo: target.codigo, email: profile?.email ?? null, status: 'ignorado', motivo: 'email_invalido' })
+          console.log(`[sus-reminder][${batchId}] ${label}: ignorado (e-mail ausente/inválido)`)
           continue
         }
         try {
@@ -90,15 +103,31 @@ Deno.serve(async (req) => {
             },
             idempotencyKey: `sus-reminder-${target.user_id}-${today}-${attemptStamp}`,
           })
-          if (res.sent) sent++
-          else skipped++
+          if (res.sent) {
+            sent++
+            details.push({ codigo: target.codigo, email: profile.email, status: 'enviado', motivo: 'ok' })
+            console.log(`[sus-reminder][${batchId}] ${label}: enviado para ${profile.email}`)
+          } else {
+            skipped++
+            details.push({ codigo: target.codigo, email: profile.email, status: 'ignorado', motivo: res.reason })
+            console.log(`[sus-reminder][${batchId}] ${label}: ignorado (${res.reason})`)
+          }
         } catch (e) {
-          console.error('bulk sus reminder failed for', target.user_id, e)
-          failures.push(target.codigo ?? target.user_id)
+          const motivo =
+            (e as { code?: string })?.code ?? (e as { message?: string })?.message ?? 'erro_desconhecido'
+          failures.push(label)
+          details.push({ codigo: target.codigo, email: profile.email, status: 'falha', motivo })
+          console.error(
+            `[sus-reminder][${batchId}] ${label}: FALHA status=${(e as { status?: number })?.status ?? '-'} code=${motivo}`,
+            e
+          )
         }
       }
 
-      return json({ bulk: true, sent, skipped, failed: failures.length })
+      console.log(
+        `[sus-reminder][${batchId}] lote concluído — enviados=${sent} ignorados=${skipped} falhas=${failures.length}`
+      )
+      return json({ bulk: true, sent, skipped, failed: failures.length, details })
     }
 
     const studentId = typeof body?.student_id === 'string' ? body.student_id.trim() : ''
