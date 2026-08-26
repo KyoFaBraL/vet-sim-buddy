@@ -1368,11 +1368,14 @@ export type Database = {
       get_sus_reminder_targets: {
         Args: never
         Returns: {
+          aberturas: number
           codigo: string
           email: string
           grupo: string
           nome_completo: string
           respondeu: boolean
+          respondido_em: string
+          ultima_abertura: string
           user_id: string
         }[]
       }
