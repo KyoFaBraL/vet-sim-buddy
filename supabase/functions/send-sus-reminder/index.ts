@@ -138,7 +138,8 @@ Deno.serve(async (req) => {
         respondeu: !!sus,
         url: APP_URL,
       },
-      idempotencyKey: `sus-reminder-${studentId}-${new Date().toISOString().slice(0, 10)}`,
+      // Chave única por tentativa — reaproveitar chave de um envio que falhou gera 409.
+      idempotencyKey: `sus-reminder-${studentId}-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`,
     })
 
     if (!result.sent) {
