@@ -41,3 +41,9 @@ verify_jwt = true
 [functions.autofix-case]
 verify_jwt = true
 
+
+[functions.preview-transactional-email]
+verify_jwt = false
+
+[functions.send-sus-reminder]
+verify_jwt = true
