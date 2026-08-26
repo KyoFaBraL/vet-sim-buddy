@@ -40,8 +40,68 @@ Deno.serve(async (req) => {
     if (roleError || !allowed) return json({ error: 'Permissão insuficiente' }, 403)
 
     const body = await req.json().catch(() => ({}))
+
+    // Envio em lote: todos os alunos UNINASSAU com o SUS pendente.
+    if (body?.all_pending === true) {
+      const { data: targets, error: targetsError } = await admin
+        .from('participant_codes')
+        .select('user_id, codigo')
+        .eq('instituicao', 'UNINASSAU')
+      if (targetsError) throw targetsError
+
+      const ids = (targets ?? []).map((t) => t.user_id)
+      const { data: answered } = await admin
+        .from('sus_responses')
+        .select('user_id')
+        .in('user_id', ids)
+      const answeredSet = new Set((answered ?? []).map((a) => a.user_id))
+
+      const { data: profiles } = await admin
+        .from('profiles')
+        .select('id, email, nome_completo')
+        .in('id', ids)
+      const profileMap = new Map((profiles ?? []).map((p) => [p.id, p]))
+
+      const today = new Date().toISOString().slice(0, 10)
+      let sent = 0
+      let skipped = 0
+      const failures: string[] = []
+
+      for (const target of targets ?? []) {
+        if (answeredSet.has(target.user_id)) {
+          skipped++
+          continue
+        }
+        const profile = profileMap.get(target.user_id)
+        if (!profile?.email || profile.email.endsWith('@example.com')) {
+          skipped++
+          continue
+        }
+        try {
+          const res = await sendTemplateEmail('sus-reminder', profile.email, {
+            templateData: {
+              nome: profile.nome_completo ?? undefined,
+              codigo: target.codigo,
+              prazo: SUS_DEADLINE_LABEL,
+              respondeu: false,
+              url: APP_URL,
+            },
+            idempotencyKey: `sus-reminder-${target.user_id}-${today}`,
+          })
+          if (res.sent) sent++
+          else skipped++
+        } catch (e) {
+          console.error('bulk sus reminder failed for', target.user_id, e)
+          failures.push(target.codigo ?? target.user_id)
+        }
+      }
+
+      return json({ bulk: true, sent, skipped, failed: failures.length })
+    }
+
     const studentId = typeof body?.student_id === 'string' ? body.student_id.trim() : ''
     if (!/^[0-9a-f-]{36}$/i.test(studentId)) return json({ error: 'Aluno inválido' }, 400)
+
 
     // Recipient is derived from trusted data only (never from the browser payload).
     const { data: code, error: codeError } = await admin
