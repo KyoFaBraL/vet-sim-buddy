@@ -40,7 +40,7 @@ export const SusReminderManager = () => {
     try {
       const { data, error } = await supabase.rpc('get_sus_reminder_targets');
       if (error) throw error;
-      setRows((data ?? []) as TargetRow[]);
+      setRows((data ?? []) as unknown as TargetRow[]);
     } catch (err) {
       console.error('Erro ao carregar alunos UNINASSAU:', err);
       toast({
