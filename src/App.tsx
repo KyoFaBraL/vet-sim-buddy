@@ -20,6 +20,8 @@ import { useAuth } from "./hooks/useAuth";
 import { useUserRole } from "./hooks/useUserRole";
 import { useTcleConsent } from "./hooks/useTcleConsent";
 import { useParticipantCode, isVisitanteCongresso } from "./hooks/useParticipantCode";
+import { useNotificationBroadcast } from "./hooks/useNotificationBroadcast";
+
 
 const queryClient = new QueryClient();
 
