@@ -1,49 +1,41 @@
 project_id = "ztyjbhzcvhaafjvkqmvv"
 
 [auth]
-enabled = true
-site_url = "http://localhost:54321"
-additional_redirect_urls = ["https://localhost:54321"]
-jwt_expiry = 3600
-enable_signup = true
-enable_email_signup = true
-enable_phone_signup = false
-enable_email_confirmations = false
-enable_phone_confirmations = false
-
-[auth.external]
-enabled = false
+  additional_redirect_urls = ["https://localhost:54321"]
+  enable_email_confirmations = false
+  enable_email_signup = true
+  enable_phone_confirmations = false
+  enable_phone_signup = false
+  enable_signup = true
+  enabled = true
+  jwt_expiry = 3600
+  site_url = "http://localhost:54321"
+  [auth.external]
+    enabled = false
 
 [db]
-pooler_enabled = false
+  pooler_enabled = false
 
-[functions.analyze-custom-case]
-verify_jwt = true
-
-[functions.treatment-hints]
-verify_jwt = true
-
-[functions.populate-case-data]
-verify_jwt = true
-
-[functions.generate-differential-diagnosis]
-verify_jwt = true
-
-[functions.generate-session-feedback]
-verify_jwt = true
-
-[functions.generate-random-case]
-verify_jwt = true
-
-[functions.validate-case-acidbase]
-verify_jwt = true
-
-[functions.autofix-case]
-verify_jwt = true
-
-
-[functions.preview-transactional-email]
-verify_jwt = false
-
-[functions.send-sus-reminder]
-verify_jwt = true
+[functions]
+  [functions.analyze-custom-case]
+    verify_jwt = true
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.autofix-case]
+    verify_jwt = true
+  [functions.generate-differential-diagnosis]
+    verify_jwt = true
+  [functions.generate-random-case]
+    verify_jwt = true
+  [functions.generate-session-feedback]
+    verify_jwt = true
+  [functions.populate-case-data]
+    verify_jwt = true
+  [functions.preview-transactional-email]
+    verify_jwt = false
+  [functions.send-sus-reminder]
+    verify_jwt = true
+  [functions.treatment-hints]
+    verify_jwt = true
+  [functions.validate-case-acidbase]
+    verify_jwt = true
