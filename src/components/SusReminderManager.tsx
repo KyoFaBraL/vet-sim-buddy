@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BellRing, CheckCircle2, Clock, Mail, RefreshCw } from 'lucide-react';
+import { BellRing, CheckCircle2, Clock, Mail, RefreshCw, ScrollText, Trash2 } from 'lucide-react';
+import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,12 +29,65 @@ interface TargetRow {
   respondido_em: string | null;
 }
 
+type LogStatus = 'enviado' | 'ignorado' | 'falha';
+
+interface AttemptLog {
+  id: string;
+  hora: string;
+  alvo: string;
+  status: LogStatus;
+  motivo: string;
+}
+
+const MOTIVOS: Record<string, string> = {
+  ok: 'Enviado com sucesso',
+  ja_respondeu: 'Já respondeu o questionário',
+  email_invalido: 'E-mail ausente ou inválido',
+  recipient_suppressed: 'Endereço bloqueado (descadastro/retorno de erro)',
+  domain_not_verified: 'Domínio de e-mail ainda em verificação',
+  emails_disabled: 'Envio de e-mails desativado no projeto',
+  rate_limited: 'Limite de envios por hora atingido',
+  unknown: 'Erro não identificado',
+  erro_desconhecido: 'Erro não identificado',
+};
+
+const traduzMotivo = (motivo?: string | null) =>
+  (motivo && MOTIVOS[motivo]) || motivo || 'Sem detalhes';
+
 export const SusReminderManager = () => {
   const [rows, setRows] = useState<TargetRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [sendingId, setSendingId] = useState<string | null>(null);
   const [enviados, setEnviados] = useState<Record<string, string>>({});
+  const [logs, setLogs] = useState<AttemptLog[]>([]);
   const { toast } = useToast();
+
+  const addLogs = useCallback((entries: Array<Omit<AttemptLog, 'id' | 'hora'>>) => {
+    const hora = new Date().toLocaleTimeString('pt-BR');
+    setLogs((prev) =>
+      [
+        ...entries.map((e, i) => ({
+          ...e,
+          hora,
+          id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2, 7)}`,
+        })),
+        ...prev,
+      ].slice(0, 200)
+    );
+  }, []);
+
+  const extractReason = async (err: unknown): Promise<string> => {
+    if (err instanceof FunctionsHttpError) {
+      try {
+        const body = await err.context.json();
+        return body?.reason ?? body?.error ?? 'unknown';
+      } catch {
+        return 'unknown';
+      }
+    }
+    return (err as { message?: string })?.message ?? 'unknown';
+  };
+
 
   const load = useCallback(async () => {
     setLoading(true);
