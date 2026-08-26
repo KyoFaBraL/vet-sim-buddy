@@ -62,7 +62,37 @@ export const SusReminderManager = () => {
     [rows],
   );
 
+  const [sendingAll, setSendingAll] = useState(false);
+
+  const enviarTodos = async () => {
+    setSendingAll(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-sus-reminder', {
+        body: { all_pending: true },
+      });
+      if (error) throw error;
+      const result = data as { sent?: number; skipped?: number; failed?: number } | null;
+      toast({
+        title: 'Lembretes enviados',
+        description: `${result?.sent ?? 0} e-mail(s) enviados, ${result?.skipped ?? 0} ignorados, ${
+          result?.failed ?? 0
+        } com falha.`,
+      });
+      await load();
+    } catch (err) {
+      console.error('Erro ao enviar lembretes em lote:', err);
+      toast({
+        title: 'Erro ao enviar lembretes',
+        description: 'Tente novamente em alguns instantes.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSendingAll(false);
+    }
+  };
+
   const enviar = async (row: TargetRow) => {
+
     setSendingId(row.user_id);
     try {
       const { data, error } = await supabase.functions.invoke('send-sus-reminder', {
