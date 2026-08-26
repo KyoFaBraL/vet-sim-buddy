@@ -1365,6 +1365,17 @@ export type Database = {
           versao: string
         }[]
       }
+      get_sus_reminder_targets: {
+        Args: never
+        Returns: {
+          codigo: string
+          email: string
+          grupo: string
+          nome_completo: string
+          respondeu: boolean
+          user_id: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
