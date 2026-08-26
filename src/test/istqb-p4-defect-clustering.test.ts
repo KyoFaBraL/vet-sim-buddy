@@ -38,14 +38,15 @@ describe("P4 — Defeitos se agrupam (módulo de HP)", () => {
     expect(result.current.hp).toBeGreaterThanOrEqual(0);
   });
 
-  it("vitória ao alcançar 100 de HP", async () => {
+  it("HP não alcança 100 sem estabilizar todos os parâmetros", async () => {
     const { result } = renderHook(() => useSimulation(1, "practice"));
     await waitFor(() => expect(result.current.parameters.length).toBe(3));
 
     act(() => result.current.changeHp(+50));
-    await waitFor(() => expect(result.current.hp).toBe(100));
-    expect(result.current.gameStatus).toBe("won");
+    await waitFor(() => expect(result.current.hp).toBe(99));
+    expect(result.current.gameStatus).toBe("playing");
   });
+
 
   it("derrota ao chegar a 0 de HP", async () => {
     const { result } = renderHook(() => useSimulation(1, "practice"));

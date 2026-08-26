@@ -35,12 +35,13 @@ describe("Regressão — correções já entregues", () => {
     expect(result.current.gameStatus).toBe("lost");
   });
 
-  it("BUG-01b — HP em 100 por changeHp encerra a partida como vitória", async () => {
+  it("BUG-01b — HP é limitado a 99 enquanto há parâmetro fora da faixa (regra de estabilização)", async () => {
     const { result } = await montar();
     act(() => result.current.changeHp(+50));
-    expect(result.current.hp).toBe(100);
-    expect(result.current.gameStatus).toBe("won");
+    expect(result.current.hp).toBe(99);
+    expect(result.current.gameStatus).toBe("playing");
   });
+
 
   it("BUG-02 — erro 429 continua traduzido com orientação prática", () => {
     const msg = getAuthErrorMessage({ status: 429, message: "Request rate limit reached" });
