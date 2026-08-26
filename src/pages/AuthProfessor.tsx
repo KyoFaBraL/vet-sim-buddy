@@ -12,6 +12,7 @@ import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { Seo } from "@/components/Seo";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 const signUpSchema = z.object({
   email: z.string()
