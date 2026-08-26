@@ -140,19 +140,35 @@ export const SusReminderManager = () => {
         body: { all_pending: true },
       });
       if (error) throw error;
-      const result = data as { sent?: number; skipped?: number; failed?: number } | null;
+      const result = data as {
+        sent?: number;
+        skipped?: number;
+        failed?: number;
+        details?: Array<{ codigo: string | null; email: string | null; status: LogStatus; motivo: string }>;
+      } | null;
+
+      addLogs(
+        (result?.details ?? []).map((d) => ({
+          alvo: `${d.codigo ?? '—'} ${d.email ? `(${d.email})` : ''}`.trim(),
+          status: d.status,
+          motivo: traduzMotivo(d.motivo),
+        }))
+      );
+
       toast({
-        title: 'Lembretes enviados',
-        description: `${result?.sent ?? 0} e-mail(s) enviados, ${result?.skipped ?? 0} ignorados, ${
+        title: 'Lembretes processados',
+        description: `${result?.sent ?? 0} enviado(s), ${result?.skipped ?? 0} ignorado(s), ${
           result?.failed ?? 0
-        } com falha.`,
+        } com falha. Veja o histórico abaixo.`,
       });
       await load();
     } catch (err) {
-      console.error('Erro ao enviar lembretes em lote:', err);
+      const motivo = await extractReason(err);
+      console.error('Erro ao enviar lembretes em lote:', err, motivo);
+      addLogs([{ alvo: 'Envio em lote', status: 'falha', motivo: traduzMotivo(motivo) }]);
       toast({
         title: 'Erro ao enviar lembretes',
-        description: 'Tente novamente em alguns instantes.',
+        description: traduzMotivo(motivo),
         variant: 'destructive',
       });
     } finally {
@@ -161,7 +177,7 @@ export const SusReminderManager = () => {
   };
 
   const enviar = async (row: TargetRow) => {
-
+    const alvo = `${row.codigo ?? '—'} ${row.email ? `(${row.email})` : ''}`.trim();
     setSendingId(row.user_id);
     try {
       const { data, error } = await supabase.functions.invoke('send-sus-reminder', {
@@ -172,29 +188,26 @@ export const SusReminderManager = () => {
 
       if (result?.sent) {
         setEnviados((prev) => ({ ...prev, [row.user_id]: new Date().toLocaleTimeString('pt-BR') }));
+        addLogs([{ alvo, status: 'enviado', motivo: traduzMotivo('ok') }]);
         toast({
           title: 'Lembrete enviado',
           description: `E-mail enviado para ${row.nome_completo ?? row.email ?? 'o aluno'}.`,
         });
-      } else if (result?.reason === 'recipient_suppressed') {
-        toast({
-          title: 'E-mail não entregue',
-          description: 'Este aluno optou por não receber e-mails ou o endereço está inválido.',
-          variant: 'destructive',
-        });
       } else {
+        addLogs([{ alvo, status: 'ignorado', motivo: traduzMotivo(result?.reason) }]);
         toast({
-          title: 'Envio indisponível',
-          description:
-            'O domínio de e-mail ainda está em verificação. Use o aviso dentro do aplicativo até a liberação.',
+          title: 'E-mail não enviado',
+          description: traduzMotivo(result?.reason),
           variant: 'destructive',
         });
       }
     } catch (err) {
-      console.error('Erro ao enviar lembrete:', err);
+      const motivo = await extractReason(err);
+      console.error('Erro ao enviar lembrete:', err, motivo);
+      addLogs([{ alvo, status: 'falha', motivo: traduzMotivo(motivo) }]);
       toast({
         title: 'Erro ao enviar lembrete',
-        description: 'Tente novamente em alguns instantes.',
+        description: traduzMotivo(motivo),
         variant: 'destructive',
       });
     } finally {
