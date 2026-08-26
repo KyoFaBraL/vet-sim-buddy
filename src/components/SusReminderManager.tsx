@@ -156,7 +156,9 @@ export const SusReminderManager = () => {
           </Badge>
           <Button
             size="sm"
+            className="ml-auto"
             onClick={enviarTodos}
+
             disabled={sendingAll || loading || stats.pendentes === 0}
           >
             <Mail className="h-4 w-4 mr-2" />
