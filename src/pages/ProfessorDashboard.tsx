@@ -248,9 +248,11 @@ export default function ProfessorDashboard() {
 
           {isAdmin && (
             <TabsContent value="settings" className="space-y-4">
+              <NotificationBroadcastManager />
               <AiFeedbackModeSettings />
             </TabsContent>
           )}
+
         </Tabs>
       </div>
     </div>
