@@ -155,15 +155,23 @@ export const SusReminderManager = () => {
             Pendentes: {stats.pendentes}
           </Badge>
           <Button
+            size="sm"
+            onClick={enviarTodos}
+            disabled={sendingAll || loading || stats.pendentes === 0}
+          >
+            <Mail className="h-4 w-4 mr-2" />
+            {sendingAll ? 'Enviando...' : `Avisar pendentes (${stats.pendentes})`}
+          </Button>
+          <Button
             variant="outline"
             size="sm"
-            className="ml-auto"
             onClick={load}
             disabled={loading}
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Atualizar
           </Button>
+
         </div>
 
         {rows.length === 0 ? (
