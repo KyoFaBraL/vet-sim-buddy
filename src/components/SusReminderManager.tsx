@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BellRing, CheckCircle2, Clock, Mail, RefreshCw } from 'lucide-react';
+import { BellRing, CheckCircle2, Clock, Mail, RefreshCw, ScrollText, Trash2 } from 'lucide-react';
+import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,12 +29,65 @@ interface TargetRow {
   respondido_em: string | null;
 }
 
+type LogStatus = 'enviado' | 'ignorado' | 'falha';
+
+interface AttemptLog {
+  id: string;
+  hora: string;
+  alvo: string;
+  status: LogStatus;
+  motivo: string;
+}
+
+const MOTIVOS: Record<string, string> = {
+  ok: 'Enviado com sucesso',
+  ja_respondeu: 'Já respondeu o questionário',
+  email_invalido: 'E-mail ausente ou inválido',
+  recipient_suppressed: 'Endereço bloqueado (descadastro/retorno de erro)',
+  domain_not_verified: 'Domínio de e-mail ainda em verificação',
+  emails_disabled: 'Envio de e-mails desativado no projeto',
+  rate_limited: 'Limite de envios por hora atingido',
+  unknown: 'Erro não identificado',
+  erro_desconhecido: 'Erro não identificado',
+};
+
+const traduzMotivo = (motivo?: string | null) =>
+  (motivo && MOTIVOS[motivo]) || motivo || 'Sem detalhes';
+
 export const SusReminderManager = () => {
   const [rows, setRows] = useState<TargetRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [sendingId, setSendingId] = useState<string | null>(null);
   const [enviados, setEnviados] = useState<Record<string, string>>({});
+  const [logs, setLogs] = useState<AttemptLog[]>([]);
   const { toast } = useToast();
+
+  const addLogs = useCallback((entries: Array<Omit<AttemptLog, 'id' | 'hora'>>) => {
+    const hora = new Date().toLocaleTimeString('pt-BR');
+    setLogs((prev) =>
+      [
+        ...entries.map((e, i) => ({
+          ...e,
+          hora,
+          id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2, 7)}`,
+        })),
+        ...prev,
+      ].slice(0, 200)
+    );
+  }, []);
+
+  const extractReason = async (err: unknown): Promise<string> => {
+    if (err instanceof FunctionsHttpError) {
+      try {
+        const body = await err.context.json();
+        return body?.reason ?? body?.error ?? 'unknown';
+      } catch {
+        return 'unknown';
+      }
+    }
+    return (err as { message?: string })?.message ?? 'unknown';
+  };
+
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -86,19 +140,35 @@ export const SusReminderManager = () => {
         body: { all_pending: true },
       });
       if (error) throw error;
-      const result = data as { sent?: number; skipped?: number; failed?: number } | null;
+      const result = data as {
+        sent?: number;
+        skipped?: number;
+        failed?: number;
+        details?: Array<{ codigo: string | null; email: string | null; status: LogStatus; motivo: string }>;
+      } | null;
+
+      addLogs(
+        (result?.details ?? []).map((d) => ({
+          alvo: `${d.codigo ?? '—'} ${d.email ? `(${d.email})` : ''}`.trim(),
+          status: d.status,
+          motivo: traduzMotivo(d.motivo),
+        }))
+      );
+
       toast({
-        title: 'Lembretes enviados',
-        description: `${result?.sent ?? 0} e-mail(s) enviados, ${result?.skipped ?? 0} ignorados, ${
+        title: 'Lembretes processados',
+        description: `${result?.sent ?? 0} enviado(s), ${result?.skipped ?? 0} ignorado(s), ${
           result?.failed ?? 0
-        } com falha.`,
+        } com falha. Veja o histórico abaixo.`,
       });
       await load();
     } catch (err) {
-      console.error('Erro ao enviar lembretes em lote:', err);
+      const motivo = await extractReason(err);
+      console.error('Erro ao enviar lembretes em lote:', err, motivo);
+      addLogs([{ alvo: 'Envio em lote', status: 'falha', motivo: traduzMotivo(motivo) }]);
       toast({
         title: 'Erro ao enviar lembretes',
-        description: 'Tente novamente em alguns instantes.',
+        description: traduzMotivo(motivo),
         variant: 'destructive',
       });
     } finally {
@@ -107,7 +177,7 @@ export const SusReminderManager = () => {
   };
 
   const enviar = async (row: TargetRow) => {
-
+    const alvo = `${row.codigo ?? '—'} ${row.email ? `(${row.email})` : ''}`.trim();
     setSendingId(row.user_id);
     try {
       const { data, error } = await supabase.functions.invoke('send-sus-reminder', {
@@ -118,29 +188,26 @@ export const SusReminderManager = () => {
 
       if (result?.sent) {
         setEnviados((prev) => ({ ...prev, [row.user_id]: new Date().toLocaleTimeString('pt-BR') }));
+        addLogs([{ alvo, status: 'enviado', motivo: traduzMotivo('ok') }]);
         toast({
           title: 'Lembrete enviado',
           description: `E-mail enviado para ${row.nome_completo ?? row.email ?? 'o aluno'}.`,
         });
-      } else if (result?.reason === 'recipient_suppressed') {
-        toast({
-          title: 'E-mail não entregue',
-          description: 'Este aluno optou por não receber e-mails ou o endereço está inválido.',
-          variant: 'destructive',
-        });
       } else {
+        addLogs([{ alvo, status: 'ignorado', motivo: traduzMotivo(result?.reason) }]);
         toast({
-          title: 'Envio indisponível',
-          description:
-            'O domínio de e-mail ainda está em verificação. Use o aviso dentro do aplicativo até a liberação.',
+          title: 'E-mail não enviado',
+          description: traduzMotivo(result?.reason),
           variant: 'destructive',
         });
       }
     } catch (err) {
-      console.error('Erro ao enviar lembrete:', err);
+      const motivo = await extractReason(err);
+      console.error('Erro ao enviar lembrete:', err, motivo);
+      addLogs([{ alvo, status: 'falha', motivo: traduzMotivo(motivo) }]);
       toast({
         title: 'Erro ao enviar lembrete',
-        description: 'Tente novamente em alguns instantes.',
+        description: traduzMotivo(motivo),
         variant: 'destructive',
       });
     } finally {
@@ -294,6 +361,54 @@ export const SusReminderManager = () => {
             </Table>
           </div>
         )}
+
+        <div className="rounded-lg border p-3 space-y-2">
+          <div className="flex items-center gap-2">
+            <ScrollText className="h-4 w-4 text-muted-foreground" />
+            <p className="text-sm font-medium">Histórico de tentativas ({logs.length})</p>
+            {logs.length > 0 && (
+              <Button
+                size="sm"
+                variant="ghost"
+                className="ml-auto"
+                onClick={() => setLogs([])}
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                Limpar
+              </Button>
+            )}
+          </div>
+          {logs.length === 0 ? (
+            <p className="text-xs text-muted-foreground">
+              Cada envio (individual ou em lote) registra aqui o horário, o aluno e o motivo do
+              resultado — enviado, ignorado ou falha.
+            </p>
+          ) : (
+            <div className="max-h-64 overflow-y-auto space-y-1">
+              {logs.map((l) => (
+                <div
+                  key={l.id}
+                  className="flex flex-wrap items-center gap-2 border-b pb-1 text-xs last:border-0"
+                >
+                  <span className="font-mono text-muted-foreground">{l.hora}</span>
+                  <Badge
+                    variant={
+                      l.status === 'enviado'
+                        ? 'secondary'
+                        : l.status === 'falha'
+                          ? 'destructive'
+                          : 'outline'
+                    }
+                  >
+                    {l.status}
+                  </Badge>
+                  <span className="font-medium">{l.alvo}</span>
+                  <span className="text-muted-foreground">— {l.motivo}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
