@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
         .in('id', ids)
       const profileMap = new Map((profiles ?? []).map((p) => [p.id, p]))
 
-      const today = new Date().toISOString().slice(0, 10)
+      const today = new Date().toISOString().slice(0, 16)
       let sent = 0
       let skipped = 0
       const failures: string[] = []
