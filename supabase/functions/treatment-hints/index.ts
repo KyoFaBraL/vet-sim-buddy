@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
 import { buildDeterministicHints, resolveAiMode } from '../_shared/deterministic-feedback.ts';
+import { AI_GATEWAY_URL, getAiGatewayKey, requireAiGatewayKey } from '../_shared/ai-gateway.ts';
 
 
 const corsHeaders = {
@@ -50,9 +51,9 @@ serve(async (req) => {
     const { currentState, parameters, condition, caseDescription, availableTreatments, caseId } = body;
     
     const aiMode = await resolveAiMode(supabaseForAuth);
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY && aiMode !== "deterministic") {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    const AI_GATEWAY_KEY = getAiGatewayKey();
+    if (!AI_GATEWAY_KEY && aiMode !== "deterministic") {
+      throw new Error("AI gateway key is not configured");
     }
 
 
@@ -167,10 +168,10 @@ Formato da resposta (JSON):
   ]
 }`;
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch(AI_GATEWAY_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+        "Authorization": `Bearer ${AI_GATEWAY_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

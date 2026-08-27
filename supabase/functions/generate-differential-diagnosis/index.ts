@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
+import { AI_GATEWAY_URL, getAiGatewayKey, requireAiGatewayKey } from '../_shared/ai-gateway.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -51,9 +52,9 @@ serve(async (req) => {
     const condition = sanitizeInput(body.condition, 200);
     const parameters = sanitizeInput(body.parameters, 1000);
     
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    const aiGatewayKey = getAiGatewayKey();
+    if (!aiGatewayKey) {
+      throw new Error('AI gateway key is not configured');
     }
 
     const prompt = `Você é um veterinário especialista em diagnóstico diferencial para ${species === 'canino' ? 'CÃES' : 'GATOS'}.
@@ -83,10 +84,10 @@ Retorne APENAS JSON válido no formato:
 
     console.log('Chamando IA para diagnóstico diferencial...');
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch(AI_GATEWAY_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
+        'Authorization': `Bearer ${aiGatewayKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

@@ -2,6 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
 import { buildDeterministicFeedback, resolveAiMode } from '../_shared/deterministic-feedback.ts';
+import { AI_GATEWAY_URL, getAiGatewayKey, requireAiGatewayKey } from '../_shared/ai-gateway.ts';
 
 
 const corsHeaders = {
@@ -35,7 +36,7 @@ serve(async (req) => {
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!;
+    const aiGatewayKey = requireAiGatewayKey();
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       global: { headers: { Authorization: authHeader } }
@@ -112,7 +113,7 @@ serve(async (req) => {
       appropriateTreatments,
     });
 
-    if (aiMode === 'deterministic' || !lovableApiKey) {
+    if (aiMode === 'deterministic' || !aiGatewayKey) {
       return new Response(
         JSON.stringify({
           success: true,
@@ -151,10 +152,10 @@ Retorne APENAS JSON válido:
 
     console.log('Gerando feedback da sessão...');
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch(AI_GATEWAY_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
+        'Authorization': `Bearer ${aiGatewayKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
