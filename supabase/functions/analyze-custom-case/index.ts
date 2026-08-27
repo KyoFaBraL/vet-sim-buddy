@@ -1,8 +1,9 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
+import { AI_GATEWAY_URL, getAiGatewayKey, requireAiGatewayKey } from '../_shared/ai-gateway.ts';
 
-const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+const AI_GATEWAY_KEY = getAiGatewayKey();
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -77,10 +78,10 @@ Avalie se o tratamento é adequado para este caso. Responda em formato JSON:
   "eficacia": 0.0-1.0 (porcentagem de eficácia do tratamento, onde 1.0 é 100% adequado)
 }`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch(AI_GATEWAY_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Authorization': `Bearer ${AI_GATEWAY_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

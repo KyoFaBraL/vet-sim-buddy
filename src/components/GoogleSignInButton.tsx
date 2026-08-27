@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { lovable } from "@/integrations/lovable/index";
+import { authProvider } from "@/integrations/auth-provider";
 import { useToast } from "@/hooks/use-toast";
 import { getAuthErrorMessage } from "@/lib/authErrors";
 import { Button } from "@/components/ui/button";
@@ -63,7 +63,7 @@ export const GoogleSignInButton = ({
     sessionStorage.setItem("vetbalance_oauth_next", redirectTo);
 
     try {
-      const result = await lovable.auth.signInWithOAuth("google", {
+      const result = await authProvider.signInWithOAuth("google", {
         redirect_uri: callbackUrl ?? window.location.origin,
       });
 
