@@ -12,7 +12,6 @@ import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
 import { VetBalanceLogo } from "@/components/VetBalanceLogo";
 import { Seo } from "@/components/Seo";
-import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 const signUpSchema = z.object({
   email: z.string()
@@ -305,15 +304,6 @@ export default function AuthProfessor() {
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
 
-                  <div className="relative my-1">
-                    <div className="absolute inset-0 flex items-center">
-                      <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">ou</span>
-                    </div>
-                  </div>
-                  <GoogleSignInButton redirectTo="/professor" label="Entrar com Google" />
 
                   <div className="text-center mt-4">
                     <Button
