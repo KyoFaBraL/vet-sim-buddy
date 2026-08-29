@@ -483,7 +483,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     const min = param.valor_minimo ?? -Infinity;
     const max = param.valor_maximo ?? Infinity;
     const span = Number.isFinite(min) && Number.isFinite(max) ? (max - min) : 0;
-    const tol = span * 0.1;
+    const tol = span * 0.15;
     return value >= min - tol && value <= max + tol;
   }, []);
 
