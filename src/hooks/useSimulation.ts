@@ -607,7 +607,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       // Rendimento decrescente: repetir o mesmo tratamento perde eficácia
       const timesUsed = treatmentUsage.current[treatmentId] ?? 0;
       treatmentUsage.current[treatmentId] = timesUsed + 1;
-      const repeatFactor = isAdequate ? Math.max(0.2, 1 - 0.4 * timesUsed) : 1;
+      const repeatFactor = isAdequate ? Math.max(0.3, 1 - 0.35 * timesUsed) : 1;
       eficacia = eficacia * repeatFactor;
 
       // Calcular novo estado e medir se houve melhora real em parâmetros anormais
@@ -618,8 +618,30 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
         // Só altera parâmetros efetivamente monitorizados neste caso
         if (baseState[effect.id_parametro] === undefined) return;
-        newState[effect.id_parametro] = currentValue + (magnitude * eficacia);
+
+        let delta = magnitude * eficacia;
+
+        // Ganho adaptativo: quando o tratamento é adequado e empurra o
+        // parâmetro na direção da faixa de referência, a resposta é
+        // proporcional à gravidade do desvio (até 4x), sem ultrapassar o
+        // ponto médio da faixa. Isso torna a estabilização alcançável.
+        const param = parameters.find((p) => p.id === effect.id_parametro);
+        if (isAdequate && param && param.valor_minimo !== null && param.valor_maximo !== null) {
+          const min = Number(param.valor_minimo);
+          const max = Number(param.valor_maximo);
+          const mid = (min + max) / 2;
+          const gap = mid - currentValue;
+          if (delta !== 0 && Math.sign(gap) === Math.sign(delta)) {
+            const gain = Math.min(4, Math.max(1, Math.abs(gap) / Math.abs(delta)));
+            delta = delta * gain;
+            // Não ultrapassar o ponto médio (evita hipercorreção)
+            if (Math.abs(delta) > Math.abs(gap)) delta = gap;
+          }
+        }
+
+        newState[effect.id_parametro] = currentValue + delta;
       });
+
 
       const abnormalBefore = getAbnormalFrom(baseState);
       const abnormalAfter = getAbnormalFrom(newState);
