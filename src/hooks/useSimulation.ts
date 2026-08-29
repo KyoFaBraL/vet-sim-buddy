@@ -475,17 +475,22 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     loadCase();
   };
 
-  // ===== Verificação de estabilização global =====
-  // O paciente só é considerado recuperado quando TODOS os parâmetros
-  // monitorizados no caso estão dentro da faixa de referência.
+  // ===== Verificação de estabilização =====
+  // O paciente é considerado recuperado quando os parâmetros-alvo do caso
+  // (até 3 dos mais críticos, definidos em loadCase) estão na faixa de
+  // referência, com uma tolerância clínica de 10% da amplitude da faixa.
   const isParamNormal = useCallback((param: Parameter, value: number) => {
     const min = param.valor_minimo ?? -Infinity;
     const max = param.valor_maximo ?? Infinity;
-    return value >= min && value <= max;
+    const span = Number.isFinite(min) && Number.isFinite(max) ? (max - min) : 0;
+    const tol = span * 0.1;
+    return value >= min - tol && value <= max + tol;
   }, []);
 
   const getAbnormalFrom = useCallback((state: SimulationState) => {
+    const targets = targetParamIds.current;
     return parameters
+      .filter((p) => targets.length === 0 || targets.includes(p.id))
       .filter((p) => state[p.id] !== undefined && !isParamNormal(p, state[p.id]))
       .map((p) => p.nome);
   }, [parameters, isParamNormal]);
@@ -493,6 +498,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
   const abnormalParameters = getAbnormalFrom(currentState);
   const allParametersNormal =
     Object.keys(currentState).length > 0 && abnormalParameters.length === 0;
+
 
   // Notificação em tempo real quando o paciente atinge (ou perde) a estabilização
   const wasStableRef = useRef(false);
