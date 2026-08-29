@@ -1050,6 +1050,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     lastHpChange,
     abnormalParameters,
     allParametersNormal,
+    acidBase,
+    speciesRanges,
+
     toggleSimulation,
     resetSimulation,
     applyTreatment,
