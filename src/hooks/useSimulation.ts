@@ -662,6 +662,27 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         newState[effect.id_parametro] = Number(nextValue.toFixed(2));
       });
 
+      // Rede de segurança: um tratamento adequado também melhora
+      // parcialmente os parâmetros-alvo que não possuem efeito cadastrado
+      // (ex.: PaCO2 sem tratamento específico no caso), garantindo que a
+      // estabilização completa seja sempre alcançável.
+      if (isAdequate) {
+        targetParamIds.current.forEach((pid) => {
+          if (baseState[pid] === undefined) return;
+          const param = parameters.find((p) => p.id === pid);
+          if (!param || param.valor_minimo === null || param.valor_maximo === null) return;
+          const value = newState[pid];
+          if (isParamNormal(param, value)) return;
+          const min = Number(param.valor_minimo);
+          const max = Number(param.valor_maximo);
+          const mid = (min + max) / 2;
+          const next = value + (mid - value) * 0.5 * eficacia;
+          newState[pid] = Number(Math.max(0, next).toFixed(2));
+        });
+      }
+
+
+
 
 
       const abnormalBefore = getAbnormalFrom(baseState);
