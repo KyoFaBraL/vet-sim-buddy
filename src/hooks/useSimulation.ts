@@ -65,6 +65,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [hp, setHp] = useState<number>(50);
   const hpRef = useRef<number>(50);
+  // Parâmetros exigidos para a estabilização do paciente (balanceamento)
+  const targetParamIds = useRef<number[]>([]);
+
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
   const [lastHpChange, setLastHpChange] = useState<number>(0);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
