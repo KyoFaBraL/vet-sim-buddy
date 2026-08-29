@@ -29,8 +29,9 @@ export const ACID_BASE_RANGES: Record<Species, AcidBaseRanges> = {
   canino: {
     pH: { min: 7.35, max: 7.45, unit: "", label: "pH" },
     PaCO2: { min: 35, max: 45, unit: "mmHg", label: "PaCO₂" },
-    HCO3: { min: 20, max: 26, unit: "mEq/L", label: "HCO₃⁻" },
-    BE: { min: -3, max: 3, unit: "mEq/L", label: "BE" },
+      HCO3: { min: 22, max: 26, unit: "mEq/L", label: "HCO₃⁻" },
+      BE: { min: -3, max: 3, unit: "mEq/L", label: "BE" },
+
     AG: { min: 8, max: 16, unit: "mEq/L", label: "Anion Gap" },
   },
   felino: {
