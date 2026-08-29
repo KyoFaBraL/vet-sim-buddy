@@ -746,9 +746,11 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       setLastHpChange(hpChange);
 
       const prevHp = hpRef.current;
-      // Recuperação total (100 HP) exige TODOS os parâmetros normalizados
-      const hpCeiling = allNormalAfter ? 100 : 99;
-      const newHp = Math.min(hpCeiling, Math.max(0, prevHp + hpChange));
+      // Quando pH e PaCO2 voltam à faixa da espécie, o paciente recebe alta (100 HP).
+      // Enquanto isso, cada tratamento correto vai elevando o HP até 95.
+      const newHp = allNormalAfter
+        ? 100
+        : Math.min(95, Math.max(0, prevHp + hpChange));
       hpRef.current = newHp;
       setHp(newHp);
 
@@ -756,12 +758,13 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       setMinHpDuringSession(minHp => Math.min(minHp, newHp));
 
       // Aviso em tempo real dos parâmetros pendentes
-      if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 90) {
+      if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 85) {
         toast({
           title: "Paciente ainda instável",
-          description: `Estabilize os parâmetros críticos para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
+          description: `Falta normalizar a gasometria para a alta: ${abnormalAfter.join(', ')}.`,
         });
       }
+
       void abnormalBefore;
       
 
