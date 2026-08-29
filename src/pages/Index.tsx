@@ -104,6 +104,8 @@ const Index = () => {
     lastHpChange,
     abnormalParameters,
     allParametersNormal,
+    acidBase,
+
     toggleSimulation,
     resetSimulation,
     applyTreatment,
