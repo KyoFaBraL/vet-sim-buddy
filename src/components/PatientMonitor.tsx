@@ -11,6 +11,8 @@ import dogSad from "@/assets/dog-sad.png";
 import dogHappy from "@/assets/dog-happy.png";
 import dogRip from "@/assets/dog-rip.png";
 import dogVictory from "@/assets/dog-victory.png";
+import { isInRange, type AcidBasePanel } from "@/constants/acidBase";
+
 
 interface PatientMonitorProps {
   hp: number;
