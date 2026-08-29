@@ -39,7 +39,9 @@ export const PatientMonitor = ({
   getParameterStatus,
   getParameterTrend,
   abnormalParameters = [],
-  allParametersNormal = false
+  allParametersNormal = false,
+  acidBase = null
+
 }: PatientMonitorProps) => {
   const getAnimalImage = () => {
     const isCat = animalType?.toLowerCase().includes('gato') || animalType?.toLowerCase().includes('felino');
