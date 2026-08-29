@@ -634,15 +634,18 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         if (isAdequate && hasRange) {
           const mid = (min! + max!) / 2;
           const gap = mid - currentValue;
-          if (delta !== 0 && Math.sign(gap) === Math.sign(delta)) {
-            // Tratamento correto normaliza o parâmetro: leva direto ao
-            // ponto médio da faixa de referência (sem hipercorreção).
-            delta = gap;
-          } else if (alreadyNormal) {
-            // Não afastar da faixa um parâmetro já normal
+          if (alreadyNormal) {
+            // Parâmetro já normal permanece normal (não é afastado da faixa)
             delta = 0;
+          } else {
+            // Tratamento correto normaliza o parâmetro em qualquer direção:
+            // leva direto ao ponto médio da faixa (sem hipercorreção).
+            // Isso corrige casos como PaCO2 baixo, em que a magnitude
+            // cadastrada só apontava para baixo.
+            delta = gap;
           }
         } else if (alreadyNormal && hasRange) {
+
           // Tratamento inadequado só pode desviar de forma limitada e
           // nunca tirar o parâmetro já normalizado da faixa
           const target = Math.min(max!, Math.max(min!, currentValue + delta));
