@@ -693,7 +693,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 90) {
         toast({
           title: "Paciente ainda instável",
-          description: `Estabilize todos os parâmetros para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
+          description: `Estabilize os parâmetros críticos para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
         });
       }
       void abnormalBefore;
