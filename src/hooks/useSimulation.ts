@@ -621,26 +621,43 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
         let delta = magnitude * eficacia;
 
-        // Ganho adaptativo: quando o tratamento é adequado e empurra o
-        // parâmetro na direção da faixa de referência, a resposta é
-        // proporcional à gravidade do desvio (até 4x), sem ultrapassar o
-        // ponto médio da faixa. Isso torna a estabilização alcançável.
         const param = parameters.find((p) => p.id === effect.id_parametro);
-        if (isAdequate && param && param.valor_minimo !== null && param.valor_maximo !== null) {
-          const min = Number(param.valor_minimo);
-          const max = Number(param.valor_maximo);
-          const mid = (min + max) / 2;
+        const hasRange = !!param && param.valor_minimo !== null && param.valor_maximo !== null;
+        const min = hasRange ? Number(param!.valor_minimo) : null;
+        const max = hasRange ? Number(param!.valor_maximo) : null;
+
+        // Proteção: parâmetro já normalizado não pode ser degradado/reduzido
+        // por um novo tratamento — ele permanece dentro da faixa.
+        const alreadyNormal = param ? isParamNormal(param, currentValue) : false;
+
+        if (isAdequate && hasRange) {
+          const mid = (min! + max!) / 2;
           const gap = mid - currentValue;
           if (delta !== 0 && Math.sign(gap) === Math.sign(delta)) {
-            const gain = Math.min(4, Math.max(1, Math.abs(gap) / Math.abs(delta)));
-            delta = delta * gain;
-            // Não ultrapassar o ponto médio (evita hipercorreção)
-            if (Math.abs(delta) > Math.abs(gap)) delta = gap;
+            // Tratamento correto normaliza o parâmetro: leva direto ao
+            // ponto médio da faixa de referência (sem hipercorreção).
+            delta = gap;
+          } else if (alreadyNormal) {
+            // Não afastar da faixa um parâmetro já normal
+            delta = 0;
           }
+        } else if (alreadyNormal && hasRange) {
+          // Tratamento inadequado só pode desviar de forma limitada e
+          // nunca tirar o parâmetro já normalizado da faixa
+          const target = Math.min(max!, Math.max(min!, currentValue + delta));
+          delta = target - currentValue;
         }
 
-        newState[effect.id_parametro] = currentValue + delta;
+        let nextValue = currentValue + delta;
+
+        // Nenhum parâmetro fisiológico pode ser negativo
+        const floor = hasRange ? Math.max(0, min! * 0.4) : 0;
+        const ceiling = hasRange ? max! * 2.5 : Infinity;
+        nextValue = Math.min(ceiling, Math.max(floor, nextValue));
+
+        newState[effect.id_parametro] = Number(nextValue.toFixed(2));
       });
+
 
 
       const abnormalBefore = getAbnormalFrom(baseState);
