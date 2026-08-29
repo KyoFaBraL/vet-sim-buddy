@@ -144,11 +144,34 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       setCurrentState(initialState);
 
+      // Definir os parâmetros-alvo da estabilização (balanceamento):
+      // apenas os parâmetros clinicamente prioritários que estão alterados
+      // no início do caso e que podem ser corrigidos pelos tratamentos.
+      const priority = ['ph', 'paco2', 'pao2', 'lactato', 'pressaoarterial', 'frequenciacardiaca'];
+      const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const abnormalAtStart = (params || [])
+        .filter((p) => {
+          const v = initialState[p.id];
+          if (v === undefined) return false;
+          const min = p.valor_minimo ?? -Infinity;
+          const max = p.valor_maximo ?? Infinity;
+          return v < min || v > max;
+        })
+        .sort((a, b) => {
+          const ia = priority.indexOf(norm(a.nome));
+          const ib = priority.indexOf(norm(b.nome));
+          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+        });
+
+      const targets = abnormalAtStart.slice(0, 3).map((p) => p.id);
+      targetParamIds.current = targets.length > 0 ? targets : Object.keys(initialState).map(Number).slice(0, 1);
+
       // Resetar HP e game status
       setHp(50);
       hpRef.current = 50;
       setGameStatus('playing');
       setLastHpChange(0);
+
     } catch (error: any) {
       toast({
         title: "Erro ao carregar caso",
