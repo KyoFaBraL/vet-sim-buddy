@@ -532,9 +532,10 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     if (allParametersNormal && !wasStableRef.current) {
       wasStableRef.current = true;
       toast({
-        title: "✓ Todos os parâmetros normalizados",
-        description: "Mantenha o suporte: o paciente pode agora alcançar a recuperação total (100 HP).",
+        title: "✓ Gasometria normalizada",
+        description: "pH e PaCO₂ na faixa de referência — o paciente está pronto para a alta (100 HP).",
       });
+
     } else if (!allParametersNormal && wasStableRef.current) {
       wasStableRef.current = false;
       toast({
