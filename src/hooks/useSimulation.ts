@@ -485,16 +485,16 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     loadCase();
   };
 
-  // ===== Verificação de estabilização =====
-  // O paciente é considerado recuperado quando os parâmetros-alvo do caso
-  // (até 2 dos mais críticos, definidos em loadCase) estão na faixa de
-  // referência, com uma tolerância clínica de 15% da amplitude da faixa.
+  // ===== Verificação de estabilização (modelo simplificado) =====
+  // O paciente é considerado estabilizado quando os parâmetros essenciais
+  // da gasometria (pH e PaCO2) estão dentro da faixa de referência da
+  // espécie, com tolerância clínica de 10% da amplitude da faixa.
 
   const isParamNormal = useCallback((param: Parameter, value: number) => {
     const min = param.valor_minimo ?? -Infinity;
     const max = param.valor_maximo ?? Infinity;
     const span = Number.isFinite(min) && Number.isFinite(max) ? (max - min) : 0;
-    const tol = span * 0.15;
+    const tol = span * 0.1;
     return value >= min - tol && value <= max + tol;
   }, []);
 
@@ -509,6 +509,20 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
   const abnormalParameters = getAbnormalFrom(currentState);
   const allParametersNormal =
     Object.keys(currentState).length > 0 && abnormalParameters.length === 0;
+
+  // Painel ácido-básico derivado (HCO3-, BE e Anion Gap) a partir de pH e PaCO2
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const phParam = parameters.find((p) => norm(p.nome) === 'ph');
+  const co2Param = parameters.find((p) => ['paco2', 'pco2'].includes(norm(p.nome)));
+  const phValue = phParam ? currentState[phParam.id] : undefined;
+  const co2Value = co2Param ? currentState[co2Param.id] : undefined;
+  const acidBase =
+    phValue !== undefined && co2Value !== undefined
+      ? buildAcidBasePanel(phValue, co2Value, caseData?.especie)
+      : null;
+  const speciesRanges = getRanges(caseData?.especie);
+
+
 
 
   // Notificação em tempo real quando o paciente atinge (ou perde) a estabilização
