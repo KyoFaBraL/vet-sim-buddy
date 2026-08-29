@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { checkAndAwardBadges } from "@/utils/badgeChecker";
+import { buildAcidBasePanel, getRanges } from "@/constants/acidBase";
+
 
 // Utility function for retrying critical database operations
 async function retryOperation(
