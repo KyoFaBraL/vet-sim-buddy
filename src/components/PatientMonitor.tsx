@@ -143,7 +143,7 @@ export const PatientMonitor = ({
           </div>
         </div>
 
-        {/* Verificação de estabilização global (tempo real) */}
+        {/* Verificação de estabilização (gasometria essencial) */}
         {gameStatus === 'playing' && (
           <div
             className={`rounded-lg border-2 p-3 text-sm ${
@@ -154,23 +154,65 @@ export const PatientMonitor = ({
           >
             {allParametersNormal ? (
               <p className="font-medium">
-                ✓ Todos os parâmetros estão na faixa de referência — o paciente pode atingir a recuperação total.
+                ✓ pH e PaCO₂ na faixa de referência — paciente estável e pronto para a alta (100 HP).
               </p>
             ) : (
               <>
                 <p className="font-medium">
-                  Para estabilizar o paciente é necessário normalizar TODOS os parâmetros.
+                  Para dar alta ao paciente, normalize a gasometria (pH e PaCO₂).
                 </p>
                 <p className="mt-1 text-muted-foreground">
                   Pendentes ({abnormalParameters.length}): {abnormalParameters.join(', ')}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  O HP fica limitado a 99 enquanto houver parâmetro alterado.
+                  Cada tratamento correto aumenta o HP; a alta (100 HP) ocorre quando pH e PaCO₂ normalizam.
                 </p>
               </>
             )}
           </div>
         )}
+
+        {/* Painel ácido-básico (valores de referência da espécie) */}
+        {acidBase && (
+          <div className="rounded-lg border p-3">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold">
+                Gasometria — {acidBase.species === 'felino' ? 'Felino' : 'Canino'}
+              </h3>
+              <Badge variant="outline" className="text-xs">{acidBase.disturbance}</Badge>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {([
+                { key: 'pH', value: acidBase.pH, range: acidBase.ranges.pH, digits: 2 },
+                { key: 'PaCO2', value: acidBase.PaCO2, range: acidBase.ranges.PaCO2, digits: 1 },
+                { key: 'HCO3', value: acidBase.HCO3, range: acidBase.ranges.HCO3, digits: 1 },
+                { key: 'BE', value: acidBase.BE, range: acidBase.ranges.BE, digits: 1 },
+                { key: 'AG', value: acidBase.AG, range: acidBase.ranges.AG, digits: 1 },
+              ] as const).map((item) => {
+                const ok = isInRange(item.value, item.range);
+                return (
+                  <div
+                    key={item.key}
+                    className={`p-2 rounded-md border ${ok ? 'border-success bg-success/10' : 'border-destructive bg-destructive/10'}`}
+                  >
+                    <div className="text-xs text-muted-foreground">{item.range.label}</div>
+                    <div className={`font-mono font-bold ${ok ? 'text-success' : 'text-destructive'}`}>
+                      {item.value.toFixed(item.digits)}
+                      {item.range.unit && <span className="text-xs ml-1 text-muted-foreground">{item.range.unit}</span>}
+                    </div>
+                    <div className="text-[10px] text-muted-foreground">
+                      Ref.: {item.range.min} – {item.range.max}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              HCO₃⁻, BE e Anion Gap são estimados a partir do pH e da PaCO₂.
+            </p>
+          </div>
+        )}
+
 
         {/* Parâmetros Principais */}
         <div className="pt-4 border-t">
