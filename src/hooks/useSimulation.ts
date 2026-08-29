@@ -116,7 +116,24 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         .select("*");
 
       if (paramsError) throw paramsError;
-      setParameters(params || []);
+
+      // Ajustar as faixas de referência de acordo com a espécie do paciente
+      const ranges = getRanges(caso?.especie);
+      const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const speciesParams = (params || []).map((p) => {
+        const key = norm(p.nome);
+        if (key === 'ph') {
+          return { ...p, valor_minimo: ranges.pH.min, valor_maximo: ranges.pH.max };
+        }
+        if (key === 'paco2' || key === 'pco2') {
+          return { ...p, valor_minimo: ranges.PaCO2.min, valor_maximo: ranges.PaCO2.max };
+        }
+        if (key === 'hco3' || key === 'hco3-' || key === 'bicarbonato') {
+          return { ...p, valor_minimo: ranges.HCO3.min, valor_maximo: ranges.HCO3.max };
+        }
+        return p;
+      });
+      setParameters(speciesParams);
 
       // Carregar valores iniciais (parâmetros principais)
       const { data: valoresIniciais, error: valoresError } = await supabase
@@ -147,27 +164,18 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       setCurrentState(initialState);
 
-      // Definir os parâmetros-alvo da estabilização (balanceamento):
-      // apenas os parâmetros clinicamente prioritários que estão alterados
-      // no início do caso e que podem ser corrigidos pelos tratamentos.
-      const priority = ['ph', 'paco2', 'pao2', 'lactato', 'pressaoarterial', 'frequenciacardiaca'];
-      const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const abnormalAtStart = (params || [])
-        .filter((p) => {
-          const v = initialState[p.id];
-          if (v === undefined) return false;
-          const min = p.valor_minimo ?? -Infinity;
-          const max = p.valor_maximo ?? Infinity;
-          return v < min || v > max;
-        })
-        .sort((a, b) => {
-          const ia = priority.indexOf(norm(a.nome));
-          const ib = priority.indexOf(norm(b.nome));
-          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-        });
+      // Simulação simplificada: a estabilização depende apenas dos
+      // parâmetros essenciais da gasometria (pH e PaCO2). HCO3-, BE e
+      // Anion Gap são derivados desses dois valores.
+      const coreIds = speciesParams
+        .filter((p) => ['ph', 'paco2', 'pco2'].includes(norm(p.nome)))
+        .filter((p) => initialState[p.id] !== undefined)
+        .map((p) => p.id);
 
-      const targets = abnormalAtStart.slice(0, 2).map((p) => p.id);
-      targetParamIds.current = targets.length > 0 ? targets : Object.keys(initialState).map(Number).slice(0, 1);
+      targetParamIds.current = coreIds.length > 0
+        ? coreIds
+        : Object.keys(initialState).map(Number).slice(0, 1);
+
 
       // Resetar HP e game status
       setHp(50);
