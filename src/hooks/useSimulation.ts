@@ -65,6 +65,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [hp, setHp] = useState<number>(50);
   const hpRef = useRef<number>(50);
+  // Parâmetros exigidos para a estabilização do paciente (balanceamento)
+  const targetParamIds = useRef<number[]>([]);
+
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
   const [lastHpChange, setLastHpChange] = useState<number>(0);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
@@ -144,11 +147,34 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       setCurrentState(initialState);
 
+      // Definir os parâmetros-alvo da estabilização (balanceamento):
+      // apenas os parâmetros clinicamente prioritários que estão alterados
+      // no início do caso e que podem ser corrigidos pelos tratamentos.
+      const priority = ['ph', 'paco2', 'pao2', 'lactato', 'pressaoarterial', 'frequenciacardiaca'];
+      const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const abnormalAtStart = (params || [])
+        .filter((p) => {
+          const v = initialState[p.id];
+          if (v === undefined) return false;
+          const min = p.valor_minimo ?? -Infinity;
+          const max = p.valor_maximo ?? Infinity;
+          return v < min || v > max;
+        })
+        .sort((a, b) => {
+          const ia = priority.indexOf(norm(a.nome));
+          const ib = priority.indexOf(norm(b.nome));
+          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+        });
+
+      const targets = abnormalAtStart.slice(0, 3).map((p) => p.id);
+      targetParamIds.current = targets.length > 0 ? targets : Object.keys(initialState).map(Number).slice(0, 1);
+
       // Resetar HP e game status
       setHp(50);
       hpRef.current = 50;
       setGameStatus('playing');
       setLastHpChange(0);
+
     } catch (error: any) {
       toast({
         title: "Erro ao carregar caso",
@@ -449,17 +475,22 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     loadCase();
   };
 
-  // ===== Verificação de estabilização global =====
-  // O paciente só é considerado recuperado quando TODOS os parâmetros
-  // monitorizados no caso estão dentro da faixa de referência.
+  // ===== Verificação de estabilização =====
+  // O paciente é considerado recuperado quando os parâmetros-alvo do caso
+  // (até 3 dos mais críticos, definidos em loadCase) estão na faixa de
+  // referência, com uma tolerância clínica de 10% da amplitude da faixa.
   const isParamNormal = useCallback((param: Parameter, value: number) => {
     const min = param.valor_minimo ?? -Infinity;
     const max = param.valor_maximo ?? Infinity;
-    return value >= min && value <= max;
+    const span = Number.isFinite(min) && Number.isFinite(max) ? (max - min) : 0;
+    const tol = span * 0.1;
+    return value >= min - tol && value <= max + tol;
   }, []);
 
   const getAbnormalFrom = useCallback((state: SimulationState) => {
+    const targets = targetParamIds.current;
     return parameters
+      .filter((p) => targets.length === 0 || targets.includes(p.id))
       .filter((p) => state[p.id] !== undefined && !isParamNormal(p, state[p.id]))
       .map((p) => p.nome);
   }, [parameters, isParamNormal]);
@@ -467,6 +498,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
   const abnormalParameters = getAbnormalFrom(currentState);
   const allParametersNormal =
     Object.keys(currentState).length > 0 && abnormalParameters.length === 0;
+
 
   // Notificação em tempo real quando o paciente atinge (ou perde) a estabilização
   const wasStableRef = useRef(false);
@@ -575,7 +607,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       // Rendimento decrescente: repetir o mesmo tratamento perde eficácia
       const timesUsed = treatmentUsage.current[treatmentId] ?? 0;
       treatmentUsage.current[treatmentId] = timesUsed + 1;
-      const repeatFactor = isAdequate ? Math.max(0.2, 1 - 0.4 * timesUsed) : 1;
+      const repeatFactor = isAdequate ? Math.max(0.3, 1 - 0.35 * timesUsed) : 1;
       eficacia = eficacia * repeatFactor;
 
       // Calcular novo estado e medir se houve melhora real em parâmetros anormais
@@ -586,8 +618,30 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         const magnitude = typeof effect.magnitude === 'number' ? effect.magnitude : parseFloat(effect.magnitude);
         // Só altera parâmetros efetivamente monitorizados neste caso
         if (baseState[effect.id_parametro] === undefined) return;
-        newState[effect.id_parametro] = currentValue + (magnitude * eficacia);
+
+        let delta = magnitude * eficacia;
+
+        // Ganho adaptativo: quando o tratamento é adequado e empurra o
+        // parâmetro na direção da faixa de referência, a resposta é
+        // proporcional à gravidade do desvio (até 4x), sem ultrapassar o
+        // ponto médio da faixa. Isso torna a estabilização alcançável.
+        const param = parameters.find((p) => p.id === effect.id_parametro);
+        if (isAdequate && param && param.valor_minimo !== null && param.valor_maximo !== null) {
+          const min = Number(param.valor_minimo);
+          const max = Number(param.valor_maximo);
+          const mid = (min + max) / 2;
+          const gap = mid - currentValue;
+          if (delta !== 0 && Math.sign(gap) === Math.sign(delta)) {
+            const gain = Math.min(4, Math.max(1, Math.abs(gap) / Math.abs(delta)));
+            delta = delta * gain;
+            // Não ultrapassar o ponto médio (evita hipercorreção)
+            if (Math.abs(delta) > Math.abs(gap)) delta = gap;
+          }
+        }
+
+        newState[effect.id_parametro] = currentValue + delta;
       });
+
 
       const abnormalBefore = getAbnormalFrom(baseState);
       const abnormalAfter = getAbnormalFrom(newState);
@@ -639,7 +693,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 90) {
         toast({
           title: "Paciente ainda instável",
-          description: `Estabilize todos os parâmetros para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
+          description: `Estabilize os parâmetros críticos para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
         });
       }
       void abnormalBefore;
