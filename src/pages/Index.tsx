@@ -504,6 +504,8 @@ const Index = () => {
               getParameterTrend={getParameterTrend}
               abnormalParameters={abnormalParameters}
               allParametersNormal={allParametersNormal}
+              acidBase={acidBase}
+
             />
           </div>
 
