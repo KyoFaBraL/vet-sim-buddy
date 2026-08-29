@@ -32,7 +32,7 @@ export const ACID_BASE_RANGES: Record<Species, AcidBaseRanges> = {
       HCO3: { min: 22, max: 26, unit: "mEq/L", label: "HCO₃⁻" },
       BE: { min: -3, max: 3, unit: "mEq/L", label: "BE" },
 
-    AG: { min: 8, max: 16, unit: "mEq/L", label: "Anion Gap" },
+    AG: { min: 8, max: 12, unit: "mEq/L", label: "Anion Gap" },
   },
   felino: {
     pH: { min: 7.31, max: 7.42, unit: "", label: "pH" },
