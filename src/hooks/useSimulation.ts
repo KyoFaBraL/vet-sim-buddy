@@ -857,8 +857,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         }
         
         toast({
-          title: "🎉 Paciente Estabilizado!",
-          description: "Você conseguiu normalizar o quadro do paciente. Parabéns!",
+          title: "🎉 Paciente recebeu alta!",
+          description: "pH e PaCO₂ normalizados: o paciente atingiu 100 HP e está estável. Parabéns!",
+
           variant: "default",
         });
       }
