@@ -477,8 +477,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
   // ===== Verificação de estabilização =====
   // O paciente é considerado recuperado quando os parâmetros-alvo do caso
-  // (até 3 dos mais críticos, definidos em loadCase) estão na faixa de
-  // referência, com uma tolerância clínica de 10% da amplitude da faixa.
+  // (até 2 dos mais críticos, definidos em loadCase) estão na faixa de
+  // referência, com uma tolerância clínica de 15% da amplitude da faixa.
+
   const isParamNormal = useCallback((param: Parameter, value: number) => {
     const min = param.valor_minimo ?? -Infinity;
     const max = param.valor_maximo ?? Infinity;
