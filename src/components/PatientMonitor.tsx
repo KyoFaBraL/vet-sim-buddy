@@ -24,6 +24,8 @@ interface PatientMonitorProps {
   getParameterTrend: (parameterId: number, currentValue: number) => 'up' | 'down' | 'stable';
   abnormalParameters?: string[];
   allParametersNormal?: boolean;
+  acidBase?: AcidBasePanel | null;
+
 }
 
 export const PatientMonitor = ({
