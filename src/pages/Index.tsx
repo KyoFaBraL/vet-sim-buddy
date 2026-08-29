@@ -104,6 +104,8 @@ const Index = () => {
     lastHpChange,
     abnormalParameters,
     allParametersNormal,
+    acidBase,
+
     toggleSimulation,
     resetSimulation,
     applyTreatment,
@@ -502,6 +504,8 @@ const Index = () => {
               getParameterTrend={getParameterTrend}
               abnormalParameters={abnormalParameters}
               allParametersNormal={allParametersNormal}
+              acidBase={acidBase}
+
             />
           </div>
 

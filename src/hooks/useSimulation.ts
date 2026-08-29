@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { checkAndAwardBadges } from "@/utils/badgeChecker";
+import { buildAcidBasePanel, getRanges } from "@/constants/acidBase";
+
 
 // Utility function for retrying critical database operations
 async function retryOperation(
@@ -116,7 +118,24 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         .select("*");
 
       if (paramsError) throw paramsError;
-      setParameters(params || []);
+
+      // Ajustar as faixas de referência de acordo com a espécie do paciente
+      const ranges = getRanges(caso?.especie);
+      const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const speciesParams = (params || []).map((p) => {
+        const key = norm(p.nome);
+        if (key === 'ph') {
+          return { ...p, valor_minimo: ranges.pH.min, valor_maximo: ranges.pH.max };
+        }
+        if (key === 'paco2' || key === 'pco2') {
+          return { ...p, valor_minimo: ranges.PaCO2.min, valor_maximo: ranges.PaCO2.max };
+        }
+        if (key === 'hco3' || key === 'hco3-' || key === 'bicarbonato') {
+          return { ...p, valor_minimo: ranges.HCO3.min, valor_maximo: ranges.HCO3.max };
+        }
+        return p;
+      });
+      setParameters(speciesParams);
 
       // Carregar valores iniciais (parâmetros principais)
       const { data: valoresIniciais, error: valoresError } = await supabase
@@ -147,27 +166,18 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
 
       setCurrentState(initialState);
 
-      // Definir os parâmetros-alvo da estabilização (balanceamento):
-      // apenas os parâmetros clinicamente prioritários que estão alterados
-      // no início do caso e que podem ser corrigidos pelos tratamentos.
-      const priority = ['ph', 'paco2', 'pao2', 'lactato', 'pressaoarterial', 'frequenciacardiaca'];
-      const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const abnormalAtStart = (params || [])
-        .filter((p) => {
-          const v = initialState[p.id];
-          if (v === undefined) return false;
-          const min = p.valor_minimo ?? -Infinity;
-          const max = p.valor_maximo ?? Infinity;
-          return v < min || v > max;
-        })
-        .sort((a, b) => {
-          const ia = priority.indexOf(norm(a.nome));
-          const ib = priority.indexOf(norm(b.nome));
-          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-        });
+      // Simulação simplificada: a estabilização depende apenas dos
+      // parâmetros essenciais da gasometria (pH e PaCO2). HCO3-, BE e
+      // Anion Gap são derivados desses dois valores.
+      const coreIds = speciesParams
+        .filter((p) => ['ph', 'paco2', 'pco2'].includes(norm(p.nome)))
+        .filter((p) => initialState[p.id] !== undefined)
+        .map((p) => p.id);
 
-      const targets = abnormalAtStart.slice(0, 2).map((p) => p.id);
-      targetParamIds.current = targets.length > 0 ? targets : Object.keys(initialState).map(Number).slice(0, 1);
+      targetParamIds.current = coreIds.length > 0
+        ? coreIds
+        : Object.keys(initialState).map(Number).slice(0, 1);
+
 
       // Resetar HP e game status
       setHp(50);
@@ -475,16 +485,16 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     loadCase();
   };
 
-  // ===== Verificação de estabilização =====
-  // O paciente é considerado recuperado quando os parâmetros-alvo do caso
-  // (até 2 dos mais críticos, definidos em loadCase) estão na faixa de
-  // referência, com uma tolerância clínica de 15% da amplitude da faixa.
+  // ===== Verificação de estabilização (modelo simplificado) =====
+  // O paciente é considerado estabilizado quando os parâmetros essenciais
+  // da gasometria (pH e PaCO2) estão dentro da faixa de referência da
+  // espécie, com tolerância clínica de 10% da amplitude da faixa.
 
   const isParamNormal = useCallback((param: Parameter, value: number) => {
     const min = param.valor_minimo ?? -Infinity;
     const max = param.valor_maximo ?? Infinity;
     const span = Number.isFinite(min) && Number.isFinite(max) ? (max - min) : 0;
-    const tol = span * 0.15;
+    const tol = span * 0.1;
     return value >= min - tol && value <= max + tol;
   }, []);
 
@@ -500,6 +510,20 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
   const allParametersNormal =
     Object.keys(currentState).length > 0 && abnormalParameters.length === 0;
 
+  // Painel ácido-básico derivado (HCO3-, BE e Anion Gap) a partir de pH e PaCO2
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const phParam = parameters.find((p) => norm(p.nome) === 'ph');
+  const co2Param = parameters.find((p) => ['paco2', 'pco2'].includes(norm(p.nome)));
+  const phValue = phParam ? currentState[phParam.id] : undefined;
+  const co2Value = co2Param ? currentState[co2Param.id] : undefined;
+  const acidBase =
+    phValue !== undefined && co2Value !== undefined
+      ? buildAcidBasePanel(phValue, co2Value, caseData?.especie)
+      : null;
+  const speciesRanges = getRanges(caseData?.especie);
+
+
+
 
   // Notificação em tempo real quando o paciente atinge (ou perde) a estabilização
   const wasStableRef = useRef(false);
@@ -508,9 +532,10 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     if (allParametersNormal && !wasStableRef.current) {
       wasStableRef.current = true;
       toast({
-        title: "✓ Todos os parâmetros normalizados",
-        description: "Mantenha o suporte: o paciente pode agora alcançar a recuperação total (100 HP).",
+        title: "✓ Gasometria normalizada",
+        description: "pH e PaCO₂ na faixa de referência — o paciente está pronto para a alta (100 HP).",
       });
+
     } else if (!allParametersNormal && wasStableRef.current) {
       wasStableRef.current = false;
       toast({
@@ -722,9 +747,11 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       setLastHpChange(hpChange);
 
       const prevHp = hpRef.current;
-      // Recuperação total (100 HP) exige TODOS os parâmetros normalizados
-      const hpCeiling = allNormalAfter ? 100 : 99;
-      const newHp = Math.min(hpCeiling, Math.max(0, prevHp + hpChange));
+      // Quando pH e PaCO2 voltam à faixa da espécie, o paciente recebe alta (100 HP).
+      // Enquanto isso, cada tratamento correto vai elevando o HP até 95.
+      const newHp = allNormalAfter
+        ? 100
+        : Math.min(95, Math.max(0, prevHp + hpChange));
       hpRef.current = newHp;
       setHp(newHp);
 
@@ -732,12 +759,13 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
       setMinHpDuringSession(minHp => Math.min(minHp, newHp));
 
       // Aviso em tempo real dos parâmetros pendentes
-      if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 90) {
+      if (!allNormalAfter && abnormalAfter.length > 0 && newHp >= 85) {
         toast({
           title: "Paciente ainda instável",
-          description: `Estabilize os parâmetros críticos para a recuperação total. Pendentes: ${abnormalAfter.join(', ')}.`,
+          description: `Falta normalizar a gasometria para a alta: ${abnormalAfter.join(', ')}.`,
         });
       }
+
       void abnormalBefore;
       
 
@@ -829,8 +857,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
         }
         
         toast({
-          title: "🎉 Paciente Estabilizado!",
-          description: "Você conseguiu normalizar o quadro do paciente. Parabéns!",
+          title: "🎉 Paciente recebeu alta!",
+          description: "pH e PaCO₂ normalizados: o paciente atingiu 100 HP e está estável. Parabéns!",
+
           variant: "default",
         });
       }
@@ -1023,6 +1052,9 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
     lastHpChange,
     abnormalParameters,
     allParametersNormal,
+    acidBase,
+    speciesRanges,
+
     toggleSimulation,
     resetSimulation,
     applyTreatment,
