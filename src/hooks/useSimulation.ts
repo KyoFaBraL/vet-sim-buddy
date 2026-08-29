@@ -166,7 +166,7 @@ export const useSimulation = (caseId: number = 1, simulationMode: 'practice' | '
           return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
         });
 
-      const targets = abnormalAtStart.slice(0, 3).map((p) => p.id);
+      const targets = abnormalAtStart.slice(0, 2).map((p) => p.id);
       targetParamIds.current = targets.length > 0 ? targets : Object.keys(initialState).map(Number).slice(0, 1);
 
       // Resetar HP e game status
