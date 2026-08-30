@@ -61,8 +61,12 @@ describe("Caixa branca — branches de prioridade em applyTreatment", () => {
       await result.current.applyTreatment(10);
     });
 
-    expect(result.current.hp).toBe(50 + delta);
+    // O bônus de HP do gabarito é registrado pela prioridade...
     expect(result.current.lastHpChange).toBe(delta);
+    // ...e, como o tratamento correto normaliza a gasometria-alvo,
+    // o paciente recebe alta (100 HP) conforme a regra de estabilização.
+    expect(result.current.hp).toBe(100);
+
   });
 
   it("caminho de tratamento inadequado (sem gabarito) penaliza o HP", async () => {
