@@ -151,7 +151,9 @@ const App = () => (
               </PublicRoute>
             } />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
+            {import.meta.env.DEV && (
+              <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
+            )}
             <Route path="/consentimento" element={
               <ProtectedRoute>
                 <ConsentimentoTCLE />
