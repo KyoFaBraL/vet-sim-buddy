@@ -30,7 +30,10 @@ describe("Caixa cinza — gabarito do caso e fallback pela condição", () => {
     });
 
     // prioridade 1 do gabarito do caso (+25) vence a genérica (+10)
-    expect(result.current.hp).toBe(75);
+    expect(result.current.lastHpChange).toBe(25);
+    // tratamento correto normaliza a gasometria-alvo → alta (100 HP)
+    expect(result.current.hp).toBe(100);
+
   });
 
   it("recorre ao gabarito da condição primária em casos pré-definidos", async () => {
