@@ -57,7 +57,9 @@ describe("Caixa cinza — gabarito do caso e fallback pela condição", () => {
       await result.current.applyTreatment(10);
     });
 
-    expect(result.current.hp).toBe(65); // 50 + 15 (prioridade 2)
+    expect(result.current.lastHpChange).toBe(15); // prioridade 2
+    expect(result.current.hp).toBe(100); // gasometria normalizada → alta
+
   });
 
   it("caso personalizado sem gabarito não herda o fallback da condição", async () => {
