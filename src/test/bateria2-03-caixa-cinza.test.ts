@@ -29,8 +29,10 @@ describe("Caixa cinza — gabarito do caso e fallback pela condição", () => {
       await result.current.applyTreatment(10);
     });
 
-    // prioridade 1 do gabarito do caso (+25) vence a genérica (+10)
-    expect(result.current.hp).toBe(75);
+    // prioridade 1 do gabarito do caso (+25) vence a genérica (+10);
+    // o tratamento adequado normaliza pH e PaCO2 e concede alta (100 HP)
+    expect(result.current.lastHpChange).toBe(25);
+    expect(result.current.hp).toBe(100);
   });
 
   it("recorre ao gabarito da condição primária em casos pré-definidos", async () => {
@@ -54,7 +56,8 @@ describe("Caixa cinza — gabarito do caso e fallback pela condição", () => {
       await result.current.applyTreatment(10);
     });
 
-    expect(result.current.hp).toBe(65); // 50 + 15 (prioridade 2)
+    expect(result.current.lastHpChange).toBe(15); // prioridade 2
+    expect(result.current.hp).toBe(100); // parâmetros normalizados -> alta
   });
 
   it("caso personalizado sem gabarito não herda o fallback da condição", async () => {

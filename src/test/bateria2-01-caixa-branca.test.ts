@@ -61,8 +61,11 @@ describe("Caixa branca — branches de prioridade em applyTreatment", () => {
       await result.current.applyTreatment(10);
     });
 
-    expect(result.current.hp).toBe(50 + delta);
+    // O ganho de HP por prioridade continua sendo calculado (lastHpChange),
+    // mas, com o motor simplificado, o tratamento adequado normaliza pH e PaCO2
+    // e o paciente recebe alta imediata com 100 HP.
     expect(result.current.lastHpChange).toBe(delta);
+    expect(result.current.hp).toBe(100);
   });
 
   it("caminho de tratamento inadequado (sem gabarito) penaliza o HP", async () => {
