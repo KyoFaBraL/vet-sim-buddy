@@ -117,9 +117,15 @@ const BroadcastListener = () => {
   return null;
 };
 
-const App = () => (
+const App = () =>
+  isMaintenanceHost() ? (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <MaintenanceNotice />
+    </ThemeProvider>
+  ) : (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+
       <TooltipProvider>
         <Toaster />
         <Sonner />
