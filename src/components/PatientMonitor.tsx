@@ -229,50 +229,30 @@ export const PatientMonitor = ({
         )}
 
 
-        {/* Parâmetros Principais */}
+        {/* Parâmetros fisiológicos principais */}
         <div className="pt-4 border-t">
           <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
             <Activity className="h-4 w-4" />
-            Parâmetros Vitais
+            Parâmetros Fisiológicos Principais
           </h3>
           <div className="grid grid-cols-3 gap-3">
-            {mainParams.map((param) => {
-              const value = currentState[param.id] || 0;
-              const { isNormal, isCritical } = getParameterStatus(param.id, value);
-              const trend = getParameterTrend(param.id, value);
-
-              return (
-                <div 
-                  key={param.id}
-                  className={`p-3 rounded-lg border-2 ${
-                    isCritical 
-                      ? 'border-destructive bg-destructive/10' 
-                      : !isNormal 
-                        ? 'border-warning bg-warning/10' 
-                        : 'border-success bg-success/10'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-medium text-muted-foreground">
-                      {paramLabels[param.nome] ?? param.nome}
-                    </span>
-                    {getTrendIcon(trend)}
-                  </div>
-                  <div className={`text-2xl font-bold font-mono ${
-                    isCritical ? 'text-destructive' : !isNormal ? 'text-warning' : 'text-success'
-                  }`}>
-                    {value.toFixed(2)}
-                    {param.unidade && (
-                      <span className="text-sm ml-1 text-muted-foreground">
-                        {param.unidade}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+            {mainParams.map((param) => renderParamCard(param))}
           </div>
         </div>
+
+        {/* Parâmetros secundários (conforme o caso clínico) */}
+        {secondaryParams.length > 0 && (
+          <div className="pt-4 border-t">
+            <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+              <Activity className="h-4 w-4 text-muted-foreground" />
+              Parâmetros Secundários
+            </h3>
+            <div className="grid grid-cols-3 gap-3">
+              {secondaryParams.map((param) => renderParamCard(param))}
+            </div>
+          </div>
+        )}
+
       </CardContent>
     </Card>
   );
