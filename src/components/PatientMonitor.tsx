@@ -71,18 +71,31 @@ export const PatientMonitor = ({
   const priorityOrder = ['pH', 'PaCO2', 'pCO2', 'HCO3-', 'HCO3', 'PaO2', 'Lactato'];
   const paramLabels: Record<string, string> = {
     FrequenciaCardiaca: 'FC',
-    PressaoArterial: 'PA',
+    FrequenciaRespiratoria: 'FR',
+    PressaoArterial: 'PAS',
     ContratilidadeCardiaca: 'Contratilidade',
     ResistenciaVascular: 'RVP',
     DebitoCardiaco: 'Débito Card.',
+    HCO3: 'HCO₃⁻',
+    BE: 'BE',
+    SpO2: 'SpO₂',
+    AnionGap: 'Anion Gap',
+    Sodio: 'Na⁺',
+    Potassio: 'K⁺',
+    Cloro: 'Cl⁻',
+    Calcio: 'Ca²⁺',
+    Fosforo: 'P',
   };
-  const mainParams = parameters
+  const monitored = parameters
     .filter((p) => currentState[p.id] !== undefined)
     .sort((a, b) => {
       const ia = priorityOrder.indexOf(a.nome);
       const ib = priorityOrder.indexOf(b.nome);
       return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
     });
+  const mainParams = monitored.filter((p) => (p.tipo ?? 'primario') !== 'secundario');
+  const secondaryParams = monitored.filter((p) => p.tipo === 'secundario');
+
 
   return (
     <Card className="overflow-hidden">
