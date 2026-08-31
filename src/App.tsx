@@ -21,6 +21,8 @@ import { useUserRole } from "./hooks/useUserRole";
 import { useTcleConsent } from "./hooks/useTcleConsent";
 import { useParticipantCode, isVisitanteCongresso } from "./hooks/useParticipantCode";
 import { useNotificationBroadcast } from "./hooks/useNotificationBroadcast";
+import { MaintenanceNotice, isMaintenanceHost } from "./components/MaintenanceGate";
+
 
 
 const queryClient = new QueryClient();
@@ -117,9 +119,15 @@ const BroadcastListener = () => {
   return null;
 };
 
-const App = () => (
+const App = () =>
+  isMaintenanceHost() ? (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <MaintenanceNotice />
+    </ThemeProvider>
+  ) : (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+
       <TooltipProvider>
         <Toaster />
         <Sonner />
