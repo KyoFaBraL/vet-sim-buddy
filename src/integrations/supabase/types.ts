@@ -353,6 +353,7 @@ export type Database = {
           descricao: string | null
           id: number
           nome: string
+          tipo: string
           unidade: string | null
           valor_maximo: number | null
           valor_minimo: number | null
@@ -361,6 +362,7 @@ export type Database = {
           descricao?: string | null
           id?: number
           nome: string
+          tipo?: string
           unidade?: string | null
           valor_maximo?: number | null
           valor_minimo?: number | null
@@ -369,6 +371,7 @@ export type Database = {
           descricao?: string | null
           id?: number
           nome?: string
+          tipo?: string
           unidade?: string | null
           valor_maximo?: number | null
           valor_minimo?: number | null
