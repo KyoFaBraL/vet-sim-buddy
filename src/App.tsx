@@ -21,6 +21,8 @@ import { useUserRole } from "./hooks/useUserRole";
 import { useTcleConsent } from "./hooks/useTcleConsent";
 import { useParticipantCode, isVisitanteCongresso } from "./hooks/useParticipantCode";
 import { useNotificationBroadcast } from "./hooks/useNotificationBroadcast";
+import { MaintenanceNotice, isMaintenanceHost } from "./components/MaintenanceGate";
+
 
 
 const queryClient = new QueryClient();
